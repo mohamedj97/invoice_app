@@ -25,7 +25,7 @@ Future<void> init() async {
 //       ));
 
 // Usecases
-
+//
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
 //   sl.registerLazySingleton(() => DeletePostUseCase(sl()));
 //   sl.registerLazySingleton(() => UpdatePostUseCase(sl()));
