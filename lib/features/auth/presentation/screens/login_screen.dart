@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -12,7 +13,6 @@ import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_email_for
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_password_form_field.dart';
 import 'package:invoice_app/features/auth/presentation/screens/walkthrough_screen.dart';
 import 'package:invoice_app/features/splash/presentation/widgets/splash_scaffold.dart';
-
 import '../../../../core/utils/enums.dart';
 import '../../domain/entities/login_request.dart';
 import '../cubit/form_submit/formsubmit_cubit.dart';
@@ -87,16 +87,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            LWCustomText(
+                          children: [
+                            const LWCustomText(
                               title: "Welcome Back",
                               color: AppColors.primary,
                               fontSize: 15.0,
                               fontFamily: FontAssets.avertaSemiBold,
                             ),
-                            SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
                             LWCustomText(
-                              title: "Sign In",
+                              title: 'sign_in'.tr(),
                               color: AppColors.blackColor,
                               fontSize: 22.0,
                               fontFamily: FontAssets.avertaSemiBold,
