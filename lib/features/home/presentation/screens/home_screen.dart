@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/features/customers/presentation/screens/add_customer_screen.dart';
-import 'package:invoice_app/features/home/presentation/pages/home_customers_page.dart';
+import 'package:invoice_app/features/home/presentation/pages/home_dasboard_page.dart';
 import 'package:invoice_app/features/home/presentation/pages/home_invoices_page.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/create_invoice_screen.dart';
 import '../../../../core/navigation/custom_page_route.dart';
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         controller: _controller,
         children: const [
-          HomeCustomersPage(),
+          HomeDashboardPage(),
           HomeInvoicesPage(),
           HomeProductsPage(),
           HomeMorePage(),

@@ -9,9 +9,9 @@ import 'package:invoice_app/features/profile/presentation/screens/business_data_
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../profile/presentation/screens/change_language_screen.dart';
 import '../../../profile/presentation/screens/change_password_screen.dart';
+import '../../../profile/presentation/screens/profile_customers_screen.dart';
 import '../../../profile/presentation/screens/profile_data_screen.dart';
 import '../../../profile/presentation/widgets/profile_item_widget.dart';
-import 'home_customers_page.dart';
 
 class HomeMorePage extends StatelessWidget {
   const HomeMorePage({Key? key}) : super(key: key);
@@ -69,7 +69,7 @@ class HomeMorePage extends StatelessWidget {
           imagePath: IconAssets.customersIcon,
           onTap: () {
             Navigator.of(context)
-                .push(CustomPageRoute.createRoute(page: const HomeCustomersPage()));
+                .push(CustomPageRoute.createRoute(page: const ProfileCustomersScreen()));
           },
         ),
         ProfileItemWidget(
