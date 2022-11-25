@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../../core/utils/enums.dart';
+import '../../../data/data_sources/local_data_sources/auth_local_data_source.dart';
 import '../../../data/models/responses/login_response_model.dart';
 import '../../../domain/entities/login_request.dart';
 import '../../../domain/use_cases/login_usecase.dart';
@@ -13,13 +14,13 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final LoginUseCase loginUseCase;
-  //final AuthLocalDataSource authLocalDataSource;
-  String email = "";
+  final AuthLocalDataSource authLocalDataSource;
+  String username = "";
   String? password;
 
   LoginCubit(
     this.loginUseCase,
-    //this.authLocalDataSource,
+    this.authLocalDataSource,
   ) : super(LoginInitial());
 
   Future<void> login(LoginRequest loginRequest) async {
@@ -36,9 +37,9 @@ class LoginCubit extends Cubit<LoginState> {
         ),
       );
     }, (response) {
-      if (response.status && response.result != null) {
+      if (response.statusCode == 200 && response.result != null) {
         emit(LoginSuccess(loginResponse: response));
-        //authLocalDataSource.updateTokenData(response.result);
+        authLocalDataSource.updateTokenData(response);
         return emit(
           state.copyWith(
             loginRequestState: RequestState.success,
@@ -46,7 +47,7 @@ class LoginCubit extends Cubit<LoginState> {
           ),
         );
       } else {
-        emit(LoginFailure(failure: response.errorMessage!));
+        emit(LoginFailure(failure: response.errorMessage ?? ""));
         return emit(
           state.copyWith(
             loginRequestState: RequestState.error,
@@ -66,7 +67,7 @@ class LoginCubit extends Cubit<LoginState> {
     }
 
     formState.save();
-    email = formState.value["email"];
+    username = formState.value["username"];
     password = formState.value["password"];
   }
 }

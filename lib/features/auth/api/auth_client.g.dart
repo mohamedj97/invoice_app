@@ -33,7 +33,7 @@ class _AuthClient implements AuthClient {
     )
             .compose(
               _dio.options,
-              'Authenticate/login1',
+              'Authenticate/login',
               queryParameters: queryParameters,
               data: _data,
             )

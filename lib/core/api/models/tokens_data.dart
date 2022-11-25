@@ -10,7 +10,7 @@ class TokensData {
 
   factory TokensData.fromLoginResponse(LoginResponse loginResponse) {
     return TokensData(
-      loginResponse.result!.token,
+      loginResponse.result?.token??"",
     );
   }
 

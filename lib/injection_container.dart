@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/api/api_repo.dart';
+import 'features/auth/data/data_sources/local_data_sources/auth_local_data_source.dart';
 import 'features/auth/data/data_sources/remote_data_sources/auth_remote_data_source.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
@@ -15,7 +16,7 @@ Future<void> init() async {
 
 // Bloc
 
-  sl.registerLazySingleton(() => LoginCubit(sl()));
+  sl.registerLazySingleton(() => LoginCubit(sl(),sl()));
   //
 
 //   sl.registerFactory(() => CreateUpdateDeletePostCubit(
@@ -38,8 +39,8 @@ Future<void> init() async {
 
   sl.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(apiRepo: sl()));
-  // sl.registerLazySingleton<AuthLocalDataSource>(
-  //     () => AuthLocalDataSourceImpl(sharedPreferences: sl()));
+  sl.registerLazySingleton<AuthLocalDataSource>(
+      () => AuthLocalDataSourceImpl(sharedPreferences: sl()));
 
 //! Core
 

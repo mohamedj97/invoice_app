@@ -7,7 +7,6 @@ part 'login_response_model.g.dart';
 @JsonSerializable()
 class LoginResponseDataModel extends LoginResponseData {
   LoginResponseDataModel({
-    required super.loginId,
     required super.token,
     required super.expiration,
   });
@@ -21,9 +20,7 @@ class LoginResponse extends BaseAPIResponse {
   late LoginResponseDataModel? result;
 
   LoginResponse({
-    required super.status,
-    required super.errors,
-    required super.errorCode,
+    required super.statusCode,
     super.errorMessage,
     required this.result,
   });

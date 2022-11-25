@@ -3,13 +3,11 @@ part 'base_api_response.g.dart';
 
 @JsonSerializable()
 class BaseAPIResponse {
-  late final bool status;
   String? errorMessage;
-  List<String>? errors = [];
-  late int? errorCode;
+  late int? statusCode;
 
   BaseAPIResponse(
-      {required this.status, this.errorMessage, this.errors, this.errorCode});
+      {this.errorMessage, this.statusCode});
 
   factory BaseAPIResponse.fromJson(Map<String, dynamic> json) =>
       _$BaseAPIResponseFromJson(json);
@@ -23,10 +21,8 @@ class BoolResponse extends BaseAPIResponse {
 
   BoolResponse({
     required this.result,
-    required super.errorCode,
     super.errorMessage,
-    required super.errors,
-    required super.status,
+    super.statusCode
   });
 
   factory BoolResponse.fromJson(Map<String, dynamic> json) =>
@@ -42,10 +38,8 @@ class StringResponse extends BaseAPIResponse {
 
   StringResponse({
     required this.result,
-    required super.errorCode,
+    required super.statusCode,
     super.errorMessage,
-    required super.errors,
-    required super.status,
   });
 
   factory StringResponse.fromJson(Map<String, dynamic> json) =>
@@ -61,10 +55,8 @@ class StringsListResponse extends BaseAPIResponse {
 
   StringsListResponse({
     required this.result,
-    required super.errorCode,
+    required super.statusCode,
     super.errorMessage,
-    required super.errors,
-    required super.status,
   });
 
   factory StringsListResponse.fromJson(Map<String, dynamic> json) =>
@@ -80,10 +72,8 @@ class IntResponse extends BaseAPIResponse {
 
   IntResponse({
     required this.result,
-    required super.errorCode,
+    required super.statusCode,
     super.errorMessage,
-    required super.errors,
-    required super.status,
   });
 
   factory IntResponse.fromJson(Map<String, dynamic> json) =>

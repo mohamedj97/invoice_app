@@ -7,12 +7,10 @@ class LoginResponseData extends Equatable {
 
   late DateTime expiration;
 
-  late String loginId;
 
   LoginResponseData({
     required this.token,
     required this.expiration,
-    required this.loginId,
   });
 
   @override
@@ -20,7 +18,6 @@ class LoginResponseData extends Equatable {
     return [
       token,
       expiration,
-      loginId,
     ];
   }
 }

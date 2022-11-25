@@ -9,10 +9,12 @@ import 'package:invoice_app/core/common_widgets/custom_elevated_button.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/core/navigation/custom_page_route.dart';
 import 'package:invoice_app/core/assets/colors.dart';
-import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_email_form_field.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_password_form_field.dart';
+import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import 'package:invoice_app/features/auth/presentation/screens/walkthrough_screen.dart';
 import 'package:invoice_app/features/splash/presentation/widgets/splash_scaffold.dart';
+import '../../../../core/api/repository/disk_repo.dart';
+import '../../../../core/api/repository/memory_repo.dart';
 import '../../../../core/utils/enums.dart';
 import '../../domain/entities/login_request.dart';
 import '../cubit/form_submit/formsubmit_cubit.dart';
@@ -103,10 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
-                        LWCustomEmailFormField(
-                          name: "email",
-                          labelText: "Email",
-                          hintText: "example@email.com",
+                        LWCustomTextFormField(
+                          name: "username",
+                          labelText: "UserName",
+                          hintText: "Ahmed",
                           isRequired: true,
                           showRequiredSymbol: false,
                           onSubmitted: (value){
@@ -146,6 +148,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: CustomElevatedButton(
                             title: "Sign In",
                             onPressed: () async {
+                              await MemoryRepo().ensureInitialized();
+                              await DiskRepo().ensureInitialized();
                               BlocProvider.of<LoginCubit>(context)
                                   .validateLoginForm(formKey);
                               BlocProvider.of<FormSubmitCubit>(context)

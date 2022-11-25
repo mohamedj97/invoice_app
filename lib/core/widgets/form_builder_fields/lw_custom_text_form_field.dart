@@ -26,6 +26,8 @@ class LWCustomTextFormField extends StatelessWidget {
   final double? height;
   final TextInputAction? textInputAction;
   final TextEditingController? controller;
+  final void Function(String?)? onSubmitted;
+  final void Function(String?)? onSaved;
 
   const LWCustomTextFormField({
     Key? key,
@@ -45,12 +47,14 @@ class LWCustomTextFormField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.height,
     this.textInputAction,
-    this.expands = false, this.controller, this.fontSize,
+    this.expands = false, this.controller, this.fontSize, this.onSubmitted, this.onSaved,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var child = FormBuilderTextField(
+      onSubmitted: onSubmitted,
+      onSaved: onSaved,
       initialValue: initialValue,
       enabled: enabled,
       controller: controller,

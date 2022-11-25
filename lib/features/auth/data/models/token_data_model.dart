@@ -8,7 +8,6 @@ part 'token_data_model.g.dart';
 class TokenDataModel extends TokenData {
   const TokenDataModel({
     required super.token,
-    required super.loginId,
     required super.expiration,
   });
 

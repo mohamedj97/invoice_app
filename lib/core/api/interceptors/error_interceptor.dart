@@ -12,9 +12,7 @@ class ErrorInterceptor extends Interceptor {
           err.type == DioErrorType.receiveTimeout ||
           err.type == DioErrorType.other) {
         final networkOperationResult = BaseAPIResponse(
-            status: false,
-            errorCode: 0,
-            errors: [],
+            statusCode: 0,
             errorMessage:
                 "Network error please check your internet connection");
         final networkErrorResponse = Response(
