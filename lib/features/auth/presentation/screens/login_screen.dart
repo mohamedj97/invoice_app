@@ -39,19 +39,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) async {
       if (state.loginRequestState == RequestState.success) {
-        bool firstLogin= await DiskRepo().loadFirstLogin()??false;
-        if(firstLogin)
-          {
-            await DiskRepo().updateFirstLogin(false);
-            Navigator.of(context)
-                .push(CustomPageRoute.createRoute(page: const WalkThroughScreen()));
-
-          }
-        else
-          {
-            Navigator.of(context)
-                .push(CustomPageRoute.createRoute(page: const HomeScreen()));
-          }
+        bool firstLogin = await DiskRepo().loadFirstLogin() ?? false;
+        if (firstLogin) {
+          await DiskRepo().updateFirstLogin(false);
+          Navigator.of(context).push(
+              CustomPageRoute.createRoute(page: const WalkThroughScreen()));
+        } else {
+          Navigator.of(context)
+              .push(CustomPageRoute.createRoute(page: const HomeScreen()));
+        }
       }
       if (state.loginRequestState == RequestState.error) {
         await showDialog(
@@ -141,6 +137,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: "UserName",
                           hintText: "Ahmed",
                           isRequired: true,
+                          contentPadding: EdgeInsets.zero,
+                          borderDecoration:  const UnderlineInputBorder(
+                            borderSide:
+                            BorderSide(color: AppColors.searchBarColor, width: 1.0),
+                          ),
+                          focusedBorderDecoration: const UnderlineInputBorder(
+                            borderSide:
+                            BorderSide(color: AppColors.dataFieldColor, width: 1.0),
+                          ),
                           showRequiredSymbol: false,
                           onSubmitted: (value) {
                             email = value;

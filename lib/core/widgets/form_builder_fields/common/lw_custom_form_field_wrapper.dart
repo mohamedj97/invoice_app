@@ -22,6 +22,7 @@ class LWCustomFormFieldWrapper extends StatelessWidget {
         if (labelText != null && labelText!.isNotEmpty)
           LWCustomText(
             title: labelText!,
+            fontWeight: FontWeight.normal,
             color: AppColors.primary,
             fontSize: 13.0,
             fontFamily: FontAssets.avertaRegular,

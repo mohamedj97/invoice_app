@@ -18,6 +18,7 @@ class LWCustomTextFormField extends StatelessWidget {
   final int maxLines;
   final TextInputType keyboardType;
   final InputBorder? borderDecoration;
+  final InputBorder? focusedBorderDecoration;
   final bool showRequiredSymbol;
   final double? fontSize;
   final bool isCard;
@@ -28,6 +29,7 @@ class LWCustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final void Function(String?)? onSubmitted;
   final void Function(String?)? onSaved;
+  final EdgeInsetsGeometry? contentPadding;
 
   const LWCustomTextFormField({
     Key? key,
@@ -47,7 +49,11 @@ class LWCustomTextFormField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.height,
     this.textInputAction,
-    this.expands = false, this.controller, this.fontSize, this.onSubmitted, this.onSaved,
+    this.expands = false,
+    this.controller,
+    this.fontSize,
+    this.onSubmitted,
+    this.onSaved, this.focusedBorderDecoration, this.contentPadding,
   }) : super(key: key);
 
   @override
@@ -64,30 +70,35 @@ class LWCustomTextFormField extends StatelessWidget {
       cursorColor: AppColors.searchBarColor,
       textInputAction: textInputAction,
       style: TextStyle(
-        color: enabled ? Colors.black : Colors.grey,fontSize: fontSize,
+        color: enabled ? Colors.black : Colors.grey,
+        fontSize: fontSize,
       ),
       keyboardType: keyboardType,
-      decoration:
-          InputDecoration(
-            enabledBorder: borderDecoration ?? const OutlineInputBorder(
+      decoration: InputDecoration(
+        enabledBorder: borderDecoration ??
+            const OutlineInputBorder(
               borderRadius: BorderRadius.zero,
               borderSide: BorderSide(
                 width: 0.5,
                 color: AppColors.searchBarColor,
               ),
             ),
-            focusedBorder: borderDecoration ?? const OutlineInputBorder(
+        focusedBorder: focusedBorderDecoration??borderDecoration ??
+            const OutlineInputBorder(
               borderRadius: BorderRadius.zero,
               borderSide: BorderSide(
                 width: 0.5,
                 color: AppColors.searchBarColor,
               ),
             ),
-            fillColor: AppColors.whiteColor,
-            filled: true,
-            hintText: hintText,
-            hintStyle: TextStyle(color: AppColors.searchBarColor,fontSize: fontSize),
-          ),
+        fillColor: AppColors.whiteColor,
+        filled: true,
+        hintText: hintText,
+        alignLabelWithHint: true,
+        contentPadding: contentPadding,
+        hintStyle:
+            TextStyle(color: AppColors.searchBarColor, fontSize: fontSize),
+      ),
       validator: FormBuilderValidators.compose(
         <String? Function(String?)>[
           if (isRequired)
@@ -104,16 +115,8 @@ class LWCustomTextFormField extends StatelessWidget {
             labelText: isRequired
                 ? "$labelText${showRequiredSymbol ? "*" : ""}"
                 : labelText,
-            child: isCard
-                ? Card(
-                    elevation: 4.0,
-                    margin: const EdgeInsets.all(0),
-                    child: child)
-                : SizedBox(child: child),
+            child: Material(child: child),
           )
-        : isCard
-            ? Card(
-                elevation: 4.0, margin: const EdgeInsets.all(0), child: child)
-            : SizedBox(child: child);
+        : Material(child: child);
   }
 }
