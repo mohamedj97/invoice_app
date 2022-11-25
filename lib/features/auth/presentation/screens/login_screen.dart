@@ -12,6 +12,7 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_password_form_field.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import 'package:invoice_app/features/auth/presentation/screens/walkthrough_screen.dart';
+import 'package:invoice_app/features/home/presentation/screens/home_screen.dart';
 import 'package:invoice_app/features/splash/presentation/widgets/splash_scaffold.dart';
 import '../../../../core/api/repository/disk_repo.dart';
 import '../../../../core/api/repository/memory_repo.dart';
@@ -38,14 +39,44 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) async {
       if (state.loginRequestState == RequestState.success) {
-        Navigator.of(context)
-            .push(CustomPageRoute.createRoute(page: const WalkThroughScreen()));
+        bool firstLogin= await DiskRepo().loadFirstLogin()??false;
+        if(firstLogin)
+          {
+            await DiskRepo().updateFirstLogin(false);
+            Navigator.of(context)
+                .push(CustomPageRoute.createRoute(page: const WalkThroughScreen()));
+
+          }
+        else
+          {
+            Navigator.of(context)
+                .push(CustomPageRoute.createRoute(page: const HomeScreen()));
+          }
       }
       if (state.loginRequestState == RequestState.error) {
         await showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return Text(state.failure!);
+          builder: (context) {
+            return AlertDialog(
+              title: const Icon(
+                Icons.warning,
+                color: AppColors.primary,
+                size: 80.0,
+              ),
+              content: Text(state.failure ?? "Something Went Wrong"),
+              actions: [
+                TextButton(
+                  child: const LWCustomText(
+                    title: "Cancel",
+                    fontFamily: FontAssets.avertaSemiBold,
+                    color: AppColors.primary,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
           },
         );
       }
@@ -111,11 +142,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           hintText: "Ahmed",
                           isRequired: true,
                           showRequiredSymbol: false,
-                          onSubmitted: (value){
-                            email=value;
+                          onSubmitted: (value) {
+                            email = value;
                           },
-                          onSaved: (value){
-                            email=value;
+                          onSaved: (value) {
+                            email = value;
                           },
                         ),
                         LWCustomPasswordFormField(
@@ -124,11 +155,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           hintText: "*******",
                           isRequired: true,
                           showRequiredSymbol: false,
-                          onSubmitted: (value){
-                            password=value;
+                          onSubmitted: (value) {
+                            password = value;
                           },
-                          onSaved: (value){
-                            password=value;
+                          onSaved: (value) {
+                            password = value;
                           },
                         ),
                         Align(

@@ -4,6 +4,7 @@ import '../models/tokens_data.dart';
 
 
 const String _tokensDataKey = "tokens_data";
+const String _firstLoginKey = "first_login";
 
 class DiskRepo {
   static final DiskRepo _singleton = DiskRepo._internal();
@@ -35,6 +36,24 @@ class DiskRepo {
 
   Future updateTokensData(TokensData tokensData) async {
     await sharedPreferences.setString(_tokensDataKey, tokensData.toString());
+  }
+  bool? loadFirstLogin() {
+    if (!sharedPreferences.containsKey(_firstLoginKey)) {
+      return null;
+    }
+    final value = sharedPreferences.getBool(_firstLoginKey);
+    if (value == null) {
+      return null;
+    }
+    return value;
+  }
+
+  Future updateFirstLogin(bool firstLogin) async {
+    await sharedPreferences.setBool(_firstLoginKey, firstLogin);
+  }
+
+  Future deleteFirstLogin() async {
+    await sharedPreferences.remove(_firstLoginKey);
   }
 
   Future deleteTokensData() async {
