@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:invoice_app/features/auth/presentation/screens/login_screen.dart';
+import 'package:invoice_app/features/splash/presentation/screens/splash_screen.dart';
 import 'core/utils/theme/theme.dart';
 import 'features/auth/presentation/cubit/form_submit/formsubmit_cubit.dart';
 import 'features/auth/presentation/cubit/login/login_cubit.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.themeData,
-        home: const LoginScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:invoice_app/core/api/repository/disk_repo.dart';
+import 'package:invoice_app/core/api/repository/memory_repo.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
@@ -138,7 +140,10 @@ class HomeMorePage extends StatelessWidget {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {
+                              onPressed: () async{
+                                await DiskRepo().deleteTokensData();
+                                await DiskRepo().deleteFirstLogin();
+                                MemoryRepo().deleteTokensData();
                                 Navigator.of(context).pushAndRemoveUntil(
                                   CustomPageRoute.createRoute(
                                     page: const LoginScreen(),
