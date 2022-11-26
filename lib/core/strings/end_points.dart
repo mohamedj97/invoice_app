@@ -6,4 +6,9 @@ class EndPoints {
 
   // auth
   static const login = 'Authenticate/login';
+
+
+  //invoices
+  static const getInvoices = 'Invoices';
+
 }

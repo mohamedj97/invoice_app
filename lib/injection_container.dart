@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:invoice_app/features/invoices/data/data_sources/invoices_remote_data_source.dart';
+import 'package:invoice_app/features/invoices/data/repositories/invoices_repository_impl.dart';
+import 'package:invoice_app/features/invoices/domain/repositories/invoices_repository.dart';
+import 'package:invoice_app/features/invoices/domain/use_cases/get_invoices_use_case.dart';
+import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/api/api_repo.dart';
@@ -17,6 +22,7 @@ Future<void> init() async {
 // Bloc
 
   sl.registerLazySingleton(() => LoginCubit(sl(),sl()));
+  sl.registerLazySingleton(() => GetInvoicesCubit(sl()));
   //
 
 //   sl.registerFactory(() => CreateUpdateDeletePostCubit(
@@ -28,12 +34,14 @@ Future<void> init() async {
 // Usecases
 //
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
+  sl.registerLazySingleton(() => GetInvoicesUseCase(invoicesRepository: sl()));
 //   sl.registerLazySingleton(() => DeletePostUseCase(sl()));
 //   sl.registerLazySingleton(() => UpdatePostUseCase(sl()));
 
 // Repository
 
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
+  sl.registerLazySingleton<InvoicesRepository>(() => InvoicesRepositoryImpl(sl()));
 
 // Datasources
 
@@ -41,6 +49,10 @@ Future<void> init() async {
       () => AuthRemoteDataSourceImpl(apiRepo: sl()));
   sl.registerLazySingleton<AuthLocalDataSource>(
       () => AuthLocalDataSourceImpl(sharedPreferences: sl()));
+
+
+  sl.registerLazySingleton<InvoicesRemoteDataSource>(
+          () => InvoicesRemoteDataSourceImpl(apiRepo: sl()));
 
 //! Core
 

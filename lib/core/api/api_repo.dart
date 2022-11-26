@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoice_app/features/invoices/api/invoices_client.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../config.dart';
@@ -9,6 +10,7 @@ import 'interceptors/error_interceptor.dart';
 
 class APIRepository {
   late AuthClient authClient;
+  late InvoicesClient invoicesClient;
 
   // APIRepository();
   APIRepository.internal() {
@@ -77,6 +79,7 @@ class APIRepository {
 
     authDio.interceptors.add(ErrorInterceptor());
     authClient = AuthClient(authDio, baseUrl: apiBaseUrl);
+    invoicesClient = InvoicesClient(authDio, baseUrl: apiBaseUrl);
   }
   Future ensureInitialized() async => true;
 }

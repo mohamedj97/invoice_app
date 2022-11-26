@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
-import 'package:invoice_app/features/invoices/domain/entities/invoice.dart';
+import 'package:invoice_app/features/invoices/domain/entities/invoice_head_model.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/create_invoice_screen.dart';
-
 import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 
 class InvoiceListItem extends StatelessWidget {
-  final Invoice invoice;
+  final InvoiceHeadModel invoice;
   const InvoiceListItem({Key? key, required this.invoice}) : super(key: key);
 
   @override
@@ -16,7 +15,7 @@ class InvoiceListItem extends StatelessWidget {
     return InkWell(
       onTap: (){
         Navigator.of(context).push(CustomPageRoute.createRoute(
-            page: CreateEditInvoiceScreen(invoice: invoice,)));
+            page: CreateEditInvoiceScreen()));
       },
       child: Container(
         color: AppColors.whiteColor,
@@ -29,13 +28,13 @@ class InvoiceListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LWCustomText(
-                    title: invoice.id,
+                    title: invoice.invId.toString(),
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 14.0,
                   ),
                   LWCustomText(
-                    title: "${invoice.total.toString()} EGP",
+                    title: "${invoice.totalAmount.toString()} EGP",
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontWeight: FontWeight.bold,
@@ -48,13 +47,13 @@ class InvoiceListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LWCustomText(
-                    title: "To : ${invoice.toWho}",
+                    title: "To : ${invoice.customerName}",
                     color: AppColors.disabledBottomItemColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 12.0,
                   ),
                   LWCustomText(
-                    title: invoice.date.toString(),
+                    title: invoice.invoiceDate.toString(),
                     color: AppColors.disabledBottomItemColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 12.0,
@@ -67,7 +66,7 @@ class InvoiceListItem extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: LWCustomText(
-                      title: invoice.status,
+                      title: invoice.status??"",
                       color: AppColors.greenColor,
                       fontSize: 10.0,
                       fontFamily: FontAssets.avertaSemiBold,
