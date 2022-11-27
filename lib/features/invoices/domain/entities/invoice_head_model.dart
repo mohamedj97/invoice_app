@@ -130,7 +130,7 @@ class InvoiceHeadModel extends Equatable {
   String? details;
 
   @override
-  List<dynamic> get props => [
+  List<Object?> get props => [
         id,
         invoiceNo,
         invoiceDate,

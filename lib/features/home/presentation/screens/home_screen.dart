@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       actions: [
         InkWell(
-          onTap: () {
+          onTap: () async{
             if (pageIndex == 0) {
               Navigator.of(context).push(CustomPageRoute.createRoute(
                   page: const AddCustomerScreen()));

@@ -155,7 +155,7 @@ GetInvoicesResponse _$GetInvoicesResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$GetInvoicesResponseToJson(
         GetInvoicesResponse instance) =>
     <String, dynamic>{
-      'statuscode': instance.errorMessage,
-      'message': instance.statusCode,
+      'message': instance.errorMessage,
+      'statuscode': instance.statusCode,
       'result': instance.result,
     };

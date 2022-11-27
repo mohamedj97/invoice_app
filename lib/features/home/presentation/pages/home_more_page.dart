@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/api/repository/disk_repo.dart';
 import 'package:invoice_app/core/api/repository/memory_repo.dart';
 import 'package:invoice_app/core/assets/colors.dart';
@@ -6,9 +7,12 @@ import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/features/auth/presentation/screens/login_screen.dart';
+import 'package:invoice_app/features/customers/domain/use_cases/get_customers_use_case.dart';
+import 'package:invoice_app/features/customers/presentation/cubit/get_customers/get_customers_cubit.dart';
 import 'package:invoice_app/features/profile/presentation/screens/business_data_screen.dart';
 
 import '../../../../core/navigation/custom_page_route.dart';
+import '../../../../injection_container.dart';
 import '../../../profile/presentation/screens/change_language_screen.dart';
 import '../../../profile/presentation/screens/change_password_screen.dart';
 import '../../../profile/presentation/screens/profile_customers_screen.dart';
@@ -71,7 +75,9 @@ class HomeMorePage extends StatelessWidget {
           imagePath: IconAssets.customersIcon,
           onTap: () {
             Navigator.of(context)
-                .push(CustomPageRoute.createRoute(page: const ProfileCustomersScreen()));
+                .push(CustomPageRoute.createRoute(page: BlocProvider(
+                create: (context) => GetCustomersCubit(GetCustomersUseCase(customersRepository: sl())),
+                child: const ProfileCustomersScreen())));
           },
         ),
         ProfileItemWidget(

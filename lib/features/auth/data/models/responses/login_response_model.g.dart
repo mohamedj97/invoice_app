@@ -22,8 +22,8 @@ Map<String, dynamic> _$LoginResponseDataModelToJson(
 
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
-      statusCode: json['statuscode'] as int?,
-      errorMessage: json['message'] as String?,
+      statusCode: json['statusCode'] as int?,
+      errorMessage: json['errorMessage'] as String?,
       result: json['result'] == null
           ? null
           : LoginResponseDataModel.fromJson(
@@ -32,7 +32,7 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
     <String, dynamic>{
-      'message': instance.errorMessage,
-      'statuscode': instance.statusCode,
+      'errorMessage': instance.errorMessage,
+      'statusCode': instance.statusCode,
       'result': instance.result,
     };

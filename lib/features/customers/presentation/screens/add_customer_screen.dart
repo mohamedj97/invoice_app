@@ -5,14 +5,14 @@ import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
+import 'package:invoice_app/features/customers/domain/entities/customer_entity.dart';
 import 'package:invoice_app/features/home/presentation/screens/home_screen.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/widgets/custom_back_button.dart';
-import '../../domain/entities/customer.dart';
 
 class AddCustomerScreen extends StatefulWidget {
-  final Customer? customerItem;
+  final CustomerModel? customerItem;
 
   const AddCustomerScreen({Key? key, this.customerItem}) : super(key: key);
 
@@ -123,7 +123,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       labelText: "",
                       hintText: "Name",
                       isRequired: true,
-                      initialValue: !hasData ? widget.customerItem!.name : null,
+                      initialValue: !hasData ? "widget.customerItem!.name" : null,
                       isCard: false,
                       borderDecoration: InputBorder.none,
                     ),
@@ -162,7 +162,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                   isCard: false,
                                   isRequired: true,
                                   initialValue: !hasData
-                                      ? widget.customerItem!.code
+                                      ? "widget.customerItem!.code"
                                       : null,
                                   maxLines: 5,
                                   keyboardType:
@@ -212,7 +212,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                   isCard: false,
                                   isRequired: true,
                                   initialValue: !hasData
-                                      ? widget.customerItem!.identityID
+                                      ? "widget.customerItem!.identityID"
                                       : null,
                                   maxLines: 5,
                                   keyboardType:
@@ -379,7 +379,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       labelText: "",
                       hintText: "Street",
                       isRequired: true,
-                      initialValue: !hasData ? widget.customerItem!.street : null,
+                      initialValue: !hasData ? "widget.customerItem!.street" : null,
                       isCard: false,
                       borderDecoration: InputBorder.none,
                     ),
@@ -403,7 +403,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       labelText: "",
                       hintText: "Building number",
                       isRequired: true,
-                      initialValue: !hasData ? widget.customerItem!.buildingNumber : null,
+                      initialValue: !hasData ?" widget.customerItem!.buildingNumber" : null,
                       isCard: false,
                       borderDecoration: InputBorder.none,
                     ),

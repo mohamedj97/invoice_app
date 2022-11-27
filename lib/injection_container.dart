@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:invoice_app/features/customers/data/data_sources/customers_remote_data_source.dart';
+import 'package:invoice_app/features/customers/data/repositories/customers_repository_impl.dart';
+import 'package:invoice_app/features/customers/domain/repositories/customers_repository.dart';
+import 'package:invoice_app/features/customers/domain/use_cases/get_Customers_use_case.dart';
+import 'package:invoice_app/features/customers/presentation/cubit/get_customers/get_customers_cubit.dart';
 import 'package:invoice_app/features/invoices/data/data_sources/invoices_remote_data_source.dart';
 import 'package:invoice_app/features/invoices/data/repositories/invoices_repository_impl.dart';
 import 'package:invoice_app/features/invoices/domain/repositories/invoices_repository.dart';
@@ -23,6 +28,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => LoginCubit(sl(),sl()));
   sl.registerLazySingleton(() => GetInvoicesCubit(sl()));
+  sl.registerLazySingleton(() => GetCustomersCubit(sl()));
   //
 
 //   sl.registerFactory(() => CreateUpdateDeletePostCubit(
@@ -35,6 +41,7 @@ Future<void> init() async {
 //
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => GetInvoicesUseCase(invoicesRepository: sl()));
+  sl.registerLazySingleton(() => GetCustomersUseCase(customersRepository: sl()));
 //   sl.registerLazySingleton(() => DeletePostUseCase(sl()));
 //   sl.registerLazySingleton(() => UpdatePostUseCase(sl()));
 
@@ -42,6 +49,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerLazySingleton<InvoicesRepository>(() => InvoicesRepositoryImpl(sl()));
+  sl.registerLazySingleton<CustomersRepository>(() => CustomersRepositoryImpl(sl()));
 
 // Datasources
 
@@ -53,6 +61,9 @@ Future<void> init() async {
 
   sl.registerLazySingleton<InvoicesRemoteDataSource>(
           () => InvoicesRemoteDataSourceImpl(apiRepo: sl()));
+
+  sl.registerLazySingleton<CustomersRemoteDataSource>(
+          () => CustomersRemoteDataSourceImpl(apiRepo: sl()));
 
 //! Core
 

@@ -11,4 +11,8 @@ class EndPoints {
   //invoices
   static const getInvoices = 'Invoices';
 
+  //customers
+  static const getCustomers = 'Customers';
+
+
 }
