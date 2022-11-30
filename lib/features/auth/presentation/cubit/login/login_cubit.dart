@@ -37,7 +37,7 @@ class LoginCubit extends Cubit<LoginState> {
         ),
       );
     }, (response) {
-      if (response.statusCode == 200 && response.result != null) {
+      if (response.statuscode == 200 || response.result != null) {
         emit(LoginSuccess(loginResponse: response));
         authLocalDataSource.updateTokenData(response);
         return emit(
@@ -47,7 +47,7 @@ class LoginCubit extends Cubit<LoginState> {
           ),
         );
       } else {
-        emit(LoginFailure(failure: response.errorMessage ?? ""));
+        emit(LoginFailure(failure: response.message ?? ""));
         return emit(
           state.copyWith(
             loginRequestState: RequestState.error,

@@ -4,152 +4,150 @@ import 'package:json_annotation/json_annotation.dart';
 part 'customer_entity.g.dart';
 @JsonSerializable()
 class CustomerModel{
-  late int Id;
+  late int id;
 
-  late int CompanyId;
-  String? Code;
+  late int companyid;
+  String? code;
 
-  String? Name;
+  String? name;
 
-  num? IdentityId;
+  num? identityid;
 
-  int? CountryId;
+  int? countryid;
 
-  String? CountryName;
+  String? countryname;
 
-  String? CountryNamear;
+  String? countrynamear;
 
-  String? CountryCode;
+  String? countrycode;
 
-  int? GovernateId;
+  int? governateid;
 
-  String? GovernateName;
+  String? governatename;
 
-  String? GovernateNamear;
+  String? governatenamear;
 
-  String? City;
+  String? city;
 
-  String? Street;
+  String? street;
 
-  String? BuilldingNumber;
+  String? builldingnumber;
 
-  String? PostalCode;
+  String? postalcode;
 
-  String? Floor;
+  String? floor;
 
-  String? Room;
+  String? room;
 
-  String? Landmark;
+  String? landmark;
 
-  String? AdditionalInformation;
+  String? additionalinformation;
 
-  String? Address;
+  String? address;
 
-  String? Address2;
+  String? address2;
 
-  int TypeId;
+  int typeid;
 
-  String? TypeCode;
+  String? typecode;
 
-  String? TypeName;
+  String? typename;
 
-  bool Active;
+  bool active;
 
-  String? Mobile;
+  String? mobile;
 
-  String? Tel;
+  String? tel;
 
-  String? Fax;
+  String? fax;
 
-  String? Email;
+  String? email;
 
-  String? Website;
+  String? website;
 
-  int CurrencyId;
+  int currencyid;
 
-  String? CurrencyCode;
+  String? currencycode;
 
-  String? CurrencyName;
+  String? currencyname;
 
-  String? CurrencyNamear;
+  String? currencynamear;
 
-  int mobile;
+  int itemid;
 
-  String? ItemCode;
+  String? itemcode;
 
-  String? ItemName;
+  String? itemname;
 
-  int TaxTypeId;
+  int taxtypeid;
 
-  String? TaxTypeCode;
+  String? taxtypecode;
 
-  String? TaxTypeName;
+  String? taxtypename;
 
-  String? TaxTypeNamear;
+  String? taxtypenamear;
 
-  int TaxTypeSubId;
+  int taxtypesubid;
 
-  String? TaxTypeSubCode;
+  String? taxtypesubcode;
 
-  String?   TaxTypeSubName;
+  String?   taxtypesubname;
 
-  String? TaxTypeSubNamear;
+  String? taxtypesubnamear;
 
-  num TaxRate;
+  num taxrate;
 
-  List<CustomerContactPerson>? ContactPersons;
-  List<CustomerShipAddress>? ShipAddresses;
+  List<CustomerContactPerson>? contactpersons;
+  List<CustomerShipAddress>? shipaddresses;
 
   CustomerModel(
-      {required this.Id,
-        required this.CompanyId,
-        this.Code,
-        this.Name,
-        this.IdentityId,
-        this.CountryId,
-        this.CountryName,
-        this.CountryNamear,
-        this.CountryCode,
-        this.GovernateId,
-        this.GovernateName,
-        this.GovernateNamear,
-        this.City,
-        this.Street,
-        this.BuilldingNumber,
-        this.PostalCode,
-        this.Floor,
-        this.Room,
-        this.Landmark,
-        this.AdditionalInformation,
-        this.Address,
-        this.Address2,
-        required this.TypeId,
-        this.TypeCode,
-        this.TypeName,
-        required this.Active,
-        this.Mobile,
-        this.Tel,
-        this.Fax,
-        this.Email,
-        this.Website,
-        required this.CurrencyId,
-        this.CurrencyCode,
-        this.CurrencyName,
-        this.CurrencyNamear,
-        required this.mobile,
-        this.ItemCode,
-        this.ItemName,
-        required this.TaxTypeId,
-        this.TaxTypeCode,
-        this.TaxTypeName,
-        this.TaxTypeNamear,
-        required this.TaxTypeSubId,
-        this.TaxTypeSubCode,
-        this.TaxTypeSubName,
-        this.TaxTypeSubNamear,
-        required this.TaxRate,
-        this.ContactPersons,
-        this.ShipAddresses});
+      {required this.id,
+        required this.companyid,
+        this.code,
+        this.name,
+        this.identityid,
+        this.countryid,
+        this.countryname,
+        this.countrynamear,
+        this.countrycode,
+        this.governateid,
+        this.governatename,
+        this.governatenamear,
+        this.city,
+        this.street,
+        this.builldingnumber,
+        this.postalcode,
+        this.floor,
+        this.room,
+        this.landmark,
+        this.additionalinformation,
+        this.address,
+        this.address2,
+        required this.typeid,
+        this.typecode,
+        this.typename,
+        required this.active,
+        this.tel,
+        this.fax,
+        this.email,
+        this.website,
+        required this.currencyid,
+        this.currencycode,
+        this.currencyname,
+        this.currencynamear,
+        required this.itemid,
+        this.itemcode,
+        this.itemname,
+        required this.taxtypeid,
+        this.taxtypecode,
+        this.taxtypename,
+        this.taxtypesubnamear,
+        required this.taxtypesubid,
+        this.taxtypesubcode,
+        this.taxtypesubname,
+        required this.taxrate,
+        this.contactpersons,
+        this.shipaddresses});
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) =>
       _$CustomerModelFromJson(json);

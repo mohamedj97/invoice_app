@@ -27,7 +27,7 @@ class LoginState extends Equatable {
         loginRequestState,
         failure!,
         loginResponse ??
-            LoginResponse(statusCode: 0, result: null)
+            LoginResponse(statuscode: 0, result: null)
       ];
 }
 

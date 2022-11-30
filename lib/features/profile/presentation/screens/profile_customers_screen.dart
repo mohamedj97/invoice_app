@@ -10,6 +10,7 @@ import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/utils/enums.dart';
+import '../../../../injection_container.dart';
 import '../../../customers/presentation/screens/add_customer_screen.dart';
 
 class ProfileCustomersScreen extends StatelessWidget {
@@ -18,140 +19,141 @@ class ProfileCustomersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController searchController = TextEditingController();
-    return BlocConsumer<GetCustomersCubit, GetCustomersState>(
-      listener: (context, state) async {
-        if (state.getCustomersRequestState == RequestState.success) {
-          Navigator.of(context).push(CustomPageRoute.createRoute(
-              page: const CreateEditInvoiceScreen()));
-        }
-        if (state.getCustomersRequestState == RequestState.error) {
-          await showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Icon(
-                  Icons.warning,
-                  color: AppColors.primary,
-                  size: 80.0,
-                ),
-                content: Text(state.failure ?? "Something Went Wrong"),
-                actions: [
-                  TextButton(
-                    child: const LWCustomText(
-                      title: "Cancel",
-                      fontFamily: FontAssets.avertaSemiBold,
-                      color: AppColors.primary,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+    return BlocProvider<GetCustomersCubit>(
+      create: (context) => sl<GetCustomersCubit>()..getCustomers(),
+      child: BlocConsumer<GetCustomersCubit, GetCustomersState>(
+        listener: (context, state) async {
+          if (state.getCustomersRequestState == RequestState.success) {
+            Navigator.of(context).push(CustomPageRoute.createRoute(
+                page: const CreateEditInvoiceScreen()));
+          }
+          if (state.getCustomersRequestState == RequestState.error) {
+            await showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Icon(
+                    Icons.warning,
+                    color: AppColors.primary,
+                    size: 80.0,
                   ),
-                ],
-              );
-            },
-          );
-        }
-      },
-      builder: (context, state) {
-        return CustomScaffold(
-          title: "Customers",
-          actions: [
-            InkWell(
-              onTap: () {
-                Navigator.of(context).push(CustomPageRoute.createRoute(
-                    page: const AddCustomerScreen()));
+                  content: Text(state.failure ?? "Something Went Wrong"),
+                  actions: [
+                    TextButton(
+                      child: const LWCustomText(
+                        title: "Cancel",
+                        fontFamily: FontAssets.avertaSemiBold,
+                        color: AppColors.primary,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                );
               },
-              child: const Padding(
-                padding: EdgeInsets.only(right: 8.0),
-                child: Icon(
-                  Icons.add,
-                  size: 25.0,
-                  color: AppColors.primary,
+            );
+          }
+        },
+        builder: (context, state) {
+          return CustomScaffold(
+            title: "Customers",
+            actions: [
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(CustomPageRoute.createRoute(
+                      page: const AddCustomerScreen()));
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 8.0),
+                  child: Icon(
+                    Icons.add,
+                    size: 25.0,
+                    color: AppColors.primary,
+                  ),
                 ),
               ),
-            ),
-          ],
-          body: Column(
-            children: [
-              SearchBar(
-                searchController: searchController,
-                searchHintText: "Search by customer name",
-              ),
-              const SizedBox(height: 8.0),
-              Expanded(
-                child: Container(
-                  color: AppColors.scaffoldColor,
-                  child: ListView.builder(
-                    itemCount: 3,
-                    physics: const ScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      CustomerModel? item =
-                          state.getCustomersResponse?.result?.Result[index];
-                      if (index !=
-                          3 -
-                              1) {
-                        return InkWell(
-                          onTap: () {
-                            // Navigator.of(context).push(
-                            //   CustomPageRoute.createRoute(
-                            //     page: AddCustomerScreen(
-                            //         customerItem: customers[index]),
-                            //   ),
-                            // );
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            color: AppColors.whiteColor,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 24.0, left: 8.0),
-                              child: Center(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    LWCustomText(
-                                      title: item?.Name ?? "NA",
-                                      color: AppColors.labelColor,
-                                      fontSize: 18.0,
-                                      fontFamily: FontAssets.avertaRegular,
-                                    ),
-                                    const SizedBox(height: 24.0),
-                                    const Divider(
-                                      thickness: 0.5,
-                                      height: 0.0,
-                                      color: AppColors.searchBarColor,
-                                    ),
-                                  ],
+            ],
+            body: Column(
+              children: [
+                SearchBar(
+                  searchController: searchController,
+                  searchHintText: "Search by customer name",
+                ),
+                const SizedBox(height: 8.0),
+                Expanded(
+                  child: Container(
+                    color: AppColors.scaffoldColor,
+                    child: ListView.builder(
+                      itemCount: 3,
+                      physics: const ScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        CustomerModel? item =
+                            state.getCustomersResponse?.result?.result[index];
+                        if (index != 3 - 1) {
+                          return InkWell(
+                            onTap: () {
+                              // Navigator.of(context).push(
+                              //   CustomPageRoute.createRoute(
+                              //     page: AddCustomerScreen(
+                              //         customerItem: customers[index]),
+                              //   ),
+                              // );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              color: AppColors.whiteColor,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 24.0, left: 8.0),
+                                child: Center(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      LWCustomText(
+                                        title: item?.name ?? "NA",
+                                        color: AppColors.labelColor,
+                                        fontSize: 18.0,
+                                        fontFamily: FontAssets.avertaRegular,
+                                      ),
+                                      const SizedBox(height: 24.0),
+                                      const Divider(
+                                        thickness: 0.5,
+                                        height: 0.0,
+                                        color: AppColors.searchBarColor,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      } else {
-                        return Container(
-                          width: double.infinity,
-                          color: AppColors.whiteColor,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 24.0, left: 8.0, bottom: 24.0),
-                            child: LWCustomText(
-                              title: item?.Name ?? "NA",
-                              color: AppColors.labelColor,
-                              fontSize: 18.0,
-                              fontFamily: FontAssets.avertaRegular,
+                          );
+                        } else {
+                          return Container(
+                            width: double.infinity,
+                            color: AppColors.whiteColor,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 24.0, left: 8.0, bottom: 24.0),
+                              child: LWCustomText(
+                                title: item?.name ?? "NA",
+                                color: AppColors.labelColor,
+                                fontSize: 18.0,
+                                fontFamily: FontAssets.avertaRegular,
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                    },
+                          );
+                        }
+                      },
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-        );
-      },
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

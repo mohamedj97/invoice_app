@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: AppColors.primary,
                 size: 80.0,
               ),
-              content: Text(state.failure ?? "Something Went Wrong"),
+              content: Text(state.loginResponse?.message ?? "Something Went Wrong"),
               actions: [
                 TextButton(
                   child: const LWCustomText(
@@ -77,6 +77,15 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     }, builder: (context, state) {
+          print("${state}   ppppppppppppppp");
+          if(state is LoginLoading)
+            {
+              return const SplashScaffold(
+                body: Center(
+                  child: CircularProgressIndicator(color: AppColors.whiteColor),
+                ),
+              );
+            }
       return SplashScaffold(
         body: Stack(
           alignment: Alignment.bottomCenter,

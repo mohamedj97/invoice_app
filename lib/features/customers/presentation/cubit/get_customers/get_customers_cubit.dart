@@ -29,7 +29,7 @@ class GetCustomersCubit extends Cubit<GetCustomersState> {
         ),
       );
     }, (response) {
-      if (response.statusCode == 200 && response.result != null) {
+      if (response.statuscode == 200 && response.result != null) {
         emit(GetCustomersSuccess(getCustomersResponse: response));
         return emit(
           state.copyWith(
@@ -38,7 +38,7 @@ class GetCustomersCubit extends Cubit<GetCustomersState> {
           ),
         );
       } else {
-        emit(GetCustomersFailure(failure: response.errorMessage ?? ""));
+        emit(GetCustomersFailure(failure: response.message ?? ""));
         return emit(
           state.copyWith(
             getCustomersRequestState: RequestState.error,

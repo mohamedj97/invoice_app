@@ -19,7 +19,7 @@ class HomeInvoicesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController searchController = TextEditingController();
     return BlocProvider<GetInvoicesCubit>(
-      create: (context) => sl<GetInvoicesCubit>(),
+      create: (context) => sl<GetInvoicesCubit>()..getInvoices(),
       child: BlocConsumer<GetInvoicesCubit, GetInvoicesState>(
         listener: (context, state) async
         {
@@ -67,10 +67,10 @@ class HomeInvoicesPage extends StatelessWidget {
                 child: Container(
                   color: AppColors.scaffoldColor,
                   child: ListView.builder(
-                    itemCount: state.getInvoicesResponse?.result?.length??0,
+                    itemCount: state.getInvoicesResponse?.result?.result.length ??0,
                     physics: const ScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return InvoiceListItem(invoice: state.getInvoicesResponse!.result![index]);
+                      return InvoiceListItem(invoice: state.getInvoicesResponse!.result!.result[index]);
                     },
                   ),
                 ),

@@ -27,7 +27,7 @@ class GetCustomersState extends Equatable {
     getCustomersRequestState,
     failure!,
     getCustomersResponse ??
-        GetCustomersResponse(statusCode: 0, result: null)
+        GetCustomersResponse(statuscode: 0, result: null)
   ];
 }
 

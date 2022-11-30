@@ -27,7 +27,7 @@ class GetInvoicesState extends Equatable {
     getInvoicesRequestState,
     failure!,
     getInvoicesResponse ??
-        GetInvoicesResponse(statusCode: 0, result: null)
+        GetInvoicesResponse(statuscode: 0, result: null)
   ];
 }
 

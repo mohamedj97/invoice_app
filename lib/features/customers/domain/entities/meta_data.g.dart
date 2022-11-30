@@ -7,11 +7,11 @@ part of 'meta_data.dart';
 // **************************************************************************
 
 MetaData _$MetaDataFromJson(Map<String, dynamic> json) => MetaData(
-      field: json['Field'] as String?,
-      label: json['Label'] as String?,
+      field: json['field'] as String?,
+      label: json['label'] as String?,
     );
 
 Map<String, dynamic> _$MetaDataToJson(MetaData instance) => <String, dynamic>{
-      'Field': instance.field,
-      'Label': instance.label,
+      'field': instance.field,
+      'label': instance.label,
     };

@@ -11,8 +11,8 @@ abstract class Failure extends Equatable {
 
 class FailureResponse extends BaseAPIResponse {
   FailureResponse({
-    required super.statusCode,
-    super.errorMessage,
+    required super.statuscode,
+    super.message,
     // required this.result,
   });
 }

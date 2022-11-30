@@ -3,11 +3,11 @@ part 'base_api_response.g.dart';
 
 @JsonSerializable()
 class BaseAPIResponse {
-  String? errorMessage;
-  late int? statusCode;
+  String? message;
+  late int? statuscode;
 
   BaseAPIResponse(
-      {this.errorMessage, this.statusCode});
+      {this.message, this.statuscode});
 
   factory BaseAPIResponse.fromJson(Map<String, dynamic> json) =>
       _$BaseAPIResponseFromJson(json);
@@ -21,8 +21,8 @@ class BoolResponse extends BaseAPIResponse {
 
   BoolResponse({
     required this.result,
-    super.errorMessage,
-    super.statusCode
+    super.message,
+    super.statuscode
   });
 
   factory BoolResponse.fromJson(Map<String, dynamic> json) =>
@@ -38,8 +38,8 @@ class StringResponse extends BaseAPIResponse {
 
   StringResponse({
     required this.result,
-    required super.statusCode,
-    super.errorMessage,
+    required super.statuscode,
+    super.message,
   });
 
   factory StringResponse.fromJson(Map<String, dynamic> json) =>
@@ -55,8 +55,8 @@ class StringsListResponse extends BaseAPIResponse {
 
   StringsListResponse({
     required this.result,
-    required super.statusCode,
-    super.errorMessage,
+    required super.statuscode,
+    super.message,
   });
 
   factory StringsListResponse.fromJson(Map<String, dynamic> json) =>
@@ -72,8 +72,8 @@ class IntResponse extends BaseAPIResponse {
 
   IntResponse({
     required this.result,
-    required super.statusCode,
-    super.errorMessage,
+    required super.statuscode,
+    super.message,
   });
 
   factory IntResponse.fromJson(Map<String, dynamic> json) =>

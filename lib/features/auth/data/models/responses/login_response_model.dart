@@ -20,8 +20,8 @@ class LoginResponse extends BaseAPIResponse {
   late LoginResponseDataModel? result;
 
   LoginResponse({
-    required super.statusCode,
-    super.errorMessage,
+    required super.statuscode,
+    super.message,
     required this.result,
   });
 

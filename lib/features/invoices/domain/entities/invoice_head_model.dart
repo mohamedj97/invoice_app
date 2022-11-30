@@ -1,6 +1,7 @@
-import 'package:equatable/equatable.dart';
-
-class InvoiceHeadModel extends Equatable {
+import 'package:json_annotation/json_annotation.dart';
+part 'invoice_head_model.g.dart';
+@JsonSerializable()
+class InvoiceHeadModel {
   InvoiceHeadModel({
     required this.id,
     this.invoiceNo,
@@ -129,69 +130,6 @@ class InvoiceHeadModel extends Equatable {
   int? statusCode;
   String? details;
 
-  @override
-  List<Object?> get props => [
-        id,
-        invoiceNo,
-        invoiceDate,
-        direction,
-        companyCode,
-        companyName,
-        companyTaxRegId,
-        companyCountry,
-        companyGovernate,
-        companyCity,
-        companyStreet,
-        companyBuildingNo,
-        customerCode,
-        customerName,
-        customerTaxRegId,
-        customerCountry,
-        customerGovernate,
-        customerCity,
-        customerStreet,
-        customerBuildingNo,
-        poNo,
-        poDesc,
-        soNo,
-        soDesc,
-        performaNo,
-        bankName,
-        bankAddress,
-        bankAccountNo,
-        bankAccountIban,
-        swiftCode,
-        paymentTerms,
-        approch,
-        packaging,
-        dateValidity,
-        exportPort,
-        countryOfOrigin,
-        grossWeight,
-        netWeight,
-        deliveryTerms,
-        invoiceTypeCode,
-        invoiceTypeName,
-        extraDiscountAmount,
-        totalSalesAmount,
-        totalDiscountAmount,
-        netAmount,
-        totalItemDiscountAmount,
-        totalAmount,
-        invoiceLinesCount,
-        reference,
-        companyId,
-        branchId,
-        companyActivityId,
-        companyActivityCode,
-        companyActivityName,
-        companyCountryCode,
-        customerId,
-        invoiceType,
-        invId,
-        uuid,
-        status,
-        statusCode,
-        details,
-      ];
+  factory InvoiceHeadModel.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceHeadModelFromJson(json);
 }

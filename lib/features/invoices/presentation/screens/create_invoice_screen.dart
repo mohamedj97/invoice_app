@@ -8,13 +8,13 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_date_form_field.dart';
-import '../../domain/entities/invoice.dart';
+import '../../domain/entities/invoice_head_model.dart';
 import '../widgets/add_price_item_in_create_invoice.dart';
 import '../widgets/invoice_add_item_widget.dart';
 import '../widgets/primary_and_secondary_button.dart';
 
 class CreateEditInvoiceScreen extends StatefulWidget {
-  final Invoice? invoice;
+  final InvoiceHeadModel? invoice;
 
   const CreateEditInvoiceScreen({Key? key, this.invoice}) : super(key: key);
 
@@ -91,7 +91,8 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                             isRequired: true,
                                             name: "invoice_date",
                                             labelText: "",
-                                            initialValue: widget.invoice!.date,
+                                            initialValue:
+                                                widget.invoice!.dateValidity,
                                             hintText: "Choose date",
                                           )
                                         : const LWCustomDateFormField(
@@ -129,7 +130,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                             isRequired: true,
                                             labelText: "",
                                             initialValue:
-                                                widget.invoice!.dueDate,
+                                                widget.invoice!.dateValidity,
                                             hintText: "Choose date",
                                           )
                                         : const LWCustomDateFormField(
@@ -148,7 +149,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                       const SizedBox(height: 16.0),
                       hasData
                           ? InvoiceAddItemWidget(
-                              title: widget.invoice!.toWho,
+                              title: widget.invoice?.customerName ?? "",
                               iconData: Icons.person,
                               onTap: () {},
                             )
@@ -175,7 +176,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                         title: "Subtotal",
                         name: "subtotal",
                         initialValue: hasData
-                            ? widget.invoice!.subTotal.toString()
+                            ? widget.invoice!.totalAmount.toString()
                             : null,
                       ),
                       InvoiceAddItemWidget(
@@ -195,7 +196,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                         title: "Total sales",
                         name: "total_sales",
                         initialValue: hasData
-                            ? widget.invoice!.totalSales.toString()
+                            ? widget.invoice!.totalAmount.toString()
                             : null,
                       ),
                       AddPriceItemInCreateInvoice(
@@ -209,21 +210,22 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                         title: "Tax Total",
                         name: "tax_total",
                         initialValue: hasData
-                            ? widget.invoice!.taxTotal.toString()
+                            ? widget.invoice!.totalSalesAmount.toString()
                             : null,
                       ),
                       AddPriceItemInCreateInvoice(
                         title: "Tax Discount",
                         name: "tax_discount",
                         initialValue: hasData
-                            ? widget.invoice!.taxDiscount.toString()
+                            ? widget.invoice!.totalItemDiscountAmount.toString()
                             : null,
                       ),
                       AddPriceItemInCreateInvoice(
                         title: "Total",
                         name: "total",
-                        initialValue:
-                            hasData ? widget.invoice!.total.toString() : null,
+                        initialValue: hasData
+                            ? widget.invoice!.totalAmount.toString()
+                            : null,
                       ),
                     ],
                   ),

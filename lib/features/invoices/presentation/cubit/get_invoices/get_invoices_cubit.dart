@@ -31,7 +31,7 @@ class GetInvoicesCubit extends Cubit<GetInvoicesState> {
         ),
       );
     }, (response) {
-      if (response.statusCode == 200 && response.result != null) {
+      if (response.statuscode == 200 && response.result != null) {
         emit(GetInvoicesSuccess(getInvoicesResponse: response));
         return emit(
           state.copyWith(
@@ -40,7 +40,7 @@ class GetInvoicesCubit extends Cubit<GetInvoicesState> {
           ),
         );
       } else {
-        emit(GetInvoicesFailure(failure: response.errorMessage ?? ""));
+        emit(GetInvoicesFailure(failure: response.message ?? ""));
         return emit(
           state.copyWith(
             getInvoicesRequestState: RequestState.error,
