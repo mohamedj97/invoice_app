@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
-import 'package:invoice_app/features/invoices/domain/entities/invoice_head_model.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/create_invoice_screen.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/navigation/custom_page_route.dart';
+import '../../domain/entities/invoice_head_model.dart';
 
 class InvoiceListItem extends StatelessWidget {
   final InvoiceHeadModel invoice;
@@ -28,7 +29,7 @@ class InvoiceListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LWCustomText(
-                    title: invoice.id.toString(),
+                    title: "Invoice# ${invoice.id.toString()}",
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 14.0,
@@ -53,7 +54,7 @@ class InvoiceListItem extends StatelessWidget {
                     fontSize: 12.0,
                   ),
                   LWCustomText(
-                    title: invoice.invoiceDate.toString(),
+                    title: DateFormat('MMM dd,yyyy  HH:mm a').format(invoice.invoiceDate.toLocal()),
                     color: AppColors.disabledBottomItemColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 12.0,
