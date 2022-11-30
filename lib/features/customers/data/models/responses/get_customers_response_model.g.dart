@@ -9,7 +9,7 @@ part of 'get_customers_response_model.dart';
 GetCustomersResponseDataModel _$GetCustomersResponseDataModelFromJson(
         Map<String, dynamic> json) =>
     GetCustomersResponseDataModel(
-      Result: (json['Result'] as List<dynamic>)
+      result: (json['result'] as List<dynamic>)
           .map((e) => CustomerModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       total: json['total'] as int?,
@@ -21,7 +21,7 @@ GetCustomersResponseDataModel _$GetCustomersResponseDataModelFromJson(
 Map<String, dynamic> _$GetCustomersResponseDataModelToJson(
         GetCustomersResponseDataModel instance) =>
     <String, dynamic>{
-      'Result': instance.Result,
+      'result': instance.result,
       'total': instance.total,
       'metData': instance.metData,
     };
@@ -29,8 +29,8 @@ Map<String, dynamic> _$GetCustomersResponseDataModelToJson(
 GetCustomersResponse _$GetCustomersResponseFromJson(
         Map<String, dynamic> json) =>
     GetCustomersResponse(
-      statusCode: json['statusCode'] as int?,
-      errorMessage: json['errorMessage'] as String?,
+      statuscode: json['statuscode'] as int?,
+      message: json['message'] as String?,
       result: json['result'] == null
           ? null
           : GetCustomersResponseDataModel.fromJson(
@@ -40,7 +40,7 @@ GetCustomersResponse _$GetCustomersResponseFromJson(
 Map<String, dynamic> _$GetCustomersResponseToJson(
         GetCustomersResponse instance) =>
     <String, dynamic>{
-      'errorMessage': instance.errorMessage,
-      'statusCode': instance.statusCode,
+      'message': instance.message,
+      'statuscode': instance.statuscode,
       'result': instance.result,
     };
