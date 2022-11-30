@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:invoice_app/core/api/models/tokens_data.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/assets/image_assets.dart';
@@ -33,20 +34,36 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormBuilderState>();
   String? email;
   String? password;
+  final TextEditingController? userNameController = TextEditingController();
+  final TextEditingController? passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) async {
       if (state.loginRequestState == RequestState.success) {
-        bool firstLogin = await DiskRepo().loadFirstLogin() ?? false;
+        bool firstLogin = DiskRepo().loadFirstLogin() ?? false;
         if (firstLogin) {
           await DiskRepo().updateFirstLogin(false);
-          Navigator.of(context).push(
-              CustomPageRoute.createRoute(page: const WalkThroughScreen()));
+          await DiskRepo().deleteTokensData();
+          await DiskRepo().updateTokensData(
+              TokensData.fromLoginResponse(state.loginResponse!));
+          Navigator.of(context).pushAndRemoveUntil(
+            CustomPageRoute.createRoute(
+              page: const WalkThroughScreen(),
+            ),
+            (Route<dynamic> route) => false,
+          );
         } else {
-          Navigator.of(context)
-              .push(CustomPageRoute.createRoute(page: const HomeScreen()));
+          await DiskRepo().deleteTokensData();
+          await DiskRepo().updateTokensData(
+              TokensData.fromLoginResponse(state.loginResponse!));
+          Navigator.of(context).pushAndRemoveUntil(
+            CustomPageRoute.createRoute(
+              page: const HomeScreen(),
+            ),
+            (Route<dynamic> route) => false,
+          );
         }
       }
       if (state.loginRequestState == RequestState.error) {
@@ -59,7 +76,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: AppColors.primary,
                 size: 80.0,
               ),
-              content: Text(state.loginResponse?.message ?? "Something Went Wrong"),
+              content:
+                  Text(state.loginResponse?.message ?? "Something Went Wrong"),
               actions: [
                 TextButton(
                   child: const LWCustomText(
@@ -77,188 +95,191 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     }, builder: (context, state) {
-          print("${state}   ppppppppppppppp");
-          if(state is LoginLoading)
-            {
-              return const SplashScaffold(
-                body: Center(
-                  child: CircularProgressIndicator(color: AppColors.whiteColor),
-                ),
-              );
-            }
-      return SplashScaffold(
-        body: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            AnimatedPositioned(
-              curve: Curves.linear,
-              duration: const Duration(seconds: 2),
-              top: active
-                  ? MediaQuery.of(context).size.height / 2
-                  : MediaQuery.of(context).size.height / 5,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 64.0),
-                child: Image.asset(ImageAssets.splashImage),
-              ),
-            ),
-            AnimatedPositioned(
-              curve: Curves.easeInOut,
-              duration: const Duration(seconds: 2),
-              height: active ? 0 : MediaQuery.of(context).size.height - 300,
-              child: Container(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25.0),
-                    topRight: Radius.circular(25.0),
-                  ),
-                ),
+      if (state is LoginLoading) {
+        return const SplashScaffold(
+          body: Center(
+            child: CircularProgressIndicator(color: AppColors.whiteColor),
+          ),
+        );
+      } else if (state.loginRequestState == RequestState.success) {
+        return SplashScaffold(body: Container());
+      } else {
+        return SplashScaffold(
+          body: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              AnimatedPositioned(
+                curve: Curves.linear,
+                duration: const Duration(seconds: 2),
+                top: active
+                    ? MediaQuery.of(context).size.height / 2
+                    : MediaQuery.of(context).size.height / 5,
                 child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: FormBuilder(
-                    key: formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const LWCustomText(
-                              title: "Welcome Back",
-                              color: AppColors.primary,
-                              fontSize: 15.0,
-                              fontFamily: FontAssets.avertaSemiBold,
-                            ),
-                            const SizedBox(height: 16.0),
-                            LWCustomText(
-                              title: 'sign_in'.tr(),
-                              color: AppColors.blackColor,
-                              fontSize: 22.0,
-                              fontFamily: FontAssets.avertaSemiBold,
-                            ),
-                          ],
-                        ),
-                        LWCustomTextFormField(
-                          name: "username",
-                          labelText: "UserName",
-                          hintText: "Ahmed",
-                          isRequired: true,
-                          contentPadding: EdgeInsets.zero,
-                          borderDecoration:  const UnderlineInputBorder(
-                            borderSide:
-                            BorderSide(color: AppColors.searchBarColor, width: 1.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 64.0),
+                  child: Image.asset(ImageAssets.splashImage),
+                ),
+              ),
+              AnimatedPositioned(
+                curve: Curves.easeInOut,
+                duration: const Duration(seconds: 2),
+                height: active ? 0 : MediaQuery.of(context).size.height - 300,
+                child: Container(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.0),
+                      topRight: Radius.circular(25.0),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: FormBuilder(
+                      key: formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const LWCustomText(
+                                title: "Welcome Back",
+                                color: AppColors.primary,
+                                fontSize: 15.0,
+                                fontFamily: FontAssets.avertaSemiBold,
+                              ),
+                              const SizedBox(height: 16.0),
+                              LWCustomText(
+                                title: 'sign_in'.tr(),
+                                color: AppColors.blackColor,
+                                fontSize: 22.0,
+                                fontFamily: FontAssets.avertaSemiBold,
+                              ),
+                            ],
                           ),
-                          focusedBorderDecoration: const UnderlineInputBorder(
-                            borderSide:
-                            BorderSide(color: AppColors.dataFieldColor, width: 1.0),
-                          ),
-                          showRequiredSymbol: false,
-                          onSubmitted: (value) {
-                            email = value;
-                          },
-                          onSaved: (value) {
-                            email = value;
-                          },
-                        ),
-                        LWCustomPasswordFormField(
-                          name: "password",
-                          labelText: "Password",
-                          hintText: "*******",
-                          isRequired: true,
-                          showRequiredSymbol: false,
-                          onSubmitted: (value) {
-                            password = value;
-                          },
-                          onSaved: (value) {
-                            password = value;
-                          },
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const LWCustomText(
-                              title: "Forgot Password?",
-                              color: AppColors.secondary,
-                              fontFamily: FontAssets.avertaSemiBold,
-                              fontSize: 13.0,
+                          LWCustomTextFormField(
+                            name: "username",
+                            labelText: "UserName",
+                            hintText: "Ahmed",
+                            isRequired: true,
+                            controller: userNameController,
+                            contentPadding: EdgeInsets.zero,
+                            borderDecoration: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: AppColors.searchBarColor, width: 1.0),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: CustomElevatedButton(
-                            title: "Sign In",
-                            onPressed: () async {
-                              await MemoryRepo().ensureInitialized();
-                              await DiskRepo().ensureInitialized();
-                              BlocProvider.of<LoginCubit>(context)
-                                  .validateLoginForm(formKey);
-                              BlocProvider.of<FormSubmitCubit>(context)
-                                  .isSubmitField(isSubmit: true);
-                              BlocProvider.of<LoginCubit>(context)
-                                  .login(LoginRequest(email!, password!));
-                              BlocProvider.of<FormSubmitCubit>(context)
-                                  .isSubmitField(isSubmit: false);
+                            focusedBorderDecoration: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: AppColors.dataFieldColor, width: 1.0),
+                            ),
+                            showRequiredSymbol: false,
+                            onSubmitted: (value) {
+                              email = value;
+                            },
+                            onSaved: (value) {
+                              email = value;
                             },
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const LWCustomText(
-                              title: "Language :",
-                              fontSize: 12.0,
-                              fontFamily: FontAssets.avertaRegular,
-                              color: AppColors.blackColor,
-                            ),
-                            const SizedBox(width: 8.0),
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: AppColors.dataFieldColor,
-                                  width: 0.5,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(20),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 16.0,
-                                  right: 4.0,
-                                  top: 4.0,
-                                  bottom: 4.0,
-                                ),
-                                child: Row(
-                                  children: [
-                                    const LWCustomText(
-                                      title: "Eng",
-                                      fontSize: 12.0,
-                                      fontFamily: FontAssets.avertaRegular,
-                                      color: AppColors.blackColor,
-                                    ),
-                                    const SizedBox(width: 8.0),
-                                    Image.asset(IconAssets.englishIcon,
-                                        width: 22.0, height: 22.0),
-                                  ],
-                                ),
+                          LWCustomPasswordFormField(
+                            name: "password",
+                            labelText: "Password",
+                            hintText: "*******",
+                            isRequired: true,
+                            controller: passwordController,
+                            showRequiredSymbol: false,
+                            onSubmitted: (value) {
+                              password = value;
+                            },
+                            onSaved: (value) {
+                              password = value;
+                            },
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {},
+                              child: const LWCustomText(
+                                title: "Forgot Password?",
+                                color: AppColors.secondary,
+                                fontFamily: FontAssets.avertaSemiBold,
+                                fontSize: 13.0,
                               ),
                             ),
-                          ],
-                        )
-                      ],
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: CustomElevatedButton(
+                              title: "Sign In",
+                              onPressed: () async {
+                                await MemoryRepo().ensureInitialized();
+                                await DiskRepo().ensureInitialized();
+                                BlocProvider.of<LoginCubit>(context)
+                                    .validateLoginForm(formKey);
+                                BlocProvider.of<FormSubmitCubit>(context)
+                                    .isSubmitField(isSubmit: true);
+                                BlocProvider.of<LoginCubit>(context)
+                                    .login(LoginRequest(email!, password!));
+                                BlocProvider.of<FormSubmitCubit>(context)
+                                    .isSubmitField(isSubmit: false);
+                              },
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const LWCustomText(
+                                title: "Language :",
+                                fontSize: 12.0,
+                                fontFamily: FontAssets.avertaRegular,
+                                color: AppColors.blackColor,
+                              ),
+                              const SizedBox(width: 8.0),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColors.dataFieldColor,
+                                    width: 0.5,
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 16.0,
+                                    right: 4.0,
+                                    top: 4.0,
+                                    bottom: 4.0,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      const LWCustomText(
+                                        title: "Eng",
+                                        fontSize: 12.0,
+                                        fontFamily: FontAssets.avertaRegular,
+                                        color: AppColors.blackColor,
+                                      ),
+                                      const SizedBox(width: 8.0),
+                                      Image.asset(IconAssets.englishIcon,
+                                          width: 22.0, height: 22.0),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      );
+            ],
+          ),
+        );
+      }
     });
   }
 

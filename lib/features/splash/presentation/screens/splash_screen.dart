@@ -37,11 +37,14 @@ class _SplashScreenState extends State<SplashScreen> {
       await MemoryRepo().ensureInitialized();
       await DiskRepo().ensureInitialized();
       final tokensData = await DiskRepo().loadTokensData();
-      if (tokensData != null) {
+      if (tokensData != null &&
+          tokensData.expiration.toLocal().isAfter(DateTime.now())) {
         MemoryRepo().updateTokensData(tokensData);
         Navigator.of(context).pushReplacement(
             CustomPageRoute.createRoute(page: const HomeScreen()));
       } else {
+        await DiskRepo().deleteTokensData();
+        MemoryRepo().deleteTokensData();
         Navigator.of(context).pushReplacement(
             CustomPageRoute.createRoute(page: const LoginScreen()));
       }

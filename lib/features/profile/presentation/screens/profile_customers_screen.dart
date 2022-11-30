@@ -19,7 +19,7 @@ class ProfileCustomersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController searchController = TextEditingController();
-    return BlocProvider<GetCustomersCubit>(
+    return BlocProvider(
       create: (context) => sl<GetCustomersCubit>()..getCustomers(),
       child: BlocConsumer<GetCustomersCubit, GetCustomersState>(
         listener: (context, state) async {

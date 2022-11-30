@@ -1,5 +1,9 @@
+
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:synchronized/synchronized.dart' as sync;
+import '../../../features/auth/presentation/screens/login_screen.dart';
+import '../../navigation/custom_page_route.dart';
 import '../models/tokens_data.dart';
 import '../repository/disk_repo.dart';
 import '../repository/memory_repo.dart';
@@ -7,6 +11,7 @@ import '../repository/memory_repo.dart';
 class AuthInterceptor extends Interceptor {
   final lock = sync.Lock();
   final Dio originalDio;
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   AuthInterceptor(Dio dio) : originalDio = dio;
 
@@ -20,7 +25,7 @@ class AuthInterceptor extends Interceptor {
     //   options.headers["Accept-Language"] = "en-US,en;";
     // }
     TokensData? tokensData = MemoryRepo().tokensData;
-    if (tokensData != null) {
+    if (tokensData != null ) {
       options.headers["Authorization"] = "Bearer ${tokensData.token}";
     }
     return handler.next(options);
@@ -44,13 +49,13 @@ class AuthInterceptor extends Interceptor {
     if (response.statusCode == 401) {
       MemoryRepo().deleteTokensData();
       await DiskRepo().deleteTokensData();
-      // Navigator.of(context).pushAndRemoveUntil(
-      //   CustomPageRoute.createRoute(
-      //     page: const LoginScreen(),
-      //   ),
-      //       (Route<dynamic> route) => false,
-      // );
-      //return handler.next(response);
+      Navigator.of(navigatorKey.currentContext!).pushAndRemoveUntil(
+        CustomPageRoute.createRoute(
+          page: const LoginScreen(),
+        ),
+            (Route<dynamic> route) => false,
+      );
+      return handler.next(response);
     }
 
     // final shouldRetry = await lock.synchronized(() async {

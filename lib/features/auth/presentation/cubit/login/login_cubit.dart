@@ -37,7 +37,7 @@ class LoginCubit extends Cubit<LoginState> {
         ),
       );
     }, (response) {
-      if (response.statuscode == 200 || response.result != null) {
+      if (response.statuscode == 200 && response.result != null) {
         emit(LoginSuccess(loginResponse: response));
         authLocalDataSource.updateTokenData(response);
         return emit(

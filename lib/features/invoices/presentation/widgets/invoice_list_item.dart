@@ -28,7 +28,7 @@ class InvoiceListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LWCustomText(
-                    title: invoice.invId.toString(),
+                    title: invoice.id.toString(),
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 14.0,
@@ -47,7 +47,7 @@ class InvoiceListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LWCustomText(
-                    title: "To : ${invoice.customerName}",
+                    title: "To : ${invoice.customerName??"NA"}",
                     color: AppColors.disabledBottomItemColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 12.0,
@@ -66,7 +66,7 @@ class InvoiceListItem extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: LWCustomText(
-                      title: invoice.status??"",
+                      title: invoice.status??"NA",
                       color: AppColors.greenColor,
                       fontSize: 10.0,
                       fontFamily: FontAssets.avertaSemiBold,

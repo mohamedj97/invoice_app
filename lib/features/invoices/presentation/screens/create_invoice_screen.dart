@@ -92,7 +92,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                             name: "invoice_date",
                                             labelText: "",
                                             initialValue:
-                                                widget.invoice!.dateValidity,
+                                                widget.invoice!.invoiceDate,
                                             hintText: "Choose date",
                                           )
                                         : const LWCustomDateFormField(
@@ -130,7 +130,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                             isRequired: true,
                                             labelText: "",
                                             initialValue:
-                                                widget.invoice!.dateValidity,
+                                                widget.invoice!.invoiceDate,
                                             hintText: "Choose date",
                                           )
                                         : const LWCustomDateFormField(
@@ -217,7 +217,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                         title: "Tax Discount",
                         name: "tax_discount",
                         initialValue: hasData
-                            ? widget.invoice!.totalItemDiscountAmount.toString()
+                            ? widget.invoice!.totalTaxAmount.toString()
                             : null,
                       ),
                       AddPriceItemInCreateInvoice(

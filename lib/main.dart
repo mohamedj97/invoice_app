@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:invoice_app/features/customers/presentation/cubit/get_customers/get_customers_cubit.dart';
 import 'package:invoice_app/features/splash/presentation/screens/splash_screen.dart';
 import 'core/utils/theme/theme.dart';
 import 'features/auth/presentation/cubit/form_submit/formsubmit_cubit.dart';
