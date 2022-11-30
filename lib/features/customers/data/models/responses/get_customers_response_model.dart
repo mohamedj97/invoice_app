@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:invoice_app/features/customers/domain/entities/customer_entity.dart';
 import 'package:invoice_app/features/customers/domain/entities/customer_result_response.dart';
+import 'package:invoice_app/features/customers/domain/entities/meta_data_model.dart';
 import '../../../../../core/api/base_api_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 

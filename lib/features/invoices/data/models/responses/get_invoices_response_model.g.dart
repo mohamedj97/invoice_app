@@ -12,8 +12,8 @@ GetInvoicesResponseDataModel _$GetInvoicesResponseDataModelFromJson(
       result: (json['result'] as List<dynamic>)
           .map((e) => InvoiceHeadModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      metData: (json['metData'] as List<dynamic>?)
-          ?.map((e) => MetaData.fromJson(e as Map<String, dynamic>))
+      metaData: (json['metaData'] as List<dynamic>)
+          .map((e) => MetaDataData.fromJson(e as Map<String, dynamic>))
           .toList(),
       total: json['total'] as int?,
     );
@@ -23,7 +23,7 @@ Map<String, dynamic> _$GetInvoicesResponseDataModelToJson(
     <String, dynamic>{
       'result': instance.result,
       'total': instance.total,
-      'metData': instance.metData,
+      'metaData': instance.metaData,
     };
 
 GetInvoicesResponse _$GetInvoicesResponseFromJson(Map<String, dynamic> json) =>

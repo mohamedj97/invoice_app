@@ -14,7 +14,7 @@ GetCustomersResponseDataModel _$GetCustomersResponseDataModelFromJson(
           .toList(),
       total: json['total'] as int?,
       metData: (json['metData'] as List<dynamic>)
-          .map((e) => MetaData.fromJson(e as Map<String, dynamic>))
+          .map((e) => MetaDataModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
