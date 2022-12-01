@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) async {
       if (state.loginRequestState == RequestState.success) {
-        bool firstLogin = DiskRepo().loadFirstLogin() ?? false;
+        bool firstLogin = DiskRepo().loadFirstLogin() ?? true;
         if (firstLogin) {
           await DiskRepo().updateFirstLogin(false);
           await DiskRepo().deleteTokensData();
@@ -95,15 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     }, builder: (context, state) {
-      if (state is LoginLoading) {
-        return const SplashScaffold(
-          body: Center(
-            child: CircularProgressIndicator(color: AppColors.whiteColor),
-          ),
-        );
-      } else if (state.loginRequestState == RequestState.success) {
-        return SplashScaffold(body: Container());
-      } else {
+
         return SplashScaffold(
           body: Stack(
             alignment: Alignment.bottomCenter,
@@ -135,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(32.0),
-                    child: FormBuilder(
+                    child: state is LoginLoading ? Center(child: CircularProgressIndicator()) :FormBuilder(
                       key: formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: state is LoginLoading ? null :() {},
                               child: const LWCustomText(
                                 title: "Forgot Password?",
                                 color: AppColors.secondary,
@@ -210,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            child: CustomElevatedButton(
+                            child:  CustomElevatedButton(
                               title: "Sign In",
                               onPressed: () async {
                                 await MemoryRepo().ensureInitialized();
@@ -279,7 +271,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
         );
-      }
     });
   }
 

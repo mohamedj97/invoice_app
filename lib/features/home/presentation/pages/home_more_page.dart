@@ -141,7 +141,6 @@ class HomeMorePage extends StatelessWidget {
                             TextButton(
                               onPressed: () async {
                                 await DiskRepo().deleteTokensData();
-                                await DiskRepo().deleteFirstLogin();
                                 MemoryRepo().deleteTokensData();
                                 Navigator.of(context).pushAndRemoveUntil(
                                   CustomPageRoute.createRoute(
