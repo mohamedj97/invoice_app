@@ -59,7 +59,13 @@
   "products": "Products",
   "contacts": "Contacts",
   "invoices": "Invoices",
+  "choose_type": "Choose type",
   "language": "Language",
   "save": "Save",
+  "done": "Done",
+  "name": "Name",
+  "description": "Description",
+  "barcode": "Barcode",
+  "price": "Price",
   "lang": "Eng"
 }

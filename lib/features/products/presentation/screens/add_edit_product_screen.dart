@@ -1,9 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/core/assets/colors.dart';
-import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import 'package:invoice_app/features/home/presentation/screens/home_screen.dart';
 import 'package:invoice_app/features/products/domain/entities/product.dart';
@@ -26,12 +26,6 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   @override
   Widget build(BuildContext context) {
     bool hasData = widget.productItem == null;
-    var dropdownList = [
-      "1",
-      "2",
-      "3",
-      "4",
-    ];
     return CustomScaffold(
       title: !hasData ? "Edit Product" : "Add item",
       leading: const CustomBackButton(),
@@ -50,7 +44,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                     CustomPageRoute.createRoute(page: const HomeScreen()));
               },
               child: LWCustomText(
-                title: !hasData ? "Save" : "Done",
+                title: !hasData ? "save".tr() : "done".tr(),
                 color: AppColors.primary,
                 fontFamily: FontAssets.avertaSemiBold,
                 fontWeight: FontWeight.bold,
@@ -74,7 +68,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                         name: "name",
                         showLabel: false,
                         labelText: "",
-                        hintText: "Name",
+                        hintText: "name".tr(),
                         isRequired: true,
                         initialValue:
                             !hasData ? widget.productItem!.name : null,
@@ -93,7 +87,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                         name: "description",
                         showLabel: false,
                         labelText: "",
-                        hintText: "Description",
+                        hintText: "description".tr(),
                         initialValue:
                             !hasData ? widget.productItem!.description : null,
                         isCard: false,
@@ -123,8 +117,8 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const LWCustomText(
-                              title: "Price",
+                            LWCustomText(
+                              title: "price".tr(),
                               color: AppColors.labelColor,
                               fontFamily: FontAssets.avertaRegular,
                             ),
@@ -136,10 +130,10 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                   name: "price",
                                   showLabel: false,
                                   labelText: "",
-                                  hintText: "00.0 EGP",
+                                  hintText: "00.0 ${'currency_egp'.tr()}",
                                   isRequired: true,
                                   initialValue: !hasData
-                                      ? "${widget.productItem!.unittype} EGP"
+                                      ? "${widget.productItem!.unittype} ${'currency_egp'.tr()}"
                                       : null,
                                   isCard: false,
                                   maxLines: 5,
@@ -182,17 +176,20 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                               width: 110.0,
                               height: 70.0,
                               child: Center(
-                                child: LWCustomDropdownFormField<String>(
+                                child: LWCustomTextFormField(
                                   name: "item_type",
                                   showLabel: false,
                                   labelText: "",
-                                  hintText: "Choose type",
-                                  isRequired: true,
+                                  hintText: "GS1",
                                   isCard: false,
-                                  items: dropdownList,
-                                  itemBuilder: (context, data) {
-                                    return Text(data);
-                                  },
+                                  isRequired: true,
+                                  initialValue: !hasData
+                                      ? widget.productItem!.type
+                                      : null,
+                                  maxLines: 5,
+                                  keyboardType:
+                                  const TextInputType.numberWithOptions(),
+                                  borderDecoration: InputBorder.none,
                                 ),
                               ),
                             ),
@@ -220,8 +217,8 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const LWCustomText(
-                              title: "Barcode",
+                            LWCustomText(
+                              title: "barcode".tr(),
                               color: AppColors.labelColor,
                               fontFamily: FontAssets.avertaRegular,
                             ),
