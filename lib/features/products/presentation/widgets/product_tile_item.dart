@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:invoice_app/features/products/domain/entities/product.dart';
 
@@ -34,7 +35,7 @@ class ProductTileItem extends StatelessWidget {
                     fontFamily: FontAssets.avertaRegular,
                   ),
                   LWCustomText(
-                    title: "${product.price.toString()} EGP",
+                    title: "${product.price.toString()} ${'currency_egp'.tr()}",
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                   )

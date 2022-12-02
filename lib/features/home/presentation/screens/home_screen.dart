@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/assets/colors.dart';
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: pageIndex == 3
-          ? "menu"
+          ? "menu".tr()
           : BottomAppBarItemsData.labelList[pageIndex],
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,

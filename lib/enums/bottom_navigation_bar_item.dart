@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 class BottomNavigationBarItem {
   /// The underlying value of this enum member.
   int value = 0;
@@ -12,13 +14,13 @@ class BottomNavigationBarItem {
   String get name {
     switch (value) {
       case 0:
-        return "Home";
+        return "home".tr();
       case 1:
-        return "Invoices";
+        return "invoices".tr();
       case 2:
-        return "Products";
+        return "products".tr();
       case 3:
-        return "More";
+        return "more".tr();
       default:
         throw ('Unknown enum value to decode name');
     }

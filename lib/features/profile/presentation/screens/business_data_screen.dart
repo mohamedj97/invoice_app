@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
@@ -21,7 +22,8 @@ class _BusinessDataScreenState extends State<BusinessDataScreen> {
   final TextEditingController businessNameController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
-  final TextEditingController additionalDetailsController = TextEditingController();
+  final TextEditingController additionalDetailsController =
+      TextEditingController();
   final formKey = GlobalKey<FormBuilderState>();
 
   @override
@@ -43,12 +45,16 @@ class _BusinessDataScreenState extends State<BusinessDataScreen> {
                   Navigator.of(context).push(
                       CustomPageRoute.createRoute(page: const HomeScreen()));
                 },
-                child: const LWCustomText(
-                    title: "Save", color: AppColors.primary,fontFamily: FontAssets.avertaSemiBold,fontWeight: FontWeight.bold,)),
+                child: LWCustomText(
+                  title: "save".tr(),
+                  color: AppColors.primary,
+                  fontFamily: FontAssets.avertaSemiBold,
+                  fontWeight: FontWeight.bold,
+                )),
           ),
         ),
       ],
-      title: "business data",
+      title: "business_data".tr(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24.0),
         child: FormBuilder(
@@ -57,7 +63,7 @@ class _BusinessDataScreenState extends State<BusinessDataScreen> {
             children: [
               ProfileDataFormItem(
                 hintText: "Zara Store",
-                label: "Business Name",
+                label: "business_name".tr(),
                 name: "business_name",
                 isRequired: true,
                 controller: businessNameController,
@@ -81,18 +87,18 @@ class _BusinessDataScreenState extends State<BusinessDataScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Padding(
-                              padding:  EdgeInsets.only(left: 8.0),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
                               child: LWCustomText(
-                                title: "Country",
+                                title: "country".tr(),
                                 color: AppColors.labelColor,
                                 fontSize: 14.0,
                                 fontFamily: FontAssets.avertaRegular,
                               ),
                             ),
                             LWCustomDropdownFormField<String>(
-                              items: ["sss","ddd","eee"],
-                              itemBuilder: (context,value){
+                              items: ["sss", "ddd", "eee"],
+                              itemBuilder: (context, value) {
                                 return Text(value);
                               },
                               iconColor: AppColors.blackColor,
@@ -125,18 +131,18 @@ class _BusinessDataScreenState extends State<BusinessDataScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Padding(
-                              padding:  EdgeInsets.only(left: 8.0),
+                             Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
                               child: LWCustomText(
-                                title: "City",
+                                title: "city".tr(),
                                 color: AppColors.labelColor,
                                 fontSize: 14.0,
                                 fontFamily: FontAssets.avertaRegular,
                               ),
                             ),
                             LWCustomDropdownFormField<String>(
-                              items: ["sss","ddd","eee"],
-                              itemBuilder: (context,value){
+                              items: ["sss", "ddd", "eee"],
+                              itemBuilder: (context, value) {
                                 return Text(value);
                               },
                               iconColor: AppColors.blackColor,
@@ -158,7 +164,7 @@ class _BusinessDataScreenState extends State<BusinessDataScreen> {
               ProfileDataFormItem(
                 hintText:
                     "90th street, fifth settlement, next to the university of the future",
-                label: "Additional Details",
+                label: "additional_details".tr(),
                 name: "additional_details",
                 isRequired: true,
                 maxLines: 3,

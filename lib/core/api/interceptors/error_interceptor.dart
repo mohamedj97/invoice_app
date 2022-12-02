@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../base_api_response.dart';
 
@@ -14,7 +15,7 @@ class ErrorInterceptor extends Interceptor {
         final networkOperationResult = BaseAPIResponse(
             statuscode: 0,
             message:
-                "Network error please check your internet connection");
+                "network_error".tr());
         final networkErrorResponse = Response(
           requestOptions: err.requestOptions,
           data: networkOperationResult.toJson(),

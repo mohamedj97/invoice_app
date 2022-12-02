@@ -29,13 +29,13 @@ class InvoiceListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LWCustomText(
-                    title: "Invoice# ${invoice.id.toString()}",
+                    title: "${'Invoice_number'.tr()} ${invoice.id.toString()}",
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 14.0,
                   ),
                   LWCustomText(
-                    title: "${invoice.totalAmount.toString()} EGP",
+                    title: "${invoice.totalAmount.toString()} ${'currency_egp'.tr()}",
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ class InvoiceListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LWCustomText(
-                    title: "To : ${invoice.customerName??"NA"}",
+                    title: "${'to'.tr()} : ${invoice.customerName??"NA"}",
                     color: AppColors.disabledBottomItemColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 12.0,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/assets/colors.dart';
@@ -33,11 +34,11 @@ class HomeInvoicesPage extends StatelessWidget {
                       size: 80.0,
                     ),
                     content: Text(state.getInvoicesResponse?.message ??
-                        "Something Went Wrong"),
+                        "something_went_wrong".tr()),
                     actions: [
                       TextButton(
-                        child: const LWCustomText(
-                          title: "Cancel",
+                        child: LWCustomText(
+                          title: "cancel".tr(),
                           fontFamily: FontAssets.avertaSemiBold,
                           color: AppColors.primary,
                         ),
@@ -56,7 +57,7 @@ class HomeInvoicesPage extends StatelessWidget {
               children: [
                 SearchBar(
                   searchController: searchController,
-                  searchHintText: "Search by invoice number",
+                  searchHintText: "search_for_invoices".tr(),
                 ),
                 const SizedBox(height: 8.0),
                 Expanded(

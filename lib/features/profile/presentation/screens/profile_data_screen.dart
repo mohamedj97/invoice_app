@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
@@ -42,13 +43,13 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                   Navigator.of(context).push(
                       CustomPageRoute.createRoute(page: const HomeScreen()));
                 },
-                child: const LWCustomText(
-                    title: "Save",
+                child: LWCustomText(
+                    title: "save".tr(),
                     color: AppColors.primary,fontFamily: FontAssets.avertaSemiBold,fontWeight: FontWeight.bold,)),
           ),
         ),
       ],
-      title: "profile data",
+      title: "profile_data".tr(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24.0),
         child: FormBuilder(
@@ -60,7 +61,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                   Expanded(
                     child: ProfileDataFormItem(
                       hintText: "Hazem",
-                      label: "First name",
+                      label: "first_name".tr(),
                       name: "first_name",
                       isRequired:true,
                       controller: firstNameController,
@@ -70,7 +71,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                   Expanded(
                     child: ProfileDataFormItem(
                       hintText: "Hassan",
-                      label: "Last name",
+                      label: "last_name".tr(),
                       name: "last_name",
                       isRequired:true,
                       controller: lastNameController,
@@ -81,7 +82,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
               const SizedBox(height: 24.0),
               ProfileDataFormItem(
                 hintText: "+201234567890",
-                label: "Phone number",
+                label: "phone_number".tr(),
                 name: "phone_number",
                 keyboardType: const TextInputType.numberWithOptions(),
                 controller: phoneController,
@@ -90,7 +91,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
               const SizedBox(height: 24.0),
               ProfileDataFormItem(
                 hintText: "example@email.com",
-                label: "Email",
+                label: "email".tr(),
                 name: "email",
                 controller: emailController,
               ),
@@ -100,7 +101,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                   Expanded(
                     child: ProfileDataFormItem(
                       hintText: "Egypt",
-                      label: "Country",
+                      label: "country".tr(),
                       name: "Country",
                       controller: firstNameController,
                     ),
@@ -109,7 +110,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                   Expanded(
                     child: ProfileDataFormItem(
                       hintText: "New Cairo",
-                      label: "City",
+                      label: "city".tr(),
                       name: "city",
                       controller: lastNameController,
                     ),

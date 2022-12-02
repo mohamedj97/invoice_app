@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/assets/colors.dart';
@@ -37,11 +38,11 @@ class ProfileCustomersScreen extends StatelessWidget {
                     color: AppColors.primary,
                     size: 80.0,
                   ),
-                  content: Text(state.failure ?? "Something Went Wrong"),
+                  content: Text(state.failure ?? "something_went_wrong".tr()),
                   actions: [
                     TextButton(
-                      child: const LWCustomText(
-                        title: "Cancel",
+                      child: LWCustomText(
+                        title: "cancel".tr(),
                         fontFamily: FontAssets.avertaSemiBold,
                         color: AppColors.primary,
                       ),
@@ -57,7 +58,7 @@ class ProfileCustomersScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return CustomScaffold(
-            title: "Customers",
+            title: "customers".tr(),
             actions: [
               InkWell(
                 onTap: () {
@@ -78,7 +79,7 @@ class ProfileCustomersScreen extends StatelessWidget {
               children: [
                 SearchBar(
                   searchController: searchController,
-                  searchHintText: "Search by customer name",
+                  searchHintText: "search_for_customers".tr(),
                 ),
                 const SizedBox(height: 8.0),
                 Expanded(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:invoice_app/core/common_widgets/search_bar.dart';
 import 'package:invoice_app/core/assets/colors.dart';
@@ -29,7 +30,7 @@ class HomeProductsPage extends StatelessWidget {
       children: [
         SearchBar(
           searchController: searchController,
-          searchHintText: "Search by product name",
+          searchHintText: "search_for_products".tr(),
         ),
         const SizedBox(height: 8.0),
         Expanded(

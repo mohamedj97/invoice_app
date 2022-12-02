@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_future_builder.dart';
@@ -118,7 +119,7 @@ class LoadingWidget extends StatelessWidget {
         ),
         const SizedBox(height: 16.0),
         Text(
-          "Loading...",
+          "${'loading'.tr()}...",
           style: Theme.of(context).textTheme.headline5,
           textAlign: TextAlign.center,
         ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -41,8 +42,8 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                   Navigator.of(context).push(
                       CustomPageRoute.createRoute(page: const HomeScreen()));
                 },
-                child: const LWCustomText(
-                  title: "Save",
+                child: LWCustomText(
+                  title: "save".tr(),
                   color: AppColors.primary,
                   fontFamily: FontAssets.avertaSemiBold,
                   fontWeight: FontWeight.bold,
@@ -50,7 +51,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
           ),
         ),
       ],
-      title: "language",
+      title: "language".tr(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24.0),
         child: FormBuilder(

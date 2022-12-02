@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../assets/font_assets.dart';
@@ -27,7 +28,7 @@ class EmptyScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           LWCustomText(
-            title: title ?? "You Have No Products",
+            title: title ?? "no_products".tr(),
             fontSize: 17.0,
             color: AppColors.blackColor,
             fontFamily: FontAssets.avertaSemiBold,
@@ -35,7 +36,7 @@ class EmptyScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           LWCustomText(
-            title: subtitle ?? "Its Look Empty Start Add New Products",
+            title: subtitle ?? "no_products_subtitle".tr(),
             fontSize: 13.0,
             color: AppColors.blackColor,
             fontFamily: FontAssets.avertaRegular,

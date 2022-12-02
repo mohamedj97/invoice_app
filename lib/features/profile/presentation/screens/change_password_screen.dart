@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
@@ -42,8 +43,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   Navigator.of(context).push(
                       CustomPageRoute.createRoute(page: const HomeScreen()));
                 },
-                child: const LWCustomText(
-                  title: "Save",
+                child: LWCustomText(
+                  title: "save".tr(),
                   color: AppColors.primary,
                   fontFamily: FontAssets.avertaSemiBold,
                   fontWeight: FontWeight.bold,
@@ -51,7 +52,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           ),
         ),
       ],
-      title: "password",
+      title: "password".tr(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24.0),
         child: FormBuilder(
@@ -73,8 +74,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const LWCustomText(
-                        title: "Current Password",
+                      LWCustomText(
+                        title: "current_password".tr(),
                         color: AppColors.labelColor,
                         fontSize: 14.0,
                         fontFamily: FontAssets.avertaRegular,
@@ -108,8 +109,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const LWCustomText(
-                        title: "New Password",
+                      LWCustomText(
+                        title: "new_password".tr(),
                         color: AppColors.labelColor,
                         fontSize: 14.0,
                         fontFamily: FontAssets.avertaRegular,
@@ -143,8 +144,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const LWCustomText(
-                        title: "Confirm Password",
+                      LWCustomText(
+                        title: "confirm_password".tr(),
                         color: AppColors.labelColor,
                         fontSize: 14.0,
                         fontFamily: FontAssets.avertaRegular,
@@ -179,8 +180,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const LWCustomText(
-                        title: "User Name",
+                      LWCustomText(
+                        title: "user_name".tr(),
                         color: AppColors.labelColor,
                         fontSize: 14.0,
                         fontFamily: FontAssets.avertaRegular,

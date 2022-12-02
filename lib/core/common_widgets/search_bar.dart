@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 
@@ -64,7 +65,7 @@ class _SearchBarState extends State<SearchBar> {
                 },
               )
             : const SizedBox(),
-        hintText: widget.searchHintText ?? "Search Here",
+        hintText: widget.searchHintText ?? "search_here".tr(),
         hintStyle: const TextStyle(color: AppColors.searchBarColor),
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.zero,

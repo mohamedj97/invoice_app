@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:invoice_app/core/api/repository/disk_repo.dart';
 import 'package:invoice_app/core/api/repository/memory_repo.dart';
@@ -50,7 +51,7 @@ class HomeMorePage extends StatelessWidget {
           ),
         ),
         ProfileItemWidget(
-          title: "Profile Data",
+          title: "profile_data".tr(),
           imagePath: IconAssets.profileIcon,
           onTap: () {
             Navigator.of(context).push(
@@ -58,7 +59,7 @@ class HomeMorePage extends StatelessWidget {
           },
         ),
         ProfileItemWidget(
-          title: "Business Data",
+          title: "business_data".tr(),
           imagePath: IconAssets.businessIcon,
           onTap: () {
             Navigator.of(context).push(
@@ -66,7 +67,7 @@ class HomeMorePage extends StatelessWidget {
           },
         ),
         ProfileItemWidget(
-          title: "Customers",
+          title: "customers".tr(),
           imagePath: IconAssets.customersIcon,
           onTap: () {
             Navigator.of(context)
@@ -74,7 +75,7 @@ class HomeMorePage extends StatelessWidget {
           },
         ),
         ProfileItemWidget(
-          title: "Change Password",
+          title: "change_password".tr(),
           imagePath: IconAssets.lockIcon,
           onTap: () {
             Navigator.of(context).push(CustomPageRoute.createRoute(
@@ -82,7 +83,7 @@ class HomeMorePage extends StatelessWidget {
           },
         ),
         ProfileItemWidget(
-          title: "Change Language",
+          title: "change_language".tr(),
           imagePath: IconAssets.customersIcon,
           onTap: () {
             Navigator.of(context).push(CustomPageRoute.createRoute(
@@ -90,12 +91,12 @@ class HomeMorePage extends StatelessWidget {
           },
         ),
         ProfileItemWidget(
-          title: "Support",
+          title: "support".tr(),
           imagePath: IconAssets.customersIcon,
           onTap: () {},
         ),
         ProfileItemWidget(
-          title: "Logout",
+          title: "logout".tr(),
           imagePath: IconAssets.profileIcon,
           onTap: () async {
             await showDialog(
@@ -107,9 +108,9 @@ class HomeMorePage extends StatelessWidget {
                   ),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 24.0, horizontal: 32.0),
-                  title: const LWCustomText(
+                  title: LWCustomText(
                     textAlign: TextAlign.center,
-                    title: "Do you want to log out of the app",
+                    title: "logout_subtitle".tr(),
                     color: AppColors.dialogueTitleColor,
                     fontFamily: FontAssets.avertaSemiBold,
                   ),
@@ -131,8 +132,8 @@ class HomeMorePage extends StatelessWidget {
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: const LWCustomText(
-                                title: "Cancel",
+                              child: LWCustomText(
+                                title: "cancel".tr(),
                                 color: AppColors.iconsColor,
                                 fontSize: 15.0,
                                 fontFamily: FontAssets.avertaSemiBold,
@@ -149,8 +150,8 @@ class HomeMorePage extends StatelessWidget {
                                   (Route<dynamic> route) => false,
                                 );
                               },
-                              child: const LWCustomText(
-                                title: "Logout",
+                              child: LWCustomText(
+                                title: "logout".tr(),
                                 color: AppColors.errorColor,
                                 fontSize: 15.0,
                                 fontFamily: FontAssets.avertaSemiBold,

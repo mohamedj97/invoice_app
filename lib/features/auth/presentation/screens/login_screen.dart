@@ -77,11 +77,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 size: 80.0,
               ),
               content:
-                  Text(state.loginResponse?.message ?? "Something Went Wrong"),
+                  Text(state.loginResponse?.message ?? "something_went_wrong".tr()),
               actions: [
                 TextButton(
-                  child: const LWCustomText(
-                    title: "Cancel",
+                  child: LWCustomText(
+                    title: 'cancel'.tr(),
                     fontFamily: FontAssets.avertaSemiBold,
                     color: AppColors.primary,
                   ),
@@ -136,8 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const LWCustomText(
-                                title: "Welcome Back",
+                               LWCustomText(
+                                title: "welcome_back".tr(),
                                 color: AppColors.primary,
                                 fontSize: 15.0,
                                 fontFamily: FontAssets.avertaSemiBold,
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           LWCustomTextFormField(
                             name: "username",
-                            labelText: "UserName",
+                            labelText: "user_name".tr(),
                             hintText: "Ahmed",
                             isRequired: true,
                             controller: userNameController,
@@ -176,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           LWCustomPasswordFormField(
                             name: "password",
-                            labelText: "Password",
+                            labelText: "password".tr(),
                             hintText: "*******",
                             isRequired: true,
                             controller: passwordController,
@@ -192,8 +192,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             alignment: Alignment.centerRight,
                             child: TextButton(
                               onPressed: state is LoginLoading ? null :() {},
-                              child: const LWCustomText(
-                                title: "Forgot Password?",
+                              child: LWCustomText(
+                                title: "forgot_password".tr(),
                                 color: AppColors.secondary,
                                 fontFamily: FontAssets.avertaSemiBold,
                                 fontSize: 13.0,
@@ -203,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child:  CustomElevatedButton(
-                              title: "Sign In",
+                              title: "sign_in".tr(),
                               onPressed: () async {
                                 await MemoryRepo().ensureInitialized();
                                 await DiskRepo().ensureInitialized();
@@ -221,8 +221,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const LWCustomText(
-                                title: "Language :",
+                              LWCustomText(
+                                title: "${'language'.tr()} :",
                                 fontSize: 12.0,
                                 fontFamily: FontAssets.avertaRegular,
                                 color: AppColors.blackColor,
@@ -247,8 +247,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   child: Row(
                                     children: [
-                                      const LWCustomText(
-                                        title: "Eng",
+                                      LWCustomText(
+                                        title: "lang".tr(),
                                         fontSize: 12.0,
                                         fontFamily: FontAssets.avertaRegular,
                                         color: AppColors.blackColor,

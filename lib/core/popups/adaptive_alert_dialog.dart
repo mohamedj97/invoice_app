@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -176,7 +177,7 @@ Future<T?> showAdaptiveAlertDialog<T>({
             [
               if (!showCloseButton)
                 AdaptiveAlertDialogAction(
-                  title: "Ok",
+                  title: "ok".tr(),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

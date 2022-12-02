@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -20,7 +21,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    Navigator.of(context).push(CustomPageRoute.createRoute(page: HomeScreen()));
+    Navigator.of(context).push(CustomPageRoute.createRoute(page: const HomeScreen()));
   }
 
   @override
@@ -43,7 +44,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
         child: SizedBox(
           width: double.infinity,
           child: CustomElevatedButton(
-            title: "Get started",
+            title: "get_started".tr(),
             onPressed: () => _onIntroEnd(context),
           ),
         ),
@@ -57,16 +58,16 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
             padding: const EdgeInsets.all(32.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 LWCustomText(
-                  title: "Powerful invoicing app",
+                  title: "powerful_invoicing_app".tr(),
                   color: AppColors.blackColor,
                   fontSize: 22.0,
                   fontWeight: FontWeight.bold,
                   fontFamily: FontAssets.avertaSemiBold,
                 ),
-                SizedBox(height: 32.0),
-                LWCustomText(
+                const SizedBox(height: 32.0),
+                const LWCustomText(
                   title:
                       "Vivamus auctor dui dignissim, sollicitudin nunc ac, aliquam justo. Vestibulum pellentesque lacinia eleifend.",
                   color: AppColors.blackColor,
@@ -86,16 +87,16 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
             padding: const EdgeInsets.all(32.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 LWCustomText(
-                  title: "Start Sending Your Invoices",
+                  title: "start_sending_your_invoices".tr(),
                   color: AppColors.blackColor,
                   fontSize: 22.0,
                   fontWeight: FontWeight.bold,
                   fontFamily: FontAssets.avertaSemiBold,
                 ),
-                SizedBox(height: 32.0),
-                LWCustomText(
+                const SizedBox(height: 32.0),
+                const LWCustomText(
                   title:
                       "Vivamus auctor dui dignissim, sollicitudin nunc ac, aliquam justo. Vestibulum pellentesque lacinia eleifend.",
                   color: AppColors.blackColor,
@@ -115,16 +116,16 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
             padding: const EdgeInsets.all(32.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children:  [
                 LWCustomText(
-                  title: "Accept payments anywhere",
+                  title: "accept_payments_anywhere".tr(),
                   color: AppColors.blackColor,
                   fontSize: 22.0,
                   fontWeight: FontWeight.bold,
                   fontFamily: FontAssets.avertaSemiBold,
                 ),
-                SizedBox(height: 32.0),
-                LWCustomText(
+                const SizedBox(height: 32.0),
+                const LWCustomText(
                   title:
                       "Vivamus auctor dui dignissim, sollicitudin nunc ac, aliquam justo. Vestibulum pellentesque lacinia eleifend.",
                   color: AppColors.blackColor,
