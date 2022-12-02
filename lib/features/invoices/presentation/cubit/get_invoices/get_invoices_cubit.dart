@@ -14,8 +14,8 @@ class GetInvoicesCubit extends Cubit<GetInvoicesState> {
   String? password;
 
   GetInvoicesCubit(
-      this.getInvoicesUseCase,
-      ) : super(GetInvoicesInitial());
+    this.getInvoicesUseCase,
+  ) : super(GetInvoicesInitial());
 
   Future<void> getInvoices() async {
     emit(GetInvoicesLoading());

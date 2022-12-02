@@ -10,6 +10,7 @@ class GetInvoicesState extends Equatable {
     this.getInvoicesRequestState = RequestState.loading,
     this.failure = "",
   });
+
   GetInvoicesState copyWith({
     GetInvoicesResponse? getInvoicesResponse,
     String? failure,
@@ -17,24 +18,25 @@ class GetInvoicesState extends Equatable {
   }) {
     return GetInvoicesState(
       failure: failure ?? this.failure,
-      getInvoicesRequestState: getInvoicesRequestState ?? this.getInvoicesRequestState,
+      getInvoicesRequestState:
+          getInvoicesRequestState ?? this.getInvoicesRequestState,
       getInvoicesResponse: getInvoicesResponse ?? this.getInvoicesResponse,
     );
   }
 
   @override
   List<Object> get props => [
-    getInvoicesRequestState,
-    failure!,
-    getInvoicesResponse ??
-        GetInvoicesResponse(statuscode: 0, result: null)
-  ];
+        getInvoicesRequestState,
+        failure!,
+        getInvoicesResponse ?? GetInvoicesResponse(statuscode: 0, result: null)
+      ];
 }
 
 class GetInvoicesInitial extends GetInvoicesState {}
 
 class GetInvoicesSuccess extends GetInvoicesState {
   final GetInvoicesResponse getInvoicesResponse;
+
   const GetInvoicesSuccess({
     required this.getInvoicesResponse,
   });
@@ -44,6 +46,7 @@ class GetInvoicesLoading extends GetInvoicesState {}
 
 class GetInvoicesFailure extends GetInvoicesState {
   final String failure;
+
   const GetInvoicesFailure({
     required this.failure,
   });
