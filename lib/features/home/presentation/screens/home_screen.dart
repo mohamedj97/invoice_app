@@ -32,7 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
           : BottomAppBarItemsData.labelList[pageIndex],
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(CustomPageRoute.createRoute(
+              page: const CreateEditInvoiceScreen()));
+        },
         child: const Icon(Icons.add,color: AppColors.whiteColor), //icon inside button
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
