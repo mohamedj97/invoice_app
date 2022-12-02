@@ -54,41 +54,41 @@ class HomeInvoicesPage extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            return state.getInvoicesResponse!.result!.result.isEmpty
-                ? EmptyScreen(
-                    title: "no_invoices".tr(),
-                    subtitle: "no_invoices_subtitle".tr(),
-                    imageString: ImageAssets.noInvoices,
-                  )
-                : Column(
-                    children: [
-                      SearchBar(
-                        searchController: searchController,
-                        searchHintText: "search_for_invoices".tr(),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Expanded(
-                        child: state is GetInvoicesLoading
-                            ? const Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : Container(
-                                color: AppColors.scaffoldColor,
-                                child: ListView.builder(
-                                  itemCount: state.getInvoicesResponse?.result
-                                          ?.result.length ??
-                                      0,
-                                  physics: const ScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return InvoiceListItem(
-                                        invoice: state.getInvoicesResponse!
-                                            .result!.result[index]);
-                                  },
-                                ),
+            return Column(
+              children: [
+                SearchBar(
+                  searchController: searchController,
+                  searchHintText: "search_for_invoices".tr(),
+                ),
+                const SizedBox(height: 8.0),
+                Expanded(
+                  child: state is GetInvoicesLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : state.getInvoicesResponse!.result!.result.isEmpty
+                          ? EmptyScreen(
+                              title: "no_invoices".tr(),
+                              subtitle: "no_invoices_subtitle".tr(),
+                              imageString: ImageAssets.noInvoices,
+                            )
+                          : Container(
+                              color: AppColors.scaffoldColor,
+                              child: ListView.builder(
+                                itemCount: state.getInvoicesResponse?.result
+                                        ?.result.length ??
+                                    0,
+                                physics: const ScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return InvoiceListItem(
+                                      invoice: state.getInvoicesResponse!
+                                          .result!.result[index]);
+                                },
                               ),
-                      )
-                    ],
-                  );
+                            ),
+                )
+              ],
+            );
           },
         ),
       ),

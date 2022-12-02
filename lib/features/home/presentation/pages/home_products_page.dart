@@ -51,13 +51,7 @@ class HomeProductsPage extends StatelessWidget {
           );
         }
       }, builder: (context, state) {
-        return state.getProductsResponse!.result!.result.isEmpty
-            ? EmptyScreen(
-          title: "no_products".tr(),
-          subtitle: "no_products_subtitle".tr(),
-          imageString: ImageAssets.noProducts,
-        )
-            : Column(
+        return Column(
           children: [
             SearchBar(
               searchController: searchController,
@@ -69,29 +63,36 @@ class HomeProductsPage extends StatelessWidget {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : Container(
-                      color: AppColors.scaffoldColor,
-                      child: ListView.builder(
-                        itemCount:
-                            state.getProductsResponse?.result?.result.length ??
+                  : state.getProductsResponse!.result!.result.isEmpty
+                      ? EmptyScreen(
+                          title: "no_products".tr(),
+                          subtitle: "no_products_subtitle".tr(),
+                          imageString: ImageAssets.noProducts,
+                        )
+                      : Container(
+                          color: AppColors.scaffoldColor,
+                          child: ListView.builder(
+                            itemCount: state.getProductsResponse?.result?.result
+                                    .length ??
                                 0,
-                        physics: const ScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          if (index ==
-                              state.getProductsResponse!.result!.result.length -
-                                  1) {
-                            return ProductTileItem(
-                                product: state
-                                    .getProductsResponse!.result!.result[index],
-                                showDivider: false);
-                          } else {
-                            return ProductTileItem(
-                                product: state.getProductsResponse!.result!
-                                    .result[index]);
-                          }
-                        },
-                      ),
-                    ),
+                            physics: const ScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              if (index ==
+                                  state.getProductsResponse!.result!.result
+                                          .length -
+                                      1) {
+                                return ProductTileItem(
+                                    product: state.getProductsResponse!.result!
+                                        .result[index],
+                                    showDivider: false);
+                              } else {
+                                return ProductTileItem(
+                                    product: state.getProductsResponse!.result!
+                                        .result[index]);
+                              }
+                            },
+                          ),
+                        ),
             )
           ],
         );

@@ -58,13 +58,7 @@ class ProfileCustomersScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return state.getCustomersResponse!.result!.result.isEmpty
-              ? EmptyScreen(
-            title: "no_customers".tr(),
-            subtitle: "no_customers_subtitle".tr(),
-            imageString: ImageAssets.noCustomers,
-          )
-              : CustomScaffold(
+          return CustomScaffold(
             title: "customers".tr(),
             actions: [
               InkWell(
@@ -92,77 +86,91 @@ class ProfileCustomersScreen extends StatelessWidget {
                 Expanded(
                   child: state is GetCustomersLoading
                       ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                      : Container(
-                    color: AppColors.scaffoldColor,
-                    child: ListView.builder(
-                      itemCount:
-                          state.getCustomersResponse?.result?.result.length ??
-                              0,
-                      physics: const ScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        CustomerModel? item =
-                            state.getCustomersResponse?.result?.result[index];
-                        if (index != state.getCustomersResponse!.result!.result.length - 1) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                CustomPageRoute.createRoute(
-                                  page: AddCustomerScreen(
-                                      customerItem: item),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              color: AppColors.whiteColor,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 24.0, left: 8.0),
-                                child: Center(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      LWCustomText(
-                                        title: item?.name ?? "NA",
-                                        color: AppColors.labelColor,
-                                        fontSize: 18.0,
-                                        fontFamily: FontAssets.avertaRegular,
+                          child: CircularProgressIndicator(),
+                        )
+                      : state.getCustomersResponse!.result!.result.isEmpty
+                          ? EmptyScreen(
+                              title: "no_customers".tr(),
+                              subtitle: "no_customers_subtitle".tr(),
+                              imageString: ImageAssets.noCustomers,
+                            )
+                          : Container(
+                              color: AppColors.scaffoldColor,
+                              child: ListView.builder(
+                                itemCount: state.getCustomersResponse?.result
+                                        ?.result.length ??
+                                    0,
+                                physics: const ScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  CustomerModel? item = state
+                                      .getCustomersResponse
+                                      ?.result
+                                      ?.result[index];
+                                  if (index !=
+                                      state.getCustomersResponse!.result!.result
+                                              .length -
+                                          1) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          CustomPageRoute.createRoute(
+                                            page: AddCustomerScreen(
+                                                customerItem: item),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        width: double.infinity,
+                                        color: AppColors.whiteColor,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 24.0, left: 8.0),
+                                          child: Center(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                LWCustomText(
+                                                  title: item?.name ?? "NA",
+                                                  color: AppColors.labelColor,
+                                                  fontSize: 18.0,
+                                                  fontFamily:
+                                                      FontAssets.avertaRegular,
+                                                ),
+                                                const SizedBox(height: 24.0),
+                                                const Divider(
+                                                  thickness: 0.5,
+                                                  height: 0.0,
+                                                  color:
+                                                      AppColors.searchBarColor,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      const SizedBox(height: 24.0),
-                                      const Divider(
-                                        thickness: 0.5,
-                                        height: 0.0,
-                                        color: AppColors.searchBarColor,
+                                    );
+                                  } else {
+                                    return Container(
+                                      width: double.infinity,
+                                      color: AppColors.whiteColor,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 24.0, left: 8.0, bottom: 24.0),
+                                        child: LWCustomText(
+                                          title: item?.name ?? "NA",
+                                          color: AppColors.labelColor,
+                                          fontSize: 18.0,
+                                          fontFamily: FontAssets.avertaRegular,
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                ),
+                                    );
+                                  }
+                                },
                               ),
                             ),
-                          );
-                        } else {
-                          return Container(
-                            width: double.infinity,
-                            color: AppColors.whiteColor,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 24.0, left: 8.0, bottom: 24.0),
-                              child: LWCustomText(
-                                title: item?.name ?? "NA",
-                                color: AppColors.labelColor,
-                                fontSize: 18.0,
-                                fontFamily: FontAssets.avertaRegular,
-                              ),
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  ),
                 )
               ],
             ),
