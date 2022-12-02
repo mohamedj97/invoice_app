@@ -13,7 +13,7 @@ GetCustomersResponseDataModel _$GetCustomersResponseDataModelFromJson(
           .map((e) => CustomerModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       total: json['total'] as int?,
-      metData: (json['metData'] as List<dynamic>)
+      metaData: (json['metaData'] as List<dynamic>)
           .map((e) => MetaDataModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -23,7 +23,7 @@ Map<String, dynamic> _$GetCustomersResponseDataModelToJson(
     <String, dynamic>{
       'result': instance.result,
       'total': instance.total,
-      'metData': instance.metData,
+      'metaData': instance.metaData,
     };
 
 GetCustomersResponse _$GetCustomersResponseFromJson(

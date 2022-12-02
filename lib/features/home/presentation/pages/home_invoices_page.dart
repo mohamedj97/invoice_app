@@ -2,8 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/assets/colors.dart';
+import 'package:invoice_app/core/assets/image_assets.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
 import '../../../../core/assets/font_assets.dart';
+import '../../../../core/common_widgets/empty_screen.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/utils/enums.dart';
@@ -52,35 +54,41 @@ class HomeInvoicesPage extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            return Column(
-              children: [
-                SearchBar(
-                  searchController: searchController,
-                  searchHintText: "search_for_invoices".tr(),
-                ),
-                const SizedBox(height: 8.0),
-                Expanded(
-                  child: state is GetInvoicesLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : Container(
-                          color: AppColors.scaffoldColor,
-                          child: ListView.builder(
-                            itemCount: state.getInvoicesResponse?.result?.result
-                                    .length ??
-                                0,
-                            physics: const ScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return InvoiceListItem(
-                                  invoice: state.getInvoicesResponse!.result!
-                                      .result[index]);
-                            },
-                          ),
-                        ),
-                )
-              ],
-            );
+            return state.getInvoicesResponse!.result!.result.isEmpty
+                ? EmptyScreen(
+                    title: "no_invoices".tr(),
+                    subtitle: "no_invoices_subtitle".tr(),
+                    imageString: ImageAssets.noInvoices,
+                  )
+                : Column(
+                    children: [
+                      SearchBar(
+                        searchController: searchController,
+                        searchHintText: "search_for_invoices".tr(),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Expanded(
+                        child: state is GetInvoicesLoading
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Container(
+                                color: AppColors.scaffoldColor,
+                                child: ListView.builder(
+                                  itemCount: state.getInvoicesResponse?.result
+                                          ?.result.length ??
+                                      0,
+                                  physics: const ScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return InvoiceListItem(
+                                        invoice: state.getInvoicesResponse!
+                                            .result!.result[index]);
+                                  },
+                                ),
+                              ),
+                      )
+                    ],
+                  );
           },
         ),
       ),

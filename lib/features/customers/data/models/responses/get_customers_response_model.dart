@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:invoice_app/features/customers/domain/entities/customer_entity.dart';
 import 'package:invoice_app/features/customers/domain/entities/customer_result_response.dart';
 import 'package:invoice_app/features/customers/domain/entities/meta_data_model.dart';
@@ -12,7 +11,7 @@ class GetCustomersResponseDataModel extends CustomerResultResponse {
   GetCustomersResponseDataModel({
     required super.result,
     super.total,
-    required super.metData,
+    required super.metaData,
   });
 
   factory GetCustomersResponseDataModel.fromJson(Map<String, dynamic> json) =>

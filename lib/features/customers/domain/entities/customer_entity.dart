@@ -5,98 +5,52 @@ part 'customer_entity.g.dart';
 @JsonSerializable()
 class CustomerModel{
   late int id;
-
   late int companyid;
   String? code;
-
   String? name;
-
-  num? identityid;
-
+  num identityid;
   int? countryid;
-
   String? countryname;
-
   String? countrynamear;
-
   String? countrycode;
-
   int? governateid;
-
   String? governatename;
-
   String? governatenamear;
-
   String? city;
-
   String? street;
-
   String? builldingnumber;
-
   String? postalcode;
-
   String? floor;
-
   String? room;
-
   String? landmark;
-
   String? additionalinformation;
-
   String? address;
-
   String? address2;
-
   int typeid;
-
   String? typecode;
-
   String? typename;
-
   bool active;
-
   String? mobile;
-
   String? tel;
-
   String? fax;
-
   String? email;
-
   String? website;
-
   int currencyid;
-
   String? currencycode;
-
   String? currencyname;
-
   String? currencynamear;
-
   int itemid;
-
   String? itemcode;
-
   String? itemname;
-
   int taxtypeid;
-
   String? taxtypecode;
-
   String? taxtypename;
-
   String? taxtypenamear;
-
   int taxtypesubid;
-
   String? taxtypesubcode;
-
-  String?   taxtypesubname;
-
+  String? taxtypesubname;
   String? taxtypesubnamear;
-
   num taxrate;
-
   List<CustomerContactPerson>? contactpersons;
   List<CustomerShipAddress>? shipaddresses;
 
@@ -105,7 +59,7 @@ class CustomerModel{
         required this.companyid,
         this.code,
         this.name,
-        this.identityid,
+        required this.identityid,
         this.countryid,
         this.countryname,
         this.countrynamear,

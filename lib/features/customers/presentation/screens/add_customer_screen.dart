@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
@@ -33,7 +34,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
       "4",
     ];
     return CustomScaffold(
-      title: !hasData ? "Edit Customer" : "Add Customer",
+      title: !hasData ? "edit_customer".tr() : "add_customer".tr(),
       leading: const CustomBackButton(),
       actions: [
         Center(
@@ -50,7 +51,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       CustomPageRoute.createRoute(page: const HomeScreen()));
                 },
                 child: LWCustomText(
-                    title: !hasData ? "Save" : "Done",
+                    title: !hasData ? "save".tr() : "done".tr(),
                     color: AppColors.primary,fontFamily: FontAssets.avertaSemiBold,fontWeight: FontWeight.bold,)),
           ),
         ),
@@ -63,10 +64,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding:  EdgeInsets.only(left: 8.0),
+                 Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
                   child:  LWCustomText(
-                      title: "CONTACT INFORMATION",
+                      title: "contact_information".tr(),
                       color: AppColors.disabledBottomItemColor),
                 ),
                 const SizedBox(height: 16.0),
@@ -78,8 +79,8 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const LWCustomText(
-                          title: "Customer type",
+                        LWCustomText(
+                          title: "customer_type".tr(),
                           color: AppColors.labelColor,
                           fontFamily: FontAssets.avertaRegular,
                         ),
@@ -91,7 +92,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                               name: "customer_type",
                               showLabel: false,
                               labelText: "",
-                              hintText: "Choose type",
+                              hintText: "choose_type".tr(),
                               isRequired: true,
                               isCard: false,
                               items: dropdownList,
@@ -121,7 +122,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       name: "name",
                       showLabel: false,
                       labelText: "",
-                      hintText: "Name",
+                      hintText: "name".tr(),
                       isRequired: true,
                       initialValue: !hasData ? "widget.customerItem!.name" : null,
                       isCard: false,
@@ -145,8 +146,8 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const LWCustomText(
-                              title: "Code",
+                            LWCustomText(
+                              title: "code".tr(),
                               color: AppColors.labelColor,
                               fontFamily: FontAssets.avertaRegular,
                             ),
@@ -162,7 +163,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                   isCard: false,
                                   isRequired: true,
                                   initialValue: !hasData
-                                      ? "widget.customerItem!.code"
+                                      ? widget.customerItem!.code
                                       : null,
                                   maxLines: 5,
                                   keyboardType:
@@ -195,8 +196,8 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const LWCustomText(
-                              title: "Identity id",
+                            LWCustomText(
+                              title: "identity_id".tr(),
                               color: AppColors.labelColor,
                               fontFamily: FontAssets.avertaRegular,
                             ),
@@ -212,7 +213,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                   isCard: false,
                                   isRequired: true,
                                   initialValue: !hasData
-                                      ? "widget.customerItem!.identityID"
+                                      ? widget.customerItem?.identityid.toString()
                                       : null,
                                   maxLines: 5,
                                   keyboardType:
@@ -233,10 +234,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                   ),
                 ),
                 const SizedBox(height: 16.0),
-                  const Padding(
-                    padding:  EdgeInsets.only(left: 8.0),
+                   Padding(
+                    padding:  const EdgeInsets.only(left: 8.0),
                     child: LWCustomText(
-                      title: "ADDRESS INFORMATION",
+                      title: "address_information".tr(),
                       color: AppColors.disabledBottomItemColor),
                   ),
                 const SizedBox(height: 16.0),
@@ -248,8 +249,8 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const LWCustomText(
-                          title: "Country",
+                        LWCustomText(
+                          title: "country".tr(),
                           color: AppColors.labelColor,
                           fontFamily: FontAssets.avertaRegular,
                         ),
@@ -261,7 +262,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                               name: "country",
                               showLabel: false,
                               labelText: "",
-                              hintText: "Choose Country",
+                              hintText: "choose_country".tr(),
                               isRequired: true,
                               isCard: false,
                               items: dropdownList,
@@ -291,8 +292,8 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const LWCustomText(
-                          title: "Governorate",
+                        LWCustomText(
+                          title: "governorate".tr(),
                           color: AppColors.labelColor,
                           fontFamily: FontAssets.avertaRegular,
                         ),
@@ -304,7 +305,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                               name: "governorate",
                               showLabel: false,
                               labelText: "",
-                              hintText: "Choose Governorate",
+                              hintText: "choose_governorate".tr(),
                               isRequired: true,
                               isCard: false,
                               items: dropdownList,
@@ -334,8 +335,8 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const LWCustomText(
-                          title: "City",
+                        LWCustomText(
+                          title: "city".tr(),
                           color: AppColors.labelColor,
                           fontFamily: FontAssets.avertaRegular,
                         ),
@@ -347,7 +348,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                               name: "city",
                               showLabel: false,
                               labelText: "",
-                              hintText: "Choose City",
+                              hintText: "choose_city".tr(),
                               isRequired: true,
                               isCard: false,
                               items: dropdownList,
@@ -377,9 +378,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       name: "street",
                       showLabel: false,
                       labelText: "",
-                      hintText: "Street",
+                      hintText: "street".tr(),
                       isRequired: true,
-                      initialValue: !hasData ? "widget.customerItem!.street" : null,
+                      initialValue: !hasData ? widget.customerItem!.street : null,
                       isCard: false,
                       borderDecoration: InputBorder.none,
                     ),
@@ -401,9 +402,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       name: "building_number",
                       showLabel: false,
                       labelText: "",
-                      hintText: "Building number",
+                      hintText: "building_number".tr(),
                       isRequired: true,
-                      initialValue: !hasData ?" widget.customerItem!.buildingNumber" : null,
+                      initialValue: !hasData ? widget.customerItem!.builldingnumber : null,
                       isCard: false,
                       borderDecoration: InputBorder.none,
                     ),

@@ -5,10 +5,10 @@ import 'package:invoice_app/features/customers/domain/entities/meta_data_model.d
 class CustomerResultResponse extends Equatable {
  late List<CustomerModel> result=[];
   int? total;
-  late List<MetaDataModel> metData=[];
+  late List<MetaDataModel> metaData=[];
 
-  CustomerResultResponse({required this.result, this.total,required this.metData});
+  CustomerResultResponse({required this.result, this.total,required this.metaData});
 
   @override
-  List<Object?> get props => [result, total, metData];
+  List<Object?> get props => [result, total, metaData];
 }

@@ -5,8 +5,9 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/features/customers/domain/entities/customer_entity.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/get_customers/get_customers_cubit.dart';
-import 'package:invoice_app/features/invoices/presentation/screens/create_invoice_screen.dart';
 import '../../../../core/assets/font_assets.dart';
+import '../../../../core/assets/image_assets.dart';
+import '../../../../core/common_widgets/empty_screen.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/navigation/custom_page_route.dart';
@@ -25,8 +26,8 @@ class ProfileCustomersScreen extends StatelessWidget {
       child: BlocConsumer<GetCustomersCubit, GetCustomersState>(
         listener: (context, state) async {
           if (state.getCustomersRequestState == RequestState.success) {
-            Navigator.of(context).push(CustomPageRoute.createRoute(
-                page: const CreateEditInvoiceScreen()));
+            // Navigator.of(context).push(CustomPageRoute.createRoute(
+            //     page: const CreateEditInvoiceScreen()));
           }
           if (state.getCustomersRequestState == RequestState.error) {
             await showDialog(
@@ -57,7 +58,13 @@ class ProfileCustomersScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return CustomScaffold(
+          return state.getCustomersResponse!.result!.result.isEmpty
+              ? EmptyScreen(
+            title: "no_customers".tr(),
+            subtitle: "no_customers_subtitle".tr(),
+            imageString: ImageAssets.noCustomers,
+          )
+              : CustomScaffold(
             title: "customers".tr(),
             actions: [
               InkWell(
@@ -83,23 +90,29 @@ class ProfileCustomersScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8.0),
                 Expanded(
-                  child: Container(
+                  child: state is GetCustomersLoading
+                      ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                      : Container(
                     color: AppColors.scaffoldColor,
                     child: ListView.builder(
-                      itemCount: 3,
+                      itemCount:
+                          state.getCustomersResponse?.result?.result.length ??
+                              0,
                       physics: const ScrollPhysics(),
                       itemBuilder: (context, index) {
                         CustomerModel? item =
                             state.getCustomersResponse?.result?.result[index];
-                        if (index != 3 - 1) {
+                        if (index != state.getCustomersResponse!.result!.result.length - 1) {
                           return InkWell(
                             onTap: () {
-                              // Navigator.of(context).push(
-                              //   CustomPageRoute.createRoute(
-                              //     page: AddCustomerScreen(
-                              //         customerItem: customers[index]),
-                              //   ),
-                              // );
+                              Navigator.of(context).push(
+                                CustomPageRoute.createRoute(
+                                  page: AddCustomerScreen(
+                                      customerItem: item),
+                                ),
+                              );
                             },
                             child: Container(
                               width: double.infinity,
@@ -109,7 +122,8 @@ class ProfileCustomersScreen extends StatelessWidget {
                                     const EdgeInsets.only(top: 24.0, left: 8.0),
                                 child: Center(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       LWCustomText(

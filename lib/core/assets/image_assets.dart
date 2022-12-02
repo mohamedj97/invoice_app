@@ -8,5 +8,6 @@ class ImageAssets {
   static const walkThroughThird="assets/images/walkthrough_third.png";
   static const noProducts="assets/images/no_products.png";
   static const noCustomers="assets/images/no_customers.png";
+  static const noInvoices="assets/images/no_invoices.png";
 
 }

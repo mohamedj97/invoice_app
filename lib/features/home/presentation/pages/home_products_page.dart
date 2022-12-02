@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/common_widgets/search_bar.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import '../../../../core/assets/font_assets.dart';
+import '../../../../core/assets/image_assets.dart';
+import '../../../../core/common_widgets/empty_screen.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
@@ -49,7 +51,13 @@ class HomeProductsPage extends StatelessWidget {
           );
         }
       }, builder: (context, state) {
-        return Column(
+        return state.getProductsResponse!.result!.result.isEmpty
+            ? EmptyScreen(
+          title: "no_products".tr(),
+          subtitle: "no_products_subtitle".tr(),
+          imageString: ImageAssets.noProducts,
+        )
+            : Column(
           children: [
             SearchBar(
               searchController: searchController,
