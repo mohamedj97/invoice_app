@@ -21,7 +21,12 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    Navigator.of(context).push(CustomPageRoute.createRoute(page: const HomeScreen()));
+    Navigator.of(context).pushAndRemoveUntil(
+      CustomPageRoute.createRoute(
+        page: const HomeScreen(),
+      ),
+          (Route<dynamic> route) => false,
+    );
   }
 
   @override
