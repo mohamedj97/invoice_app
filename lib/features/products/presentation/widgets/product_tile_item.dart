@@ -30,12 +30,12 @@ class ProductTileItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LWCustomText(
-                    title: product.title,
+                    title: product.name,
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                   ),
                   LWCustomText(
-                    title: "${product.price.toString()} ${'currency_egp'.tr()}",
+                    title: "${product.unittype.toString()} ${'currency_egp'.tr()}",
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                   )
@@ -44,7 +44,7 @@ class ProductTileItem extends StatelessWidget {
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: LWCustomText(
-                  title: product.description,
+                  title: product.description??"NA",
                   color: AppColors.searchBarColor,
                   fontFamily: FontAssets.avertaRegular,
                 ),

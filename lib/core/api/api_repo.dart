@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoice_app/features/customers/api/customers_client.dart';
 import 'package:invoice_app/features/invoices/api/invoices_client.dart';
+import 'package:invoice_app/features/products/api/products_client.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../config.dart';
@@ -13,6 +14,7 @@ class APIRepository {
   late AuthClient authClient;
   late InvoicesClient invoicesClient;
   late CustomersClient customersClient;
+  late ProductsClient productsClient;
 
   // APIRepository();
   APIRepository.internal() {
@@ -83,6 +85,7 @@ class APIRepository {
     authClient = AuthClient(authDio, baseUrl: apiBaseUrl);
     invoicesClient = InvoicesClient(authDio, baseUrl: apiBaseUrl);
     customersClient = CustomersClient(authDio, baseUrl: apiBaseUrl);
+    productsClient = ProductsClient(authDio, baseUrl: apiBaseUrl);
   }
   Future ensureInitialized() async => true;
 }

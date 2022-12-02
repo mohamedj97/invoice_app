@@ -9,27 +9,27 @@ part of 'customer_contact_person.dart';
 CustomerContactPerson _$CustomerContactPersonFromJson(
         Map<String, dynamic> json) =>
     CustomerContactPerson(
-      id: json['Id'] as int,
-      customerId: json['CustomerId'] as int,
-      name: json['Name'] as String?,
-      mobile: json['Mobile'] as String?,
-      tel: json['Tel'] as String?,
-      fax: json['Fax'] as String?,
-      email: json['Email'] as String?,
-      address: json['Address'] as String?,
-      address2: json['Address2'] as String?,
+      id: json['id'] as int,
+      customerId: json['customerId'] as int,
+      name: json['name'] as String?,
+      mobile: json['mobile'] as String?,
+      tel: json['tel'] as String?,
+      fax: json['fax'] as String?,
+      email: json['email'] as String?,
+      address: json['address'] as String?,
+      address2: json['address2'] as String?,
     );
 
 Map<String, dynamic> _$CustomerContactPersonToJson(
         CustomerContactPerson instance) =>
     <String, dynamic>{
-      'Id': instance.id,
-      'CustomerId': instance.customerId,
-      'Name': instance.name,
-      'Mobile': instance.mobile,
-      'Tel': instance.tel,
-      'Fax': instance.fax,
-      'Email': instance.email,
-      'Address': instance.address,
-      'Address2': instance.address2,
+      'id': instance.id,
+      'customerId': instance.customerId,
+      'name': instance.name,
+      'mobile': instance.mobile,
+      'tel': instance.tel,
+      'fax': instance.fax,
+      'email': instance.email,
+      'address': instance.address,
+      'address2': instance.address2,
     };

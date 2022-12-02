@@ -9,6 +9,7 @@ import 'package:invoice_app/features/invoices/data/repositories/invoices_reposit
 import 'package:invoice_app/features/invoices/domain/repositories/invoices_repository.dart';
 import 'package:invoice_app/features/invoices/domain/use_cases/get_invoices_use_case.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
+import 'package:invoice_app/features/products/presentation/cubit/get_products_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/api/api_repo.dart';
@@ -18,6 +19,10 @@ import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
 import 'features/auth/domain/use_cases/login_usecase.dart';
 import 'features/auth/presentation/cubit/login/login_cubit.dart';
+import 'features/products/data/data_sources/products_remote_data_source.dart';
+import 'features/products/data/repositories/products_repository_impl.dart';
+import 'features/products/domain/repositories/products_repositories.dart';
+import 'features/products/domain/use_cases/get_products_use_case.dart';
 
 final sl = GetIt.instance;
 
@@ -29,6 +34,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => LoginCubit(sl(),sl()));
   sl.registerLazySingleton(() => GetInvoicesCubit(sl()));
   sl.registerLazySingleton(() => GetCustomersCubit(sl()));
+  sl.registerLazySingleton(() => GetProductsCubit(sl()));
   //
 
 //   sl.registerFactory(() => CreateUpdateDeletePostCubit(
@@ -42,6 +48,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => GetInvoicesUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => GetCustomersUseCase(customersRepository: sl()));
+  sl.registerLazySingleton(() => GetProductsUseCase(productsRepository: sl()));
 //   sl.registerLazySingleton(() => DeletePostUseCase(sl()));
 //   sl.registerLazySingleton(() => UpdatePostUseCase(sl()));
 
@@ -50,6 +57,7 @@ Future<void> init() async {
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerLazySingleton<InvoicesRepository>(() => InvoicesRepositoryImpl(sl()));
   sl.registerLazySingleton<CustomersRepository>(() => CustomersRepositoryImpl(sl()));
+  sl.registerLazySingleton<ProductsRepository>(() => ProductsRepositoryImpl(sl()));
 
 // Datasources
 
@@ -64,6 +72,9 @@ Future<void> init() async {
 
   sl.registerLazySingleton<CustomersRemoteDataSource>(
           () => CustomersRemoteDataSourceImpl(apiRepo: sl()));
+
+  sl.registerLazySingleton<ProductsRemoteDataSource>(
+          () => ProductsRemoteDataSourceImpl(apiRepo: sl()));
 
 //! Core
 

@@ -1,8 +1,30 @@
-class Product {
-  final String title;
-  final String description;
-  final double price;
-  final String barcode;
+import 'package:json_annotation/json_annotation.dart';
+part'product.g.dart';
 
-  Product(this.title, this.description, this.price, this.barcode);
+@JsonSerializable()
+class Product {
+  late int id;
+  late int companyId;
+  late String code;
+  String? brickcode;
+  String name;
+  String? type;
+  String? description;
+  int? unittype;
+  bool active;
+
+  Product({
+   required this.id,
+    required  this.companyId,
+    required  this.code,
+    this.brickcode,
+    required  this.name,
+    this.type,
+    this.description,
+    this.unittype,
+    required this.active,
+  });
+
+  factory Product.fromJson(Map<String, dynamic> json) =>
+      _$ProductFromJson(json);
 }

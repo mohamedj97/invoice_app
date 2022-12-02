@@ -77,7 +77,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                         hintText: "Name",
                         isRequired: true,
                         initialValue:
-                            !hasData ? widget.productItem!.title : null,
+                            !hasData ? widget.productItem!.name : null,
                         isCard: false,
                         borderDecoration: InputBorder.none,
                       ),
@@ -139,7 +139,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                   hintText: "00.0 EGP",
                                   isRequired: true,
                                   initialValue: !hasData
-                                      ? "${widget.productItem!.price} EGP"
+                                      ? "${widget.productItem!.unittype} EGP"
                                       : null,
                                   isCard: false,
                                   maxLines: 5,
@@ -237,7 +237,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                   isCard: false,
                                   isRequired: true,
                                   initialValue: !hasData
-                                      ? widget.productItem!.barcode
+                                      ? widget.productItem!.brickcode
                                       : null,
                                   maxLines: 5,
                                   keyboardType:

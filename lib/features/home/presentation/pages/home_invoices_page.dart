@@ -17,8 +17,7 @@ class HomeInvoicesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController searchController = TextEditingController();
     return RefreshIndicator(
-      onRefresh: () async{
-      },
+      onRefresh: () async {},
       child: BlocProvider<GetInvoicesCubit>(
         create: (context) => sl<GetInvoicesCubit>()..getInvoices(),
         child: BlocConsumer<GetInvoicesCubit, GetInvoicesState>(

@@ -14,5 +14,9 @@ class EndPoints {
   //customers
   static const getCustomers = 'Customers';
 
+  //products
+  static const getProducts = 'Items';
+
+
 
 }
