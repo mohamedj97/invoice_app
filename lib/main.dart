@@ -18,6 +18,7 @@ void main() async {
       startLocale: const Locale('en'),
       fallbackLocale: const Locale('en'),
       useOnlyLangCode: true,
+      saveLocale: true,
       child: const MyApp(),
     ),
   );

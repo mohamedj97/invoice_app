@@ -18,10 +18,8 @@ class ChangeLanguageScreen extends StatefulWidget {
 }
 
 class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
-  final TextEditingController currentPasswordController =
-      TextEditingController();
-  final TextEditingController newPasswordController = TextEditingController();
   final formKey = GlobalKey<FormBuilderState>();
+  String language="";
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +37,14 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                   if (!formState.saveAndValidate()) {
                     return;
                   }
+                  if(language=="" || language =="English- (En)")
+                    {
+                      context.setLocale(Locale("en"));
+                    }
+                  else
+                    {
+                      context.setLocale(Locale("ar"));
+                    }
                   Navigator.of(context).push(
                       CustomPageRoute.createRoute(page: const HomeScreen()));
                 },
@@ -61,12 +67,17 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: FormBuilderRadioGroup<String>(
+                  onSaved: (val){
+                    setState(() {
+                      language=val??"";
+                    });
+                  },
                   activeColor: AppColors.greenColor,
                   orientation: OptionsOrientation.vertical,
                   wrapRunSpacing: 24.0,
                   decoration: const InputDecoration(border: InputBorder.none),
                   initialValue: 'English- (En)',
-                  name: 'best_language',
+                  name: 'language',
                   onChanged: (value) {},
                   validator: FormBuilderValidators.compose(
                     [
