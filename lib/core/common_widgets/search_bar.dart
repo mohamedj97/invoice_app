@@ -12,6 +12,7 @@ class SearchBar extends StatefulWidget {
   final bool showSearchIcon;
   final bool showResetIcon;
   final InputBorder? enabledBorder;
+  final bool? enabled;
 
   const SearchBar({
     Key? key,
@@ -23,7 +24,7 @@ class SearchBar extends StatefulWidget {
     this.onSubmitted,
     this.onChanged,
     this.searchController,
-    this.onTap,
+    this.onTap, this.enabled=true,
   }) : super(key: key);
 
   @override
@@ -36,6 +37,7 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      enabled: widget.enabled,
       cursorColor: AppColors.searchBarColor,
       style: widget.searchTextStyle,
       decoration: InputDecoration(
@@ -61,6 +63,7 @@ class _SearchBarState extends State<SearchBar> {
                       widget.searchController ?? _searchController;
                   setState(() {
                     controller.text = '';
+                    controller.clear();
                   });
                 },
               )

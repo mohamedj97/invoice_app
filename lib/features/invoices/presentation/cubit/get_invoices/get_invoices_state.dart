@@ -44,6 +44,8 @@ class GetInvoicesSuccess extends GetInvoicesState {
 
 class GetInvoicesLoading extends GetInvoicesState {}
 
+class GetInvoicesRefresh extends GetInvoicesState {}
+
 class GetInvoicesFailure extends GetInvoicesState {
   final String failure;
 
