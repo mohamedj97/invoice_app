@@ -10,7 +10,7 @@ CompanyInfo _$CompanyInfoFromJson(Map<String, dynamic> json) => CompanyInfo(
       id: json['id'] as int,
       code: json['code'] as String,
       name: json['name'] as String,
-      taxRegId: json['taxRegId'] as int,
+      taxRegId: json['taxRegId'] as num,
       activityid: json['activityid'] as int,
       country: json['country'] as int,
       governate: json['governate'] as int,

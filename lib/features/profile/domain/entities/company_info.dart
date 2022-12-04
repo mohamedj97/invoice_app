@@ -6,7 +6,7 @@ class CompanyInfo {
   late int id;
   late String code;
   late String name;
-  late int taxRegId;
+  late num taxRegId;
   late int activityid;
   late int country;
   late int governate;

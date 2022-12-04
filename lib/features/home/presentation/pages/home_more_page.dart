@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/api/repository/disk_repo.dart';
 import 'package:invoice_app/core/api/repository/memory_repo.dart';
 import 'package:invoice_app/core/assets/colors.dart';
@@ -7,8 +8,11 @@ import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/features/auth/presentation/screens/login_screen.dart';
+import 'package:invoice_app/features/profile/presentation/cubit/get_profile_cubit.dart';
 import 'package:invoice_app/features/profile/presentation/screens/business_data_screen.dart';
 import '../../../../core/navigation/custom_page_route.dart';
+import '../../../../core/utils/enums.dart';
+import '../../../../injection_container.dart';
 import '../../../profile/presentation/screens/change_language_screen.dart';
 import '../../../profile/presentation/screens/change_password_screen.dart';
 import '../../../profile/presentation/screens/profile_customers_screen.dart';
@@ -20,155 +24,196 @@ class HomeMorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Container(
-          width: double.infinity,
-          color: AppColors.whiteColor,
-          child: Column(
-            children: const [
-              CircleAvatar(
-                backgroundColor: AppColors.primary,
-                radius: 52,
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(
-                      "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"),
+    return BlocProvider<GetProfileCubit>(
+      create: (context) => sl<GetProfileCubit>()..getProfile(),
+      child: BlocConsumer<GetProfileCubit, GetProfileState>(
+          listener: (context, state) async {
+        if (state.getProfileRequestState == RequestState.error) {
+          await showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Icon(
+                  Icons.warning,
+                  color: AppColors.primary,
+                  size: 80.0,
                 ),
-              ),
-              SizedBox(height: 16.0),
-              LWCustomText(
-                  title: "Hazim Hassan",
-                  color: AppColors.blackColor,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold),
-              SizedBox(height: 8.0),
-              LWCustomText(
-                  title: "Business Name",
-                  color: AppColors.blackColor,
-                  fontSize: 12.0),
-            ],
-          ),
-        ),
-        ProfileItemWidget(
-          title: "profile_data".tr(),
-          imagePath: IconAssets.profileIcon,
-          onTap: () {
-            Navigator.of(context).push(
-                CustomPageRoute.createRoute(page: const ProfileDataScreen()));
-          },
-        ),
-        ProfileItemWidget(
-          title: "business_data".tr(),
-          imagePath: IconAssets.businessIcon,
-          onTap: () {
-            Navigator.of(context).push(
-                CustomPageRoute.createRoute(page: const BusinessDataScreen()));
-          },
-        ),
-        ProfileItemWidget(
-          title: "customers".tr(),
-          imagePath: IconAssets.customersIcon,
-          onTap: () {
-            Navigator.of(context)
-                .push(CustomPageRoute.createRoute(page: const ProfileCustomersScreen()));
-          },
-        ),
-        ProfileItemWidget(
-          title: "change_password".tr(),
-          imagePath: IconAssets.lockIcon,
-          onTap: () {
-            Navigator.of(context).push(CustomPageRoute.createRoute(
-                page: const ChangePasswordScreen()));
-          },
-        ),
-        ProfileItemWidget(
-          title: "change_language".tr(),
-          imagePath: IconAssets.customersIcon,
-          onTap: () {
-            Navigator.of(context).push(CustomPageRoute.createRoute(
-                page: const ChangeLanguageScreen()));
-          },
-        ),
-        ProfileItemWidget(
-          title: "support".tr(),
-          imagePath: IconAssets.customersIcon,
-          onTap: () {},
-        ),
-        ProfileItemWidget(
-          title: "logout".tr(),
-          imagePath: IconAssets.profileIcon,
-          onTap: () async {
-            await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                content: Text(state.getProfileResponse?.message ??
+                    "something_went_wrong".tr()),
+                actions: [
+                  TextButton(
+                    child: LWCustomText(
+                      title: "cancel".tr(),
+                      fontFamily: FontAssets.avertaSemiBold,
+                      color: AppColors.primary,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 24.0, horizontal: 32.0),
-                  title: LWCustomText(
-                    textAlign: TextAlign.center,
-                    title: "logout_subtitle".tr(),
-                    color: AppColors.dialogueTitleColor,
-                    fontFamily: FontAssets.avertaSemiBold,
-                  ),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Divider(
-                        thickness: 0.5,
-                        height: 0.0,
-                        color: AppColors.searchBarColor,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 24.0, right: 24.0, top: 16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: LWCustomText(
-                                title: "cancel".tr(),
-                                color: AppColors.iconsColor,
-                                fontSize: 15.0,
-                                fontFamily: FontAssets.avertaSemiBold,
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () async {
-                                await DiskRepo().deleteTokensData();
-                                MemoryRepo().deleteTokensData();
-                                Navigator.of(context).pushAndRemoveUntil(
-                                  CustomPageRoute.createRoute(
-                                    page: const LoginScreen(),
-                                  ),
-                                  (Route<dynamic> route) => false,
-                                );
-                              },
-                              child: LWCustomText(
-                                title: "logout".tr(),
-                                color: AppColors.errorColor,
-                                fontSize: 15.0,
-                                fontFamily: FontAssets.avertaSemiBold,
-                              ),
-                            ),
-                          ],
+                ],
+              );
+            },
+          );
+        }
+      }, builder: (context, state) {
+        return state is GetProfileLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    color: AppColors.whiteColor,
+                    child: Column(
+                      children: const [
+                        CircleAvatar(
+                          backgroundColor: AppColors.primary,
+                          radius: 52,
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(
+                                "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"),
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 16.0),
+                        LWCustomText(
+                            title: "Hazim Hassan",
+                            color: AppColors.blackColor,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                        SizedBox(height: 8.0),
+                        LWCustomText(
+                            title: "Business Name",
+                            color: AppColors.blackColor,
+                            fontSize: 12.0),
+                      ],
+                    ),
                   ),
-                );
-              },
-            );
-          },
-          color: AppColors.errorColor,
-        ),
-      ],
+                  ProfileItemWidget(
+                    title: "profile_data".tr(),
+                    imagePath: IconAssets.profileIcon,
+                    onTap: () {
+                      Navigator.of(context).push(CustomPageRoute.createRoute(
+                          page: const ProfileDataScreen()));
+                    },
+                  ),
+                  ProfileItemWidget(
+                    title: "business_data".tr(),
+                    imagePath: IconAssets.businessIcon,
+                    onTap: () {
+                      Navigator.of(context).push(CustomPageRoute.createRoute(
+                          page: const BusinessDataScreen()));
+                    },
+                  ),
+                  ProfileItemWidget(
+                    title: "customers".tr(),
+                    imagePath: IconAssets.customersIcon,
+                    onTap: () {
+                      Navigator.of(context).push(CustomPageRoute.createRoute(
+                          page: const ProfileCustomersScreen()));
+                    },
+                  ),
+                  ProfileItemWidget(
+                    title: "change_password".tr(),
+                    imagePath: IconAssets.lockIcon,
+                    onTap: () {
+                      Navigator.of(context).push(CustomPageRoute.createRoute(
+                          page: const ChangePasswordScreen()));
+                    },
+                  ),
+                  ProfileItemWidget(
+                    title: "change_language".tr(),
+                    imagePath: IconAssets.customersIcon,
+                    onTap: () {
+                      Navigator.of(context).push(CustomPageRoute.createRoute(
+                          page: const ChangeLanguageScreen()));
+                    },
+                  ),
+                  ProfileItemWidget(
+                    title: "support".tr(),
+                    imagePath: IconAssets.customersIcon,
+                    onTap: () {},
+                  ),
+                  ProfileItemWidget(
+                    title: "logout".tr(),
+                    imagePath: IconAssets.profileIcon,
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 24.0, horizontal: 32.0),
+                            title: LWCustomText(
+                              textAlign: TextAlign.center,
+                              title: "logout_subtitle".tr(),
+                              color: AppColors.dialogueTitleColor,
+                              fontFamily: FontAssets.avertaSemiBold,
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Divider(
+                                  thickness: 0.5,
+                                  height: 0.0,
+                                  color: AppColors.searchBarColor,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 24.0, right: 24.0, top: 16.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: LWCustomText(
+                                          title: "cancel".tr(),
+                                          color: AppColors.iconsColor,
+                                          fontSize: 15.0,
+                                          fontFamily: FontAssets.avertaSemiBold,
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          await DiskRepo().deleteTokensData();
+                                          MemoryRepo().deleteTokensData();
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
+                                            CustomPageRoute.createRoute(
+                                              page: const LoginScreen(),
+                                            ),
+                                            (Route<dynamic> route) => false,
+                                          );
+                                        },
+                                        child: LWCustomText(
+                                          title: "logout".tr(),
+                                          color: AppColors.errorColor,
+                                          fontSize: 15.0,
+                                          fontFamily: FontAssets.avertaSemiBold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    color: AppColors.errorColor,
+                  ),
+                ],
+              );
+      }),
     );
   }
 }
