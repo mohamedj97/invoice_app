@@ -9,7 +9,6 @@ import '../../../../core/assets/font_assets.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/common_widgets/search_bar.dart';
-import '../../../../core/utils/debouncer.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
 import '../../../invoices/domain/entities/invoice_head_model.dart';
@@ -24,8 +23,6 @@ class HomeInvoicesPage extends StatefulWidget {
 
 class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
   TextEditingController searchController = TextEditingController();
-  final searchDebouncer = Debouncer();
-  final cubit = GetInvoicesCubit(sl());
   List<InvoiceHeadModel> invoices = [];
 
   @override

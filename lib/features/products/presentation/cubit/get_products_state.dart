@@ -42,6 +42,8 @@ class GetProductsSuccess extends GetProductsState {
 
 class GetProductsLoading extends GetProductsState {}
 
+class GetProductsRefresh extends GetProductsState {}
+
 class GetProductsFailure extends GetProductsState {
   final String failure;
   const GetProductsFailure({

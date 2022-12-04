@@ -16,7 +16,7 @@ class SearchBar extends StatefulWidget {
 
   const SearchBar({
     Key? key,
-    this.showResetIcon = true,
+    this.showResetIcon = false,
     this.enabledBorder,
     this.showSearchIcon = true,
     this.searchTextStyle,
