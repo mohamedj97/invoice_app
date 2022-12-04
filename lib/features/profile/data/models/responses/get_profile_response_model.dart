@@ -1,3 +1,5 @@
+import 'package:invoice_app/features/profile/domain/entities/company_role.dart';
+import 'package:invoice_app/features/profile/domain/entities/user_company.dart';
 import 'package:json_annotation/json_annotation.dart';
 import '../../../../../core/api/base_api_response.dart';
 import '../../../domain/entities/user_info_data.dart';
