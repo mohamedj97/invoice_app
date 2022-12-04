@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:invoice_app/features/customers/domain/entities/meta_data_model.dart';
 import 'package:invoice_app/features/invoices/domain/entities/invoice_head_model.dart';
 import 'package:invoice_app/features/invoices/domain/entities/meta_data.dart';
 import 'package:json_annotation/json_annotation.dart';

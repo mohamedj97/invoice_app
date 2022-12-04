@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'customers_client.dart';
+part of 'profile_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'customers_client.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _CustomersClient implements CustomersClient {
-  _CustomersClient(
+class _ProfileClient implements ProfileClient {
+  _ProfileClient(
     this._dio, {
     this.baseUrl,
   });
@@ -19,25 +19,25 @@ class _CustomersClient implements CustomersClient {
   String? baseUrl;
 
   @override
-  Future<GetCustomersResponse> getCustomers() async {
+  Future<GetProfileResponse> getProfile() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GetCustomersResponse>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<GetProfileResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'Customers',
+              'Users/getuserdata',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GetCustomersResponse.fromJson(_result.data!);
+    final value = GetProfileResponse.fromJson(_result.data!);
     return value;
   }
 
