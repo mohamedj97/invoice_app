@@ -195,7 +195,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                                               left: 8.0,
                                               bottom: 24.0),
                                           child: LWCustomText(
-                                            title: item.name ?? "NA",
+                                            title: item.name!,
                                             color: AppColors.labelColor,
                                             fontSize: 18.0,
                                             fontFamily:
