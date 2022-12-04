@@ -13,6 +13,7 @@ class ProfileDataFormItem extends StatelessWidget {
   final bool? isRequired;
   final TextInputType? keyboardType;
   final int? maxLines;
+  final String? initialValue;
 
   const ProfileDataFormItem(
       {Key? key,
@@ -22,7 +23,7 @@ class ProfileDataFormItem extends StatelessWidget {
       this.isRequired,
       this.controller,
       this.keyboardType,
-      this.maxLines})
+      this.maxLines, this.initialValue})
       : super(key: key);
 
   @override
@@ -56,6 +57,7 @@ class ProfileDataFormItem extends StatelessWidget {
             labelText: "",
             isCard: false,
             showLabel: false,
+            initialValue: initialValue,
             maxLines: maxLines ?? 1,
             keyboardType: keyboardType ?? TextInputType.text,
             borderDecoration: InputBorder.none,

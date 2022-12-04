@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/widgets/custom_back_button.dart';
+import 'package:invoice_app/features/profile/domain/entities/user_info_data.dart';
 import '../../../../core/assets/colors.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
@@ -11,7 +12,8 @@ import '../../../home/presentation/screens/home_screen.dart';
 import '../widgets/profile_data_form_item.dart';
 
 class ProfileDataScreen extends StatefulWidget {
-  const ProfileDataScreen({Key? key}) : super(key: key);
+  final UserInfoData user;
+  const ProfileDataScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<ProfileDataScreen> createState() => _ProfileDataScreenState();
@@ -56,28 +58,12 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
           key: formKey,
           child: Column(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: ProfileDataFormItem(
-                      hintText: "Hazem",
-                      label: "first_name".tr(),
-                      name: "first_name",
-                      isRequired:true,
-                      controller: firstNameController,
-                    ),
-                  ),
-                  const SizedBox(width: 3.0),
-                  Expanded(
-                    child: ProfileDataFormItem(
-                      hintText: "Hassan",
-                      label: "last_name".tr(),
-                      name: "last_name",
-                      isRequired:true,
-                      controller: lastNameController,
-                    ),
-                  ),
-                ],
+              ProfileDataFormItem(
+                hintText: "Hazem",
+                label: "full_name".tr(),
+                name: "full_name",
+                isRequired:true,
+                initialValue: widget.user.userName,
               ),
               const SizedBox(height: 24.0),
               ProfileDataFormItem(
@@ -93,30 +79,28 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                 hintText: "example@email.com",
                 label: "email".tr(),
                 name: "email",
-                controller: emailController,
+                initialValue: widget.user.email,
               ),
-              const SizedBox(height: 24.0),
-              Row(
-                children: [
-                  Expanded(
-                    child: ProfileDataFormItem(
-                      hintText: "Egypt",
-                      label: "country".tr(),
-                      name: "Country",
-                      controller: firstNameController,
-                    ),
-                  ),
-                  const SizedBox(width: 3.0),
-                  Expanded(
-                    child: ProfileDataFormItem(
-                      hintText: "New Cairo",
-                      label: "city".tr(),
-                      name: "city",
-                      controller: lastNameController,
-                    ),
-                  ),
-                ],
-              ),
+              // const SizedBox(height: 24.0),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: ProfileDataFormItem(
+              //         hintText: "Egypt",
+              //         label: "country".tr(),
+              //         name: "Country",
+              //       ),
+              //     ),
+              //     const SizedBox(width: 3.0),
+              //     Expanded(
+              //       child: ProfileDataFormItem(
+              //         hintText: "New Cairo",
+              //         label: "city".tr(),
+              //         name: "city",
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),

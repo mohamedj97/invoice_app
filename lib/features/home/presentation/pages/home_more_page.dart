@@ -8,6 +8,7 @@ import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/features/auth/presentation/screens/login_screen.dart';
+import 'package:invoice_app/features/profile/domain/entities/user_info_data.dart';
 import 'package:invoice_app/features/profile/presentation/cubit/get_profile_cubit.dart';
 import 'package:invoice_app/features/profile/presentation/screens/business_data_screen.dart';
 import '../../../../core/navigation/custom_page_route.dart';
@@ -67,8 +68,8 @@ class HomeMorePage extends StatelessWidget {
                     width: double.infinity,
                     color: AppColors.whiteColor,
                     child: Column(
-                      children: const [
-                        CircleAvatar(
+                      children: [
+                        const CircleAvatar(
                           backgroundColor: AppColors.primary,
                           radius: 52,
                           child: CircleAvatar(
@@ -77,15 +78,18 @@ class HomeMorePage extends StatelessWidget {
                                 "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"),
                           ),
                         ),
-                        SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
                         LWCustomText(
-                            title: "Hazim Hassan",
+                            title: state.getProfileResponse?.result?.userName ??
+                                "",
                             color: AppColors.blackColor,
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 8.0),
                         LWCustomText(
-                            title: "Business Name",
+                            title: state.getProfileResponse?.result
+                                    ?.companies[0].companyInfo.name ??
+                                "",
                             color: AppColors.blackColor,
                             fontSize: 12.0),
                       ],
@@ -96,7 +100,9 @@ class HomeMorePage extends StatelessWidget {
                     imagePath: IconAssets.profileIcon,
                     onTap: () {
                       Navigator.of(context).push(CustomPageRoute.createRoute(
-                          page: const ProfileDataScreen()));
+                          page: ProfileDataScreen(
+                        user: state.getProfileResponse!.result as UserInfoData,
+                      )));
                     },
                   ),
                   ProfileItemWidget(
@@ -104,7 +110,10 @@ class HomeMorePage extends StatelessWidget {
                     imagePath: IconAssets.businessIcon,
                     onTap: () {
                       Navigator.of(context).push(CustomPageRoute.createRoute(
-                          page: const BusinessDataScreen()));
+                          page: BusinessDataScreen(
+                        companyInfo: state.getProfileResponse?.result
+                            ?.companies[0].companyInfo,
+                      )));
                     },
                   ),
                   ProfileItemWidget(
@@ -131,11 +140,11 @@ class HomeMorePage extends StatelessWidget {
                           page: const ChangeLanguageScreen()));
                     },
                   ),
-                  ProfileItemWidget(
-                    title: "support".tr(),
-                    imagePath: IconAssets.customersIcon,
-                    onTap: () {},
-                  ),
+                  // ProfileItemWidget(
+                  //   title: "support".tr(),
+                  //   imagePath: IconAssets.customersIcon,
+                  //   onTap: () {},
+                  // ),
                   ProfileItemWidget(
                     title: "logout".tr(),
                     imagePath: IconAssets.profileIcon,
@@ -147,7 +156,7 @@ class HomeMorePage extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 24.0, horizontal: 32.0),
                             title: LWCustomText(
                               textAlign: TextAlign.center,

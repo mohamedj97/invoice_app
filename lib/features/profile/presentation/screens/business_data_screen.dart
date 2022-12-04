@@ -4,15 +4,16 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/widgets/custom_back_button.dart';
+import 'package:invoice_app/features/profile/domain/entities/company_info.dart';
 import '../../../../core/assets/colors.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/navigation/custom_page_route.dart';
-import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import '../../../home/presentation/screens/home_screen.dart';
 import '../widgets/profile_data_form_item.dart';
 
 class BusinessDataScreen extends StatefulWidget {
-  const BusinessDataScreen({Key? key}) : super(key: key);
+  final CompanyInfo? companyInfo;
+  const BusinessDataScreen({Key? key, required this.companyInfo}) : super(key: key);
 
   @override
   State<BusinessDataScreen> createState() => _BusinessDataScreenState();
@@ -65,101 +66,116 @@ class _BusinessDataScreenState extends State<BusinessDataScreen> {
                 hintText: "Zara Store",
                 label: "business_name".tr(),
                 name: "business_name",
+                initialValue: widget.companyInfo!.name,
                 isRequired: true,
-                controller: businessNameController,
               ),
               const SizedBox(height: 24.0),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.whiteColor,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColors.blackColor,
-                            width: 0.25,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: LWCustomText(
-                                title: "country".tr(),
-                                color: AppColors.labelColor,
-                                fontSize: 14.0,
-                                fontFamily: FontAssets.avertaRegular,
-                              ),
-                            ),
-                            LWCustomDropdownFormField<String>(
-                              items: ["sss", "ddd", "eee"],
-                              itemBuilder: (context, value) {
-                                return Text(value);
-                              },
-                              iconColor: AppColors.blackColor,
-                              isRequired: true,
-                              isCard: false,
-                              showLabel: false,
-                              labelText: "",
-                              hintText: "Egypt",
-                              name: "country",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 3.0),
-                  Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.whiteColor,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColors.blackColor,
-                            width: 0.25,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                             Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: LWCustomText(
-                                title: "city".tr(),
-                                color: AppColors.labelColor,
-                                fontSize: 14.0,
-                                fontFamily: FontAssets.avertaRegular,
-                              ),
-                            ),
-                            LWCustomDropdownFormField<String>(
-                              items: ["sss", "ddd", "eee"],
-                              itemBuilder: (context, value) {
-                                return Text(value);
-                              },
-                              iconColor: AppColors.blackColor,
-                              isRequired: true,
-                              isCard: false,
-                              showLabel: false,
-                              labelText: "",
-                              hintText: "Cairo",
-                              name: "city",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              ProfileDataFormItem(
+                hintText: "Egypt",
+                label: "country".tr(),
+                name: "country",
+                initialValue: widget.companyInfo!.country.toString()=="65"?"Egypt":null,
+                isRequired: true,
               ),
+              const SizedBox(height: 24.0),
+              ProfileDataFormItem(
+                hintText: "cairo",
+                label: "city".tr(),
+                name: "city",
+                initialValue: widget.companyInfo!.city,
+                isRequired: true,
+              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         decoration: const BoxDecoration(
+              //           color: AppColors.whiteColor,
+              //           border: Border(
+              //             bottom: BorderSide(
+              //               color: AppColors.blackColor,
+              //               width: 0.25,
+              //             ),
+              //           ),
+              //         ),
+              //         child: Padding(
+              //           padding: const EdgeInsets.only(left: 4.0),
+              //           child: Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               Padding(
+              //                 padding: const EdgeInsets.only(left: 8.0),
+              //                 child: LWCustomText(
+              //                   title: "country".tr(),
+              //                   color: AppColors.labelColor,
+              //                   fontSize: 14.0,
+              //                   fontFamily: FontAssets.avertaRegular,
+              //                 ),
+              //               ),
+              //               LWCustomDropdownFormField<String>(
+              //                 items: ["sss", "ddd", "eee"],
+              //                 itemBuilder: (context, value) {
+              //                   return Text(value);
+              //                 },
+              //                 iconColor: AppColors.blackColor,
+              //                 isRequired: true,
+              //                 isCard: false,
+              //                 showLabel: false,
+              //                 labelText: "",
+              //                 hintText: "Egypt",
+              //                 name: "country",
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBox(width: 3.0),
+              //     Expanded(
+              //       child: Container(
+              //         decoration: const BoxDecoration(
+              //           color: AppColors.whiteColor,
+              //           border: Border(
+              //             bottom: BorderSide(
+              //               color: AppColors.blackColor,
+              //               width: 0.25,
+              //             ),
+              //           ),
+              //         ),
+              //         child: Padding(
+              //           padding: const EdgeInsets.only(left: 4.0),
+              //           child: Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //                Padding(
+              //                 padding: const EdgeInsets.only(left: 8.0),
+              //                 child: LWCustomText(
+              //                   title: "city".tr(),
+              //                   color: AppColors.labelColor,
+              //                   fontSize: 14.0,
+              //                   fontFamily: FontAssets.avertaRegular,
+              //                 ),
+              //               ),
+              //               LWCustomDropdownFormField<String>(
+              //                 items: ["sss", "ddd", "eee"],
+              //                 itemBuilder: (context, value) {
+              //                   return Text(value);
+              //                 },
+              //                 iconColor: AppColors.blackColor,
+              //                 isRequired: true,
+              //                 isCard: false,
+              //                 showLabel: false,
+              //                 labelText: "",
+              //                 hintText: "Cairo",
+              //                 name: "city",
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(height: 24.0),
               ProfileDataFormItem(
                 hintText:
@@ -168,7 +184,7 @@ class _BusinessDataScreenState extends State<BusinessDataScreen> {
                 name: "additional_details",
                 isRequired: true,
                 maxLines: 3,
-                controller: additionalDetailsController,
+                initialValue: widget.companyInfo!.additionalinformation,
               ),
             ],
           ),
