@@ -26,6 +26,7 @@ class ProfileCustomersScreen extends StatefulWidget {
 class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
   TextEditingController searchController = TextEditingController();
   List<CustomerModel> customers = [];
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -66,8 +67,9 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
         },
         builder: (context, state) {
           customers = state.getCustomersResponse?.result?.result
-                  .where((customer) =>
-                      customer.name.toString().contains(searchController.text))
+                  .where((customer) => customer.name!
+                      .toLowerCase()
+                      .contains(searchController.text))
                   .toList() ??
               state.getCustomersResponse?.result?.result ??
               [];
@@ -103,9 +105,9 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                       //searchDebouncer(() {
                       setState(() {
                         customers = customers
-                            .where((invoice) => invoice.id
-                            .toString()
-                            .contains(searchController.text))
+                            .where((customer) => customer.name!
+                                .toLowerCase()
+                                .contains(searchController.text))
                             .toList();
                       });
                       // });

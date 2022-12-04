@@ -124,7 +124,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       labelText: "",
                       hintText: "name".tr(),
                       isRequired: true,
-                      initialValue: !hasData ? "widget.customerItem!.name" : null,
+                      initialValue: !hasData ? widget.customerItem!.name : null,
                       isCard: false,
                       borderDecoration: InputBorder.none,
                     ),

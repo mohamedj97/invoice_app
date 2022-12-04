@@ -62,7 +62,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
       }, builder: (context, state) {
         products = state.getProductsResponse?.result?.result
                 .where((product) =>
-                    product.name.toString().contains(searchController.text))
+                    product.name.toLowerCase().contains(searchController.text))
                 .toList() ??
             state.getProductsResponse?.result?.result ??
             [];
@@ -79,7 +79,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
                   setState(() {
                     products = products
                         .where((product) => product.name
-                            .toString()
+                            .toLowerCase()
                             .contains(searchController.text))
                         .toList();
                   });
