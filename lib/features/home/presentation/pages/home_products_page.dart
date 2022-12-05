@@ -24,11 +24,18 @@ class HomeProductsPage extends StatefulWidget {
 class _HomeProductsPageState extends State<HomeProductsPage> {
   List<Product> products = [];
   TextEditingController searchController = TextEditingController();
+  final cubit = GetProductsCubit(sl());
+
+  @override
+  void initState() {
+    cubit.getProducts();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<GetProductsCubit>(
-      create: (context) => sl<GetProductsCubit>()..getProducts(),
+    return BlocProvider<GetProductsCubit>.value(
+      value: cubit,
       child: BlocConsumer<GetProductsCubit, GetProductsState>(
           listener: (context, state) async {
         if (state.getProductsRequestState == RequestState.error) {

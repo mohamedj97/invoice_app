@@ -26,11 +26,18 @@ class ProfileCustomersScreen extends StatefulWidget {
 class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
   TextEditingController searchController = TextEditingController();
   List<CustomerModel> customers = [];
+  final cubit = GetCustomersCubit(sl());
+
+  @override
+  void initState() {
+    cubit.getCustomers();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<GetCustomersCubit>()..getCustomers(),
+    return BlocProvider.value(
+      value: cubit,
       child: BlocConsumer<GetCustomersCubit, GetCustomersState>(
         listener: (context, state) async {
           if (state.getCustomersRequestState == RequestState.success) {
