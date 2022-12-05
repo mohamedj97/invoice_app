@@ -69,15 +69,15 @@ class HomeMorePage extends StatelessWidget {
                     color: AppColors.whiteColor,
                     child: Column(
                       children: [
-                        const CircleAvatar(
-                          backgroundColor: AppColors.primary,
-                          radius: 52,
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundImage: NetworkImage(
-                                "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"),
-                          ),
-                        ),
+                        // const CircleAvatar(
+                        //   backgroundColor: AppColors.primary,
+                        //   radius: 52,
+                        //   child: CircleAvatar(
+                        //     radius: 50,
+                        //     backgroundImage: NetworkImage(
+                        //         "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"),
+                        //   ),
+                        // ),
                         const SizedBox(height: 16.0),
                         LWCustomText(
                             title: state.getProfileResponse?.result?.userName ??
