@@ -24,9 +24,11 @@ class HomeInvoicesPage extends StatefulWidget {
 class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
   TextEditingController searchController = TextEditingController();
   List<InvoiceHeadModel> invoices = [];
+  final cubit = GetInvoicesCubit(sl());
 
   @override
   void initState() {
+    cubit.getInvoices();
     super.initState();
   }
   @override
@@ -36,8 +38,8 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<GetInvoicesCubit>(
-      create: (context) => sl<GetInvoicesCubit>()..getInvoices(),
+    return BlocProvider<GetInvoicesCubit>.value(
+      value: cubit,
       child: BlocConsumer<GetInvoicesCubit, GetInvoicesState>(
         listener: (context, state) async {
           if (state.getInvoicesRequestState == RequestState.error) {
@@ -87,7 +89,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                           state.getInvoicesResponse?.result?.result ?? [];
                     });
                   } else {
-                    //searchDebouncer(() {
+                    // searchDebouncer(() {
                       setState(() {
                         invoices = invoices
                             .where((invoice) => invoice.id
