@@ -136,24 +136,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                               Material(
-                                 child: InkWell(
-                                   onTap: (){
-                                     Navigator.of(context).pushAndRemoveUntil(
-                                       CustomPageRoute.createRoute(
-                                         page: const HomeScreen(),
-                                       ),
-                                           (Route<dynamic> route) => false,
-                                     );
-                                   },
-                                   child: LWCustomText(
-                                    title: "welcome_back".tr(),
-                                    color: AppColors.primary,
-                                    fontSize: 15.0,
-                                    fontFamily: FontAssets.avertaSemiBold,
+                               LWCustomText(
+                                title: "welcome_back".tr(),
+                                color: AppColors.primary,
+                                fontSize: 15.0,
+                                fontFamily: FontAssets.avertaSemiBold,
                               ),
-                                 ),
-                               ),
                               const SizedBox(height: 16.0),
                               LWCustomText(
                                 title: 'sign_in'.tr(),
