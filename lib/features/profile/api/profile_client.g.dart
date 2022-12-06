@@ -56,7 +56,7 @@ class _ProfileClient implements ProfileClient {
     )
             .compose(
               _dio.options,
-              'RegisterUsers/change-password',
+              'Users/change-password',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -34,7 +34,7 @@ class BoolResponse extends BaseAPIResponse {
 
 @JsonSerializable()
 class StringResponse extends BaseAPIResponse {
-  final String result;
+  final String? result;
 
   StringResponse({
     required this.result,

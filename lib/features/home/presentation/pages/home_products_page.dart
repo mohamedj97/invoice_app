@@ -40,8 +40,9 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
         if (state.getProductsRequestState == RequestState.error) {
           getErrorDialogue(
             context: context,
-            isUnAuthorized: state.getProductsResponse!.statuscode==401,
-            message: state.getProductsResponse?.message ?? "something_went_wrong".tr(),
+            isUnAuthorized: state.getProductsResponse!.statuscode == 401,
+            message: state.getProductsResponse?.message ??
+                "something_went_wrong".tr(),
           );
         }
       }, builder: (context, state) {
@@ -81,10 +82,23 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
                       child: CircularProgressIndicator(),
                     )
                   : products.isEmpty
-                      ? EmptyScreen(
-                          title: "no_products".tr(),
-                          subtitle: "no_products_subtitle".tr(),
-                          imageString: ImageAssets.noProducts,
+                      ? RefreshIndicator(
+                          onRefresh: () async {
+                            await BlocProvider.of<GetProductsCubit>(context)
+                                .getProducts();
+                            searchController.clear();
+                          },
+                          child: SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height / 1.5,
+                              child: EmptyScreen(
+                                title: "no_products".tr(),
+                                subtitle: "no_products_subtitle".tr(),
+                                imageString: ImageAssets.noProducts,
+                              ),
+                            ),
+                          ),
                         )
                       : RefreshIndicator(
                           onRefresh: () async {
@@ -96,7 +110,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
                             color: AppColors.scaffoldColor,
                             child: ListView.builder(
                               itemCount: products.length,
-                              physics: const ScrollPhysics(),
+                              physics: const AlwaysScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 if (index == products.length - 1) {
                                   return ProductTileItem(

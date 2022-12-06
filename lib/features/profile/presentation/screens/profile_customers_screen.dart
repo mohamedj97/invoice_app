@@ -48,8 +48,9 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
           if (state.getCustomersRequestState == RequestState.error) {
             getErrorDialogue(
               context: context,
-              isUnAuthorized: state.getCustomersResponse!.statuscode==401,
-              message: state.getCustomersResponse?.message ?? "something_went_wrong".tr(),
+              isUnAuthorized: state.getCustomersResponse!.statuscode == 401,
+              message: state.getCustomersResponse?.message ??
+                  "something_went_wrong".tr(),
             );
           }
         },
@@ -111,10 +112,24 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                           child: CircularProgressIndicator(),
                         )
                       : customers.isEmpty
-                          ? EmptyScreen(
-                              title: "no_customers".tr(),
-                              subtitle: "no_customers_subtitle".tr(),
-                              imageString: ImageAssets.noCustomers,
+                          ? RefreshIndicator(
+                              onRefresh: () async {
+                                await BlocProvider.of<GetCustomersCubit>(
+                                        context)
+                                    .getCustomers();
+                                searchController.clear();
+                              },
+                              child: SingleChildScrollView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                child: SizedBox(
+                                  height: MediaQuery.of(context).size.height/1.5,
+                                  child: EmptyScreen(
+                                    title: "no_customers".tr(),
+                                    subtitle: "no_customers_subtitle".tr(),
+                                    imageString: ImageAssets.noCustomers,
+                                  ),
+                                ),
+                              ),
                             )
                           : Container(
                               color: AppColors.scaffoldColor,
@@ -127,7 +142,8 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                                 },
                                 child: ListView.builder(
                                   itemCount: customers.length,
-                                  physics: const ScrollPhysics(),
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     CustomerModel? item = customers[index];
                                     if (index != customers.length - 1) {

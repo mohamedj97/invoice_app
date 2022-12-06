@@ -39,6 +39,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
         listener: (context, state) async {
           if (state.changePasswordRequestState == RequestState.success) {
+            getErrorDialogue(
+              context: context,
+              onPressed: (){
+                Navigator.pop(context);
+                Navigator.of(context).pushAndRemoveUntil(
+                  CustomPageRoute.createRoute(
+                    page: const HomeScreen(),
+                  ),
+                      (Route<dynamic> route) => false,
+                );
+              },
+              isUnAuthorized: state.stringResponse!.statuscode == 401,
+              message:
+              state.stringResponse?.result ?? "password_change_success".tr(),
+            );
           }
           if (state.changePasswordRequestState == RequestState.error) {
             getErrorDialogue(
@@ -48,7 +63,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             );
           }
         },
-        builder: (context, state){
+        builder: (context, state) {
           return CustomScaffold(
             backGroundColor: AppColors.whiteColor,
             leading: const CustomBackButton(),
@@ -57,22 +72,40 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: InkWell(
-                      onTap: () {
-                        var formState = formKey.currentState;
-                        if (formState == null) return;
-                        if (!formState.saveAndValidate()) {
-                          return;
-                        }
-                        BlocProvider.of<ChangePasswordCubit>(context).changePassword(
-                          ChangePasswordRequest(
-                              widget.userName??"",
-                              formState.value["current_password"],
-                              formState.value["new_password"],
-                              formState.value["confirm_password"]),
-                        );
-                        Navigator.of(context).push(
-                            CustomPageRoute.createRoute(page: const HomeScreen()));
-                      },
+                      onTap: state is ChangePasswordLoading
+                          ? null
+                          : () {
+                              var formState = formKey.currentState;
+                              if (formState == null) return;
+                              if (!formState.saveAndValidate()) {
+                                return;
+                              }
+                                  BlocProvider.of<ChangePasswordCubit>(context)
+                                      .changePassword(
+                                ChangePasswordRequest(
+                                    widget.userName ?? "",
+                                    formState.value["current_password"],
+                                    formState.value["new_password"],
+                                    formState.value["confirm_password"]),
+                              );
+                              // if (state.stringResponse!.message!.isNotEmpty && state.stringResponse!.message !=null) {
+                              //   getErrorDialogue(
+                              //     context: context,
+                              //     isUnAuthorized:
+                              //         state.stringResponse!.statuscode == 401,
+                              //     message: state.stringResponse?.message ??
+                              //         "something_went_wrong".tr(),
+                              //   );
+                              // } else {
+                              //   getErrorDialogue(
+                              //     context: context,
+                              //     isUnAuthorized:
+                              //         state.stringResponse!.statuscode == 401,
+                              //     message: state.stringResponse?.message ??
+                              //         "password_change_success".tr(),
+                              //   );
+                              // }
+                            },
                       child: LWCustomText(
                         title: "save".tr(),
                         color: AppColors.primary,
@@ -83,161 +116,165 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               ),
             ],
             title: "password".tr(),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24.0),
-              child: FormBuilder(
-                key: formKey,
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.whiteColor,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColors.blackColor,
-                            width: 0.25,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LWCustomText(
-                              title: "current_password".tr(),
-                              color: AppColors.labelColor,
-                              fontSize: 14.0,
-                              fontFamily: FontAssets.avertaRegular,
-                            ),
-                            LWCustomPasswordFormField(
-                              controller: currentPasswordController,
-                              isRequired: true,
-                              labelText: "",
-                              showLabel: false,
-                              name: 'current_password',
-                              showRequiredSymbol: false,
-                              hintText: "**********",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24.0),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.whiteColor,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColors.blackColor,
-                            width: 0.25,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LWCustomText(
-                              title: "new_password".tr(),
-                              color: AppColors.labelColor,
-                              fontSize: 14.0,
-                              fontFamily: FontAssets.avertaRegular,
-                            ),
-                            LWCustomPasswordFormField(
-                              controller: newPasswordController,
-                              isRequired: true,
-                              labelText: "",
-                              showLabel: false,
-                              name: 'new_password',
-                              showRequiredSymbol: false,
-                              hintText: "**********",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24.0),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.whiteColor,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColors.blackColor,
-                            width: 0.25,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LWCustomText(
-                              title: "confirm_password".tr(),
-                              color: AppColors.labelColor,
-                              fontSize: 14.0,
-                              fontFamily: FontAssets.avertaRegular,
-                            ),
-                            LWCustomRepeatPasswordFormField(
-                              isRequired: true,
-                              labelText: "",
-                              showLabel: false,
-                              name: 'confirm_password',
-                              showRequiredSymbol: false,
-                              isCard: false,
-                              hintText: "**********",
-                              passwordController: newPasswordController,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24.0),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.whiteColor,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColors.blackColor,
-                            width: 0.25,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LWCustomText(
-                              title: "user_name".tr(),
-                              color: AppColors.labelColor,
-                              fontSize: 14.0,
-                              fontFamily: FontAssets.avertaRegular,
-                            ),
-                            const SizedBox(height: 16.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                LWCustomText(
-                                  title: widget.userName ?? "user_name".tr(),
-                                  color: AppColors.searchBarColor,
+            body: state is ChangePasswordLoading
+                ? Center(child: CircularProgressIndicator())
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24.0),
+                    child: FormBuilder(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.whiteColor,
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: AppColors.blackColor,
+                                  width: 0.25,
                                 ),
-                                const Icon(Icons.mode_edit_sharp,
-                                    color: AppColors.searchBarColor)
-                              ],
-                            )
-                          ],
-                        ),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  LWCustomText(
+                                    title: "current_password".tr(),
+                                    color: AppColors.labelColor,
+                                    fontSize: 14.0,
+                                    fontFamily: FontAssets.avertaRegular,
+                                  ),
+                                  LWCustomPasswordFormField(
+                                    controller: currentPasswordController,
+                                    isRequired: true,
+                                    labelText: "",
+                                    showLabel: false,
+                                    name: 'current_password',
+                                    showRequiredSymbol: false,
+                                    hintText: "**********",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 24.0),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.whiteColor,
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: AppColors.blackColor,
+                                  width: 0.25,
+                                ),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  LWCustomText(
+                                    title: "new_password".tr(),
+                                    color: AppColors.labelColor,
+                                    fontSize: 14.0,
+                                    fontFamily: FontAssets.avertaRegular,
+                                  ),
+                                  LWCustomPasswordFormField(
+                                    controller: newPasswordController,
+                                    isRequired: true,
+                                    labelText: "",
+                                    showLabel: false,
+                                    name: 'new_password',
+                                    showRequiredSymbol: false,
+                                    hintText: "**********",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 24.0),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.whiteColor,
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: AppColors.blackColor,
+                                  width: 0.25,
+                                ),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  LWCustomText(
+                                    title: "confirm_password".tr(),
+                                    color: AppColors.labelColor,
+                                    fontSize: 14.0,
+                                    fontFamily: FontAssets.avertaRegular,
+                                  ),
+                                  LWCustomRepeatPasswordFormField(
+                                    isRequired: true,
+                                    labelText: "",
+                                    showLabel: false,
+                                    name: 'confirm_password',
+                                    showRequiredSymbol: false,
+                                    isCard: false,
+                                    hintText: "**********",
+                                    passwordController: newPasswordController,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 24.0),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.whiteColor,
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: AppColors.blackColor,
+                                  width: 0.25,
+                                ),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  LWCustomText(
+                                    title: "user_name".tr(),
+                                    color: AppColors.labelColor,
+                                    fontSize: 14.0,
+                                    fontFamily: FontAssets.avertaRegular,
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      LWCustomText(
+                                        title:
+                                            widget.userName ?? "user_name".tr(),
+                                        color: AppColors.searchBarColor,
+                                      ),
+                                      const Icon(Icons.mode_edit_sharp,
+                                          color: AppColors.searchBarColor)
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
           );
-      },
+        },
       ),
     );
   }

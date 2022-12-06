@@ -33,7 +33,7 @@ Map<String, dynamic> _$BoolResponseToJson(BoolResponse instance) =>
 
 StringResponse _$StringResponseFromJson(Map<String, dynamic> json) =>
     StringResponse(
-      result: json['result'] as String,
+      result: json['result'] as String?,
       statuscode: json['statuscode'] as int?,
       message: json['message'] as String?,
     );

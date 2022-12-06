@@ -13,6 +13,7 @@ import '../navigation/custom_page_route.dart';
 Future<void> getErrorDialogue(
     {required String message,
     required bool isUnAuthorized,
+      void Function()? onPressed,
     required BuildContext context}) async {
   if (isUnAuthorized) {
     await DiskRepo().deleteTokensData();
@@ -55,7 +56,7 @@ Future<void> getErrorDialogue(
               width: 300,
               child: CustomElevatedButton(
                 title: isUnAuthorized ? "login".tr() : "cancel".tr(),
-                onPressed: () {
+                onPressed: onPressed??() {
                   Navigator.pop(context);
                 },
               ),

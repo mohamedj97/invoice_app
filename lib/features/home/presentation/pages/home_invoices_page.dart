@@ -90,10 +90,24 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                         child: CircularProgressIndicator(),
                       )
                     : invoices.isEmpty
-                        ? EmptyScreen(
-                            title: "no_invoices".tr(),
-                            subtitle: "no_invoices_subtitle".tr(),
-                            imageString: ImageAssets.noInvoices,
+                        ? RefreshIndicator(
+                            onRefresh: () async {
+                              await BlocProvider.of<GetInvoicesCubit>(context)
+                                  .getInvoices();
+                              searchController.clear();
+                            },
+                            child: SingleChildScrollView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 1.5,
+                                child: EmptyScreen(
+                                  title: "no_invoices".tr(),
+                                  subtitle: "no_invoices_subtitle".tr(),
+                                  imageString: ImageAssets.noInvoices,
+                                ),
+                              ),
+                            ),
                           )
                         : RefreshIndicator(
                             onRefresh: () async {
@@ -104,8 +118,8 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                             child: Container(
                               color: AppColors.scaffoldColor,
                               child: ListView.builder(
+                                physics: const AlwaysScrollableScrollPhysics(),
                                 itemCount: invoices.length,
-                                physics: const ScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return InvoiceListItem(
                                       invoice: invoices[index]);

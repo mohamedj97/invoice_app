@@ -20,6 +20,7 @@
   "sign_in": "Sign In",
   "user_name": "UserName",
   "password": "Password",
+  "password_change_success": "Password Changed Successfully",
   "get_started": "Get started",
   "powerful_invoicing_app": "Powerful invoicing app",
   "start_sending_your_invoices": "Start Sending Your Invoices",

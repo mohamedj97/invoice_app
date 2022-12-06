@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
       body: PageView(
+        allowImplicitScrolling: false,
         onPageChanged: (index) {
           setState(() {
             pageIndex = index;
