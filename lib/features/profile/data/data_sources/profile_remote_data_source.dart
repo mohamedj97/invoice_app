@@ -1,8 +1,11 @@
 import '../../../../../core/api/api_repo.dart';
+import '../../../../core/api/base_api_response.dart';
+import '../models/responses/change_password_request_model.dart';
 import '../models/responses/get_profile_response_model.dart';
 
 abstract class ProfileRemoteDataSource {
   Future<GetProfileResponse> getProfile();
+  Future<StringResponse> changePassword(ChangePasswordModel changePasswordModel);
 }
 
 class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
@@ -13,6 +16,12 @@ class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
   @override
   Future<GetProfileResponse> getProfile() async {
     final response = await apiRepo.profileClient.getProfile();
+
+    return response;
+  }
+  @override
+  Future<StringResponse> changePassword(ChangePasswordModel changePasswordModel) async {
+    final response = await apiRepo.profileClient.changePassword(changePasswordModel);
 
     return response;
   }

@@ -5,10 +5,9 @@ import 'package:invoice_app/core/common_widgets/search_bar.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/utils/string_validation_extension.dart';
 import 'package:invoice_app/features/products/domain/entities/product.dart';
-import '../../../../core/assets/font_assets.dart';
 import '../../../../core/assets/image_assets.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
-import '../../../../core/common_widgets/lw_custom_text.dart';
+import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
 import '../../../products/presentation/cubit/get_products_cubit.dart';
@@ -39,31 +38,10 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
       child: BlocConsumer<GetProductsCubit, GetProductsState>(
           listener: (context, state) async {
         if (state.getProductsRequestState == RequestState.error) {
-          await showDialog(
+          getErrorDialogue(
             context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Icon(
-                  Icons.warning,
-                  color: AppColors.primary,
-                  size: 80.0,
-                ),
-                content: Text(state.getProductsResponse?.message ??
-                    "something_went_wrong".tr()),
-                actions: [
-                  TextButton(
-                    child: LWCustomText(
-                      title: "cancel".tr(),
-                      fontFamily: FontAssets.avertaSemiBold,
-                      color: AppColors.primary,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              );
-            },
+            isUnAuthorized: state.getProductsResponse!.statuscode==401,
+            message: state.getProductsResponse?.message ?? "something_went_wrong".tr(),
           );
         }
       }, builder: (context, state) {

@@ -35,7 +35,6 @@ class ErrorInterceptor extends Interceptor {
       );
       return handler.resolve(response);
     }
-
     return handler.next(err);
   }
 }

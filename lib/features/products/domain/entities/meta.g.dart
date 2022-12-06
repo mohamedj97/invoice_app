@@ -11,8 +11,7 @@ Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
       label: json['label'] as String?,
     );
 
-Map<String, dynamic> _$MetaToJson(Meta instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{
       'field': instance.field,
       'label': instance.label,
     };

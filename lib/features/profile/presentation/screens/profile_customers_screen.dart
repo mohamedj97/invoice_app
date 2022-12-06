@@ -12,6 +12,7 @@ import '../../../../core/common_widgets/empty_screen.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/navigation/custom_page_route.dart';
+import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
 import '../../../customers/presentation/screens/add_customer_screen.dart';
@@ -45,30 +46,10 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
             //     page: const CreateEditInvoiceScreen()));
           }
           if (state.getCustomersRequestState == RequestState.error) {
-            await showDialog(
+            getErrorDialogue(
               context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Icon(
-                    Icons.warning,
-                    color: AppColors.primary,
-                    size: 80.0,
-                  ),
-                  content: Text(state.failure ?? "something_went_wrong".tr()),
-                  actions: [
-                    TextButton(
-                      child: LWCustomText(
-                        title: "cancel".tr(),
-                        fontFamily: FontAssets.avertaSemiBold,
-                        color: AppColors.primary,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
-              },
+              isUnAuthorized: state.getCustomersResponse!.statuscode==401,
+              message: state.getCustomersResponse?.message ?? "something_went_wrong".tr(),
             );
           }
         },

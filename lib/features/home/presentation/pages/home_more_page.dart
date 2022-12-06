@@ -12,6 +12,7 @@ import 'package:invoice_app/features/profile/domain/entities/user_info_data.dart
 import 'package:invoice_app/features/profile/presentation/cubit/get_profile_cubit.dart';
 import 'package:invoice_app/features/profile/presentation/screens/business_data_screen.dart';
 import '../../../../core/navigation/custom_page_route.dart';
+import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
 import '../../../profile/presentation/screens/change_language_screen.dart';
@@ -20,41 +21,36 @@ import '../../../profile/presentation/screens/profile_customers_screen.dart';
 import '../../../profile/presentation/screens/profile_data_screen.dart';
 import '../../../profile/presentation/widgets/profile_item_widget.dart';
 
-class HomeMorePage extends StatelessWidget {
+class HomeMorePage extends StatefulWidget {
   const HomeMorePage({Key? key}) : super(key: key);
 
   @override
+  State<HomeMorePage> createState() => _HomeMorePageState();
+}
+
+class _HomeMorePageState extends State<HomeMorePage> {
+  final cubit = GetProfileCubit(sl());
+
+  @override
+  void initState() {
+    cubit.getProfile();
+    super.initState();
+  }
+  @override
+  void dispose() async{
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider<GetProfileCubit>(
-      create: (context) => sl<GetProfileCubit>()..getProfile(),
+    return BlocProvider<GetProfileCubit>.value(
+      value: cubit,
       child: BlocConsumer<GetProfileCubit, GetProfileState>(
           listener: (context, state) async {
         if (state.getProfileRequestState == RequestState.error) {
-          await showDialog(
+          getErrorDialogue(
             context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Icon(
-                  Icons.warning,
-                  color: AppColors.primary,
-                  size: 80.0,
-                ),
-                content: Text(state.getProfileResponse?.message ??
-                    "something_went_wrong".tr()),
-                actions: [
-                  TextButton(
-                    child: LWCustomText(
-                      title: "cancel".tr(),
-                      fontFamily: FontAssets.avertaSemiBold,
-                      color: AppColors.primary,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              );
-            },
+            isUnAuthorized: state.getProfileResponse!.statuscode == 401,
+            message: state.getProfileResponse?.message ?? "something_went_wrong".tr(),
           );
         }
       }, builder: (context, state) {
@@ -129,7 +125,7 @@ class HomeMorePage extends StatelessWidget {
                     imagePath: IconAssets.lockIcon,
                     onTap: () {
                       Navigator.of(context).push(CustomPageRoute.createRoute(
-                          page: const ChangePasswordScreen()));
+                          page: ChangePasswordScreen(userName: state.getProfileResponse?.result?.userName??"user_name".tr(),)));
                     },
                   ),
                   ProfileItemWidget(

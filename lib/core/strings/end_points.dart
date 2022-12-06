@@ -6,6 +6,7 @@ class EndPoints {
 
   // auth
   static const login = 'Authenticate/login';
+  static const changePassword = 'RegisterUsers/change-password';
 
 
   //invoices

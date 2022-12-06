@@ -5,10 +5,9 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/image_assets.dart';
 import 'package:invoice_app/core/utils/string_validation_extension.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
-import '../../../../core/assets/font_assets.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
-import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/common_widgets/search_bar.dart';
+import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
 import '../../../invoices/domain/entities/invoice_head_model.dart';
@@ -31,8 +30,9 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
     cubit.getInvoices();
     super.initState();
   }
+
   @override
-  void dispose() async{
+  void dispose() async {
     super.dispose();
   }
 
@@ -43,31 +43,11 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
       child: BlocConsumer<GetInvoicesCubit, GetInvoicesState>(
         listener: (context, state) async {
           if (state.getInvoicesRequestState == RequestState.error) {
-            await showDialog(
+            getErrorDialogue(
               context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Icon(
-                    Icons.warning,
-                    color: AppColors.primary,
-                    size: 80.0,
-                  ),
-                  content: Text(state.getInvoicesResponse?.message ??
-                      "something_went_wrong".tr()),
-                  actions: [
-                    TextButton(
-                      child: LWCustomText(
-                        title: "cancel".tr(),
-                        fontFamily: FontAssets.avertaSemiBold,
-                        color: AppColors.primary,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
-              },
+              isUnAuthorized: state.getInvoicesResponse!.statuscode == 401,
+              message: state.getInvoicesResponse?.message ??
+                  "something_went_wrong".tr(),
             );
           }
         },
@@ -90,14 +70,14 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                     });
                   } else {
                     // searchDebouncer(() {
-                      setState(() {
-                        invoices = invoices
-                            .where((invoice) => invoice.id
-                                .toString()
-                                .contains(searchController.text))
-                            .toList();
-                      });
-                   // });
+                    setState(() {
+                      invoices = invoices
+                          .where((invoice) => invoice.id
+                              .toString()
+                              .contains(searchController.text))
+                          .toList();
+                    });
+                    // });
                   }
                 },
                 searchController: searchController,

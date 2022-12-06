@@ -65,7 +65,7 @@ class AuthInterceptor extends Interceptor {
                   const EdgeInsets.symmetric(vertical: 24.0, horizontal: 32.0),
               title: LWCustomText(
                 textAlign: TextAlign.center,
-                title: "session_timeout".tr(),
+                title: "session_expired".tr(),
                 color: AppColors.dialogueTitleColor,
                 fontFamily: FontAssets.avertaSemiBold,
               ),
