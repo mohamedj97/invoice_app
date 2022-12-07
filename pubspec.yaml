@@ -22,20 +22,15 @@ dependencies:
   connectivity_plus: ^3.0.2
   alice: ^0.3.2
   pretty_dio_logger: ^1.1.1
-  flutter_app_badger: ^1.5.0
-  internet_connection_checker: ^1.0.0+1
   shared_preferences: ^2.0.15
   flutter_bloc: ^8.1.1
   syncfusion_flutter_sliders: ^20.3.57
   synchronized: ^3.0.0+3
   dartz: ^0.10.1
-  get_it: ^7.2.0
   dio: ^4.0.6
   retrofit: ^3.3.1
   injectable: ^1.5.3
   json_annotation: ^4.7.0
-  logger: any  #for logging purpose
-  freezed_annotation:
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -43,7 +38,6 @@ dev_dependencies:
   retrofit_generator: '>=4.0.0 <5.0.0'
   build_runner:
   json_serializable: '>4.4.0'
-  freezed: ^2.1.0+1
   injectable_generator: ^1.5.4
 
 

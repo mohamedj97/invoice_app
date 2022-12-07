@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(32.0),
-                    child: state is LoginLoading ? Center(child: CircularProgressIndicator()) :FormBuilder(
+                    child: state is LoginLoading ? const Center(child: CircularProgressIndicator()) :FormBuilder(
                       key: formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,13 +187,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             onSaved: (value) {
                               password = value;
                             },
-                          ),
+                           ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
                               onPressed: state is LoginLoading ? null :() {},
-                              child: LWCustomText(
-                                title: "forgot_password".tr(),
+                              child: const LWCustomText(
+                                title: "",
                                 color: AppColors.secondary,
                                 fontFamily: FontAssets.avertaSemiBold,
                                 fontSize: 13.0,

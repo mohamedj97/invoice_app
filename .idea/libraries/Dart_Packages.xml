@@ -289,13 +289,6 @@
             </list>
           </value>
         </entry>
-        <entry key="flutter_app_badger">
-          <value>
-            <list>
-              <option value="C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_app_badger-1.5.0/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="flutter_bloc">
           <value>
             <list>
@@ -366,20 +359,6 @@
             </list>
           </value>
         </entry>
-        <entry key="freezed">
-          <value>
-            <list>
-              <option value="C:/flutter/.pub-cache/hosted/pub.dartlang.org/freezed-2.2.1/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="freezed_annotation">
-          <value>
-            <list>
-              <option value="C:/flutter/.pub-cache/hosted/pub.dartlang.org/freezed_annotation-2.2.0/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="frontend_server_client">
           <value>
             <list>
@@ -443,13 +422,6 @@
             </list>
           </value>
         </entry>
-        <entry key="internet_connection_checker">
-          <value>
-            <list>
-              <option value="C:/flutter/.pub-cache/hosted/pub.dartlang.org/internet_connection_checker-1.0.0+1/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="intl">
           <value>
             <list>
@@ -496,13 +468,6 @@
           <value>
             <list>
               <option value="C:/flutter/.pub-cache/hosted/pub.dartlang.org/lints-2.0.1/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="logger">
-          <value>
-            <list>
-              <option value="C:/flutter/.pub-cache/hosted/pub.dartlang.org/logger-1.1.0/lib" />
             </list>
           </value>
         </entry>
@@ -1137,7 +1102,6 @@
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/ffi-2.0.1/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/file-6.1.4/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/fixnum-1.0.1/lib" />
-      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_app_badger-1.5.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_bloc-8.1.1/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_form_builder-7.7.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-2.0.1/lib" />
@@ -1145,8 +1109,6 @@
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_linux-2.0.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_platform_interface-6.0.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/form_builder_validators-8.3.0/lib" />
-      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/freezed-2.2.1/lib" />
-      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/freezed_annotation-2.2.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/frontend_server_client-3.1.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/get_it-7.2.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/glob-2.1.1/lib" />
@@ -1156,7 +1118,6 @@
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.2/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/injectable-1.5.4/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/injectable_generator-1.5.5/lib" />
-      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/internet_connection_checker-1.0.0+1/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/introduction_screen-3.0.2/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/io-1.0.3/lib" />
@@ -1164,7 +1125,6 @@
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-4.7.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/json_serializable-6.5.4/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/lints-2.0.1/lib" />
-      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/logger-1.1.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/logging-1.1.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.12/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/material_color_utilities-0.1.5/lib" />
