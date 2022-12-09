@@ -23,6 +23,7 @@ dependencies:
   alice: ^0.3.2
   pretty_dio_logger: ^1.1.1
   shared_preferences: ^2.0.15
+  device_preview: ^1.1.0
   flutter_bloc: ^8.1.1
   syncfusion_flutter_sliders: ^20.3.57
   synchronized: ^3.0.0+3

@@ -1,4 +1,6 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/features/splash/presentation/screens/splash_screen.dart';
@@ -12,14 +14,17 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await di.init();
   runApp(
-    EasyLocalization(
-      supportedLocales: const [Locale('en'), Locale('ar')],
-      path: 'assets/locale',
-      startLocale: const Locale('en'),
-      fallbackLocale: const Locale('en'),
-      useOnlyLangCode: true,
-      saveLocale: true,
-      child: const MyApp(),
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => EasyLocalization(
+        supportedLocales: const [Locale('en'), Locale('ar')],
+        path: 'assets/locale',
+        startLocale: const Locale('en'),
+        fallbackLocale: const Locale('en'),
+        useOnlyLangCode: true,
+        saveLocale: true,
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -40,7 +45,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'title'.tr(),
+        title: "Invoice",
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         localizationsDelegates: context.localizationDelegates,
