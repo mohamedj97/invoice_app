@@ -1,24 +1,24 @@
 part of 'add_product_cubit.dart';
 
 class AddProductState extends Equatable {
-  final BoolResponse? boolResponse;
+  final AddProductResponse? addProductResponse;
   final String? failure;
   final RequestState addProductRequestState;
 
   const AddProductState({
-    this.boolResponse,
+    this.addProductResponse,
     this.addProductRequestState = RequestState.loading,
     this.failure = "",
   });
   AddProductState copyWith({
-    BoolResponse? boolResponse,
+    AddProductResponse? addProductResponse,
     String? failure,
     RequestState? addProductRequestState,
   }) {
     return AddProductState(
       failure: failure ?? this.failure,
       addProductRequestState: addProductRequestState ?? this.addProductRequestState,
-      boolResponse: boolResponse ?? this.boolResponse,
+      addProductResponse: addProductResponse ?? this.addProductResponse,
     );
   }
 
@@ -26,17 +26,17 @@ class AddProductState extends Equatable {
   List<Object> get props => [
     addProductRequestState,
     failure!,
-    boolResponse ??
-        BoolResponse(statuscode: 0, result: null)
+    addProductResponse ??
+        AddProductResponse(statuscode: 0, result: null)
   ];
 }
 
 class AddProductInitial extends AddProductState {}
 
 class AddProductSuccess extends AddProductState {
-  final BoolResponse boolResponse;
+  final AddProductResponse addProductResponse;
   const AddProductSuccess({
-    required this.boolResponse,
+    required this.addProductResponse,
   });
 }
 

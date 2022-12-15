@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:invoice_app/features/products/data/models/requests/product_request_model.dart';
 import '../../../../../core/utils/enums.dart';
-import '../../../../core/api/base_api_response.dart';
+import '../../data/models/responses/add_product_response_model.dart';
 import '../../domain/use_cases/add_product_usecase.dart';
 
 part 'add_product_state.dart';
@@ -32,11 +32,11 @@ class AddProductCubit extends Cubit<AddProductState> {
       );
     }, (response) {
       if (response.statuscode == 200 && response.result != null) {
-        emit(AddProductSuccess(boolResponse: response));
+        emit(AddProductSuccess(addProductResponse: response));
         return emit(
           state.copyWith(
             addProductRequestState: RequestState.success,
-            boolResponse: response,
+            addProductResponse: response,
           ),
         );
       } else {
@@ -44,7 +44,7 @@ class AddProductCubit extends Cubit<AddProductState> {
         return emit(
           state.copyWith(
             addProductRequestState: RequestState.error,
-            boolResponse: response,
+            addProductResponse: response,
           ),
         );
       }

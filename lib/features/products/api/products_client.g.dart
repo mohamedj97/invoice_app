@@ -42,14 +42,14 @@ class _ProductsClient implements ProductsClient {
   }
 
   @override
-  Future<BoolResponse> addProduct(productModel) async {
+  Future<AddProductResponse> addProduct(productModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(productModel.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<BoolResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<AddProductResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -61,7 +61,7 @@ class _ProductsClient implements ProductsClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BoolResponse.fromJson(_result.data!);
+    final value = AddProductResponse.fromJson(_result.data!);
     return value;
   }
 
