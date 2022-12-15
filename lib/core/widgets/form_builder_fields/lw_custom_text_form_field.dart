@@ -30,6 +30,7 @@ class LWCustomTextFormField extends StatelessWidget {
   final void Function(String?)? onSubmitted;
   final void Function(String?)? onSaved;
   final EdgeInsetsGeometry? contentPadding;
+  final TextAlign? textAlign;
 
   const LWCustomTextFormField({
     Key? key,
@@ -53,7 +54,7 @@ class LWCustomTextFormField extends StatelessWidget {
     this.controller,
     this.fontSize,
     this.onSubmitted,
-    this.onSaved, this.focusedBorderDecoration, this.contentPadding,
+    this.onSaved, this.focusedBorderDecoration, this.contentPadding, this.textAlign,
   }) : super(key: key);
 
   @override
@@ -62,6 +63,7 @@ class LWCustomTextFormField extends StatelessWidget {
       onSubmitted: onSubmitted,
       onSaved: onSaved,
       initialValue: initialValue,
+      textAlign: textAlign??TextAlign.start,
       enabled: enabled,
       controller: controller,
       name: name,

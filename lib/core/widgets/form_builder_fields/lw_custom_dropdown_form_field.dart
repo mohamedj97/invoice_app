@@ -44,47 +44,44 @@ class LWCustomDropdownFormField<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var child = Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: FormBuilderDropdown<T>(
-        iconEnabledColor: iconColor ?? Colors.transparent,
-        name: name,
-        enabled: enabled,
-        icon: null,
-        elevation: 0,
-        decoration: InputDecoration(
-          enabledBorder: border ?? InputBorder.none,
-          focusedBorder: border ?? InputBorder.none,
-          fillColor: fillColor,
-          errorMaxLines: 10,
-          hintText: hintText,
-          hintStyle: const TextStyle(color: AppColors.searchBarColor),
-        ),
-        items: <DropdownMenuItem<T>>[
-          for (var item in items)
-            DropdownMenuItem(
-              value: item,
-              child: itemBuilder(context, item),
-            ),
-        ],
-        initialValue: initialValue,
-        onChanged: enabled ? onChanged : null,
-        autovalidateMode: AutovalidateMode.disabled,
-        validator: (T? value) {
-          var validatorsList = <String? Function(T?)>[
-            if (isRequired) (value) => LWValidators.required(value, labelText),
-            for (final validator in validators)
-              (value) => validator(value, labelText),
-          ];
-          for (var validator in validatorsList) {
-            var validationResult = validator(value);
-            if (validationResult != null) {
-              return validationResult;
-            }
-          }
-          return null;
-        },
+    var child = FormBuilderDropdown<T>(
+      iconEnabledColor: iconColor ?? Colors.transparent,
+      name: name,
+      enabled: enabled,
+      icon: null,
+      elevation: 0,
+      decoration: InputDecoration(
+        enabledBorder: border ?? InputBorder.none,
+        focusedBorder: border ?? InputBorder.none,
+        fillColor: fillColor,
+        errorMaxLines: 10,
+        hintText: hintText,
+        hintStyle: const TextStyle(color: AppColors.searchBarColor),
       ),
+      items: <DropdownMenuItem<T>>[
+        for (var item in items)
+          DropdownMenuItem(
+            value: item,
+            child: itemBuilder(context, item),
+          ),
+      ],
+      initialValue: initialValue,
+      onChanged: enabled ? onChanged : null,
+      autovalidateMode: AutovalidateMode.disabled,
+      validator: (T? value) {
+        var validatorsList = <String? Function(T?)>[
+          if (isRequired) (value) => LWValidators.required(value, labelText),
+          for (final validator in validators)
+            (value) => validator(value, labelText),
+        ];
+        for (var validator in validatorsList) {
+          var validationResult = validator(value);
+          if (validationResult != null) {
+            return validationResult;
+          }
+        }
+        return null;
+      },
     );
     return showLabel
         ? LWCustomFormFieldWrapper(

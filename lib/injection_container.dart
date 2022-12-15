@@ -9,6 +9,9 @@ import 'package:invoice_app/features/invoices/domain/repositories/invoices_repos
 import 'package:invoice_app/features/invoices/domain/use_cases/get_invoices_use_case.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
 import 'package:invoice_app/features/products/domain/use_cases/add_product_usecase.dart';
+import 'package:invoice_app/features/products/domain/use_cases/get_types_use_case.dart';
+import 'package:invoice_app/features/products/presentation/cubit/add_product_cubit.dart';
+import 'package:invoice_app/features/products/presentation/cubit/get_item_types_cubit.dart';
 import 'package:invoice_app/features/products/presentation/cubit/get_products_cubit.dart';
 import 'package:invoice_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:invoice_app/features/profile/domain/use_cases/change_password_usecase.dart';
@@ -45,6 +48,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetProductsCubit(sl()));
   sl.registerLazySingleton(() => GetProfileCubit(sl()));
   sl.registerLazySingleton(() => ChangePasswordCubit(sl()));
+  sl.registerLazySingleton(() => AddProductCubit(sl()));
+  sl.registerLazySingleton(() => GetItemTypesCubit(sl()));
   //
 
 //   sl.registerFactory(() => CreateUpdateDeletePostCubit(
@@ -60,6 +65,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetCustomersUseCase(customersRepository: sl()));
   sl.registerLazySingleton(() => GetProductsUseCase(productsRepository: sl()));
   sl.registerLazySingleton(() => AddProductUseCase(productsRepository: sl()));
+  sl.registerLazySingleton(() => GetItemTypesUseCase(productsRepository: sl()));
   sl.registerLazySingleton(() => GetProfileUseCase(profileRepository: sl()));
   sl.registerLazySingleton(() => ChangePasswordUseCase(profileRepository: sl()));
 //   sl.registerLazySingleton(() => DeletePostUseCase(sl()));
