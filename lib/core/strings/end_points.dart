@@ -17,6 +17,7 @@ class EndPoints {
   //products
   static const getProducts = 'Items';
   static const addProduct = 'Items';
+  static const getItemTypes = 'Items/getItem-lookups';
 
   //profile
   static const getProfile = 'Users/getuserdata';

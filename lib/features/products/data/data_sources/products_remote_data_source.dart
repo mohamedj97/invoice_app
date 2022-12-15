@@ -3,9 +3,11 @@ import 'package:invoice_app/features/products/data/models/responses/get_products
 
 import '../../../../../core/api/api_repo.dart';
 import '../models/responses/add_product_response_model.dart';
+import '../models/responses/get_item_types_response_model.dart';
 
 abstract class ProductsRemoteDataSource {
   Future<GetProductsResponse> getProducts();
+  Future<GetItemTypesResponse> getItemTypes();
   Future<AddProductResponse> addProduct(ProductModel productModel);
 }
 
@@ -24,6 +26,13 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
   @override
   Future<AddProductResponse> addProduct(ProductModel productModel) async{
     final response = await apiRepo.productsClient.addProduct(productModel);
+
+    return response;
+  }
+
+  @override
+  Future<GetItemTypesResponse> getItemTypes() async{
+    final response = await apiRepo.productsClient.getItemTypes();
 
     return response;
   }
