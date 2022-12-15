@@ -13,6 +13,7 @@ import '../../../../core/assets/font_assets.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/custom_back_button.dart';
+import '../../data/models/requests/product_request_model.dart';
 
 class AddEditProductScreen extends StatefulWidget {
   final Product? productItem;
@@ -49,8 +50,8 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                   color: AppColors.primary,
                   size: 80.0,
                 ),
-                content: Text(
-                    state.addProductResponse?.message ?? "something_went_wrong".tr()),
+                content: Text(state.addProductResponse?.message ??
+                    "something_went_wrong".tr()),
                 actions: [
                   TextButton(
                     child: LWCustomText(
@@ -84,8 +85,17 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                       return;
                     }
                     if (hasData) {
-                      // BlocProvider.of<AddProductCubit>(context)
-                      //     .addProduct(ProductModel(companyId, code, brickcode, name, type, description, unittype, active));
+                      BlocProvider.of<AddProductCubit>(context).addProduct(
+                        ProductModel(
+                          formState.value["code"],
+                          formState.value["barcode"],
+                          formState.value["name"],
+                          formState.value["type"],
+                          formState.value["description"],
+                          formState.value["item_type"],
+                          true,
+                        ),
+                      );
                     } else {}
                     // Navigator.of(context).push(
                     //     CustomPageRoute.createRoute(page: const HomeScreen()));
