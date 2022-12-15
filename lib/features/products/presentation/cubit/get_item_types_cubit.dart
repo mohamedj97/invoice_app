@@ -16,7 +16,7 @@ class GetItemTypesCubit extends Cubit<GetItemTypesState> {
       this.getItemTypesUseCase,
       ) : super(GetItemTypesInitial());
 
-  Future<void> getProducts() async {
+  Future<void> getItemTypes() async {
     emit(GetItemTypesLoading());
     final response = await getItemTypesUseCase.call();
 

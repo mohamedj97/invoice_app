@@ -15,7 +15,7 @@ GetItemTypesResponseDataModel _$GetItemTypesResponseDataModelFromJson(
       unitTypes: (json['unitTypes'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
-      meta: (json['meta'] as List<dynamic>)
+      meta: (json['metaData'] as List<dynamic>)
           .map((e) => Meta.fromJson(e as Map<String, dynamic>))
           .toList(),
       total: json['total'] as int?,
@@ -27,7 +27,7 @@ Map<String, dynamic> _$GetItemTypesResponseDataModelToJson(
       'itemTypes': instance.itemTypes,
       'unitTypes': instance.unitTypes,
       'total': instance.total,
-      'meta': instance.meta,
+      'metaData': instance.meta,
     };
 
 GetItemTypesResponse _$GetItemTypesResponseFromJson(

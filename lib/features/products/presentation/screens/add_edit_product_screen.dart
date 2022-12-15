@@ -7,10 +7,13 @@ import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import 'package:invoice_app/features/home/presentation/screens/home_screen.dart';
+import 'package:invoice_app/features/products/domain/entities/base_lookup.dart';
 import 'package:invoice_app/features/products/domain/entities/product.dart';
 import 'package:invoice_app/features/products/presentation/cubit/add_product_cubit.dart';
+import 'package:invoice_app/features/products/presentation/cubit/get_item_types_cubit.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/navigation/custom_page_route.dart';
+import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
@@ -28,16 +31,19 @@ class AddEditProductScreen extends StatefulWidget {
 
 class _AddEditProductScreenState extends State<AddEditProductScreen> {
   final cubit = AddProductCubit(sl());
+  final getItemTypesCubit = GetItemTypesCubit(sl());
   final formKey = GlobalKey<FormBuilderState>();
+  List<BaseLookup> unitTypes = [];
+  List<BaseLookup> itemTypes = [];
+
+  @override
+  void initState() {
+    getItemTypesCubit.getItemTypes();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var dropdownList = [
-      "1",
-      "2",
-      "3",
-      "4",
-    ];
     bool hasData = widget.productItem == null;
     return BlocProvider<AddProductCubit>.value(
       value: cubit,
@@ -221,14 +227,15 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  if(hasData)Padding(
-                                    padding: const EdgeInsets.only(top: 13),
-                                    child: LWCustomText(
-                                      title: "currency_egp".tr(),
-                                      color: AppColors.labelColor,
-                                      fontFamily: FontAssets.avertaRegular,
+                                  if (hasData)
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 13),
+                                      child: LWCustomText(
+                                        title: "currency_egp".tr(),
+                                        color: AppColors.labelColor,
+                                        fontFamily: FontAssets.avertaRegular,
+                                      ),
                                     ),
-                                  ),
                                   const SizedBox(width: 8.0),
                                 ],
                               ),
@@ -245,76 +252,104 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                           ),
                         ),
                       ),
-
-
-                      Container(
-                        color: AppColors.whiteColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 8.0),
-                              const LWCustomText(
-                                title: "Item type",
-                                color: AppColors.labelColor,
-                                fontFamily: FontAssets.avertaRegular,
-                              ),
-                              const SizedBox(height: 16.0),
-                              LWCustomDropdownFormField<String>(
-                                iconColor: AppColors.labelColor,
-                                name: "item_type",
-                                showLabel: false,
-                                labelText: "",
-                                hintText: "choose_item_type".tr(),
-                                isRequired: true,
-                                isCard: false,
-                                items: dropdownList,
-                                itemBuilder: (context, data) {
-                                  return Text(data);
-                                },
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Divider(
-                                  thickness: 0.5,
-                                  height: 0.0,
-                                  color: AppColors.searchBarColor,
+                      BlocProvider<GetItemTypesCubit>.value(
+                        value: getItemTypesCubit,
+                        child:
+                            BlocConsumer<GetItemTypesCubit, GetItemTypesState>(
+                          listener: (context, state) async {
+                            if (state.getItemTypesRequestState ==
+                                RequestState.success) {}
+                            if (state.getItemTypesRequestState ==
+                                RequestState.error) {
+                              getErrorDialogue(
+                                context: context,
+                                isUnAuthorized:
+                                    state.getItemTypesResponse!.statuscode ==
+                                        401,
+                                message: state.getItemTypesResponse?.message ??
+                                    "something_went_wrong".tr(),
+                              );
+                            }
+                          },
+                          builder: (context, state) {
+                            itemTypes =
+                                state.getItemTypesResponse?.result?.itemTypes ??
+                                    [];
+                            unitTypes =
+                                state.getItemTypesResponse?.result?.unitTypes ??
+                                    [];
+                            return Container(
+                              color: AppColors.whiteColor,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 8.0),
+                                    const LWCustomText(
+                                      title: "Item type",
+                                      color: AppColors.labelColor,
+                                      fontFamily: FontAssets.avertaRegular,
+                                    ),
+                                    const SizedBox(height: 16.0),
+                                    LWCustomDropdownFormField<BaseLookup>(
+                                      iconColor: AppColors.labelColor,
+                                      name: "item_type",
+                                      showLabel: false,
+                                      labelText: "",
+                                      hintText: "choose_item_type".tr(),
+                                      isRequired: true,
+                                      isCard: false,
+                                      items: itemTypes,
+                                      itemBuilder: (context, data) {
+                                        return Text(data.name ?? "NA");
+                                      },
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: Divider(
+                                        thickness: 0.5,
+                                        height: 0.0,
+                                        color: AppColors.searchBarColor,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16.0),
+                                    const LWCustomText(
+                                      title: "Unit type",
+                                      color: AppColors.labelColor,
+                                      fontFamily: FontAssets.avertaRegular,
+                                    ),
+                                    const SizedBox(height: 16.0),
+                                    LWCustomDropdownFormField<BaseLookup>(
+                                      name: "unit_type",
+                                      iconColor: AppColors.labelColor,
+                                      showLabel: false,
+                                      labelText: "",
+                                      hintText: "choose_unit_type".tr(),
+                                      isRequired: true,
+                                      isCard: false,
+                                      items: unitTypes,
+                                      itemBuilder: (context, data) {
+                                        return Text(data.name ?? "NA");
+                                      },
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: Divider(
+                                        thickness: 0.5,
+                                        height: 0.0,
+                                        color: AppColors.searchBarColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 16.0),
-                              const LWCustomText(
-                                title: "Unit type",
-                                color: AppColors.labelColor,
-                                fontFamily: FontAssets.avertaRegular,
-                              ),
-                              const SizedBox(height: 16.0),
-                              LWCustomDropdownFormField<String>(
-                                name: "unit_type",
-                                iconColor: AppColors.labelColor,
-                                showLabel: false,
-                                labelText: "",
-                                hintText: "choose_unit_type".tr(),
-                                isRequired: true,
-                                isCard: false,
-                                items: dropdownList,
-                                itemBuilder: (context, data) {
-                                  return Text(data);
-                                },
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Divider(
-                                  thickness: 0.5,
-                                  height: 0.0,
-                                  color: AppColors.searchBarColor,
-                                ),
-                              ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
                       ),
-
                       Container(
                         color: AppColors.whiteColor,
                         child: Padding(
@@ -324,7 +359,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                             children: [
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
