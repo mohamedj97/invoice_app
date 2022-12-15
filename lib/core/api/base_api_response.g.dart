@@ -19,7 +19,7 @@ Map<String, dynamic> _$BaseAPIResponseToJson(BaseAPIResponse instance) =>
     };
 
 BoolResponse _$BoolResponseFromJson(Map<String, dynamic> json) => BoolResponse(
-      result: json['result'] as bool,
+      result: json['result'] as bool?,
       message: json['message'] as String?,
       statuscode: json['statuscode'] as int?,
     );

@@ -17,7 +17,7 @@ class BaseAPIResponse {
 
 @JsonSerializable()
 class BoolResponse extends BaseAPIResponse {
-  final bool result;
+   bool? result;
 
   BoolResponse({
     required this.result,
