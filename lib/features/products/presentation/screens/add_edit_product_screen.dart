@@ -140,8 +140,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -166,12 +165,12 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                     hintText: "#12345",
                                     isRequired: true,
                                     initialValue: !hasData
-                                        ? "${widget.productItem!.brickcode}"
+                                        ? widget.productItem!.code
                                         : null,
                                     isCard: false,
                                     maxLines: 5,
-                                    keyboardType: const TextInputType
-                                        .numberWithOptions(),
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(),
                                     borderDecoration: InputBorder.none,
                                   ),
                                 ),
@@ -205,9 +204,8 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                         showLabel: false,
                         labelText: "",
                         hintText: "description".tr(),
-                        initialValue: !hasData
-                            ? widget.productItem!.description
-                            : null,
+                        initialValue:
+                            !hasData ? widget.productItem!.description : null,
                         isCard: false,
                         isRequired: true,
                         maxLines: 5,
@@ -312,15 +310,23 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                             }
                           },
                           builder: (context, state) {
-                            BaseLookup? initialValue;
-                            if(!hasData)
-                              {initialValue=state.getItemTypesResponse?.result?.result.itemTypes.firstWhere((element) => element.name!.contains(widget.productItem!.type!));}
-                            itemTypes =
-                                state.getItemTypesResponse?.result?.result.itemTypes ??
-                                    [];
-                            unitTypes =
-                                state.getItemTypesResponse?.result?.result.unitTypes ??
-                                    [];
+                            BaseLookup? initialValueItem;
+                            BaseLookup? initialValueUnit;
+                            if (!hasData) {
+                              initialValueItem = state.getItemTypesResponse
+                                  ?.result?.result.itemTypes
+                                  .firstWhere((element) => element.name!
+                                      .contains(widget.productItem!.type!));
+                              initialValueUnit = state.getItemTypesResponse
+                                  ?.result?.result.unitTypes
+                                  .firstWhere((element) => element.id==(widget.productItem!.unittype!));
+                            }
+                            itemTypes = state.getItemTypesResponse?.result
+                                    ?.result.itemTypes ??
+                                [];
+                            unitTypes = state.getItemTypesResponse?.result
+                                    ?.result.unitTypes ??
+                                [];
                             return state is GetItemTypesLoading
                                 ? const Center(
                                     child: CircularProgressIndicator(),
@@ -347,7 +353,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                             showLabel: false,
                                             labelText: "",
                                             initialValue: !hasData
-                                                ? initialValue
+                                                ? initialValueItem
                                                 : null,
                                             hintText: "choose_item_type".tr(),
                                             isRequired: true,
@@ -379,9 +385,9 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                             iconColor: AppColors.labelColor,
                                             showLabel: false,
                                             labelText: "",
-                                            // initialValue: !hasData
-                                            //     ? widget.productItem!.
-                                            //     : null,
+                                            initialValue: !hasData
+                                                ? initialValueUnit
+                                                : null,
                                             hintText: "choose_unit_type".tr(),
                                             isRequired: true,
                                             isCard: false,
