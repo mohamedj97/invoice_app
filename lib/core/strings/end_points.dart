@@ -13,6 +13,7 @@ class EndPoints {
 
   //customers
   static const getCustomers = 'Customers';
+  static const getCustomersLookups = 'Customers/getCustomer-lookups';
 
   //products
   static const getProducts = 'Items';

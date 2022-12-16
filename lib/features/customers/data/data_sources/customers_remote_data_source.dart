@@ -1,11 +1,13 @@
 import '../../../../../core/api/api_repo.dart';
 import '../models/requests/customer_request_model.dart';
 import '../models/responses/add_customer_response_model.dart';
+import '../models/responses/get_customer_types_response_model.dart';
 import '../models/responses/get_customers_response_model.dart';
 
 abstract class CustomersRemoteDataSource {
   Future<GetCustomersResponse> getCustomers();
   Future<AddCustomerResponse> addCustomer(CustomerModelModel customerModel);
+  Future<GetCustomerTypesResponse> getCustomersLookUps();
 }
 
 class CustomersRemoteDataSourceImpl extends CustomersRemoteDataSource {
@@ -23,6 +25,13 @@ class CustomersRemoteDataSourceImpl extends CustomersRemoteDataSource {
   @override
   Future<AddCustomerResponse> addCustomer(CustomerModelModel customerModel) async{
     final response = await apiRepo.customersClient.addCustomer(customerModel);
+
+    return response;
+  }
+
+  @override
+  Future<GetCustomerTypesResponse> getCustomersLookUps() async{
+    final response = await apiRepo.customersClient.getCustomersLookUps();
 
     return response;
   }

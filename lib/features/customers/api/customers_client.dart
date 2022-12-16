@@ -5,6 +5,7 @@ import '../../../core/api/repository/memory_repo.dart';
 import '../../../core/strings/end_points.dart';
 import '../data/models/requests/customer_request_model.dart';
 import '../data/models/responses/add_customer_response_model.dart';
+import '../data/models/responses/get_customer_types_response_model.dart';
 import '../data/models/responses/get_customers_response_model.dart';
 
 part 'customers_client.g.dart';
@@ -15,6 +16,9 @@ abstract class CustomersClient {
 
   @GET(EndPoints.getCustomers)
   Future<GetCustomersResponse> getCustomers();
+
+  @GET(EndPoints.getCustomersLookups)
+  Future<GetCustomerTypesResponse> getCustomersLookUps();
 
   @POST(EndPoints.getCustomers)
   Future<AddCustomerResponse> addCustomer(@Body() CustomerModelModel customerModel);

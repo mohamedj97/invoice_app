@@ -42,6 +42,29 @@ class _CustomersClient implements CustomersClient {
   }
 
   @override
+  Future<GetCustomerTypesResponse> getCustomersLookUps() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetCustomerTypesResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'Customers/getCustomer-lookups',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GetCustomerTypesResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<AddCustomerResponse> addCustomer(customerModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
