@@ -10,7 +10,7 @@ GetItemTypesResponseDataModel _$GetItemTypesResponseDataModelFromJson(
         Map<String, dynamic> json) =>
     GetItemTypesResponseDataModel(
       result: ItemLookUpResult.fromJson(json['result'] as Map<String, dynamic>),
-      meta: (json['metaData'] as List<dynamic>)
+      meta: (json['meta'] as List<dynamic>)
           .map((e) => Meta.fromJson(e as Map<String, dynamic>))
           .toList(),
       total: json['total'] as int?,
@@ -21,7 +21,7 @@ Map<String, dynamic> _$GetItemTypesResponseDataModelToJson(
     <String, dynamic>{
       'result': instance.result,
       'total': instance.total,
-      'metaData': instance.meta,
+      'meta': instance.meta,
     };
 
 GetItemTypesResponse _$GetItemTypesResponseFromJson(

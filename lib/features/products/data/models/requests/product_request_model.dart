@@ -13,12 +13,13 @@ class ProductModel extends ProductRequest {
       super.type,
       super.description,
       super.unittype,
+      super.price,
       super.active,
   );
 
   @override
   String toString() {
-    return 'LoginModel[code=$code,  brickcode=$brickcode,  name=$name,  type=$type,  description=$description,   unittype=$unittype,   active=$active, ]';
+    return 'ProductModel[code=$code,  brickcode=$brickcode,  name=$name,  type=$type,  description=$description,   unittype=$unittype,   price=$price,   active=$active, ]';
   }
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>

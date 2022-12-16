@@ -12,6 +12,7 @@ class Product {
   String? description;
   int? unittype;
   bool active;
+  num? price;
 
   Product({
    required this.id,
@@ -22,6 +23,7 @@ class Product {
     this.type,
     this.description,
     this.unittype,
+    this.price,
     required this.active,
   });
 

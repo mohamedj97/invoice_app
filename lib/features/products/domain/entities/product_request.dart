@@ -8,6 +8,7 @@ class ProductRequest extends Equatable {
   String description;
   int unittype;
   bool active;
+  num price;
 
   ProductRequest(
     this.code,
@@ -17,6 +18,7 @@ class ProductRequest extends Equatable {
     this.description,
     this.unittype,
     this.active,
+    this.price,
   );
 
   @override
@@ -28,5 +30,6 @@ class ProductRequest extends Equatable {
         description,
         unittype,
         active,
+        price,
       ];
 }

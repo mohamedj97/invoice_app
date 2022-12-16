@@ -105,12 +105,13 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                         BlocProvider.of<AddProductCubit>(context).addProduct(
                           ProductModel(
                             formState.value["code"],
-                            formState.value["barcode"],
+                            formState.value["brickcode"],
                             formState.value["name"],
                             formState.value["item_type"],
                             formState.value["description"],
                             formState.value["unit_type"],
                             true,
+                            formState.value["price"],
                           ),
                         );
                       } else {}
@@ -394,7 +395,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                       height: 40,
                                       child: LWCustomTextFormField(
                                         textAlign: TextAlign.end,
-                                        name: "barcode",
+                                        name: "brickcode",
                                         showLabel: false,
                                         labelText: "",
                                         hintText: "#123456",

@@ -18,7 +18,7 @@ AddProductResponseDataModel _$AddProductResponseDataModelFromJson(
       description: json['description'] as String?,
       unittype: json['unittype'] as int?,
       active: json['active'] as bool,
-    );
+    )..price = json['price'] as num?;
 
 Map<String, dynamic> _$AddProductResponseDataModelToJson(
         AddProductResponseDataModel instance) =>
@@ -32,6 +32,7 @@ Map<String, dynamic> _$AddProductResponseDataModelToJson(
       'description': instance.description,
       'unittype': instance.unittype,
       'active': instance.active,
+      'price': instance.price,
     };
 
 AddProductResponse _$AddProductResponseFromJson(Map<String, dynamic> json) =>
