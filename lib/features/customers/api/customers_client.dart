@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../core/api/repository/memory_repo.dart';
 import '../../../core/strings/end_points.dart';
+import '../data/models/requests/customer_request_model.dart';
 import '../data/models/responses/add_customer_response_model.dart';
 import '../data/models/responses/get_customers_response_model.dart';
 
@@ -16,5 +17,5 @@ abstract class CustomersClient {
   Future<GetCustomersResponse> getCustomers();
 
   @POST(EndPoints.getCustomers)
-  Future<AddCustomerResponse> addCustomer();
+  Future<AddCustomerResponse> addCustomer(@Body() CustomerModelModel customerModel);
 }

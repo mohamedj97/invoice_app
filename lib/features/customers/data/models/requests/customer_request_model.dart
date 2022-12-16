@@ -7,8 +7,8 @@ import '../../../domain/entities/customer_ship_address.dart';
 part 'customer_request_model.g.dart';
 
 @JsonSerializable()
-class CustomerModel extends CustomerRequest {
-  CustomerModel(
+class CustomerModelModel extends CustomerRequest {
+    CustomerModelModel(
       {super.companyid,
       super.code,
       super.name,
@@ -61,10 +61,10 @@ class CustomerModel extends CustomerRequest {
     return 'CustomerModel[companyid=$companyid,  code=$code,  name=$name,  identityid=$identityid,  countryid=$countryid,  countryname=$countryname,  countrynamear=$countrynamear,  countrycode=$countrycode,  governateid=$governateid,  governatename=$governatename,  governatenamear=$governatenamear,  city=$city,  street=$street,  builldingnumber=$builldingnumber,  postalcode=$postalcode,  floor=$floor,  room=$room,  landmark=$landmark,  additionalinformation=$additionalinformation,  address=$address,  address2=$address2,  typeid=$typeid,  typecode=$typecode,  typename=$typename,  active=$active,  mobile=$mobile,  tel=$tel,  fax=$fax,  email=$email,  website=$website,  currencyid=$currencyid,  currencycode=$currencycode,  currencyname=$currencyname,  currencynamear=$currencynamear,  itemid=$itemid,  itemcode=$itemcode,  itemname=$itemname,  taxtypeid=$taxtypeid,  taxtypecode=$taxtypecode,  taxtypename=$taxtypename,  taxtypenamear=$taxtypenamear,  taxtypesubid=$taxtypesubid,  taxtypesubcode=$taxtypesubcode,  taxtypesubname=$taxtypesubname,  taxtypesubnamear=$taxtypesubnamear,  taxrate=$taxrate,  contactpersons=$contactpersons,  shipaddresses=$shipaddresses,  ]';
   }
 
-  factory CustomerModel.fromJson(Map<String,dynamic> json) =>
-      _$CustomerModelFromJson(json);
+  factory CustomerModelModel.fromJson(Map<String,dynamic> json) =>
+      _$CustomerModelModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CustomerModelToJson(this);
+  Map<String, dynamic> toJson() => _$CustomerModelModelToJson(this);
 }
 
 
