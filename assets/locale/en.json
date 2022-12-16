@@ -78,6 +78,7 @@
   "contact_information": "CONTACT INFORMATION",
   "code": "Code",
   "barcode": "Barcode",
+  "brickcode": "brickCode",
   "building_number": "Building number",
   "street": "Street",
   "governorate": "Governorate",

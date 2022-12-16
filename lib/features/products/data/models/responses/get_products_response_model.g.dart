@@ -12,7 +12,7 @@ GetProductsResponseDataModel _$GetProductsResponseDataModelFromJson(
       result: (json['result'] as List<dynamic>)
           .map((e) => Product.fromJson(e as Map<String, dynamic>))
           .toList(),
-      meta: (json['meta'] as List<dynamic>)
+      meta: (json['metaData'] as List<dynamic>)
           .map((e) => Meta.fromJson(e as Map<String, dynamic>))
           .toList(),
       total: json['total'] as int?,
@@ -23,7 +23,7 @@ Map<String, dynamic> _$GetProductsResponseDataModelToJson(
     <String, dynamic>{
       'result': instance.result,
       'total': instance.total,
-      'meta': instance.meta,
+      'metaData': instance.meta,
     };
 
 GetProductsResponse _$GetProductsResponseFromJson(Map<String, dynamic> json) =>

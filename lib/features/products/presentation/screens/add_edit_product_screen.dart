@@ -137,49 +137,88 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                     children: [
                       Container(
                         color: AppColors.whiteColor,
-                        child: Column(
-                          children: [
-                            LWCustomTextFormField(
-                              name: "name",
-                              showLabel: false,
-                              labelText: "",
-                              hintText: "name".tr(),
-                              isRequired: true,
-                              initialValue:
-                                  !hasData ? widget.productItem!.name : null,
-                              isCard: false,
-                              borderDecoration: InputBorder.none,
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Divider(
-                                thickness: 0.5,
-                                height: 0.0,
-                                color: AppColors.searchBarColor,
-                              ),
-                            ),
-                            LWCustomTextFormField(
-                              name: "description",
-                              showLabel: false,
-                              labelText: "",
-                              hintText: "description".tr(),
-                              initialValue: !hasData
-                                  ? widget.productItem!.description
-                                  : null,
-                              isCard: false,
-                              isRequired: true,
-                              maxLines: 5,
-                              textInputAction: TextInputAction.newline,
-                              keyboardType: TextInputType.multiline,
-                              borderDecoration: const UnderlineInputBorder(
-                                borderRadius: BorderRadius.zero,
-                                borderSide: BorderSide(
-                                  width: 0.0,
-                                  color: AppColors.searchBarColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 13),
+                                  child: LWCustomText(
+                                    title: "code".tr(),
+                                    color: AppColors.labelColor,
+                                    fontFamily: FontAssets.avertaRegular,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                              Expanded(
+                                child: SizedBox(
+                                  height: 40,
+                                  child: LWCustomTextFormField(
+                                    textAlign: TextAlign.end,
+                                    name: "code",
+                                    showLabel: false,
+                                    labelText: "",
+                                    hintText: "#12345",
+                                    isRequired: true,
+                                    initialValue: !hasData
+                                        ? "${widget.productItem!.brickcode}"
+                                        : null,
+                                    isCard: false,
+                                    maxLines: 5,
+                                    keyboardType: const TextInputType
+                                        .numberWithOptions(),
+                                    borderDecoration: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
+                      LWCustomTextFormField(
+                        name: "name",
+                        showLabel: false,
+                        labelText: "",
+                        hintText: "name".tr(),
+                        isRequired: true,
+                        initialValue:
+                            !hasData ? widget.productItem!.name : null,
+                        isCard: false,
+                        borderDecoration: InputBorder.none,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Divider(
+                          thickness: 0.5,
+                          height: 0.0,
+                          color: AppColors.searchBarColor,
+                        ),
+                      ),
+                      LWCustomTextFormField(
+                        name: "description",
+                        showLabel: false,
+                        labelText: "",
+                        hintText: "description".tr(),
+                        initialValue: !hasData
+                            ? widget.productItem!.description
+                            : null,
+                        isCard: false,
+                        isRequired: true,
+                        maxLines: 5,
+                        textInputAction: TextInputAction.newline,
+                        keyboardType: TextInputType.multiline,
+                        borderDecoration: const UnderlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(
+                            width: 0.0,
+                            color: AppColors.searchBarColor,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16.0),
@@ -384,7 +423,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 13),
                                       child: LWCustomText(
-                                        title: "barcode".tr(),
+                                        title: "brickcode".tr(),
                                         color: AppColors.labelColor,
                                         fontFamily: FontAssets.avertaRegular,
                                       ),
