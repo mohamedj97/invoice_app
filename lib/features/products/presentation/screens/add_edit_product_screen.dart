@@ -19,7 +19,6 @@ import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import '../../../../injection_container.dart';
 import '../../data/models/requests/product_request_model.dart';
-import '../../data/models/responses/get_item_types_response_model.dart';
 
 class AddEditProductScreen extends StatefulWidget {
   final Product? productItem;
@@ -273,6 +272,9 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                             }
                           },
                           builder: (context, state) {
+                            BaseLookup? initialValue;
+                            if(!hasData)
+                              {initialValue=state.getItemTypesResponse?.result?.result.itemTypes.firstWhere((element) => element.name!.contains(widget.productItem!.type!));}
                             itemTypes =
                                 state.getItemTypesResponse?.result?.result.itemTypes ??
                                     [];
@@ -304,6 +306,9 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                             name: "item_type",
                                             showLabel: false,
                                             labelText: "",
+                                            initialValue: !hasData
+                                                ? initialValue
+                                                : null,
                                             hintText: "choose_item_type".tr(),
                                             isRequired: true,
                                             isCard: false,
@@ -334,6 +339,9 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                             iconColor: AppColors.labelColor,
                                             showLabel: false,
                                             labelText: "",
+                                            // initialValue: !hasData
+                                            //     ? widget.productItem!.
+                                            //     : null,
                                             hintText: "choose_unit_type".tr(),
                                             isRequired: true,
                                             isCard: false,
