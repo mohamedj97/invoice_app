@@ -1,23 +1,20 @@
-import 'package:invoice_app/features/products/domain/entities/base_lookup.dart';
+import 'package:invoice_app/features/products/domain/entities/item_lookup_result.dart';
 import 'meta.dart';
 
 class ItemTypesResultResponse {
-  late List<BaseLookup> itemTypes = [];
-  late List<BaseLookup> unitTypes = [];
+  ItemLookUpResult result;
   int? total;
   late List<Meta> meta = [];
 
   ItemTypesResultResponse({
-    required this.itemTypes,
-    required this.unitTypes,
+    required this.result,
     this.total,
     required this.meta,
   });
 
   @override
   List<Object?> get props => [
-        itemTypes,
-        unitTypes,
+        result,
         total,
         meta,
       ];

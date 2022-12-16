@@ -19,6 +19,7 @@ import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import '../../../../injection_container.dart';
 import '../../data/models/requests/product_request_model.dart';
+import '../../data/models/responses/get_item_types_response_model.dart';
 
 class AddEditProductScreen extends StatefulWidget {
   final Product? productItem;
@@ -273,80 +274,87 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                           },
                           builder: (context, state) {
                             itemTypes =
-                                state.getItemTypesResponse?.result?.itemTypes ??
+                                state.getItemTypesResponse?.result?.result.itemTypes ??
                                     [];
                             unitTypes =
-                                state.getItemTypesResponse?.result?.unitTypes ??
+                                state.getItemTypesResponse?.result?.result.unitTypes ??
                                     [];
-                            return Container(
-                              color: AppColors.whiteColor,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 8.0),
-                                    const LWCustomText(
-                                      title: "Item type",
-                                      color: AppColors.labelColor,
-                                      fontFamily: FontAssets.avertaRegular,
-                                    ),
-                                    const SizedBox(height: 16.0),
-                                    LWCustomDropdownFormField<BaseLookup>(
-                                      iconColor: AppColors.labelColor,
-                                      name: "item_type",
-                                      showLabel: false,
-                                      labelText: "",
-                                      hintText: "choose_item_type".tr(),
-                                      isRequired: true,
-                                      isCard: false,
-                                      items: itemTypes,
-                                      itemBuilder: (context, data) {
-                                        return Text(data.name ?? "NA");
-                                      },
-                                    ),
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Divider(
-                                        thickness: 0.5,
-                                        height: 0.0,
-                                        color: AppColors.searchBarColor,
+                            return state is GetItemTypesLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : Container(
+                                    color: AppColors.whiteColor,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 8.0),
+                                          const LWCustomText(
+                                            title: "Item type",
+                                            color: AppColors.labelColor,
+                                            fontFamily:
+                                                FontAssets.avertaRegular,
+                                          ),
+                                          const SizedBox(height: 16.0),
+                                          LWCustomDropdownFormField<BaseLookup>(
+                                            iconColor: AppColors.labelColor,
+                                            name: "item_type",
+                                            showLabel: false,
+                                            labelText: "",
+                                            hintText: "choose_item_type".tr(),
+                                            isRequired: true,
+                                            isCard: false,
+                                            items: itemTypes,
+                                            itemBuilder: (context, data) {
+                                              return Text(data.name ?? "NA");
+                                            },
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: Divider(
+                                              thickness: 0.5,
+                                              height: 0.0,
+                                              color: AppColors.searchBarColor,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 16.0),
+                                          const LWCustomText(
+                                            title: "Unit type",
+                                            color: AppColors.labelColor,
+                                            fontFamily:
+                                                FontAssets.avertaRegular,
+                                          ),
+                                          const SizedBox(height: 16.0),
+                                          LWCustomDropdownFormField<BaseLookup>(
+                                            name: "unit_type",
+                                            iconColor: AppColors.labelColor,
+                                            showLabel: false,
+                                            labelText: "",
+                                            hintText: "choose_unit_type".tr(),
+                                            isRequired: true,
+                                            isCard: false,
+                                            items: unitTypes,
+                                            itemBuilder: (context, data) {
+                                              return Text(data.name ?? "NA");
+                                            },
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: Divider(
+                                              thickness: 0.5,
+                                              height: 0.0,
+                                              color: AppColors.searchBarColor,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const SizedBox(height: 16.0),
-                                    const LWCustomText(
-                                      title: "Unit type",
-                                      color: AppColors.labelColor,
-                                      fontFamily: FontAssets.avertaRegular,
-                                    ),
-                                    const SizedBox(height: 16.0),
-                                    LWCustomDropdownFormField<BaseLookup>(
-                                      name: "unit_type",
-                                      iconColor: AppColors.labelColor,
-                                      showLabel: false,
-                                      labelText: "",
-                                      hintText: "choose_unit_type".tr(),
-                                      isRequired: true,
-                                      isCard: false,
-                                      items: unitTypes,
-                                      itemBuilder: (context, data) {
-                                        return Text(data.name ?? "NA");
-                                      },
-                                    ),
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Divider(
-                                        thickness: 0.5,
-                                        height: 0.0,
-                                        color: AppColors.searchBarColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
+                                  );
                           },
                         ),
                       ),
