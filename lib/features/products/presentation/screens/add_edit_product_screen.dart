@@ -9,7 +9,7 @@ import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form
 import 'package:invoice_app/features/home/presentation/screens/home_screen.dart';
 import 'package:invoice_app/features/products/domain/entities/base_lookup.dart';
 import 'package:invoice_app/features/products/domain/entities/product.dart';
-import 'package:invoice_app/features/products/presentation/cubit/add_product_cubit.dart';
+import 'package:invoice_app/features/products/presentation/cubit/add_edit_product_cubit.dart';
 import 'package:invoice_app/features/products/presentation/cubit/get_item_types_cubit.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/navigation/custom_page_route.dart';
@@ -30,7 +30,7 @@ class AddEditProductScreen extends StatefulWidget {
 }
 
 class _AddEditProductScreenState extends State<AddEditProductScreen> {
-  final cubit = AddProductCubit(sl());
+  final cubit = AddEditProductCubit(sl(),sl());
   final getItemTypesCubit = GetItemTypesCubit(sl());
   final formKey = GlobalKey<FormBuilderState>();
   List<BaseLookup> unitTypes = [];
@@ -45,9 +45,9 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   @override
   Widget build(BuildContext context) {
     bool hasData = widget.productItem == null;
-    return BlocProvider<AddProductCubit>.value(
+    return BlocProvider<AddEditProductCubit>.value(
       value: cubit,
-      child: BlocConsumer<AddProductCubit, AddProductState>(
+      child: BlocConsumer<AddEditProductCubit, AddEditProductState>(
         listener: (context, state) async {
           if (state.addProductRequestState == RequestState.success) {
             Navigator.of(context).pushAndRemoveUntil(
@@ -113,7 +113,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                       final BaseLookup unitType =
                           formState.value["unit_type"] as BaseLookup;
                       if (hasData) {
-                        BlocProvider.of<AddProductCubit>(context).addProduct(
+                        BlocProvider.of<AddEditProductCubit>(context).addProduct(
                           ProductModel(
                             name: name,
                             active: true,
@@ -132,7 +132,21 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                           (Route<dynamic> route) => false,
                         );
                       } else {
-                        int x=0;
+                        BlocProvider.of<AddEditProductCubit>(context).editProduct(
+                          widget.productItem!.id,
+                          ProductModel(
+                            id: widget.productItem!.id,
+                            companyId: widget.productItem!.companyId,
+                            name: name,
+                            active: true,
+                            brickcode: brickCode,
+                            code: code,
+                            description: description,
+                            price: price,
+                            type: itemType.name ?? "",
+                            unittype: unitType.id,
+                          ),
+                        );
                       }
                       // Navigator.of(context).push(
                       //     CustomPageRoute.createRoute(page: const HomeScreen()));

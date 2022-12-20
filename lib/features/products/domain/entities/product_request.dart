@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class ProductRequest extends Equatable {
+  int? id;
+  int? companyId;
   String code;
   String brickcode;
   String name;
@@ -11,7 +13,9 @@ class ProductRequest extends Equatable {
   num price;
 
   ProductRequest({
-   required this.code,
+    this.id,
+    this.companyId,
+    required this.code,
     required this.brickcode,
     required this.name,
     required this.type,
@@ -19,11 +23,12 @@ class ProductRequest extends Equatable {
     required this.unittype,
     required this.active,
     required this.price,
-  }
-  );
+  });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
+        id,
+        companyId,
         code,
         brickcode,
         name,
