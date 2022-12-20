@@ -94,7 +94,7 @@ class _ProductsClient implements ProductsClient {
     productModel,
   ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'id': id};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(productModel.toJson());
@@ -106,7 +106,7 @@ class _ProductsClient implements ProductsClient {
     )
             .compose(
               _dio.options,
-              'Items',
+              'Items/$id',
               queryParameters: queryParameters,
               data: _data,
             )

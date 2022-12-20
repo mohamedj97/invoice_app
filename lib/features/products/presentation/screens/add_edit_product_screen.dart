@@ -115,6 +115,8 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                       if (hasData) {
                         BlocProvider.of<AddEditProductCubit>(context).addProduct(
                           ProductModel(
+                            companyId: 0,
+                            id: 0,
                             name: name,
                             active: true,
                             brickcode: brickCode,
@@ -125,12 +127,24 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                             unittype: unitType.id,
                           ),
                         );
-                        Navigator.of(context).pushAndRemoveUntil(
-                          CustomPageRoute.createRoute(
-                            page: const HomeScreen(),
-                          ),
-                          (Route<dynamic> route) => false,
-                        );
+                        if(state.addProductResponse!.statuscode==200)
+                          {
+                            Navigator.of(context).pushAndRemoveUntil(
+                              CustomPageRoute.createRoute(
+                                page: const HomeScreen(),
+                              ),
+                                  (Route<dynamic> route) => false,
+                            );
+                          }
+                        else {
+                          getErrorDialogue(
+                            context: context,
+                            isUnAuthorized:
+                            state.addProductResponse!.statuscode ==
+                                401,
+                            message: "something_went_wrong".tr(),
+                          );
+                        }
                       } else {
                         BlocProvider.of<AddEditProductCubit>(context).editProduct(
                           widget.productItem!.id,
@@ -147,6 +161,24 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                             unittype: unitType.id,
                           ),
                         );
+                        if(state.stringResponse!.statuscode==200)
+                        {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            CustomPageRoute.createRoute(
+                              page: const HomeScreen(),
+                            ),
+                                (Route<dynamic> route) => false,
+                          );
+                        }
+                        else {
+                          getErrorDialogue(
+                            context: context,
+                            isUnAuthorized:
+                            state.addProductResponse!.statuscode ==
+                                401,
+                            message: state.stringResponse!.message??"something_went_wrong".tr(),
+                          );
+                        }
                       }
                       // Navigator.of(context).push(
                       //     CustomPageRoute.createRoute(page: const HomeScreen()));
@@ -161,7 +193,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                 ),
               ),
             ],
-            body: SingleChildScrollView(
+            body: state is AddEditProductLoading ? const Center(child: CircularProgressIndicator()) :SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 32.0),
                 child: FormBuilder(
@@ -287,7 +319,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                         hintText: "00.0",
                                         isRequired: true,
                                         initialValue: !hasData
-                                            ? "${widget.productItem!.unittype} ${'currency_egp'.tr()}"
+                                            ? "${widget.productItem!.price??""}"
                                             : null,
                                         isCard: false,
                                         maxLines: 5,
@@ -298,7 +330,6 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  if (hasData)
                                     Padding(
                                       padding: const EdgeInsets.only(top: 13),
                                       child: LWCustomText(

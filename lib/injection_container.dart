@@ -11,6 +11,7 @@ import 'package:invoice_app/features/invoices/domain/repositories/invoices_repos
 import 'package:invoice_app/features/invoices/domain/use_cases/get_invoices_use_case.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
 import 'package:invoice_app/features/products/domain/use_cases/add_product_usecase.dart';
+import 'package:invoice_app/features/products/domain/use_cases/edit_product_use_case.dart';
 import 'package:invoice_app/features/products/domain/use_cases/get_types_use_case.dart';
 import 'package:invoice_app/features/products/presentation/cubit/add_edit_product_cubit.dart';
 import 'package:invoice_app/features/products/presentation/cubit/get_item_types_cubit.dart';
@@ -71,6 +72,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetCustomersUseCase(customersRepository: sl()));
   sl.registerLazySingleton(() => GetProductsUseCase(productsRepository: sl()));
   sl.registerLazySingleton(() => AddProductUseCase(productsRepository: sl()));
+  sl.registerLazySingleton(() => EditProductUseCase(productsRepository: sl()));
   sl.registerLazySingleton(() => AddCustomerUseCase(customersRepository: sl()));
   sl.registerLazySingleton(() => GetCustomerTypesUseCase(customersRepository: sl()));
   sl.registerLazySingleton(() => GetItemTypesUseCase(productsRepository: sl()));

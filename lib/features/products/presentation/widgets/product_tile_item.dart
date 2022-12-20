@@ -35,7 +35,7 @@ class ProductTileItem extends StatelessWidget {
                     fontFamily: FontAssets.avertaRegular,
                   ),
                   LWCustomText(
-                    title: "${product.price.toString()} ${'currency_egp'.tr()}",
+                    title: "${product.price??"NA"} ${'currency_egp'.tr()}",
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                   )

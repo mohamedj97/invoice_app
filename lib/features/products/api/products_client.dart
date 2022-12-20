@@ -24,5 +24,5 @@ abstract class ProductsClient {
   Future<GetItemTypesResponse> getItemTypes();
 
   @PUT(EndPoints.editProduct)
-  Future<StringResponse> editProduct(@Query("id") int id,@Body() ProductModel productModel);
+  Future<StringResponse> editProduct(int id,@Body() ProductModel productModel);
 }
