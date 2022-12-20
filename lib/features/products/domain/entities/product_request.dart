@@ -10,15 +10,16 @@ class ProductRequest extends Equatable {
   bool active;
   num price;
 
-  ProductRequest(
-    this.code,
-    this.brickcode,
-    this.name,
-    this.type,
-    this.description,
-    this.unittype,
-    this.active,
-    this.price,
+  ProductRequest({
+   required this.code,
+    required this.brickcode,
+    required this.name,
+    required this.type,
+    required this.description,
+    required this.unittype,
+    required this.active,
+    required this.price,
+  }
   );
 
   @override

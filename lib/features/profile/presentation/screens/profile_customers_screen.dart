@@ -68,7 +68,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(CustomPageRoute.createRoute(
-                      page: const AddCustomerScreen()));
+                      page: const AddEditCustomerScreen()));
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(right: 8.0),
@@ -151,7 +151,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                                         onTap: () {
                                           Navigator.of(context).push(
                                             CustomPageRoute.createRoute(
-                                              page: AddCustomerScreen(
+                                              page: AddEditCustomerScreen(
                                                   customerItem: item),
                                             ),
                                           );

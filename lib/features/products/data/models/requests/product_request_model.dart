@@ -6,20 +6,21 @@ part 'product_request_model.g.dart';
 
 @JsonSerializable()
 class ProductModel extends ProductRequest {
-  ProductModel(
-      super.code,
-      super.brickcode,
-      super.name,
-      super.type,
-      super.description,
-      super.unittype,
-      super.price,
-      super.active,
+  ProductModel({
+    required super.code,
+    required super.brickcode,
+    required super.name,
+    required super.type,
+    required super.description,
+    required super.unittype,
+    required super.active,
+    required super.price,
+  }
   );
 
   @override
   String toString() {
-    return 'ProductModel[code=$code,  brickcode=$brickcode,  name=$name,  type=$type,  description=$description,   unittype=$unittype,   price=$price,   active=$active, ]';
+    return 'ProductModel[code=$code,  brickcode=$brickcode,  name=$name,  type=$type,  description=$description,   unittype=$unittype,   active=$active,   price==$price=, ]';
   }
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>

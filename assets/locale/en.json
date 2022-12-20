@@ -53,6 +53,7 @@
   "last_name": "Last name",
   "phone_number": "Phone number",
   "customers": "Customers",
+  "customer_name": "Customer Name",
   "country": "Country",
   "city": "City",
   "additional_details": "Additional Details",

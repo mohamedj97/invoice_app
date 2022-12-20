@@ -104,15 +104,21 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                       if (hasData) {
                         BlocProvider.of<AddProductCubit>(context).addProduct(
                           ProductModel(
-                            formState.value["code"],
-                            formState.value["brickcode"],
-                            formState.value["name"],
-                            formState.value["item_type"],
-                            formState.value["description"],
-                            formState.value["unit_type"],
-                            true,
-                            formState.value["price"],
+                            name: formState.value["name"],
+                            active: true,
+                            brickcode: formState.value["brickcode"],
+                            code: formState.value["code"],
+                            description: formState.value["description"],
+                            price: formState.value["price"],
+                            type: formState.value["item_type"],
+                            unittype: formState.value["unit_type"],
                           ),
+                        );
+                        Navigator.of(context).pushAndRemoveUntil(
+                          CustomPageRoute.createRoute(
+                            page: const HomeScreen(),
+                          ),
+                              (Route<dynamic> route) => false,
                         );
                       } else {}
                       // Navigator.of(context).push(
@@ -319,7 +325,9 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                       .contains(widget.productItem!.type!));
                               initialValueUnit = state.getItemTypesResponse
                                   ?.result?.result.unitTypes
-                                  .firstWhere((element) => element.id==(widget.productItem!.unittype!));
+                                  .firstWhere((element) =>
+                                      element.id ==
+                                      (widget.productItem!.unittype!));
                             }
                             itemTypes = state.getItemTypesResponse?.result
                                     ?.result.itemTypes ??

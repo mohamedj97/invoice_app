@@ -7,14 +7,14 @@ part of 'product_request_model.dart';
 // **************************************************************************
 
 ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
-      json['code'] as String,
-      json['brickcode'] as String,
-      json['name'] as String,
-      json['type'] as String,
-      json['description'] as String,
-      json['unittype'] as int,
-      json['price'] as bool,
-      json['active'] as num,
+      code: json['code'] as String,
+      brickcode: json['brickcode'] as String,
+      name: json['name'] as String,
+      type: json['type'] as String,
+      description: json['description'] as String,
+      unittype: json['unittype'] as int,
+      price: json['price'] as num,
+      active: json['active'] as bool,
     );
 
 Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
