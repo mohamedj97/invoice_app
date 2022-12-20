@@ -101,26 +101,39 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                       if (!formState.saveAndValidate()) {
                         return;
                       }
+                      final String name = formState.value["name"] as String;
+                      final String brickCode =
+                          formState.value["brickcode"] as String;
+                      final String code = formState.value["code"] as String;
+                      final String description =
+                          formState.value["description"] as String;
+                      final num price = num.parse(formState.value["price"]);
+                      final BaseLookup itemType =
+                          formState.value["item_type"] as BaseLookup;
+                      final BaseLookup unitType =
+                          formState.value["unit_type"] as BaseLookup;
                       if (hasData) {
                         BlocProvider.of<AddProductCubit>(context).addProduct(
                           ProductModel(
-                            name: formState.value["name"],
+                            name: name,
                             active: true,
-                            brickcode: formState.value["brickcode"],
-                            code: formState.value["code"],
-                            description: formState.value["description"],
-                            price: formState.value["price"],
-                            type: formState.value["item_type"],
-                            unittype: formState.value["unit_type"],
+                            brickcode: brickCode,
+                            code: code,
+                            description: description,
+                            price: price,
+                            type: itemType.name ?? "",
+                            unittype: unitType.id,
                           ),
                         );
                         Navigator.of(context).pushAndRemoveUntil(
                           CustomPageRoute.createRoute(
                             page: const HomeScreen(),
                           ),
-                              (Route<dynamic> route) => false,
+                          (Route<dynamic> route) => false,
                         );
-                      } else {}
+                      } else {
+                        int x=0;
+                      }
                       // Navigator.of(context).push(
                       //     CustomPageRoute.createRoute(page: const HomeScreen()));
                     },
