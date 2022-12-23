@@ -11,6 +11,7 @@ class CustomerModelModel extends CustomerRequest {
     CustomerModelModel(
       {super.companyid,
       super.code,
+      super.id,
       super.name,
       super.identityid,
       super.countryid,
@@ -58,7 +59,7 @@ class CustomerModelModel extends CustomerRequest {
 
   @override
   String toString() {
-    return 'CustomerModel[companyid=$companyid,  code=$code,  name=$name,  identityid=$identityid,  countryid=$countryid,  countryname=$countryname,  countrynamear=$countrynamear,  countrycode=$countrycode,  governateid=$governateid,  governatename=$governatename,  governatenamear=$governatenamear,  city=$city,  street=$street,  builldingnumber=$builldingnumber,  postalcode=$postalcode,  floor=$floor,  room=$room,  landmark=$landmark,  additionalinformation=$additionalinformation,  address=$address,  address2=$address2,  typeid=$typeid,  typecode=$typecode,  typename=$typename,  active=$active,  mobile=$mobile,  tel=$tel,  fax=$fax,  email=$email,  website=$website,  currencyid=$currencyid,  currencycode=$currencycode,  currencyname=$currencyname,  currencynamear=$currencynamear,  itemid=$itemid,  itemcode=$itemcode,  itemname=$itemname,  taxtypeid=$taxtypeid,  taxtypecode=$taxtypecode,  taxtypename=$taxtypename,  taxtypenamear=$taxtypenamear,  taxtypesubid=$taxtypesubid,  taxtypesubcode=$taxtypesubcode,  taxtypesubname=$taxtypesubname,  taxtypesubnamear=$taxtypesubnamear,  taxrate=$taxrate,  contactpersons=$contactpersons,  shipaddresses=$shipaddresses,  ]';
+    return 'CustomerModel[id=$id,  companyid=$companyid,  code=$code,  name=$name,  identityid=$identityid,  countryid=$countryid,  countryname=$countryname,  countrynamear=$countrynamear,  countrycode=$countrycode,  governateid=$governateid,  governatename=$governatename,  governatenamear=$governatenamear,  city=$city,  street=$street,  builldingnumber=$builldingnumber,  postalcode=$postalcode,  floor=$floor,  room=$room,  landmark=$landmark,  additionalinformation=$additionalinformation,  address=$address,  address2=$address2,  typeid=$typeid,  typecode=$typecode,  typename=$typename,  active=$active,  mobile=$mobile,  tel=$tel,  fax=$fax,  email=$email,  website=$website,  currencyid=$currencyid,  currencycode=$currencycode,  currencyname=$currencyname,  currencynamear=$currencynamear,  itemid=$itemid,  itemcode=$itemcode,  itemname=$itemname,  taxtypeid=$taxtypeid,  taxtypecode=$taxtypecode,  taxtypename=$taxtypename,  taxtypenamear=$taxtypenamear,  taxtypesubid=$taxtypesubid,  taxtypesubcode=$taxtypesubcode,  taxtypesubname=$taxtypesubname,  taxtypesubnamear=$taxtypesubnamear,  taxrate=$taxrate,  contactpersons=$contactpersons,  shipaddresses=$shipaddresses,  ]';
   }
 
   factory CustomerModelModel.fromJson(Map<String,dynamic> json) =>

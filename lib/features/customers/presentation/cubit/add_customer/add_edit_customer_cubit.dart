@@ -10,13 +10,13 @@ import '../../../domain/use_cases/edit_customer_use_case.dart';
 
 part 'add_edit_customer_state.dart';
 
-class AddCustomerCubit extends Cubit<AddEditCustomerState> {
+class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
   final AddCustomerUseCase addCustomerUseCase;
   final EditCustomerUseCase editCustomerUseCase;
   String username = "";
   String? password;
 
-  AddCustomerCubit(
+  AddEditCustomerCubit(
       this.addCustomerUseCase,
       this.editCustomerUseCase,
       ) : super(AddEditCustomerInitial());
@@ -55,7 +55,7 @@ class AddCustomerCubit extends Cubit<AddEditCustomerState> {
     });
   }
 
-  Future<void> editProduct(int id,CustomerModelModel customerModel) async {
+  Future<void> editCustomer(int id,CustomerModelModel customerModel) async {
     emit(AddEditCustomerLoading());
     final response = await editCustomerUseCase.call(id,customerModel);
 

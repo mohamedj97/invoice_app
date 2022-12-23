@@ -5,6 +5,7 @@ import 'customer_ship_address.dart';
 
 class CustomerRequest extends Equatable {
   int? companyid;
+  int? id;
   String? code;
   String? name;
   num? identityid;
@@ -56,6 +57,7 @@ class CustomerRequest extends Equatable {
   CustomerRequest(
       {this.companyid,
       this.code,
+      this.id,
       this.name,
       this.identityid,
       this.countryid,
@@ -105,6 +107,7 @@ class CustomerRequest extends Equatable {
   List<Object> get props => [
         {
           companyid,
+          id,
           code,
           name,
           identityid,

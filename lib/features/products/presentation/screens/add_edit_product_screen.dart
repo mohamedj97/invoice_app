@@ -174,7 +174,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                           getErrorDialogue(
                             context: context,
                             isUnAuthorized:
-                            state.addProductResponse!.statuscode ==
+                            state.stringResponse!.statuscode ==
                                 401,
                             message: state.stringResponse!.message??"something_went_wrong".tr(),
                           );

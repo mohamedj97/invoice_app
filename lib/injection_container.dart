@@ -51,7 +51,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => LoginCubit(sl(),sl()));
   sl.registerLazySingleton(() => GetInvoicesCubit(sl()));
   sl.registerLazySingleton(() => GetCustomersCubit(sl()));
-  sl.registerLazySingleton(() => AddCustomerCubit(sl(),sl()));
+  sl.registerLazySingleton(() => AddEditCustomerCubit(sl(),sl()));
   sl.registerLazySingleton(() => GetCustomerTypesCubit(sl()));
   sl.registerLazySingleton(() => GetProductsCubit(sl()));
   sl.registerLazySingleton(() => GetProfileCubit(sl()));
