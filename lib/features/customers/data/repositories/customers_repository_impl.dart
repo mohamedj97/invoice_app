@@ -1,6 +1,7 @@
 
 
 import 'package:dartz/dartz.dart';
+import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:invoice_app/features/customers/data/models/requests/customer_request_model.dart';
 import 'package:invoice_app/features/customers/data/models/responses/add_customer_response_model.dart';
 import 'package:invoice_app/features/customers/data/models/responses/get_customer_types_response_model.dart';
@@ -42,6 +43,17 @@ class CustomersRepositoryImpl extends CustomersRepository with ConnectivityMixin
   Future<Either<Failure, GetCustomerTypesResponse>> getCustomersLookUps() async{
     try {
       final response = await customersRemoteDataSource.getCustomersLookUps();
+
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, StringResponse>> editCustomer(int id, CustomerModelModel customerModel) async{
+    try {
+      final response = await customersRemoteDataSource.editCustomer(id, customerModel);
 
       return Right(response);
     } on ServerException catch (e) {

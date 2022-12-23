@@ -53,13 +53,13 @@ CustomerModel _$CustomerModelFromJson(Map<String, dynamic> json) =>
       taxtypesubcode: json['taxtypesubcode'] as String?,
       taxtypesubname: json['taxtypesubname'] as String?,
       taxrate: json['taxrate'] as num,
-      // contactpersons: (json['contactpersons'] as List<dynamic>?)
-      //     ?.map(
-      //         (e) => CustomerContactPerson.fromJson(e as Map<String, dynamic>))
-      //     .toList(),
-      // shipaddresses: (json['shipaddresses'] as List<dynamic>?)
-      //     ?.map((e) => CustomerShipAddress.fromJson(e as Map<String, dynamic>))
-      //     .toList(),
+      contactpersons: (json['contactpersons'] as List<dynamic>?)
+          ?.map(
+              (e) => CustomerContactPerson.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      shipaddresses: (json['shipaddresses'] as List<dynamic>?)
+          ?.map((e) => CustomerShipAddress.fromJson(e as Map<String, dynamic>))
+          .toList(),
     )
       ..mobile = json['mobile'] as String?
       ..taxtypenamear = json['taxtypenamear'] as String?;

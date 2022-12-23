@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../core/api/repository/memory_repo.dart';
@@ -22,4 +23,7 @@ abstract class CustomersClient {
 
   @POST(EndPoints.getCustomers)
   Future<AddCustomerResponse> addCustomer(@Body() CustomerModelModel customerModel);
+
+  @PUT(EndPoints.getCustomers)
+  Future<StringResponse> editCustomer(int id,@Body() CustomerModelModel customerModel);
 }

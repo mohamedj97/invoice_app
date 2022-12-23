@@ -13,4 +13,8 @@ class IconAssets {
   static const lockIcon="assets/icons/lock_icon.png";
   static const customersIcon="assets/icons/customer_icon.png";
   static const businessIcon="assets/icons/business_icon.png";
+  static const addItemIcon="assets/icons/add_item_icon.png";
+  static const addCustomerIcon="assets/icons/add_customer_icon.png";
+  static const invoiceCustomerIcon="assets/icons/invoice_customer_icon.png";
+  static const addDiscountIcon="assets/icons/add_discount_icon.png";
 }

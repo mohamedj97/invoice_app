@@ -5,6 +5,7 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/features/home/presentation/pages/home_dasboard_page.dart';
 import 'package:invoice_app/features/home/presentation/pages/home_invoices_page.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/create_invoice_screen.dart';
+import 'package:invoice_app/features/invoices/presentation/screens/filter_screen.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../utils/static_const_data/bottom_nav_bar_items_date.dart';
 import '../../../products/presentation/screens/add_edit_product_screen.dart';
@@ -45,6 +46,13 @@ class _HomeScreenState extends State<HomeScreen> {
           _controller.jumpToPage(index);
         }),
       ),
+      leading: pageIndex==1?IconButton(onPressed: (){
+        Navigator.of(context).push(
+          CustomPageRoute.createRoute(
+            page: const FilterScreen(),
+          ),
+        );
+      }, icon: const Icon(Icons.filter_vintage_rounded,color: AppColors.primary,)):const SizedBox(),
       actions: pageIndex == 0 || pageIndex == 3
           ? null
           : [

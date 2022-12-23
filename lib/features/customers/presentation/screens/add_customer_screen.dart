@@ -8,7 +8,7 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import 'package:invoice_app/features/customers/domain/entities/customer_entity.dart';
-import 'package:invoice_app/features/customers/presentation/cubit/add_customer/add_customer_cubit.dart';
+import 'package:invoice_app/features/customers/presentation/cubit/add_customer/add_edit_customer_cubit.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/get_customer_types/get_customer_types_cubit.dart';
 import 'package:invoice_app/features/home/presentation/screens/home_screen.dart';
 import '../../../../core/assets/font_assets.dart';
@@ -30,7 +30,7 @@ class AddEditCustomerScreen extends StatefulWidget {
 
 class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
   final formKey = GlobalKey<FormBuilderState>();
-  final cubit = AddCustomerCubit(sl());
+  final cubit = AddCustomerCubit(sl(),sl());
   final getCustomerTypesCubit = GetCustomerTypesCubit(sl());
   List<BaseLookup> customerTypes = [];
   List<BaseLookup> countries = [];
@@ -46,9 +46,9 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
     bool hasData = widget.customerItem == null;
     return BlocProvider<AddCustomerCubit>.value(
       value: cubit,
-      child: BlocConsumer<AddCustomerCubit, AddCustomerState>(
+      child: BlocConsumer<AddCustomerCubit, AddEditCustomerState>(
         listener: (context, state) async {
-          if (state.addCustomerRequestState == RequestState.success) {
+          if (state.addEditCustomerRequestState == RequestState.success) {
             Navigator.of(context).pushAndRemoveUntil(
               CustomPageRoute.createRoute(
                 page: const HomeScreen(),
@@ -56,7 +56,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
                   (Route<dynamic> route) => false,
             );
           }
-          if (state.addCustomerRequestState == RequestState.error) {
+          if (state.addEditCustomerRequestState == RequestState.error) {
             await getErrorDialogue(
               context: context,
               isUnAuthorized:
@@ -84,7 +84,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
                         }
                         if (hasData) {
                           // BlocProvider.of<AddCustomerCubit>(context).addCustomer(
-                          //   C(
+                          //   (
                           //     formState.value["code"],
                           //     formState.value["brickcode"],
                           //     formState.value["name"],
@@ -94,7 +94,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
                           //     true,
                           //     formState.value["price"],
                           //   ),
-                          // );
+                          //);
                         } else {}
                         // Navigator.of(context).push(
                         //     CustomPageRoute.createRoute(page: const HomeScreen()));
