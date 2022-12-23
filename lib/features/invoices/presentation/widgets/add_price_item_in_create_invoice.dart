@@ -39,8 +39,9 @@ class AddPriceItemInCreateInvoice extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(
-                      width: 60,
+                      width: 100,
                       child: LWCustomTextFormField(
+                        textAlign: TextAlign.end,
                         name: name,
                         showLabel: false,
                         controller: controller,
