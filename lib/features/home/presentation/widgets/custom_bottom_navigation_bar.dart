@@ -9,12 +9,18 @@ class CustomBottomNavigationBar extends StatelessWidget {
   final int pageIndex;
   final Function(int) onChanged;
   final void Function()? onItemTapped;
-  const CustomBottomNavigationBar({Key? key, required this.pageIndex, required this.onChanged, this.onItemTapped}) : super(key: key);
+
+  const CustomBottomNavigationBar(
+      {Key? key,
+      required this.pageIndex,
+      required this.onChanged,
+      this.onItemTapped})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Color bottomColor=AppColors.disabledBottomItemColor;
-    return  AnimatedBottomNavigationBar.builder(
+    Color bottomColor = AppColors.disabledBottomItemColor;
+    return AnimatedBottomNavigationBar.builder(
       backgroundColor: AppColors.whiteColor,
       itemCount: 4,
       activeIndex: pageIndex,
@@ -22,7 +28,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       height: 60.0,
       tabBuilder: (int index, bool isActive) {
         bottomColor =
-        isActive ? AppColors.primary : AppColors.disabledBottomItemColor;
+            isActive ? AppColors.primary : AppColors.disabledBottomItemColor;
         return InkWell(
           onTap: onItemTapped,
           child: Column(
@@ -30,7 +36,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                  isActive ? BottomAppBarItemsData.activeIconsList[index] : BottomAppBarItemsData.disabledIconsList[index]),
+                  height: isActive ? 22.0 : 20.0,
+                  isActive
+                      ? BottomAppBarItemsData.activeIconsList[index]
+                      : BottomAppBarItemsData.disabledIconsList[index]),
               const SizedBox(height: 4),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
