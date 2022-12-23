@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:invoice_app/features/invoices/data/models/responses/get_invoices_response_model.dart';
+import 'package:invoice_app/features/invoices/data/models/responses/get_invoices_types_response_model.dart';
 import 'package:invoice_app/features/invoices/domain/repositories/invoices_repository.dart';
 
 import '../../../../core/error/exception.dart';
@@ -16,6 +17,17 @@ class InvoicesRepositoryImpl extends InvoicesRepository with ConnectivityMixin {
   Future<Either<Failure, GetInvoicesResponse>> getInvoices() async {
     try {
       final response = await invoicesRemoteDataSource.getInvoices();
+
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetInvoiceTypesResponse>> getInvoiceLookups() async {
+    try {
+      final response = await invoicesRemoteDataSource.getInvoiceLookups();
 
       return Right(response);
     } on ServerException catch (e) {

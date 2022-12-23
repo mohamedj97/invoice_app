@@ -1,13 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
+import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/success_invoice_screen.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_date_form_field.dart';
+import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
+import '../../../products/domain/entities/base_lookup.dart';
 import '../../domain/entities/invoice_head_model.dart';
 import '../widgets/add_price_item_in_create_invoice.dart';
 import '../widgets/invoice_add_item_widget.dart';
@@ -74,6 +78,45 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 8.0),
+                                  const LWCustomText(
+                                    title: "Invoice Type",
+                                    color: AppColors.labelColor,
+                                    fontFamily: FontAssets.avertaRegular,
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  LWCustomDropdownFormField<BaseLookup>(
+                                    iconColor: AppColors.labelColor,
+                                    name: "invoice_type",
+                                    showLabel: false,
+                                    labelText: "",
+                                    // initialValue: !hasData
+                                    //     ? initialValueCountry
+                                    //     : null,
+                                    hintText: "invoice_type".tr(),
+                                    isRequired: true,
+                                    isCard: false,
+                                    items: [
+                                      BaseLookup(id: 1, name: "ss"),
+                                      BaseLookup(id: 2, name: "pp")
+                                    ],
+                                    itemBuilder: (context, data) {
+                                      return Text(data.name ?? "NA");
+                                    },
+                                  ),
+                                ],
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                child: Divider(
+                                  thickness: 0.5,
+                                  height: 0.0,
+                                  color: AppColors.searchBarColor,
+                                ),
+                              ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
@@ -104,60 +147,16 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                   ),
                                 ],
                               ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                                child: Divider(
-                                  thickness: 0.5,
-                                  height: 0.0,
-                                  color: AppColors.searchBarColor,
-                                ),
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const LWCustomText(
-                                    title: "Due Date",
-                                    color: AppColors.labelColor,
-                                    fontFamily: FontAssets.avertaRegular,
-                                  ),
-                                  SizedBox(
-                                    width: 150,
-                                    child: hasData
-                                        ? LWCustomDateFormField(
-                                            name: "due_date",
-                                            isRequired: true,
-                                            labelText: "",
-                                            initialValue:
-                                                widget.invoice!.invoiceDate,
-                                            hintText: "Choose date",
-                                          )
-                                        : const LWCustomDateFormField(
-                                            name: "due_date",
-                                            isRequired: true,
-                                            labelText: "",
-                                            hintText: "Choose date",
-                                          ),
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                         ),
                       ),
                       const SizedBox(height: 16.0),
-                      hasData
-                          ? InvoiceAddItemWidget(
-                              title: widget.invoice?.customerName ?? "",
-                              iconData: Icons.person,
-                              onTap: () {},
-                            )
-                          : InvoiceAddItemWidget(
-                              title: "Add customer",
-                              iconData: Icons.person_add_alt,
-                              onTap: () {},
-                            ),
+                      InvoiceAddItemWidget(
+                        title: "Add customer",
+                        iconPath: IconAssets.addCustomerIcon,
+                        onTap: () {},
+                      ),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Divider(
@@ -168,7 +167,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                       ),
                       InvoiceAddItemWidget(
                         title: "Add item",
-                        iconData: Icons.add_card_rounded,
+                        iconPath: IconAssets.addItemIcon,
                         onTap: () {},
                       ),
                       const SizedBox(height: 16.0),
@@ -181,7 +180,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                       ),
                       InvoiceAddItemWidget(
                         title: "Add Discount",
-                        iconData: Icons.discount_outlined,
+                        iconPath: IconAssets.addDiscountIcon,
                         onTap: () {},
                       ),
                       const Padding(

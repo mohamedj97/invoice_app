@@ -6,9 +6,9 @@ import '../../../../core/common_widgets/lw_custom_text.dart';
 
 class InvoiceAddItemWidget extends StatelessWidget {
   final String title;
-  final IconData iconData;
+  final String iconPath;
   final void Function()? onTap;
-  const InvoiceAddItemWidget({Key? key, required this.title, required this.iconData, this.onTap}) : super(key: key);
+  const InvoiceAddItemWidget({Key? key, required this.title, required this.iconPath, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class InvoiceAddItemWidget extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(iconData,color: AppColors.primary,size: 40.0,),
+                  Image.asset(iconPath),
                   const SizedBox(width: 8.0),
                   LWCustomText(title: title,color: AppColors.primary,fontFamily: FontAssets.avertaSemiBold,fontSize: 14.0,)
                 ],

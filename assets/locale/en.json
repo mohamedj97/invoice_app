@@ -54,6 +54,7 @@
   "phone_number": "Phone number",
   "customers": "Customers",
   "customer_name": "Customer Name",
+  "invoice_type": "Invoice Type",
   "country": "Country",
   "city": "City",
   "additional_details": "Additional Details",
