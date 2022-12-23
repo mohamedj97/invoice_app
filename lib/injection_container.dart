@@ -3,6 +3,7 @@ import 'package:invoice_app/features/customers/data/data_sources/customers_remot
 import 'package:invoice_app/features/customers/data/repositories/customers_repository_impl.dart';
 import 'package:invoice_app/features/customers/domain/repositories/customers_repository.dart';
 import 'package:invoice_app/features/customers/domain/use_cases/add_customer_use_case.dart';
+import 'package:invoice_app/features/customers/domain/use_cases/edit_customer_use_case.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/add_customer/add_edit_customer_cubit.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/get_customers/get_customers_cubit.dart';
 import 'package:invoice_app/features/invoices/data/data_sources/invoices_remote_data_source.dart';
@@ -75,6 +76,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => EditProductUseCase(productsRepository: sl()));
   sl.registerLazySingleton(() => AddCustomerUseCase(customersRepository: sl()));
   sl.registerLazySingleton(() => GetCustomerTypesUseCase(customersRepository: sl()));
+  sl.registerLazySingleton(() => EditCustomerUseCase(customersRepository: sl()));
   sl.registerLazySingleton(() => GetItemTypesUseCase(productsRepository: sl()));
   sl.registerLazySingleton(() => GetProfileUseCase(profileRepository: sl()));
   sl.registerLazySingleton(() => ChangePasswordUseCase(profileRepository: sl()));

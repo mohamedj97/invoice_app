@@ -6,7 +6,7 @@ class IconAssets {
   static const productsActiveIcon="assets/icons/products_active_icon.png";
   static const productsDisabledIcon="assets/icons/products_disabled_icon.png";
   static const homeDisabledIcon="assets/icons/home_disabled_icon.png";
-  static const homeActiveIcon="assets/icons/home_disabled_icon.png";
+  static const homeActiveIcon="assets/icons/home_active_icon.png";
   static const moreDisabledIcon="assets/icons/more_disabled_icon.png";
   static const moreActiveIcon="assets/icons/more_disabled_icon.png";
   static const profileIcon="assets/icons/profile_icon.png";
