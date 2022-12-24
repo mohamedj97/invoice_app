@@ -18,19 +18,19 @@ InvoiceLookUpResult _$InvoiceLookUpResultFromJson(Map<String, dynamic> json) =>
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
       taxTypes: (json['taxTypes'] as List<dynamic>)
-          .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
+          .map((e) => LookupCode.fromJson(e as Map<String, dynamic>))
           .toList(),
       taxSubTypes: (json['taxSubTypes'] as List<dynamic>)
-          .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
+          .map((e) => TaxSubtypeLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
       customers: (json['customers'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
       currencies: (json['currencies'] as List<dynamic>)
-          .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
+          .map((e) => LookupCode.fromJson(e as Map<String, dynamic>))
           .toList(),
       items: (json['items'] as List<dynamic>)
-          .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
+          .map((e) => ItemLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
       unitTypes: (json['unitTypes'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))

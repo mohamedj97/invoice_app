@@ -6,6 +6,7 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
+import 'package:invoice_app/features/invoices/domain/entities/lookup_code.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_types/get_invoice_types_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/success_invoice_screen.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -18,6 +19,8 @@ import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_fie
 import '../../../../injection_container.dart';
 import '../../../products/domain/entities/base_lookup.dart';
 import '../../domain/entities/invoice_head_model.dart';
+import '../../domain/entities/item_lookup.dart';
+import '../../domain/entities/tax_subtype_lookup.dart';
 import '../widgets/add_price_item_in_create_invoice.dart';
 import '../widgets/invoice_add_item_widget.dart';
 import '../widgets/primary_and_secondary_button.dart';
@@ -37,8 +40,9 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   final getInvoiceTypesCubit = GetInvoiceTypesCubit(sl());
   List<BaseLookup> invoiceTypes = [];
   List<BaseLookup> customers = [];
-  List<BaseLookup> items = [];
+  List<ItemLookup> items = [];
   BaseLookup? customerValue;
+  List<ItemLookup> addedItems=[];
 
   @override
   void initState() {
@@ -238,11 +242,17 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                 ? const Center(
                                     child: CircularProgressIndicator(),
                                   )
-                                : InvoiceAddItemWidget(
-                                    title: "Add item",
-                                    iconPath: IconAssets.addItemIcon,
-                                    onTap: () {},
-                                  ),
+                                : Column(
+                                  children: [
+                                    InvoiceAddItemWidget(
+                                        title: "Add item",
+                                        iconPath: IconAssets.addItemIcon,
+                                        onTap: () {
+                                          _dialogBuilderItems(context,items,hasData);
+                                        },
+                                      ),
+                                  ],
+                                ),
                             const SizedBox(height: 16.0),
                             AddPriceItemInCreateInvoice(
                               title: "Subtotal",
@@ -318,6 +328,204 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
           },
         ),
       ),
+    );
+  }
+
+  Future<void> _dialogBuilderTax(
+  {required BuildContext context,required  List<LookupCode> mainTaxType,required  bool hasData,required  List<TaxSubtypeLookup> subTaxType}) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          insetPadding: const EdgeInsets.all(0),
+          content: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: CustomScaffold(
+                  title: "add_tax".tr(),
+                  body: Column(
+                    children: [
+                      Column(
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8.0),
+                          LWCustomText(
+                            title: "main_tax_type".tr(),
+                            color: AppColors.labelColor,
+                            fontFamily:
+                            FontAssets.avertaRegular,
+                          ),
+                          const SizedBox(height: 16.0),
+                          LWCustomDropdownFormField<
+                              LookupCode>(
+                            iconColor: AppColors.labelColor,
+                            name: "main_tax_type",
+                            showLabel: false,
+                            labelText: "",
+                            // initialValue: !hasData
+                            //     ? initialValueInvoiceType
+                            //     : null,
+                            hintText: "main_tax_type".tr(),
+                            isRequired: true,
+                            isCard: false,
+                            items: mainTaxType,
+                            itemBuilder: (context, data) {
+                              return Text(
+                                  data.name ?? "NA");
+                            },
+                          ),
+                        ],
+                      ),
+
+                      Column(
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8.0),
+                          LWCustomText(
+                            title: "sub_tax_type".tr(),
+                            color: AppColors.labelColor,
+                            fontFamily:
+                            FontAssets.avertaRegular,
+                          ),
+                          const SizedBox(height: 16.0),
+                          LWCustomDropdownFormField<
+                              LookupCode>(
+                            iconColor: AppColors.labelColor,
+                            name: "sub_tax_type",
+                            showLabel: false,
+                            labelText: "",
+                            // initialValue: !hasData
+                            //     ? initialValueInvoiceType
+                            //     : null,
+                            hintText: "sub_tax_type".tr(),
+                            isRequired: true,
+                            isCard: false,
+                            items: mainTaxType,
+                            itemBuilder: (context, data) {
+                              return Text(
+                                  data.name ?? "NA");
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8.0),
+                      const Padding(
+                        padding:  EdgeInsets.all(8.0),
+                        child: Divider(
+                          thickness: 0.5,
+                          height: 0.0,
+                          color: AppColors.searchBarColor,
+                        ),
+                      ),
+                      AddPriceItemInCreateInvoice(
+                        title: "price".tr(),
+                        name: "price",
+                        initialValue: hasData
+                            ? widget.invoice!.totalAmount.toString()
+                            : null,
+                      ),
+                      const SizedBox(height: 8.0),
+                    ],
+                  ),
+                ),
+
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _dialogBuilderItems(
+      BuildContext context, List<ItemLookup> items,bool hasData) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          insetPadding: const EdgeInsets.all(0),
+          contentPadding: const EdgeInsets.all(0),
+          content: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: CustomScaffold(
+                  title: "add_item".tr(),
+                  body: Column(
+                    children: [
+                      const SizedBox(height: 16.0),
+                      Container(
+                        color: AppColors.whiteColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 8.0),
+                              const LWCustomText(
+                                title: "Item",
+                                color: AppColors.labelColor,
+                                fontFamily: FontAssets.avertaRegular,
+                              ),
+                              const SizedBox(height: 16.0),
+                              LWCustomDropdownFormField<ItemLookup>(
+                                iconColor: AppColors.labelColor,
+                                name: "item",
+                                showLabel: false,
+                                labelText: "",
+                                // initialValue: !hasData
+                                //     ? initialValueCountry
+                                //     : null,
+                                hintText: "choose_item".tr(),
+                                isRequired: true,
+                                isCard: false,
+                                items: items,
+                                itemBuilder: (context, data) {
+                                  return Text(data.name ?? "NA");
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
+                      AddPriceItemInCreateInvoice(
+                        hintText: "00",
+                        showCurrency: false,
+                        title: "quantity".tr(),
+                        name: "quantity",
+                        initialValue: hasData
+                            ? widget.invoice!.totalAmount.toString()
+                            : null,
+                      ),
+                      AddPriceItemInCreateInvoice(
+                        title: "price".tr(),
+                        name: "price",
+                        initialValue: hasData
+                            ? widget.invoice!.totalAmount.toString()
+                            : null,
+                      ),
+                      const SizedBox(height: 16.0),
+                      AddPriceItemInCreateInvoice(
+                        title: "discount".tr(),
+                        name: "discount",
+                        initialValue: hasData
+                            ? widget.invoice!.totalAmount.toString()
+                            : null,
+                      ),
+                      InvoiceAddItemWidget(
+                        title: "add_tax".tr(),
+                        iconPath: IconAssets.addCustomerIcon,
+                        onTap: () {
+                          //_dialogBuilderTax(context, customers);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+          ),
+        );
+      },
     );
   }
 
