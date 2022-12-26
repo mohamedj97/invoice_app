@@ -69,6 +69,7 @@
   "contacts": "Contacts",
   "invoices": "Invoices",
   "quantity": "Quantity",
+  "rate": "Rate",
   "add_customer": "Add Customer",
   "choose_customer": "Choose Customer",
   "choose_item": "Choose Item",

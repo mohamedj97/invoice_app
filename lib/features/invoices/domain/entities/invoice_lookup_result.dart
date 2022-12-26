@@ -15,6 +15,7 @@ class InvoiceLookUpResult {
   late List<TaxSubtypeLookup> taxSubTypes = [];
   late List<LookupCode> taxTypes = [];
   late List<LookupCode> currencies = [];
+  late List<BaseLookup> countries = [];
   late List<BaseLookup> customers = [];
   late List<BaseLookup> unitTypes = [];
   late List<ItemLookup> items = [];
@@ -28,6 +29,7 @@ class InvoiceLookUpResult {
     required this.customers,
     required this.currencies,
     required this.items,
+    required this.countries,
     required this.unitTypes,
   });
 

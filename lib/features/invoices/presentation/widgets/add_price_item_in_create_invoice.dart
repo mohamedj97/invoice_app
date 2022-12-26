@@ -13,14 +13,18 @@ class AddPriceItemInCreateInvoice extends StatelessWidget {
   final String? initialValue;
   final String? hintText;
   final bool showCurrency;
+  final bool fullDivider;
 
   const AddPriceItemInCreateInvoice(
       {Key? key,
       this.controller,
-        this.hintText,
+      this.fullDivider = false,
+      this.hintText,
       required this.title,
       this.currency,
-      required this.name, this.initialValue, this.showCurrency=true})
+      required this.name,
+      this.initialValue,
+      this.showCurrency = true})
       : super(key: key);
 
   @override
@@ -49,7 +53,7 @@ class AddPriceItemInCreateInvoice extends StatelessWidget {
                         showLabel: false,
                         controller: controller,
                         labelText: "",
-                        hintText: hintText??"00.0",
+                        hintText: hintText ?? "00.0",
                         initialValue: initialValue,
                         isRequired: true,
                         // initialValue: !hasData
@@ -61,19 +65,23 @@ class AddPriceItemInCreateInvoice extends StatelessWidget {
                         borderDecoration: InputBorder.none,
                       ),
                     ),
-                    showCurrency?LWCustomText(
-                      title: currency ?? "EGP",
-                      color: AppColors.labelColor,
-                      fontFamily: FontAssets.avertaRegular,
-                    ):const SizedBox(),
+                    showCurrency
+                        ? LWCustomText(
+                            title: currency ?? "EGP",
+                            color: AppColors.labelColor,
+                            fontFamily: FontAssets.avertaRegular,
+                          )
+                        : const SizedBox(),
                   ],
                 ),
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Divider(
+          Padding(
+            padding: fullDivider
+                ? const EdgeInsets.all(0)
+                : const EdgeInsets.symmetric(horizontal: 16.0),
+            child: const Divider(
               thickness: 0.5,
               height: 0.0,
               color: AppColors.searchBarColor,
