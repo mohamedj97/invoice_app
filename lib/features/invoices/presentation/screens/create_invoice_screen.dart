@@ -6,9 +6,12 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
+import 'package:invoice_app/features/invoices/data/models/requests/invoice_request_model.dart';
+import 'package:invoice_app/features/invoices/domain/entities/line_tax.dart';
 import 'package:invoice_app/features/invoices/domain/entities/line_total.dart';
 import 'package:invoice_app/features/invoices/domain/entities/lookup_code.dart';
 import 'package:invoice_app/features/invoices/domain/entities/tax_subtype_lookup.dart';
+import 'package:invoice_app/features/invoices/presentation/cubit/add_invoice/add_invoice_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_types/get_invoice_types_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/success_invoice_screen.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -54,6 +57,9 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   List<LookupCode> currencies = [];
   List<BaseLookup> unitTypes = [];
   List<Line> addedItems = [];
+  List<LineTax> addedTaxes = [];
+  BaseLookup? invoiceType;
+  num? extraDiscountAmount;
   bool hasData = false;
 
   @override
@@ -68,111 +74,133 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
     return CustomScaffold(
       title: hasData ? "Edit Invoice" : "Create invoice",
       leading: const CustomBackButton(),
-      body: BlocProvider<GetInvoiceTypesCubit>.value(
-        value: getInvoiceTypesCubit,
-        child: BlocConsumer<GetInvoiceTypesCubit, GetInvoiceTypesState>(
-          listener: (context, state) async {
-            if (state.getInvoiceTypesRequestState == RequestState.success) {}
-            if (state.getInvoiceTypesRequestState == RequestState.error) {
-              getErrorDialogue(
-                context: context,
-                isUnAuthorized:
-                    state.getInvoiceTypesResponse!.statuscode == 401,
-                message: state.getInvoiceTypesResponse?.message ??
-                    "something_went_wrong".tr(),
-              );
-            }
-          },
-          builder: (context, state) {
-            BaseLookup? initialValueInvoiceType;
-            if (hasData) {
-              initialValueInvoiceType = state
-                  .getInvoiceTypesResponse?.result?.result.invoiceTypes
-                  .firstWhere((element) => element.id == widget.invoice?.id);
-            }
-            customers =
-                state.getInvoiceTypesResponse?.result?.result.customers ?? [];
-            invoiceTypes =
-                state.getInvoiceTypesResponse?.result?.result.invoiceTypes ??
-                    [];
-            branches =
-                state.getInvoiceTypesResponse?.result?.result.branches ?? [];
-            unitTypes =
-                state.getInvoiceTypesResponse?.result?.result.unitTypes ?? [];
-            currencies =
-                state.getInvoiceTypesResponse?.result?.result.currencies ?? [];
-            taxTypes =
-                state.getInvoiceTypesResponse?.result?.result.taxTypes ?? [];
-            taxSubTypes =
-                state.getInvoiceTypesResponse?.result?.result.taxSubTypes ?? [];
-            countries =
-                state.getInvoiceTypesResponse?.result?.result.countries ?? [];
-            paymentTerms =
-                state.getInvoiceTypesResponse?.result?.result.paymentTerms ??
-                    [];
-            items = state.getInvoiceTypesResponse?.result?.result.items ?? [];
+      body: BlocProvider.value(
+        value: AddInvoiceCubit(sl()),
+        child: BlocConsumer<AddInvoiceCubit, AddInvoiceState>(
+            listener: (context, state) async {
+              if (state.addInvoiceRequestState == RequestState.success) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  CustomPageRoute.createRoute(
+                    page: const SuccessInvoiceScreen(),
+                  ),
+                      (Route<dynamic> route) => false,
+                );
+              }
+              if (state.addInvoiceRequestState == RequestState.error) {
+                getErrorDialogue(
+                  context: context,
+                  isUnAuthorized: state.stringResponse!.statuscode == 401,
+                  message: state.stringResponse?.message ??
+                      "something_went_wrong".tr(),
+                );
+              }
+            },
+          builder: (context,addInvoiceState){
+           return BlocProvider<GetInvoiceTypesCubit>.value(
+              value: getInvoiceTypesCubit,
+              child: BlocConsumer<GetInvoiceTypesCubit, GetInvoiceTypesState>(
+                listener: (context, state) async {
+                  if (state.getInvoiceTypesRequestState == RequestState.success) {}
+                  if (state.getInvoiceTypesRequestState == RequestState.error) {
+                    getErrorDialogue(
+                      context: context,
+                      isUnAuthorized:
+                      state.getInvoiceTypesResponse!.statuscode == 401,
+                      message: state.getInvoiceTypesResponse?.message ??
+                          "something_went_wrong".tr(),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  BaseLookup? initialValueInvoiceType;
+                  if (hasData) {
+                    initialValueInvoiceType = state
+                        .getInvoiceTypesResponse?.result?.result.invoiceTypes
+                        .firstWhere((element) => element.id == widget.invoice?.id);
+                  }
+                  customers =
+                      state.getInvoiceTypesResponse?.result?.result.customers ?? [];
+                  invoiceTypes =
+                      state.getInvoiceTypesResponse?.result?.result.invoiceTypes ??
+                          [];
+                  branches =
+                      state.getInvoiceTypesResponse?.result?.result.branches ?? [];
+                  unitTypes =
+                      state.getInvoiceTypesResponse?.result?.result.unitTypes ?? [];
+                  currencies =
+                      state.getInvoiceTypesResponse?.result?.result.currencies ?? [];
+                  taxTypes =
+                      state.getInvoiceTypesResponse?.result?.result.taxTypes ?? [];
+                  taxSubTypes =
+                      state.getInvoiceTypesResponse?.result?.result.taxSubTypes ?? [];
+                  countries =
+                      state.getInvoiceTypesResponse?.result?.result.countries ?? [];
+                  paymentTerms =
+                      state.getInvoiceTypesResponse?.result?.result.paymentTerms ??
+                          [];
+                  items = state.getInvoiceTypesResponse?.result?.result.items ?? [];
 
-            return FormBuilder(
-              key: formKey,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 32.0),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                border: Border.all(
-                                  width: 0.5,
-                                  color: AppColors.searchBarColor,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0, vertical: 16.0),
-                                child: LWCustomText(
-                                    title:
-                                        "Invoice#${widget.invoice?.id ?? ""}",
-                                    fontFamily: FontAssets.avertaSemiBold,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.blackColor),
-                              ),
-                            ),
-                            const SizedBox(height: 16.0),
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                border: Border.all(
-                                  color: AppColors.searchBarColor,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    state is GetInvoiceTypesLoading
-                                        ? const Padding(
+                  return FormBuilder(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 32.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.whiteColor,
+                                      border: Border.all(
+                                        width: 0.5,
+                                        color: AppColors.searchBarColor,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0, vertical: 16.0),
+                                      child: LWCustomText(
+                                          title:
+                                          "Invoice#${widget.invoice?.id ?? ""}",
+                                          fontFamily: FontAssets.avertaSemiBold,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.blackColor),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.whiteColor,
+                                      border: Border.all(
+                                        color: AppColors.searchBarColor,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          state is GetInvoiceTypesLoading
+                                              ? const Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Center(
                                               child:
-                                                  CircularProgressIndicator(),
+                                              CircularProgressIndicator(),
                                             ),
                                           )
-                                        : Column(
+                                              : Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             children: [
                                               const SizedBox(height: 8.0),
                                               const LWCustomText(
                                                 title: "Invoice Type",
                                                 color: AppColors.labelColor,
                                                 fontFamily:
-                                                    FontAssets.avertaRegular,
+                                                FontAssets.avertaRegular,
                                               ),
                                               const SizedBox(height: 16.0),
                                               LWCustomDropdownFormField<
@@ -195,30 +223,30 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                               ),
                                             ],
                                           ),
-                                    const Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16.0),
-                                      child: Divider(
-                                        thickness: 0.5,
-                                        height: 0.0,
-                                        color: AppColors.searchBarColor,
-                                      ),
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const LWCustomText(
-                                          title: "Invoice Date",
-                                          color: AppColors.labelColor,
-                                          fontFamily: FontAssets.avertaRegular,
-                                        ),
-                                        SizedBox(
-                                          width: 150,
-                                          child: hasData
-                                              ? LWCustomDateFormField(
+                                          const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 16.0),
+                                            child: Divider(
+                                              thickness: 0.5,
+                                              height: 0.0,
+                                              color: AppColors.searchBarColor,
+                                            ),
+                                          ),
+                                          Row(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const LWCustomText(
+                                                title: "Invoice Date",
+                                                color: AppColors.labelColor,
+                                                fontFamily: FontAssets.avertaRegular,
+                                              ),
+                                              SizedBox(
+                                                width: 150,
+                                                child: hasData
+                                                    ? LWCustomDateFormField(
                                                   isRequired: true,
                                                   name: "invoice_date",
                                                   labelText: "",
@@ -226,59 +254,59 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                       .invoice!.invoiceDate,
                                                   hintText: "Choose date",
                                                 )
-                                              : const LWCustomDateFormField(
+                                                    : const LWCustomDateFormField(
                                                   isRequired: true,
                                                   name: "invoice_date",
                                                   labelText: "",
                                                   hintText: "Choose date",
                                                 ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16.0),
-                            state is GetInvoiceTypesLoading
-                                ? const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  )
-                                : customerValue != null
-                                    ? InvoiceAddItemWidget(
-                                        title: customerValue?.name ?? "NA",
-                                        iconPath:
-                                            IconAssets.invoiceCustomerIcon,
-                                        onTap: () {
-                                          _dialogBuilder(context);
-                                        },
-                                      )
-                                    : InvoiceAddItemWidget(
-                                        title: "Add customer",
-                                        iconPath: IconAssets.addCustomerIcon,
-                                        onTap: () {
-                                          _dialogBuilder(context);
-                                        },
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Divider(
-                                thickness: 0.5,
-                                height: 0.0,
-                                color: AppColors.searchBarColor,
-                              ),
-                            ),
-                            state is GetInvoiceTypesLoading
-                                ? const Padding(
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  state is GetInvoiceTypesLoading
+                                      ? const Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Center(
                                       child: CircularProgressIndicator(),
                                     ),
                                   )
-                                : Column(
+                                      : customerValue != null
+                                      ? InvoiceAddItemWidget(
+                                    title: customerValue?.name ?? "NA",
+                                    iconPath:
+                                    IconAssets.invoiceCustomerIcon,
+                                    onTap: () {
+                                      _dialogBuilder(context);
+                                    },
+                                  )
+                                      : InvoiceAddItemWidget(
+                                    title: "Add customer",
+                                    iconPath: IconAssets.addCustomerIcon,
+                                    onTap: () {
+                                      _dialogBuilder(context);
+                                    },
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                    child: Divider(
+                                      thickness: 0.5,
+                                      height: 0.0,
+                                      color: AppColors.searchBarColor,
+                                    ),
+                                  ),
+                                  state is GetInvoiceTypesLoading
+                                      ? const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                      : Column(
                                     children: [
                                       InvoiceAddItemWidget(
                                         title: "Add item",
@@ -297,86 +325,104 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                             child: ItemInvoiceWidget(
                                               item: addedItems[index],
                                               name: selectedItemsNames[index],
-                                              lastItem: index+1==addedItems.length,
+                                              lastItem: index + 1 ==
+                                                  addedItems.length,
                                             ),
                                           );
                                         },
                                       ),
                                     ],
                                   ),
-                            const SizedBox(height: 16.0),
-                            AddPriceItemInCreateInvoice(
-                              title: "Subtotal",
-                              name: "subtotal",
-                              initialValue: hasData
-                                  ? widget.invoice!.totalAmount.toString()
-                                  : null,
+                                  const SizedBox(height: 16.0),
+                                  // AddPriceItemInCreateInvoice(
+                                  //   title: "Subtotal",
+                                  //   name: "subtotal",
+                                  //   initialValue: hasData
+                                  //       ? widget.invoice!.totalAmount.toString()
+                                  //       : null,
+                                  // ),
+                                  AddPriceItemInCreateInvoice(
+                                    title: "Extra Discount",
+                                    name: "extra_discount",
+                                    initialValue: hasData
+                                        ? widget.invoice!.totalAmount.toString()
+                                        : null,
+                                  ),
+                                  // AddPriceItemInCreateInvoice(
+                                  //   title: "Total sales",
+                                  //   name: "total_sales",
+                                  //   initialValue: hasData
+                                  //       ? widget.invoice!.totalAmount.toString()
+                                  //       : null,
+                                  // ),
+                                  // AddPriceItemInCreateInvoice(
+                                  //   title: "Net amount",
+                                  //   name: "net_amount",
+                                  //   initialValue: hasData
+                                  //       ? widget.invoice!.netAmount.toString()
+                                  //       : null,
+                                  // ),
+                                  // AddPriceItemInCreateInvoice(
+                                  //   title: "Tax Total",
+                                  //   name: "tax_total",
+                                  //   initialValue: hasData
+                                  //       ? widget.invoice!.totalSalesAmount.toString()
+                                  //       : null,
+                                  // ),
+                                  // AddPriceItemInCreateInvoice(
+                                  //   title: "Tax Discount",
+                                  //   name: "tax_discount",
+                                  //   initialValue: hasData
+                                  //       ? widget.invoice!.totalTaxAmount.toString()
+                                  //       : null,
+                                  // ),
+                                  // AddPriceItemInCreateInvoice(
+                                  //   title: "Total",
+                                  //   name: "total",
+                                  //   initialValue: hasData
+                                  //       ? widget.invoice!.totalAmount.toString()
+                                  //       : null,
+                                  // ),
+                                ],
+                              ),
                             ),
-                            AddPriceItemInCreateInvoice(
-                              title: "Extra Discount",
-                              name: "extra_discount",
-                              initialValue: hasData
-                                  ? widget.invoice!.totalAmount.toString()
-                                  : null,
-                            ),
-                            AddPriceItemInCreateInvoice(
-                              title: "Total sales",
-                              name: "total_sales",
-                              initialValue: hasData
-                                  ? widget.invoice!.totalAmount.toString()
-                                  : null,
-                            ),
-                            AddPriceItemInCreateInvoice(
-                              title: "Net amount",
-                              name: "net_amount",
-                              initialValue: hasData
-                                  ? widget.invoice!.netAmount.toString()
-                                  : null,
-                            ),
-                            AddPriceItemInCreateInvoice(
-                              title: "Tax Total",
-                              name: "tax_total",
-                              initialValue: hasData
-                                  ? widget.invoice!.totalSalesAmount.toString()
-                                  : null,
-                            ),
-                            AddPriceItemInCreateInvoice(
-                              title: "Tax Discount",
-                              name: "tax_discount",
-                              initialValue: hasData
-                                  ? widget.invoice!.totalTaxAmount.toString()
-                                  : null,
-                            ),
-                            AddPriceItemInCreateInvoice(
-                              title: "Total",
-                              name: "total",
-                              initialValue: hasData
-                                  ? widget.invoice!.totalAmount.toString()
-                                  : null,
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                        PrimaryAndSecondaryButton(
+                          primaryOnPressed: () {
+                            var formState = formKey.currentState;
+                            if (formState == null) return;
+                            if (!formState.saveAndValidate()) {
+                              return;
+                            }
+                            invoiceType = formState.value["invoice_type"];
+                            extraDiscountAmount = num.parse(formState.value["extra_discount"]);
+                            BlocProvider.of<AddInvoiceCubit>(context).addInvoice(
+                              InvoiceRequestModel(
+                                id: 0,
+                                invoiceType: invoiceType!.name!,
+                                invoiceDate: formState.value["invoice_date"],
+                                invoiceTypeId: invoiceType!.id,
+                                customerId: customerValue!.id,
+                                lines: addedItems,
+                                extraDiscountAmount: extraDiscountAmount,
+                              ),
+                            );
+                            Navigator.of(context).push(CustomPageRoute.createRoute(
+                                page: const SuccessInvoiceScreen()));
+                          },
+                          primaryTitle: "Submit Invoice",
+                          secondaryOnPressed: () {},
+                          secondaryTitle: "Preview",
+                        ),
+                      ],
                     ),
-                  ),
-                  PrimaryAndSecondaryButton(
-                    primaryOnPressed: () {
-                      var formState = formKey.currentState;
-                      if (formState == null) return;
-                      if (!formState.saveAndValidate()) {
-                        return;
-                      }
-                      Navigator.of(context).push(CustomPageRoute.createRoute(
-                          page: const SuccessInvoiceScreen()));
-                    },
-                    primaryTitle: "Submit Invoice",
-                    secondaryOnPressed: () {},
-                    secondaryTitle: "Preview",
-                  ),
-                ],
+                  );
+                },
               ),
             );
           },
+
         ),
       ),
     );
@@ -385,6 +431,8 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   Future<void> _dialogBuilderTax({
     required BuildContext context,
   }) {
+    LookupCode? mainTaxType;
+    TaxSubtypeLookup? subTaxType;
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -408,6 +456,22 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                         if (!formState.saveAndValidate()) {
                           return;
                         }
+                        mainTaxType =formState.value["main_tax_type"] as LookupCode;
+                        subTaxType =formState.value["main_tax_type"] as TaxSubtypeLookup;
+                        setState(() {
+                          addedTaxes.add(
+                            LineTax(
+                              invoicelineid: 0,
+                              taxSubTypeId: subTaxType!.id,
+                              taxrate: num.parse(formState.value["rate"]),
+                              taxTypeId: mainTaxType!.id,
+                              taxamount: 0,
+                              taxsubtypecode: "",
+                              taxtypecode: ""
+                            ),
+                          );
+                        });
+                        Navigator.pop(context);
                       },
                       child: LWCustomText(
                         title: "done".tr(),
@@ -453,61 +517,63 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                               return Text(data.name ?? "NA");
                             },
                           ),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Divider(
-                              thickness: 0.5,
-                              height: 0.0,
-                              color: AppColors.searchBarColor,
+                          if (taxSubTypes.isNotEmpty)
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Divider(
+                                thickness: 0.5,
+                                height: 0.0,
+                                color: AppColors.searchBarColor,
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),
                   ),
-                  Container(
-                    color: AppColors.whiteColor,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 8.0),
-                              LWCustomText(
-                                title: "sub_tax_type".tr(),
-                                color: AppColors.labelColor,
-                                fontFamily: FontAssets.avertaRegular,
-                              ),
-                              const SizedBox(height: 16.0),
-                              LWCustomDropdownFormField<TaxSubtypeLookup>(
-                                iconColor: AppColors.labelColor,
-                                name: "sub_tax_type",
-                                showLabel: false,
-                                labelText: "",
-                                // initialValue: !hasData
-                                //     ? initialValueInvoiceType
-                                //     : null,
-                                hintText: "sub_tax_type".tr(),
-                                isRequired: true,
-                                isCard: false,
-                                items: taxSubTypes,
-                                itemBuilder: (context, data) {
-                                  return Text(data.name ?? "NA");
-                                },
-                              ),
-                            ],
+                  if (taxSubTypes.isNotEmpty)
+                    Container(
+                      color: AppColors.whiteColor,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 8.0),
+                                LWCustomText(
+                                  title: "sub_tax_type".tr(),
+                                  color: AppColors.labelColor,
+                                  fontFamily: FontAssets.avertaRegular,
+                                ),
+                                const SizedBox(height: 16.0),
+                                LWCustomDropdownFormField<TaxSubtypeLookup>(
+                                  iconColor: AppColors.labelColor,
+                                  name: "sub_tax_type",
+                                  showLabel: false,
+                                  labelText: "",
+                                  // initialValue: !hasData
+                                  //     ? initialValueInvoiceType
+                                  //     : null,
+                                  hintText: "sub_tax_type".tr(),
+                                  isRequired: true,
+                                  isCard: false,
+                                  items: taxSubTypes,
+                                  itemBuilder: (context, data) {
+                                    return Text(data.name ?? "NA");
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const Divider(
-                          thickness: 0.5,
-                          height: 0.0,
-                          color: AppColors.searchBarColor,
-                        ),
-                      ],
+                          const Divider(
+                            thickness: 0.5,
+                            height: 0.0,
+                            color: AppColors.searchBarColor,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   const SizedBox(height: 24.0),
                   AddPriceItemInCreateInvoice(
                     fullDivider: true,
@@ -529,8 +595,10 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
     num? quantity;
     ItemLookup? item;
     num? price;
+    num? discountRate;
     LineTotal? lineTotal = LineTotal(salesTotal: 0, netTotal: 0, total: 0);
     final formKeyItems = GlobalKey<FormBuilderState>();
+    TextEditingController priceController = TextEditingController(text: "00");
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -553,19 +621,30 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                         if (!formState.saveAndValidate()) {
                           return;
                         }
-                        quantity =
-                            num.parse(formState.value["quantity"]) as num;
+                        quantity = num.parse(formState.value["quantity"]);
+                        discountRate = num.parse(formState.value["quantity"]);
                         item = formState.value["item"] as ItemLookup;
-                        price = num.parse(formState.value["price"]) as num;
+                        price = num.parse(priceController.text);
                         setState(() {
-                          addedItems.add(Line(
+                          for (int i = 0; i < addedItems.length; i++) {
+                            if (addedItems[i].itemId == item!.id) {
+                              addedItems.remove(addedItems[i]);
+                              selectedItemsNames.remove(selectedItemsNames[i]);
+                            }
+                          }
+                          addedItems.add(
+                            Line(
                               itemDescription: item!.description!,
                               itemId: item!.id,
                               unitType: item!.unittypeID,
                               quantity: quantity ?? 0,
                               currencyId: 1,
-                              priceEgp: price!,
-                              lineTotal: lineTotal));
+                              priceEgp: price ?? 00,
+                              lineTotal: lineTotal,
+                              discountRate: discountRate,
+                              lineTax: addedTaxes,
+                            ),
+                          );
                           selectedItemsNames.add(item?.name ?? "");
                         });
                         Navigator.pop(context);
@@ -605,7 +684,9 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                               name: "item",
                               showLabel: false,
                               onChanged: (item) {
-                                setState(() {});
+                                setState(() {
+                                  priceController.text = item!.price.toString();
+                                });
                               },
                               labelText: "",
                               // initialValue: !hasData
@@ -636,18 +717,13 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                     AddPriceItemInCreateInvoice(
                       title: "price".tr(),
                       name: "price",
-                      initialValue: hasData
-                          ? widget.invoice!.totalAmount.toString()
-                          : null,
+                      controller: priceController,
                     ),
                     const SizedBox(height: 16.0),
                     AddPriceItemInCreateInvoice(
-                      title: "discount".tr(),
-                      name: "discount",
+                      title: "discount_rate".tr(),
+                      name: "discount_rate",
                       isRequired: false,
-                      initialValue: hasData
-                          ? widget.invoice!.totalAmount.toString()
-                          : null,
                     ),
                     InvoiceAddItemWidget(
                       title: "add_tax".tr(),

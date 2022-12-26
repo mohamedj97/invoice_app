@@ -23,7 +23,7 @@ class Line {
 
   String itemDescription;
   int? exchangeRate;
-  int? discountRate;
+  num? discountRate;
   int? discountAmount;
   int itemId;
   int unitType;

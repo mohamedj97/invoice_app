@@ -6,8 +6,9 @@ class InvoiceModel extends Equatable {
   InvoiceModel({
     required this.id,
     required this.invoiceType,
-    required this.addedDate,
-    required this.updatedDate,
+    this.extraDiscountAmount,
+    this.addedDate,
+    this.updatedDate,
     this.dueDate,
     this.paymentTerms,
     this.paymentTermsComments,
@@ -20,8 +21,8 @@ class InvoiceModel extends Equatable {
 
   int id;
   String invoiceType;
-  DateTime addedDate;
-  DateTime updatedDate;
+  DateTime? addedDate;
+  DateTime? updatedDate;
   DateTime? dueDate;
   int? paymentTerms;
   String? paymentTermsComments;
@@ -29,6 +30,7 @@ class InvoiceModel extends Equatable {
   DateTime invoiceDate;
   int invoiceTypeId;
   int customerId;
+  num? extraDiscountAmount;
   List<Line> lines;
 
   @override
@@ -37,6 +39,7 @@ class InvoiceModel extends Equatable {
         invoiceNo,
         invoiceDate,
         invoiceType,
+        extraDiscountAmount,
         customerId,
         addedDate,
         updatedDate,

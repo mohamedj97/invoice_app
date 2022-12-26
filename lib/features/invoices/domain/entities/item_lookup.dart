@@ -7,6 +7,7 @@ class ItemLookup {
     this.brickCode,
     this.description,
    required this.unittypeID,
+   required this.price,
    required this.id,
     this.name,
 
@@ -16,6 +17,7 @@ class ItemLookup {
   String? brickCode;
   String? description;
   int unittypeID;
+  num price;
   int id;
   String? name;
 

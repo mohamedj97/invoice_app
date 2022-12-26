@@ -9,7 +9,7 @@ part of 'invoice_line.dart';
 Line _$LineFromJson(Map<String, dynamic> json) => Line(
       itemDescription: json['itemDescription'] as String,
       exchangeRate: json['exchangeRate'] as int?,
-      discountRate: json['discountRate'] as int?,
+      discountRate: json['discountRate'] as num?,
       discountAmount: json['discountAmount'] as int?,
       itemId: json['itemId'] as int,
       unitType: json['unitType'] as int,
