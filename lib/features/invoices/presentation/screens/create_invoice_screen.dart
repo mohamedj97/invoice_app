@@ -6,6 +6,7 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
+import 'package:invoice_app/features/invoices/domain/entities/line_total.dart';
 import 'package:invoice_app/features/invoices/domain/entities/lookup_code.dart';
 import 'package:invoice_app/features/invoices/domain/entities/tax_subtype_lookup.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_types/get_invoice_types_cubit.dart';
@@ -20,9 +21,11 @@ import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_fie
 import '../../../../injection_container.dart';
 import '../../../products/domain/entities/base_lookup.dart';
 import '../../domain/entities/invoice_head_model.dart';
+import '../../domain/entities/invoice_line.dart';
 import '../../domain/entities/item_lookup.dart';
 import '../widgets/add_price_item_in_create_invoice.dart';
 import '../widgets/invoice_add_item_widget.dart';
+import '../widgets/item_invoice_widget.dart';
 import '../widgets/primary_and_secondary_button.dart';
 
 class CreateEditInvoiceScreen extends StatefulWidget {
@@ -44,12 +47,13 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   List<BaseLookup> countries = [];
   List<BaseLookup> paymentTerms = [];
   List<ItemLookup> items = [];
+  List<String> selectedItemsNames = [];
   BaseLookup? customerValue;
   List<TaxSubtypeLookup> taxSubTypes = [];
   List<LookupCode> taxTypes = [];
   List<LookupCode> currencies = [];
   List<BaseLookup> unitTypes = [];
-  List<ItemLookup> addedItems = [];
+  List<Line> addedItems = [];
   bool hasData = false;
 
   @override
@@ -283,6 +287,21 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                           _dialogBuilderItems(context);
                                         },
                                       ),
+                                      ListView.builder(
+                                        itemCount: addedItems.length,
+                                        physics: const ScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                            color: AppColors.whiteColor,
+                                            child: ItemInvoiceWidget(
+                                              item: addedItems[index],
+                                              name: selectedItemsNames[index],
+                                              lastItem: index+1==addedItems.length,
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ],
                                   ),
                             const SizedBox(height: 16.0),
@@ -507,8 +526,10 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   }
 
   Future<void> _dialogBuilderItems(BuildContext context) {
-    int? quantity;
+    num? quantity;
+    ItemLookup? item;
     num? price;
+    LineTotal? lineTotal = LineTotal(salesTotal: 0, netTotal: 0, total: 0);
     final formKeyItems = GlobalKey<FormBuilderState>();
     return showDialog<void>(
       context: context,
@@ -532,6 +553,22 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                         if (!formState.saveAndValidate()) {
                           return;
                         }
+                        quantity =
+                            num.parse(formState.value["quantity"]) as num;
+                        item = formState.value["item"] as ItemLookup;
+                        price = num.parse(formState.value["price"]) as num;
+                        setState(() {
+                          addedItems.add(Line(
+                              itemDescription: item!.description!,
+                              itemId: item!.id,
+                              unitType: item!.unittypeID,
+                              quantity: quantity ?? 0,
+                              currencyId: 1,
+                              priceEgp: price!,
+                              lineTotal: lineTotal));
+                          selectedItemsNames.add(item?.name ?? "");
+                        });
+                        Navigator.pop(context);
                       },
                       child: LWCustomText(
                         title: "done".tr(),
@@ -607,6 +644,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                     AddPriceItemInCreateInvoice(
                       title: "discount".tr(),
                       name: "discount",
+                      isRequired: false,
                       initialValue: hasData
                           ? widget.invoice!.totalAmount.toString()
                           : null,
@@ -628,8 +666,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
     );
   }
 
-  Future<void> _dialogBuilder(
-      BuildContext context) {
+  Future<void> _dialogBuilder(BuildContext context) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {

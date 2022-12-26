@@ -14,10 +14,12 @@ class AddPriceItemInCreateInvoice extends StatelessWidget {
   final String? hintText;
   final bool showCurrency;
   final bool fullDivider;
+  final bool isRequired;
 
   const AddPriceItemInCreateInvoice(
       {Key? key,
       this.controller,
+      this.isRequired=true,
       this.fullDivider = false,
       this.hintText,
       required this.title,
@@ -55,7 +57,7 @@ class AddPriceItemInCreateInvoice extends StatelessWidget {
                         labelText: "",
                         hintText: hintText ?? "00.0",
                         initialValue: initialValue,
-                        isRequired: true,
+                        isRequired: isRequired,
                         // initialValue: !hasData
                         //     ? "${widget.productItem!.price} EGP"
                         //     : null,
