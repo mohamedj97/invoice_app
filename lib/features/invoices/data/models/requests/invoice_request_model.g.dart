@@ -20,12 +20,12 @@ InvoiceRequestModel _$InvoiceRequestModelFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['dueDate'] as String),
       paymentTerms: json['paymentTerms'] as int?,
+      extraDiscountAmount: json['extraDiscountAmount'] as num?,
       paymentTermsComments: json['paymentTermsComments'] as String?,
       invoiceNo: json['invoiceNo'] as String?,
       invoiceDate: DateTime.parse(json['invoiceDate'] as String),
       invoiceTypeId: json['invoiceTypeId'] as int,
       customerId: json['customerId'] as int,
-      extraDiscountAmount: json['extraDiscountAmount'] as num?,
       lines: (json['lines'] as List<dynamic>)
           .map((e) => Line.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -36,7 +36,6 @@ Map<String, dynamic> _$InvoiceRequestModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'invoiceType': instance.invoiceType,
-      'extraDiscountAmount': instance.extraDiscountAmount,
       'addedDate': instance.addedDate?.toIso8601String(),
       'updatedDate': instance.updatedDate?.toIso8601String(),
       'dueDate': instance.dueDate?.toIso8601String(),
@@ -46,5 +45,6 @@ Map<String, dynamic> _$InvoiceRequestModelToJson(
       'invoiceDate': instance.invoiceDate.toIso8601String(),
       'invoiceTypeId': instance.invoiceTypeId,
       'customerId': instance.customerId,
+      'extraDiscountAmount': instance.extraDiscountAmount,
       'lines': instance.lines,
     };

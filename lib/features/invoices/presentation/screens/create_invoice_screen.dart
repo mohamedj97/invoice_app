@@ -400,7 +400,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                             BlocProvider.of<AddInvoiceCubit>(context).addInvoice(
                               InvoiceRequestModel(
                                 id: 0,
-                                invoiceType: invoiceType!.name!,
+                                invoiceType: invoiceType!.id.toString(),
                                 invoiceDate: formState.value["invoice_date"],
                                 invoiceTypeId: invoiceType!.id,
                                 customerId: customerValue!.id,
@@ -408,8 +408,6 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                 extraDiscountAmount: extraDiscountAmount,
                               ),
                             );
-                            Navigator.of(context).push(CustomPageRoute.createRoute(
-                                page: const SuccessInvoiceScreen()));
                           },
                           primaryTitle: "Submit Invoice",
                           secondaryOnPressed: () {},
