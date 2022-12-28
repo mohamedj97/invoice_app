@@ -641,6 +641,8 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                               lineTotal: lineTotal,
                               discountRate: discountRate,
                               lineTax: addedTaxes,
+                              discountAmount: 0,
+                              exchangeRate: 0,
                             ),
                           );
                           selectedItemsNames.add(item?.name ?? "");
