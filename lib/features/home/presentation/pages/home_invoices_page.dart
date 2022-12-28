@@ -23,7 +23,7 @@ class HomeInvoicesPage extends StatefulWidget {
 class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
   TextEditingController searchController = TextEditingController();
   List<InvoiceHeadModel> invoices = [];
-  final cubit = GetInvoicesCubit(sl());
+  final cubit = GetInvoicesCubit(sl(),sl());
 
   @override
   void initState() {

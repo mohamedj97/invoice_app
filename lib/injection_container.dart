@@ -37,6 +37,7 @@ import 'features/auth/presentation/cubit/login/login_cubit.dart';
 import 'features/customers/domain/use_cases/get_customer_types_use_case.dart';
 import 'features/customers/domain/use_cases/get_customers_use_case.dart';
 import 'features/customers/presentation/cubit/get_customer_types/get_customer_types_cubit.dart';
+import 'features/invoices/domain/use_cases/filter_invoices_use_case.dart';
 import 'features/invoices/presentation/cubit/get_types/get_invoice_types_cubit.dart';
 import 'features/products/data/data_sources/products_remote_data_source.dart';
 import 'features/products/data/repositories/products_repository_impl.dart';
@@ -53,7 +54,7 @@ Future<void> init() async {
 // Bloc
 
   sl.registerLazySingleton(() => LoginCubit(sl(),sl()));
-  sl.registerLazySingleton(() => GetInvoicesCubit(sl()));
+  sl.registerLazySingleton(() => GetInvoicesCubit(sl(),sl()));
   sl.registerLazySingleton(() => GetInvoiceTypesCubit(sl()));
   sl.registerLazySingleton(() => AddInvoiceCubit(sl()));
   sl.registerLazySingleton(() => GetCustomersCubit(sl()));
@@ -76,6 +77,7 @@ Future<void> init() async {
 //
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => GetInvoicesUseCase(invoicesRepository: sl()));
+  sl.registerLazySingleton(() => FilterInvoicesUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => GetInvoiceTypesUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => AddInvoiceUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => GetCustomersUseCase(customersRepository: sl()));
