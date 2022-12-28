@@ -12,5 +12,10 @@ class LineTaxTotal {
   String taxType;
   num amount;
 
+  Map<String, dynamic> toJson() => {
+    "taxType": taxType,
+    "amount": amount,
+  };
+
   factory LineTaxTotal.fromJson(Map<String, dynamic> json) => _$LineTaxTotalFromJson(json);
 }

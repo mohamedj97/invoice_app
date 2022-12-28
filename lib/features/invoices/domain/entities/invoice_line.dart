@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 import 'line_tax.dart';
@@ -33,5 +35,18 @@ class Line {
   List<LineTax>? lineTax;
   LineTotal lineTotal;
 
+  Map<String, dynamic> toJson() => {
+    "ItemDescription": itemDescription,
+    "ExchangeRate": exchangeRate,
+    "DiscountRate": discountRate,
+    "DiscountAmount": discountAmount,
+    "ItemId": itemId,
+    "UnitType": unitType,
+    "Quantity": quantity,
+    "CurrencyId": currencyId,
+    "PriceEgp": priceEgp,
+    "LineTax": lineTax?.map((e) => e.toJson()).toList() ??[],
+    "LineTotal": lineTotal.toJson(),
+  };
   factory Line.fromJson(Map<String, dynamic> json) => _$LineFromJson(json);
 }

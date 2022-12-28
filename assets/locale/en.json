@@ -13,6 +13,7 @@
   "loading": "loading",
   "ok": "Ok",
   "title": "Invoice",
+  "discount_rate": "Discount Rate",
   "something_went_wrong": "Something Went Wrong",
   "retry": "Retry",
   "welcome_back": "Welcome Back",

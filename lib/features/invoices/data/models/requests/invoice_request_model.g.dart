@@ -46,5 +46,5 @@ Map<String, dynamic> _$InvoiceRequestModelToJson(
       'invoiceTypeId': instance.invoiceTypeId,
       'customerId': instance.customerId,
       'extraDiscountAmount': instance.extraDiscountAmount,
-      'lines': instance.lines,
+      'lines':instance.lines.map((e) => e.toJson()).toList(),
     };

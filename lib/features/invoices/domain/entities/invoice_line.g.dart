@@ -33,5 +33,5 @@ Map<String, dynamic> _$LineToJson(Line instance) => <String, dynamic>{
       'currencyId': instance.currencyId,
       'priceEgp': instance.priceEgp,
       'lineTax': instance.lineTax,
-      'lineTotal': instance.lineTotal,
+      'lineTotal': jsonEncode(instance.lineTotal.toJson()),
     };

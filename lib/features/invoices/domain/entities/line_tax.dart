@@ -22,5 +22,15 @@ class LineTax {
   int taxTypeId;
   int taxSubTypeId;
 
+  Map<String, dynamic> toJson() => {
+    "invoicelineid": invoicelineid,
+    "taxrate": taxrate,
+    "taxamount": taxamount,
+    "taxtypecode": taxtypecode,
+    "taxsubtypecode": taxsubtypecode,
+    "taxTypeId": taxTypeId,
+    "taxSubTypeId": taxSubTypeId,
+  };
+
   factory LineTax.fromJson(Map<String, dynamic> json) => _$LineTaxFromJson(json);
 }

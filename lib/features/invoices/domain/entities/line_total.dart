@@ -18,5 +18,12 @@ class LineTotal {
   num total;
   List<LineTaxTotal>? lineTaxTotal;
 
+  Map<String, dynamic> toJson() => {
+    "salesTotal": salesTotal,
+    "netTotal": netTotal,
+    "total": total,
+    "LineTaxTotal": lineTaxTotal?.map((e) => e.toJson()).toList()??[],
+  };
+
   factory LineTotal.fromJson(Map<String, dynamic> json) => _$LineTotalFromJson(json);
 }
