@@ -11,6 +11,7 @@ class EndPoints {
   //invoices
   static const getInvoices = 'Invoices';
   static const getInvoiceLookups = 'Invoices/getInvoice-lookups';
+  static const filterInvoices = 'Invoices/getinvoicelist';
 
   //customers
   static const getCustomers = 'Customers';

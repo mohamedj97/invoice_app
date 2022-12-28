@@ -25,7 +25,7 @@ class InvoiceRequestModel extends InvoiceModel {
 
   @override
   String toString() {
-    return 'InvoiceModel[id=$id,  invoiceType=$invoiceType,  addedDate=$addedDate,  updatedDate=$updatedDate,  dueDate=$dueDate,  paymentTerms=$paymentTerms,  paymentTermsComments=$paymentTermsComments,  invoiceNo=$invoiceNo,  invoiceDate=$invoiceDate,  invoiceTypeId=$invoiceTypeId,  customerId=$customerId,  extraDiscountAmount=$extraDiscountAmount,  lines=$lines,  ]';
+    return 'InvoiceModel[id=$id,  invoiceType=$invoiceType,  addedDate=$addedDate,  updatedDate=$updatedDate,  dueDate=$dueDate,  paymentTerms=$paymentTerms,  paymentTermsComments=$paymentTermsComments,  invoiceNo=$invoiceNo,  invoiceDate=$invoiceDate,  invoiceTypeId=$invoiceTypeId,  customerId=$customerId,  extraDiscountAmount=$extraDiscountAmount,  lines=${lines.toList()},  ]';
   }
 
   factory InvoiceRequestModel.fromJson(Map<String, dynamic> json) =>
