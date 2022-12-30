@@ -19,7 +19,6 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
-import '../../../../core/utils/value_notifier.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_date_form_field.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
@@ -67,19 +66,14 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   LookupCode? mainTaxType;
   TaxSubtypeLookup? subTaxType;
   num? taxRate;
-  late SubTypeValueNotifier subTypeValueNotifier;
 
   @override
   void dispose() {
-    subTypeValueNotifier.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
-    subTypeValueNotifier = SubTypeValueNotifier(
-        value: SubTypeSection(
-            subTaxValueNotifier: ValueNotifier<List<TaxSubtypeLookup>>([])));
     getInvoiceTypesCubit.getInvoicesLookups();
     super.initState();
   }
