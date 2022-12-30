@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -18,6 +19,7 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
+import '../../../../core/utils/value_notifier.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_date_form_field.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
@@ -65,9 +67,19 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   LookupCode? mainTaxType;
   TaxSubtypeLookup? subTaxType;
   num? taxRate;
+  late SubTypeValueNotifier subTypeValueNotifier;
+
+  @override
+  void dispose() {
+    subTypeValueNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
+    subTypeValueNotifier = SubTypeValueNotifier(
+        value: SubTypeSection(
+            subTaxValueNotifier: ValueNotifier<List<TaxSubtypeLookup>>([])));
     getInvoiceTypesCubit.getInvoicesLookups();
     super.initState();
   }
@@ -488,13 +500,13 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                             subTaxType = formState.value["sub_tax_type"]
                                 as TaxSubtypeLookup;
                             //taxRate = num.parse(formState.value["rate"]);
-                            taxRate=11;
+                            taxRate = 11;
                             addedTaxes.add(
                               LineTax(
                                   invoicelineid: 0,
                                   taxSubTypeId: subTaxType!.id,
                                   taxrate: 11,
-                                 // taxrate: num.parse(formState.value["rate"]),
+                                  // taxrate: num.parse(formState.value["rate"]),
                                   taxTypeId: mainTaxType!.id,
                                   taxamount: 0,
                                   taxsubtypecode: "",
@@ -536,12 +548,14 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                 iconColor: AppColors.labelColor,
                                 name: "main_tax_type",
                                 showLabel: false,
-                                onChanged: (value){
-                                  setState((){
-                                    filteredTaxSubTypes=[];
-                                    subTaxType=null;
-                                    mainTaxType=value;
-                                    filteredTaxSubTypes= taxSubTypes.where((o) => o.taxTypeId == value!.id).toList();
+                                onChanged: (value) {
+                                  setState(() {
+                                    filteredTaxSubTypes = [];
+                                    subTaxType = null;
+                                    mainTaxType = value;
+                                    filteredTaxSubTypes = taxSubTypes
+                                        .where((o) => o.taxTypeId == value!.id)
+                                        .toList();
                                   });
                                 },
                                 labelText: "",
@@ -553,58 +567,80 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                   return Text(data.name ?? "NA");
                                 },
                               ),
-                                const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Divider(
-                                    thickness: 0.5,
-                                    height: 0.0,
-                                    color: AppColors.searchBarColor,
-                                  ),
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Divider(
+                                  thickness: 0.5,
+                                  height: 0.0,
+                                  color: AppColors.searchBarColor,
                                 ),
+                              ),
                             ],
                           ),
                         ),
                       ),
-                        Container(
-                          color: AppColors.whiteColor,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 8.0),
-                                    LWCustomText(
-                                      title: "sub_tax_type".tr(),
-                                      color: AppColors.labelColor,
-                                      fontFamily: FontAssets.avertaRegular,
+                      Container(
+                        color: AppColors.whiteColor,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 8.0),
+                                  LWCustomText(
+                                    title: "sub_tax_type".tr(),
+                                    color: AppColors.labelColor,
+                                    fontFamily: FontAssets.avertaRegular,
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  DropdownButtonFormField<TaxSubtypeLookup>(
+                                    value: subTaxType,
+                                    onChanged: (subValue) {
+                                      setState(() {
+                                        subTaxType = subValue;
+                                      });
+                                    },
+                                    isExpanded: true,
+                                    validator:(value) {
+                                      if (value == null) {
+                                        return '${"sub_tax_type".tr()} is required';
+                                      }
+                                    },
+                                    decoration: const InputDecoration(
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      fillColor: AppColors.labelColor,
+                                      errorMaxLines: 10,
+                                      hintText: "chhose Value",
+                                      hintStyle: TextStyle(
+                                          color: AppColors.searchBarColor),
                                     ),
-                                    const SizedBox(height: 16.0),
-                                    LWCustomDropdownFormField<TaxSubtypeLookup>(
-                                      iconColor: AppColors.labelColor,
-                                      name: "sub_tax_type",
-                                      showLabel: false,
-                                      labelText: "",
-                                      hintText: "sub_tax_type".tr(),
-                                      isRequired: true,
-                                      isCard: false,
-                                      items: filteredTaxSubTypes,
-                                      itemBuilder: (context, data) {
-                                        return Text(data.name ?? "NA");
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                    items: filteredTaxSubTypes
+                                        .map((TaxSubtypeLookup item) {
+                                      return DropdownMenuItem<TaxSubtypeLookup>(
+                                        value: item,
+                                        child: Text(
+                                          item.name ?? "",
+                                          style:const  TextStyle(
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ],
                               ),
-                              const Divider(
-                                thickness: 0.5,
-                                height: 0.0,
-                                color: AppColors.searchBarColor,
-                              ),
-                            ],
-                          ),
+                            ),
+                            const Divider(
+                              thickness: 0.5,
+                              height: 0.0,
+                              color: AppColors.searchBarColor,
+                            ),
+                          ],
                         ),
+                      ),
                       const SizedBox(height: 24.0),
                       // AddPriceItemInCreateInvoice(
                       //   fullDivider: true,
@@ -627,7 +663,8 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
     ItemLookup? item;
     num? price;
     num? discountRate;
-    LineTotal? lineTotal = LineTotal(salesTotal: 0, netTotal: 0, total: 0,lineTaxTotal: []);
+    LineTotal? lineTotal =
+        LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
     final formKeyItems = GlobalKey<FormBuilderState>();
     TextEditingController priceController = TextEditingController(text: "00");
     return showDialog<void>(
@@ -779,10 +816,8 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                               color: AppColors.whiteColor,
                               child: Column(
                                 children: [
-                                  LWCustomText(
-                                      title: mainTaxType?.name ?? ""),
-                                  LWCustomText(
-                                      title: subTaxType?.name ?? ""),
+                                  LWCustomText(title: mainTaxType?.name ?? ""),
+                                  LWCustomText(title: subTaxType?.name ?? ""),
                                   LWCustomText(
                                       title: taxRate?.toString() ?? ""),
                                 ],
