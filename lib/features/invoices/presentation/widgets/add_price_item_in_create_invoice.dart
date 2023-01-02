@@ -15,19 +15,23 @@ class AddPriceItemInCreateInvoice extends StatelessWidget {
   final bool showCurrency;
   final bool fullDivider;
   final bool isRequired;
+  final bool autoFocus;
+  final FocusNode? focusNode;
 
-  const AddPriceItemInCreateInvoice(
-      {Key? key,
-      this.controller,
-      this.isRequired=true,
-      this.fullDivider = false,
-      this.hintText,
-      required this.title,
-      this.currency,
-      required this.name,
-      this.initialValue,
-      this.showCurrency = true})
-      : super(key: key);
+  const AddPriceItemInCreateInvoice({
+    Key? key,
+    this.controller,
+    this.isRequired = true,
+    this.fullDivider = false,
+    this.hintText,
+    required this.title,
+    this.currency,
+    required this.name,
+    this.focusNode,
+    this.initialValue,
+    this.showCurrency = true,
+    this.autoFocus = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +54,11 @@ class AddPriceItemInCreateInvoice extends StatelessWidget {
                     SizedBox(
                       width: 100,
                       child: LWCustomTextFormField(
+                        autoFocus:autoFocus,
                         textAlign: TextAlign.end,
                         name: name,
                         showLabel: false,
+                        focusNode: focusNode,
                         controller: controller,
                         labelText: "",
                         hintText: hintText ?? "00.0",

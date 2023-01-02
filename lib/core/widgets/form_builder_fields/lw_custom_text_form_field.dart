@@ -24,6 +24,7 @@ class LWCustomTextFormField extends StatelessWidget {
   final bool isCard;
   final bool showLabel;
   final bool expands;
+  final bool autoFocus;
   final double? height;
   final TextInputAction? textInputAction;
   final TextEditingController? controller;
@@ -31,6 +32,7 @@ class LWCustomTextFormField extends StatelessWidget {
   final void Function(String?)? onSaved;
   final EdgeInsetsGeometry? contentPadding;
   final TextAlign? textAlign;
+  final FocusNode? focusNode;
 
   const LWCustomTextFormField({
     Key? key,
@@ -54,7 +56,11 @@ class LWCustomTextFormField extends StatelessWidget {
     this.controller,
     this.fontSize,
     this.onSubmitted,
-    this.onSaved, this.focusedBorderDecoration, this.contentPadding, this.textAlign,
+    this.focusNode,
+    this.onSaved,
+    this.focusedBorderDecoration,
+    this.contentPadding,
+    this.textAlign, this.autoFocus=false,
   }) : super(key: key);
 
   @override
@@ -62,8 +68,10 @@ class LWCustomTextFormField extends StatelessWidget {
     var child = FormBuilderTextField(
       onSubmitted: onSubmitted,
       onSaved: onSaved,
+      autofocus: autoFocus,
       initialValue: initialValue,
-      textAlign: textAlign??TextAlign.start,
+      focusNode: focusNode,
+      textAlign: textAlign ?? TextAlign.start,
       enabled: enabled,
       controller: controller,
       name: name,
@@ -85,7 +93,8 @@ class LWCustomTextFormField extends StatelessWidget {
                 color: AppColors.searchBarColor,
               ),
             ),
-        focusedBorder: focusedBorderDecoration??borderDecoration ??
+        focusedBorder: focusedBorderDecoration ??
+            borderDecoration ??
             const OutlineInputBorder(
               borderRadius: BorderRadius.zero,
               borderSide: BorderSide(
