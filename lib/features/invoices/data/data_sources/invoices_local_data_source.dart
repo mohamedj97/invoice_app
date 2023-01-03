@@ -1,54 +1,49 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../domain/entities/invoice_line.dart';
 import '../../domain/entities/item_lookup.dart';
 import '../../domain/entities/line_tax.dart';
+import '../../domain/entities/lookup_code.dart';
+import '../../domain/entities/tax_subtype_lookup.dart';
 
-abstract class InvoicesLocalDataSource {
-  void updateItems(List<ItemLookup> items);
-  List<ItemLookup> getItems();
-  void updateTaxes(List<LineTax> taxes);
-  List<LineTax> getTaxes();
-  void clearItems(List<ItemLookup> items);
-  void clearTaxes(List<LineTax> taxes);
-}
+class InvoicesLocalDataSource {
+  static List<LineTax> addedTaxes = [];
+  static List<Line> addedItems = [];
+  static List<ItemLookup> items = [];
+  static List<TaxSubtypeLookup> taxSubTypes = [];
+  static List<LookupCode> taxTypes = [];
+  static num? taxRate;
+  static List<String> selectedItemsNames = [];
+  static LookupCode? mainTaxType;
+  static TaxSubtypeLookup? subTaxType;
 
-class InvoicesLocalDataSourceImpl extends InvoicesLocalDataSource {
-  final SharedPreferences sharedPreferences;
-  InvoicesLocalDataSourceImpl({
-    required this.sharedPreferences,
-  });
-
-  @override
-  void clearItems(List<ItemLookup> items) {
-    items.clear();
-  }
-
-  @override
-  void clearTaxes(List<LineTax> taxes) {
-    taxes.clear();
-  }
-
-  @override
-  List<ItemLookup> getItems() {
-    // TODO: implement getItems
-    throw UnimplementedError();
-  }
-
-  @override
-  List<LineTax> getTaxes() {
-    // TODO: implement getTaxes
-    throw UnimplementedError();
-  }
-
-  @override
-  void updateItems(List<ItemLookup> items) {
-    // TODO: implement updateItems
-    throw UnimplementedError();
-  }
-
-  @override
-  void updateTaxes(List<LineTax> taxes) {
-    // TODO: implement updateTaxes
-    throw UnimplementedError();
-  }
+// void clearItems() {
+//   addedItems.clear();
+// }
+//
+//
+// void clearTaxes() {
+//   addedTaxes.clear();
+// }
+//
+//
+// List<ItemLookup> getItems() {
+//   return addedItems;
+// }
+//
+//
+// List<LineTax> getTaxes() {
+//   return addedTaxes;
+// }
+//
+//
+// void updateItems({required List<ItemLookup> filteredItems}) {
+//   clearItems();
+//   addedItems=filteredItems;
+// }
+//
+//
+// void updateTaxes({required List<LineTax> filteredTaxes}) {
+//   clearTaxes();
+//   addedTaxes=filteredTaxes;
+// }
 
 }

@@ -7,13 +7,13 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
+import 'package:invoice_app/features/invoices/data/data_sources/invoices_local_data_source.dart';
 import 'package:invoice_app/features/invoices/data/models/requests/invoice_request_model.dart';
-import 'package:invoice_app/features/invoices/domain/entities/line_tax.dart';
-import 'package:invoice_app/features/invoices/domain/entities/line_total.dart';
 import 'package:invoice_app/features/invoices/domain/entities/lookup_code.dart';
 import 'package:invoice_app/features/invoices/domain/entities/tax_subtype_lookup.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/add_invoice/add_invoice_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_types/get_invoice_types_cubit.dart';
+import 'package:invoice_app/features/invoices/presentation/screens/add_invoice_items.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/success_invoice_screen.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/navigation/custom_page_route.dart';
@@ -25,7 +25,6 @@ import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_fie
 import '../../../../injection_container.dart';
 import '../../../products/domain/entities/base_lookup.dart';
 import '../../domain/entities/invoice_head_model.dart';
-import '../../domain/entities/invoice_line.dart';
 import '../../domain/entities/item_lookup.dart';
 import '../widgets/add_price_item_in_create_invoice.dart';
 import '../widgets/invoice_add_item_widget.dart';
@@ -51,22 +50,14 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   List<BaseLookup> countries = [];
   List<BaseLookup> paymentTerms = [];
   List<ItemLookup> items = [];
-  List<String> selectedItemsNames = [];
   BaseLookup? customerValue;
   List<TaxSubtypeLookup> taxSubTypes = [];
-  List<TaxSubtypeLookup> filteredTaxSubTypes = [];
   List<LookupCode> taxTypes = [];
   List<LookupCode> currencies = [];
   List<BaseLookup> unitTypes = [];
-  List<Line> addedItems = [];
-  List<LineTax> addedTaxes = [];
   BaseLookup? invoiceType;
   num? extraDiscountAmount;
   bool hasData = false;
-  LookupCode? mainTaxType;
-  TaxSubtypeLookup? subTaxType;
-  num? taxRate;
-  final FocusNode focusNodeRateTax = FocusNode();
 
   @override
   void dispose() {
@@ -343,11 +334,17 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                               title: "Add item",
                                               iconPath: IconAssets.addItemIcon,
                                               onTap: () {
-                                                _dialogBuilderItems(context);
+                                                setState(() {
+                                                  InvoicesLocalDataSource.taxTypes=taxTypes;
+                                                  InvoicesLocalDataSource.taxSubTypes=taxSubTypes;
+                                                  InvoicesLocalDataSource.items=items;
+                                                });
+                                                Navigator.of(context).push(CustomPageRoute.createRoute(
+                                                    page: const AddInvoiceItems())).then((_) => setState(() {}));
                                               },
                                             ),
                                             ListView.builder(
-                                              itemCount: addedItems.length,
+                                              itemCount: InvoicesLocalDataSource.addedItems.length,
                                               physics: const ScrollPhysics(),
                                               shrinkWrap: true,
                                               itemBuilder: (context, index) {
@@ -358,18 +355,18 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                   key: UniqueKey(),
                                                   onDismissed: (direction) {
                                                     setState(() {
-                                                      addedItems
+                                                      InvoicesLocalDataSource.addedItems
                                                           .removeAt(index);
                                                     });
                                                   },
                                                   child: Container(
                                                     color: AppColors.whiteColor,
                                                     child: ItemInvoiceWidget(
-                                                      item: addedItems[index],
-                                                      name: selectedItemsNames[
+                                                      item: InvoicesLocalDataSource.addedItems[index],
+                                                      name: InvoicesLocalDataSource.selectedItemsNames[
                                                           index],
                                                       lastItem: index + 1 ==
-                                                          addedItems.length,
+                                                          InvoicesLocalDataSource.addedItems.length,
                                                     ),
                                                   ),
                                                 );
@@ -450,7 +447,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                 invoiceDate: formState.value["invoice_date"],
                                 invoiceTypeId: invoiceType!.id,
                                 customerId: customerValue!.id,
-                                lines: addedItems,
+                                lines: InvoicesLocalDataSource.addedItems,
                                 extraDiscountAmount: extraDiscountAmount,
                               ),
                             );
@@ -468,375 +465,6 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
           },
         ),
       ),
-    );
-  }
-
-  Future<void> _dialogBuilderTax({
-    required BuildContext context,
-  }) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        final formKeyTax = GlobalKey<FormBuilderState>();
-        return AlertDialog(
-          contentPadding: const EdgeInsets.all(0),
-          insetPadding: const EdgeInsets.all(0),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: CustomScaffold(
-              title: "add_tax".tr(),
-              actions: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: InkWell(
-                      onTap: () {
-                        var formState = formKeyTax.currentState;
-                        if (formState == null) return;
-                        if (!formState.saveAndValidate()) {
-                          return;
-                        }
-                        Navigator.pop(context);
-                        setState(() {
-                          filteredTaxSubTypes.clear();
-                          mainTaxType =
-                              formState.value["main_tax_type"] as LookupCode;
-                          //taxRate = num.parse(formState.value["rate"]);
-                          taxRate = 11;
-                          addedTaxes.add(
-                            LineTax(
-                                invoicelineid: 0,
-                                taxSubTypeId: subTaxType!.id,
-                                taxrate: 11,
-                                // taxrate: num.parse(formState.value["rate"]),
-                                taxTypeId: mainTaxType!.id,
-                                taxamount: 0,
-                                taxsubtypecode: "",
-                                taxtypecode: ""),
-                          );
-                        });
-                      },
-                      child: LWCustomText(
-                        title: "done".tr(),
-                        color: AppColors.primary,
-                        fontFamily: FontAssets.avertaSemiBold,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-              leading: const CustomBackButton(),
-              body: FormBuilder(
-                key: formKeyTax,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 24.0),
-                    Container(
-                      color: AppColors.whiteColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 8.0),
-                            LWCustomText(
-                              title: "main_tax_type".tr(),
-                              color: AppColors.labelColor,
-                              fontFamily: FontAssets.avertaRegular,
-                            ),
-                            const SizedBox(height: 16.0),
-                            LWCustomDropdownFormField<LookupCode>(
-                              iconColor: AppColors.labelColor,
-                              name: "main_tax_type",
-                              showLabel: false,
-                              onChanged: (value) {
-                                setState(() {
-                                  filteredTaxSubTypes = [];
-                                  subTaxType = null;
-                                  mainTaxType = value;
-                                  filteredTaxSubTypes = taxSubTypes
-                                      .where((o) => o.taxTypeId == value!.id)
-                                      .toList();
-                                });
-                              },
-                              labelText: "",
-                              hintText: "main_tax_type".tr(),
-                              isRequired: true,
-                              isCard: false,
-                              items: taxTypes,
-                              itemBuilder: (context, data) {
-                                return Text(data.name ?? "NA");
-                              },
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Divider(
-                                thickness: 0.5,
-                                height: 0.0,
-                                color: AppColors.searchBarColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      color: AppColors.whiteColor,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 8.0),
-                                LWCustomText(
-                                  title: "sub_tax_type".tr(),
-                                  color: AppColors.labelColor,
-                                  fontFamily: FontAssets.avertaRegular,
-                                ),
-                                const SizedBox(height: 16.0),
-                                DropdownButtonFormField<TaxSubtypeLookup>(
-                                  value: subTaxType,
-                                  onChanged: (subValue) {
-                                    setState(() {
-                                      subTaxType = subValue;
-                                    });
-                                  },
-                                  isExpanded: true,
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return '${"sub_tax_type".tr()} is required';
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    fillColor: AppColors.labelColor,
-                                    errorMaxLines: 10,
-                                    hintText: "sub_tax_type".tr(),
-                                    hintStyle: const TextStyle(
-                                        color: AppColors.searchBarColor),
-                                  ),
-                                  items: filteredTaxSubTypes
-                                      .map((TaxSubtypeLookup item) {
-                                    return DropdownMenuItem<TaxSubtypeLookup>(
-                                      value: item,
-                                      child: Text(
-                                        item.name ?? "",
-                                        style: const TextStyle(
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Divider(
-                            thickness: 0.5,
-                            height: 0.0,
-                            color: AppColors.searchBarColor,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 24.0),
-                    // InkWell(
-                    //   onTap: (){
-                    //     setState((){
-                    //       autoFocus=true;
-                    //     });
-                    //   },
-                    //   child: AddPriceItemInCreateInvoice(
-                    //     fullDivider: true,
-                    //     title: "rate".tr(),
-                    //     autoFocus: autoFocus,
-                    //     name: "rate",
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> _dialogBuilderItems(BuildContext context) {
-    num? quantity;
-    ItemLookup? item;
-    num? price;
-    num? discountRate;
-    LineTotal? lineTotal =
-        LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
-    final formKeyItems = GlobalKey<FormBuilderState>();
-    TextEditingController priceController = TextEditingController(text: "00");
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          insetPadding: const EdgeInsets.all(0),
-          contentPadding: const EdgeInsets.all(0),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: CustomScaffold(
-              title: "add_item".tr(),
-              actions: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: InkWell(
-                      onTap: () {
-                        var formState = formKeyItems.currentState;
-                        if (formState == null) return;
-                        if (!formState.saveAndValidate()) {
-                          return;
-                        }
-                        quantity = num.parse(formState.value["quantity"]);
-                        discountRate = num.parse(formState.value["quantity"]);
-                        item = formState.value["item"] as ItemLookup;
-                        price = num.parse(priceController.text);
-                        setState(() {
-                          for (int i = 0; i < addedItems.length; i++) {
-                            if (addedItems[i].itemId == item!.id) {
-                              addedItems.remove(addedItems[i]);
-                              selectedItemsNames.remove(selectedItemsNames[i]);
-                            }
-                          }
-                          addedItems.add(
-                            Line(
-                              itemDescription: item!.description!,
-                              itemId: item!.id,
-                              unitType: item!.unittypeID,
-                              quantity: quantity ?? 0,
-                              currencyId: 70,
-                              priceEgp: price ?? 00,
-                              lineTotal: lineTotal,
-                              discountRate: discountRate,
-                              lineTax: addedTaxes,
-                              discountAmount: 0,
-                              exchangeRate: 0,
-                            ),
-                          );
-                          selectedItemsNames.add(item?.name ?? "");
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: LWCustomText(
-                        title: "done".tr(),
-                        color: AppColors.primary,
-                        fontFamily: FontAssets.avertaSemiBold,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-              leading: const CustomBackButton(),
-              body: FormBuilder(
-                key: formKeyItems,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 16.0),
-                    Container(
-                      color: AppColors.whiteColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 8.0),
-                            const LWCustomText(
-                              title: "Item",
-                              color: AppColors.labelColor,
-                              fontFamily: FontAssets.avertaRegular,
-                            ),
-                            const SizedBox(height: 16.0),
-                            LWCustomDropdownFormField<ItemLookup>(
-                              iconColor: AppColors.labelColor,
-                              name: "item",
-                              showLabel: false,
-                              onChanged: (item) {
-                                setState(() {
-                                  priceController.text = item!.price.toString();
-                                });
-                              },
-                              labelText: "",
-                              // initialValue: !hasData
-                              //     ? initialValueCountry
-                              //     : null,
-                              hintText: "choose_item".tr(),
-                              isRequired: true,
-                              isCard: false,
-                              items: items,
-                              itemBuilder: (context, data) {
-                                return Text(data.name ?? "NA");
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    AddPriceItemInCreateInvoice(
-                      hintText: "00",
-                      showCurrency: false,
-                      title: "quantity".tr(),
-                      name: "quantity",
-                      initialValue: hasData
-                          ? widget.invoice!.totalAmount.toString()
-                          : null,
-                    ),
-                    AddPriceItemInCreateInvoice(
-                      title: "price".tr(),
-                      name: "price",
-                      controller: priceController,
-                    ),
-                    const SizedBox(height: 16.0),
-                    AddPriceItemInCreateInvoice(
-                      title: "discount_rate".tr(),
-                      name: "discount_rate",
-                      isRequired: false,
-                    ),
-                    InvoiceAddItemWidget(
-                      title: "add_tax".tr(),
-                      iconPath: IconAssets.addCustomerIcon,
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        _dialogBuilderTax(context: context);
-                      },
-                    ),
-                    ListView.builder(
-                      itemCount: addedTaxes.length,
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          color: AppColors.whiteColor,
-                          child: Column(
-                            children: [
-                              LWCustomText(title: mainTaxType?.name ?? ""),
-                              LWCustomText(title: subTaxType?.name ?? ""),
-                              LWCustomText(title: taxRate?.toString() ?? ""),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 
