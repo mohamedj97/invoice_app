@@ -14,6 +14,7 @@ import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
 import '../../../home/presentation/screens/home_screen.dart';
 import '../../../products/domain/entities/base_lookup.dart';
+import '../../data/data_sources/invoices_local_data_source.dart';
 import '../../data/models/requests/invoice_filter_model.dart';
 import '../cubit/get_invoices/get_invoices_cubit.dart';
 import '../cubit/get_types/get_invoice_types_cubit.dart';
@@ -29,11 +30,13 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   final formKey = GlobalKey<FormBuilderState>();
   final getInvoiceTypesCubit = GetInvoiceTypesCubit(sl());
+
   //SfRangeValues _values = const SfRangeValues(0, 10000);
   int? _value;
   List<BaseLookup> customers = [];
   List<BaseLookup> status = [];
   BaseLookup? customerValue;
+  DateTime? invoiceDate;
 
   @override
   void initState() {
@@ -59,33 +62,38 @@ class _FilterScreenState extends State<FilterScreen> {
         builder: (context, state) {
           customers = state.getInvoiceTypesResponse?.result?.result.customers ?? [];
           status = state.getInvoiceTypesResponse?.result?.result.status ?? [];
-          return state is GetInvoiceTypesLoading
-              ? const Center(child: CircularProgressIndicator())
-              : BlocProvider.value(
-                  value: GetInvoicesCubit(sl(), sl()),
-                  child: BlocConsumer<GetInvoicesCubit, GetInvoicesState>(
-                      listener: (context, filterState) async {
-                        if (filterState.getInvoicesRequestState == RequestState.success) {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            CustomPageRoute.createRoute(
-                              page: const HomeScreen(),
-                            ),
-                                (Route<dynamic> route) => false,
-                          );
-                        }
-                        if (filterState.getInvoicesRequestState == RequestState.error) {
-                          getErrorDialogue(
-                            context: context,
-                            isUnAuthorized: filterState.getInvoicesResponse!.statuscode == 401,
-                            message: filterState.getInvoicesResponse?.message ?? "something_went_wrong".tr(),
-                          );
-                        }
-                      },
-                    builder: (context,filterState){
-                      return CustomScaffold(
-                        leading: const CustomBackButton(),
-                        title: "Filter",
-                        body: FormBuilder(
+          return BlocProvider.value(
+            value: GetInvoicesCubit(sl(), sl()),
+            child: BlocConsumer<GetInvoicesCubit, GetInvoicesState>(
+              listener: (context, filterState) async {
+                if (filterState.getInvoicesRequestState == RequestState.success) {
+                  InvoicesLocalDataSource.status = status[_value!].name;
+                  InvoicesLocalDataSource.customerName = customerValue?.name;
+                  InvoicesLocalDataSource.customerId = customerValue?.id;
+                  InvoicesLocalDataSource.invoiceDate = invoiceDate;
+
+                  Navigator.of(context).pushAndRemoveUntil(
+                    CustomPageRoute.createRoute(
+                      page: const HomeScreen(index: 1),
+                    ),
+                    (Route<dynamic> route) => false,
+                  );
+                }
+                if (filterState.getInvoicesRequestState == RequestState.error) {
+                  getErrorDialogue(
+                    context: context,
+                    isUnAuthorized: filterState.getInvoicesResponse!.statuscode == 401,
+                    message: filterState.getInvoicesResponse?.message ?? "something_went_wrong".tr(),
+                  );
+                }
+              },
+              builder: (context, filterState) {
+                return CustomScaffold(
+                  leading: const CustomBackButton(),
+                  title: "Filter",
+                  body: state is GetInvoiceTypesLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : FormBuilder(
                           key: formKey,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,8 +125,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                               fillColor: AppColors.labelColor,
                                               errorMaxLines: 10,
                                               hintText: "choose_customer".tr(),
-                                              hintStyle:
-                                              const TextStyle(color: AppColors.searchBarColor),
+                                              hintStyle: const TextStyle(color: AppColors.searchBarColor),
                                             ),
                                             value: customerValue,
                                             onChanged: (value) {
@@ -154,7 +161,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: const [
-                                           LWCustomText(
+                                          LWCustomText(
                                             title: "Invoice Date",
                                             color: AppColors.labelColor,
                                             fontFamily: FontAssets.avertaRegular,
@@ -202,7 +209,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                         Wrap(
                                           children: List<Widget>.generate(
                                             status.length,
-                                                (int index) {
+                                            (int index) {
                                               return ChoiceChip(
                                                 selectedColor: AppColors.primary,
                                                 disabledColor: AppColors.whiteColor,
@@ -212,7 +219,8 @@ class _FilterScreenState extends State<FilterScreen> {
                                                 shape: const RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.all(Radius.zero)),
                                                 label: Container(
-                                                  decoration: BoxDecoration(border: Border.all(color: AppColors.primary)),
+                                                  decoration:
+                                                      BoxDecoration(border: Border.all(color: AppColors.primary)),
                                                   child: Padding(
                                                     padding: const EdgeInsets.all(8.0),
                                                     child: LWCustomText(
@@ -300,6 +308,9 @@ class _FilterScreenState extends State<FilterScreen> {
                                   if (!formState.saveAndValidate()) {
                                     return;
                                   }
+                                  setState(() {
+                                    invoiceDate = formState.value["invoice_date"];
+                                  });
                                   BlocProvider.of<GetInvoicesCubit>(context).filterInvoices(InvoiceFilterModel(
                                     invoiceDate: formState.value["invoice_date"],
                                     customerId: customerValue?.id,
@@ -310,9 +321,9 @@ class _FilterScreenState extends State<FilterScreen> {
                                 primaryTitle: "Apply Filter",
                                 secondaryOnPressed: () {
                                   setState(() {
-                                    customerValue=null;
+                                    customerValue = null;
                                     formKey.currentState!.fields["invoice_date"]?.didChange(null);
-                                    _value=null;
+                                    _value = null;
                                   });
                                 },
                                 secondaryTitle: "Clear",
@@ -320,10 +331,10 @@ class _FilterScreenState extends State<FilterScreen> {
                             ],
                           ),
                         ),
-                      );
-                    },
-                  ),
                 );
+              },
+            ),
+          );
         },
       ),
     );

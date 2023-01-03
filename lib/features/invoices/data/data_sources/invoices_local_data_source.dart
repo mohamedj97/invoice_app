@@ -17,6 +17,14 @@ class InvoicesLocalDataSource {
   static TaxSubtypeLookup? subTaxType;
   static BaseLookup? invoiceType;
 
+
+
+  static String? status;
+  static String? customerName;
+  static int? customerId;
+  static DateTime? invoiceDate;
+
+
 // void clearItems() {
 //   addedItems.clear();
 // }

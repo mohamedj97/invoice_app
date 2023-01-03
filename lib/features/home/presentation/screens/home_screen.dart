@@ -14,7 +14,9 @@ import '../pages/home_products_page.dart';
 import '../widgets/custom_bottom_navigation_bar.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int? index;
+
+  const HomeScreen({super.key, this.index});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -22,49 +24,58 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int pageIndex = 0;
-  final _controller = PageController();
+
+  @override
+  void initState() {
+    if (widget.index != null) {
+      pageIndex = widget.index!;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    PageController controller = PageController(initialPage: widget.index ?? 0);
     return CustomScaffold(
-      title: pageIndex == 3
-          ? "menu".tr()
-          : BottomAppBarItemsData.labelList[pageIndex],
+      title: pageIndex == 3 ? "menu".tr() : BottomAppBarItemsData.labelList[pageIndex],
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
         onPressed: () {
-          Navigator.of(context).push(CustomPageRoute.createRoute(
-              page: const CreateEditInvoiceScreen()));
+          Navigator.of(context).push(CustomPageRoute.createRoute(page: const CreateEditInvoiceScreen()));
         },
-        child: const Icon(Icons.add,
-            color: AppColors.whiteColor), //icon inside button
+        child: const Icon(Icons.add, color: AppColors.whiteColor), //icon inside button
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         pageIndex: pageIndex,
         onChanged: (index) => setState(() {
           pageIndex = index;
-          _controller.jumpToPage(index);
+          controller.jumpToPage(index);
         }),
       ),
-      leading: pageIndex==1?IconButton(onPressed: (){
-        Navigator.of(context).push(
-          CustomPageRoute.createRoute(
-            page: const FilterScreen(),
-          ),
-        );
-      }, icon: const Icon(Icons.filter_vintage_rounded,color: AppColors.primary,)):const SizedBox(),
+      leading: pageIndex == 1
+          ? IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  CustomPageRoute.createRoute(
+                    page: const FilterScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(
+                Icons.filter_vintage_rounded,
+                color: AppColors.primary,
+              ))
+          : const SizedBox(),
       actions: pageIndex == 0 || pageIndex == 3
           ? null
           : [
               InkWell(
                 onTap: () async {
                   if (pageIndex == 1) {
-                    Navigator.of(context).push(CustomPageRoute.createRoute(
-                        page: const CreateEditInvoiceScreen()));
+                    Navigator.of(context).push(CustomPageRoute.createRoute(page: const CreateEditInvoiceScreen()));
                   }
                   if (pageIndex == 2) {
-                    Navigator.of(context).push(CustomPageRoute.createRoute(
-                        page: const AddEditProductScreen()));
+                    Navigator.of(context).push(CustomPageRoute.createRoute(page: const AddEditProductScreen()));
                   }
                 },
                 child: const Padding(
@@ -82,10 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
         onPageChanged: (index) {
           setState(() {
             pageIndex = index;
-            _controller.jumpToPage(index);
+            controller.jumpToPage(index);
           });
         },
-        controller: _controller,
+        controller: controller,
         children: const [
           HomeDashboardPage(),
           HomeInvoicesPage(),

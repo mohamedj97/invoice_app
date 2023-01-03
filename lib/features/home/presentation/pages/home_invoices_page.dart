@@ -4,20 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/image_assets.dart';
 import 'package:invoice_app/core/utils/string_validation_extension.dart';
+import 'package:invoice_app/features/invoices/data/data_sources/invoices_local_data_source.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
 import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
-import '../../../invoices/data/models/responses/get_invoices_response_model.dart';
+import '../../../invoices/data/models/requests/invoice_filter_model.dart';
 import '../../../invoices/domain/entities/invoice_head_model.dart';
 import '../../../invoices/presentation/widgets/invoice_list_item.dart';
 
 class HomeInvoicesPage extends StatefulWidget {
-  final GetInvoicesResponse? invoicesResponse;
-
-  const HomeInvoicesPage({Key? key, this.invoicesResponse}) : super(key: key);
+  const HomeInvoicesPage({Key? key}) : super(key: key);
 
   @override
   State<HomeInvoicesPage> createState() => _HomeInvoicesPageState();
@@ -30,8 +29,15 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
 
   @override
   void initState() {
-    if (widget.invoicesResponse != null) {
-      invoices = widget.invoicesResponse?.result?.result ?? [];
+    if (InvoicesLocalDataSource.status != null ||
+        InvoicesLocalDataSource.invoiceDate != null ||
+        InvoicesLocalDataSource.customerId != null) {
+      cubit.filterInvoices(InvoiceFilterModel(
+        status: InvoicesLocalDataSource.status,
+        customerName: InvoicesLocalDataSource.customerName,
+        customerId: InvoicesLocalDataSource.customerId,
+        invoiceDate: InvoicesLocalDataSource.invoiceDate,
+      ));
     } else {
       cubit.getInvoices();
     }
@@ -92,6 +98,12 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                         ? RefreshIndicator(
                             onRefresh: () async {
                               await BlocProvider.of<GetInvoicesCubit>(context).getInvoices();
+                              setState(() {
+                                 InvoicesLocalDataSource.status= null;
+                                 InvoicesLocalDataSource.customerName= null;
+                                 InvoicesLocalDataSource.customerId= null;
+                                 InvoicesLocalDataSource.invoiceDate= null;
+                              });
                               searchController.clear();
                             },
                             child: SingleChildScrollView(
@@ -109,6 +121,12 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                         : RefreshIndicator(
                             onRefresh: () async {
                               await BlocProvider.of<GetInvoicesCubit>(context).getInvoices();
+                              setState(() {
+                                InvoicesLocalDataSource.status= null;
+                                InvoicesLocalDataSource.customerName= null;
+                                InvoicesLocalDataSource.customerId= null;
+                                InvoicesLocalDataSource.invoiceDate= null;
+                              });
                               searchController.clear();
                             },
                             child: Container(
