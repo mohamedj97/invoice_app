@@ -12,6 +12,7 @@ class InvoiceLookUpResult {
   late List<BaseLookup> invoiceTypes = [];
   late List<BaseLookup> branches = [];
   late List<BaseLookup> paymentTerms = [];
+  late List<BaseLookup> status = [];
   late List<TaxSubtypeLookup> taxSubTypes = [];
   late List<LookupCode> taxTypes = [];
   late List<LookupCode> currencies = [];
@@ -31,6 +32,7 @@ class InvoiceLookUpResult {
     required this.items,
     required this.countries,
     required this.unitTypes,
+    required this.status,
   });
 
   factory InvoiceLookUpResult.fromJson(Map<String, dynamic> json) =>

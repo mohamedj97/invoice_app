@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
-import 'package:invoice_app/core/widgets/form_builder_fields/common/lw_custom_form_field_wrapper.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_validators.dart';
 
 import '../../assets/colors.dart';
@@ -14,7 +13,7 @@ class LWCustomDateFormField extends StatelessWidget {
   final String labelText;
   final String? hintText;
   final bool isRequired;
-
+  final TextEditingController? controller;
   final DateTime? firstDate, lastDate;
   final bool Function(DateTime)? selectableDayPredicate;
   final DateTime? initialValue;
@@ -33,7 +32,7 @@ class LWCustomDateFormField extends StatelessWidget {
     this.initialValue,
     this.validators = const [],
     this.isRequired = false,
-    this.onChanged,
+    this.onChanged, this.controller,
   }) : super(key: key);
 
   @override
@@ -41,6 +40,7 @@ class LWCustomDateFormField extends StatelessWidget {
     return FormBuilderDateTimePicker(
       enabled: enabled,
       name: name,
+      controller: controller,
       decoration: InputDecoration(
         errorMaxLines: 10,
         enabledBorder: InputBorder.none,

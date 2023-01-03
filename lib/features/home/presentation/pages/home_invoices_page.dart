@@ -10,11 +10,13 @@ import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
+import '../../../invoices/data/models/responses/get_invoices_response_model.dart';
 import '../../../invoices/domain/entities/invoice_head_model.dart';
 import '../../../invoices/presentation/widgets/invoice_list_item.dart';
 
 class HomeInvoicesPage extends StatefulWidget {
-  const HomeInvoicesPage({Key? key}) : super(key: key);
+  final GetInvoicesResponse? invoicesResponse;
+  const HomeInvoicesPage({Key? key, this.invoicesResponse}) : super(key: key);
 
   @override
   State<HomeInvoicesPage> createState() => _HomeInvoicesPageState();
@@ -27,7 +29,13 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
 
   @override
   void initState() {
-    cubit.getInvoices();
+    if(widget.invoicesResponse !=null)
+      {
+        invoices=widget.invoicesResponse?.result?.result ??[];
+      }
+    else {
+      cubit.getInvoices();
+    }
     super.initState();
   }
 

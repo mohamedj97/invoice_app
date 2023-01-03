@@ -35,6 +35,9 @@ InvoiceLookUpResult _$InvoiceLookUpResultFromJson(Map<String, dynamic> json) =>
       countries: (json['countries'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
+          status: (json['status'] as List<dynamic>)
+              .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
+              .toList(),
       unitTypes: (json['unitTypes'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -51,6 +54,7 @@ Map<String, dynamic> _$InvoiceLookUpResultToJson(
       'currencies': instance.currencies,
       'countries': instance.countries,
       'customers': instance.customers,
+      'status': instance.status,
       'unitTypes': instance.unitTypes,
       'items': instance.items,
     };
