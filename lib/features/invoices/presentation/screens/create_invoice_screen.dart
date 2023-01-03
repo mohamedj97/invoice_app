@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -21,7 +20,6 @@ import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_date_form_field.dart';
-import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import '../../../../injection_container.dart';
 import '../../../products/domain/entities/base_lookup.dart';
 import '../../domain/entities/invoice_head_model.dart';
@@ -54,9 +52,9 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   List<LookupCode> taxTypes = [];
   List<LookupCode> currencies = [];
   List<BaseLookup> unitTypes = [];
-  BaseLookup? invoiceType;
   num? extraDiscountAmount;
   bool hasData = false;
+  TextEditingController extraDiscountController = TextEditingController();
 
   @override
   void dispose() {
@@ -120,9 +118,9 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                         }
                       },
                       builder: (context, state) {
-                        BaseLookup? initialValueInvoiceType;
                         if (hasData) {
-                          initialValueInvoiceType = state.getInvoiceTypesResponse?.result?.result.invoiceTypes
+                          InvoicesLocalDataSource.invoiceType = state
+                              .getInvoiceTypesResponse?.result?.result.invoiceTypes
                               .firstWhere((element) => element.id == widget.invoice?.id);
                         }
                         customers = state.getInvoiceTypesResponse?.result?.result.customers ?? [];
@@ -192,19 +190,39 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                             fontFamily: FontAssets.avertaRegular,
                                                           ),
                                                           const SizedBox(height: 16.0),
-                                                          LWCustomDropdownFormField<BaseLookup>(
-                                                            iconColor: AppColors.labelColor,
-                                                            name: "invoice_type",
-                                                            showLabel: false,
-                                                            labelText: "",
-                                                            initialValue: !hasData ? initialValueInvoiceType : null,
-                                                            hintText: "invoice_type".tr(),
-                                                            isRequired: true,
-                                                            isCard: false,
-                                                            items: invoiceTypes,
-                                                            itemBuilder: (context, data) {
-                                                              return Text(data.name ?? "NA");
+                                                          DropdownButtonFormField<BaseLookup>(
+                                                            onChanged: (type) {
+                                                              setState(() {
+                                                                InvoicesLocalDataSource.invoiceType = type;
+                                                              });
                                                             },
+                                                            value: InvoicesLocalDataSource.invoiceType,
+                                                            validator: (value) {
+                                                              if (value == null) {
+                                                                return '${"invoice_type".tr()} is required';
+                                                              }
+                                                            },
+                                                            isExpanded: true,
+                                                            decoration: InputDecoration(
+                                                              enabledBorder: InputBorder.none,
+                                                              focusedBorder: InputBorder.none,
+                                                              fillColor: AppColors.labelColor,
+                                                              errorMaxLines: 10,
+                                                              hintText: "invoice_type".tr(),
+                                                              hintStyle:
+                                                                  const TextStyle(color: AppColors.searchBarColor),
+                                                            ),
+                                                            items: invoiceTypes.map((BaseLookup item) {
+                                                              return DropdownMenuItem<BaseLookup>(
+                                                                value: item,
+                                                                child: Text(
+                                                                  item.name ?? "",
+                                                                  style: const TextStyle(
+                                                                    overflow: TextOverflow.ellipsis,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }).toList(),
                                                           ),
                                                         ],
                                                       ),
@@ -341,7 +359,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                         AddPriceItemInCreateInvoice(
                                           title: "Extra Discount",
                                           name: "extra_discount",
-                                          initialValue: hasData ? widget.invoice!.totalAmount.toString() : null,
+                                          controller: extraDiscountController,
                                         ),
                                         // AddPriceItemInCreateInvoice(
                                         //   title: "Total sales",
@@ -403,14 +421,13 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                       message: "items_validate".tr(),
                                     );
                                   } else {
-                                    invoiceType = formState.value["invoice_type"];
-                                    extraDiscountAmount = num.parse(formState.value["extra_discount"]);
+                                    extraDiscountAmount = num.parse(extraDiscountController.text);
                                     BlocProvider.of<AddInvoiceCubit>(context).addInvoice(
                                       InvoiceRequestModel(
                                         id: 0,
-                                        invoiceType: invoiceType!.id.toString(),
+                                        invoiceType: InvoicesLocalDataSource.invoiceType!.id.toString(),
                                         invoiceDate: formState.value["invoice_date"],
-                                        invoiceTypeId: invoiceType!.id,
+                                        invoiceTypeId: InvoicesLocalDataSource.invoiceType!.id,
                                         customerId: customerValue!.id,
                                         lines: InvoicesLocalDataSource.addedItems,
                                         extraDiscountAmount: extraDiscountAmount,

@@ -1,3 +1,4 @@
+import '../../../products/domain/entities/base_lookup.dart';
 import '../../domain/entities/invoice_line.dart';
 import '../../domain/entities/item_lookup.dart';
 import '../../domain/entities/line_tax.dart';
@@ -14,6 +15,7 @@ class InvoicesLocalDataSource {
   static List<String> selectedItemsNames = [];
   static LookupCode? mainTaxType;
   static TaxSubtypeLookup? subTaxType;
+  static BaseLookup? invoiceType;
 
 // void clearItems() {
 //   addedItems.clear();
