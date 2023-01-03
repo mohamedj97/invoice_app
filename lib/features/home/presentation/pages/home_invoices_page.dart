@@ -16,6 +16,7 @@ import '../../../invoices/presentation/widgets/invoice_list_item.dart';
 
 class HomeInvoicesPage extends StatefulWidget {
   final GetInvoicesResponse? invoicesResponse;
+
   const HomeInvoicesPage({Key? key, this.invoicesResponse}) : super(key: key);
 
   @override
@@ -25,15 +26,13 @@ class HomeInvoicesPage extends StatefulWidget {
 class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
   TextEditingController searchController = TextEditingController();
   List<InvoiceHeadModel> invoices = [];
-  final cubit = GetInvoicesCubit(sl(),sl());
+  final cubit = GetInvoicesCubit(sl(), sl());
 
   @override
   void initState() {
-    if(widget.invoicesResponse !=null)
-      {
-        invoices=widget.invoicesResponse?.result?.result ??[];
-      }
-    else {
+    if (widget.invoicesResponse != null) {
+      invoices = widget.invoicesResponse?.result?.result ?? [];
+    } else {
       cubit.getInvoices();
     }
     super.initState();
@@ -54,15 +53,13 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
             getErrorDialogue(
               context: context,
               isUnAuthorized: state.getInvoicesResponse!.statuscode == 401,
-              message: state.getInvoicesResponse?.message ??
-                  "something_went_wrong".tr(),
+              message: state.getInvoicesResponse?.message ?? "something_went_wrong".tr(),
             );
           }
         },
         builder: (context, state) {
           invoices = state.getInvoicesResponse?.result?.result
-                  .where((invoice) =>
-                      invoice.id.toString().contains(searchController.text))
+                  .where((invoice) => invoice.id.toString().contains(searchController.text))
                   .toList() ??
               state.getInvoicesResponse?.result?.result ??
               [];
@@ -73,19 +70,13 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                 onChanged: (value) {
                   if (value.isEmptyOrNull) {
                     setState(() {
-                      invoices =
-                          state.getInvoicesResponse?.result?.result ?? [];
+                      invoices = state.getInvoicesResponse?.result?.result ?? [];
                     });
                   } else {
-                    // searchDebouncer(() {
                     setState(() {
-                      invoices = invoices
-                          .where((invoice) => invoice.id
-                              .toString()
-                              .contains(searchController.text))
-                          .toList();
+                      invoices =
+                          invoices.where((invoice) => invoice.id.toString().contains(searchController.text)).toList();
                     });
-                    // });
                   }
                 },
                 searchController: searchController,
@@ -100,15 +91,13 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                     : invoices.isEmpty
                         ? RefreshIndicator(
                             onRefresh: () async {
-                              await BlocProvider.of<GetInvoicesCubit>(context)
-                                  .getInvoices();
+                              await BlocProvider.of<GetInvoicesCubit>(context).getInvoices();
                               searchController.clear();
                             },
                             child: SingleChildScrollView(
                               physics: const AlwaysScrollableScrollPhysics(),
                               child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height / 1.5,
+                                height: MediaQuery.of(context).size.height / 1.5,
                                 child: EmptyScreen(
                                   title: "no_invoices".tr(),
                                   subtitle: "no_invoices_subtitle".tr(),
@@ -119,8 +108,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                           )
                         : RefreshIndicator(
                             onRefresh: () async {
-                              await BlocProvider.of<GetInvoicesCubit>(context)
-                                  .getInvoices();
+                              await BlocProvider.of<GetInvoicesCubit>(context).getInvoices();
                               searchController.clear();
                             },
                             child: Container(
@@ -129,8 +117,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                                 physics: const AlwaysScrollableScrollPhysics(),
                                 itemCount: invoices.length,
                                 itemBuilder: (context, index) {
-                                  return InvoiceListItem(
-                                      invoice: invoices[index]);
+                                  return InvoiceListItem(invoice: invoices[index]);
                                 },
                               ),
                             ),
