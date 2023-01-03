@@ -79,8 +79,16 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
       body: BlocProvider.value(
         value: AddInvoiceCubit(sl()),
         child: BlocConsumer<AddInvoiceCubit, AddInvoiceState>(
-          listener: (context, state) async {
-            if (state.addInvoiceRequestState == RequestState.success) {
+          listener: (context, addInvoiceState) async {
+            if (addInvoiceState.addInvoiceRequestState == RequestState.success) {
+              InvoicesLocalDataSource.mainTaxType = null;
+              InvoicesLocalDataSource.items = [];
+              InvoicesLocalDataSource.addedItems = [];
+              InvoicesLocalDataSource.taxTypes = [];
+              InvoicesLocalDataSource.taxSubTypes = [];
+              InvoicesLocalDataSource.addedTaxes = [];
+              InvoicesLocalDataSource.subTaxType = null;
+              InvoicesLocalDataSource.taxRate = null;
               Navigator.of(context).pushAndRemoveUntil(
                 CustomPageRoute.createRoute(
                   page: const SuccessInvoiceScreen(),
@@ -88,17 +96,19 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                 (Route<dynamic> route) => false,
               );
             }
-            if (state.addInvoiceRequestState == RequestState.error) {
+            if (addInvoiceState.addInvoiceRequestState == RequestState.error) {
               getErrorDialogue(
                 context: context,
-                isUnAuthorized: state.stringResponse!.statuscode == 401,
-                message: state.stringResponse?.message ??
+                isUnAuthorized: addInvoiceState.stringResponse!.statuscode == 401,
+                message: addInvoiceState.stringResponse?.message ??
                     "something_went_wrong".tr(),
               );
             }
           },
           builder: (context, addInvoiceState) {
-            return BlocProvider<GetInvoiceTypesCubit>.value(
+            return addInvoiceState is AddInvoiceLoading
+                ? const Center(child: CircularProgressIndicator())
+                : BlocProvider<GetInvoiceTypesCubit>.value(
               value: getInvoiceTypesCubit,
               child: BlocConsumer<GetInvoiceTypesCubit, GetInvoiceTypesState>(
                 listener: (context, state) async {
@@ -153,312 +163,378 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                       state.getInvoiceTypesResponse?.result?.result.items ?? [];
 
                   return FormBuilder(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 32.0),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.whiteColor,
-                                      border: Border.all(
-                                        width: 0.5,
-                                        color: AppColors.searchBarColor,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0, vertical: 16.0),
-                                      child: LWCustomText(
-                                          title:
-                                              "Invoice#${widget.invoice?.id ?? ""}",
-                                          fontFamily: FontAssets.avertaSemiBold,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.blackColor),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16.0),
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.whiteColor,
-                                      border: Border.all(
-                                        color: AppColors.searchBarColor,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        children: [
-                                          state is GetInvoiceTypesLoading
-                                              ? const Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
+                          key: formKey,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 32.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.whiteColor,
+                                            border: Border.all(
+                                              width: 0.5,
+                                              color: AppColors.searchBarColor,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0,
+                                                vertical: 16.0),
+                                            child: LWCustomText(
+                                                title:
+                                                    "Invoice#${widget.invoice?.id ?? ""}",
+                                                fontFamily:
+                                                    FontAssets.avertaSemiBold,
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.blackColor),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16.0),
+                                        Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.whiteColor,
+                                            border: Border.all(
+                                              color: AppColors.searchBarColor,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                state is GetInvoiceTypesLoading
+                                                    ? const Padding(
+                                                        padding:
+                                                            EdgeInsets.all(8.0),
+                                                        child: Center(
+                                                          child:
+                                                              CircularProgressIndicator(),
+                                                        ),
+                                                      )
+                                                    : Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const SizedBox(
+                                                              height: 8.0),
+                                                          const LWCustomText(
+                                                            title:
+                                                                "Invoice Type",
+                                                            color: AppColors
+                                                                .labelColor,
+                                                            fontFamily: FontAssets
+                                                                .avertaRegular,
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 16.0),
+                                                          LWCustomDropdownFormField<
+                                                              BaseLookup>(
+                                                            iconColor: AppColors
+                                                                .labelColor,
+                                                            name:
+                                                                "invoice_type",
+                                                            showLabel: false,
+                                                            labelText: "",
+                                                            initialValue: !hasData
+                                                                ? initialValueInvoiceType
+                                                                : null,
+                                                            hintText:
+                                                                "invoice_type"
+                                                                    .tr(),
+                                                            isRequired: true,
+                                                            isCard: false,
+                                                            items: invoiceTypes,
+                                                            itemBuilder:
+                                                                (context,
+                                                                    data) {
+                                                              return Text(
+                                                                  data.name ??
+                                                                      "NA");
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 16.0),
+                                                  child: Divider(
+                                                    thickness: 0.5,
+                                                    height: 0.0,
+                                                    color: AppColors
+                                                        .searchBarColor,
                                                   ),
-                                                )
-                                              : Column(
+                                                ),
+                                                Row(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    const SizedBox(height: 8.0),
                                                     const LWCustomText(
-                                                      title: "Invoice Type",
+                                                      title: "Invoice Date",
                                                       color:
                                                           AppColors.labelColor,
                                                       fontFamily: FontAssets
                                                           .avertaRegular,
                                                     ),
-                                                    const SizedBox(
-                                                        height: 16.0),
-                                                    LWCustomDropdownFormField<
-                                                        BaseLookup>(
-                                                      iconColor:
-                                                          AppColors.labelColor,
-                                                      name: "invoice_type",
-                                                      showLabel: false,
-                                                      labelText: "",
-                                                      initialValue: !hasData
-                                                          ? initialValueInvoiceType
-                                                          : null,
-                                                      hintText:
-                                                          "invoice_type".tr(),
-                                                      isRequired: true,
-                                                      isCard: false,
-                                                      items: invoiceTypes,
-                                                      itemBuilder:
-                                                          (context, data) {
-                                                        return Text(
-                                                            data.name ?? "NA");
-                                                      },
+                                                    SizedBox(
+                                                      width: 150,
+                                                      child: hasData
+                                                          ? LWCustomDateFormField(
+                                                              isRequired: true,
+                                                              name:
+                                                                  "invoice_date",
+                                                              labelText: "",
+                                                              initialValue: widget
+                                                                  .invoice!
+                                                                  .invoiceDate,
+                                                              hintText:
+                                                                  "Choose date",
+                                                            )
+                                                          : const LWCustomDateFormField(
+                                                              isRequired: true,
+                                                              name:
+                                                                  "invoice_date",
+                                                              labelText: "",
+                                                              hintText:
+                                                                  "Choose date",
+                                                            ),
                                                     ),
                                                   ],
                                                 ),
-                                          const Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 16.0),
-                                            child: Divider(
-                                              thickness: 0.5,
-                                              height: 0.0,
-                                              color: AppColors.searchBarColor,
+                                              ],
                                             ),
                                           ),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              const LWCustomText(
-                                                title: "Invoice Date",
-                                                color: AppColors.labelColor,
-                                                fontFamily:
-                                                    FontAssets.avertaRegular,
-                                              ),
-                                              SizedBox(
-                                                width: 150,
-                                                child: hasData
-                                                    ? LWCustomDateFormField(
-                                                        isRequired: true,
-                                                        name: "invoice_date",
-                                                        labelText: "",
-                                                        initialValue: widget
-                                                            .invoice!
-                                                            .invoiceDate,
-                                                        hintText: "Choose date",
-                                                      )
-                                                    : const LWCustomDateFormField(
-                                                        isRequired: true,
-                                                        name: "invoice_date",
-                                                        labelText: "",
-                                                        hintText: "Choose date",
-                                                      ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16.0),
-                                  state is GetInvoiceTypesLoading
-                                      ? const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        )
-                                      : customerValue != null
-                                          ? InvoiceAddItemWidget(
-                                              title:
-                                                  customerValue?.name ?? "NA",
-                                              iconPath: IconAssets
-                                                  .invoiceCustomerIcon,
-                                              onTap: () {
-                                                _dialogBuilder(context);
-                                              },
-                                            )
-                                          : InvoiceAddItemWidget(
-                                              title: "Add customer",
-                                              iconPath:
-                                                  IconAssets.addCustomerIcon,
-                                              onTap: () {
-                                                _dialogBuilder(context);
-                                              },
-                                            ),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 16.0),
-                                    child: Divider(
-                                      thickness: 0.5,
-                                      height: 0.0,
-                                      color: AppColors.searchBarColor,
-                                    ),
-                                  ),
-                                  state is GetInvoiceTypesLoading
-                                      ? const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        )
-                                      : Column(
-                                          children: [
-                                            InvoiceAddItemWidget(
-                                              title: "Add item",
-                                              iconPath: IconAssets.addItemIcon,
-                                              onTap: () {
-                                                setState(() {
-                                                  InvoicesLocalDataSource.taxTypes=taxTypes;
-                                                  InvoicesLocalDataSource.taxSubTypes=taxSubTypes;
-                                                  InvoicesLocalDataSource.items=items;
-                                                });
-                                                Navigator.of(context).push(CustomPageRoute.createRoute(
-                                                    page: const AddInvoiceItems())).then((_) => setState(() {}));
-                                              },
-                                            ),
-                                            ListView.builder(
-                                              itemCount: InvoicesLocalDataSource.addedItems.length,
-                                              physics: const ScrollPhysics(),
-                                              shrinkWrap: true,
-                                              itemBuilder: (context, index) {
-                                                return Dismissible(
-                                                  background: Container(
-                                                      color:
-                                                          AppColors.errorColor),
-                                                  key: UniqueKey(),
-                                                  onDismissed: (direction) {
-                                                    setState(() {
-                                                      InvoicesLocalDataSource.addedItems
-                                                          .removeAt(index);
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    color: AppColors.whiteColor,
-                                                    child: ItemInvoiceWidget(
-                                                      item: InvoicesLocalDataSource.addedItems[index],
-                                                      name: InvoicesLocalDataSource.selectedItemsNames[
-                                                          index],
-                                                      lastItem: index + 1 ==
-                                                          InvoicesLocalDataSource.addedItems.length,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ],
                                         ),
-                                  const SizedBox(height: 16.0),
-                                  // AddPriceItemInCreateInvoice(
-                                  //   title: "Subtotal",
-                                  //   name: "subtotal",
-                                  //   initialValue: hasData
-                                  //       ? widget.invoice!.totalAmount.toString()
-                                  //       : null,
-                                  // ),
-                                  AddPriceItemInCreateInvoice(
-                                    title: "Extra Discount",
-                                    name: "extra_discount",
-                                    initialValue: hasData
-                                        ? widget.invoice!.totalAmount.toString()
-                                        : null,
+                                        const SizedBox(height: 16.0),
+                                        state is GetInvoiceTypesLoading
+                                            ? const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
+                                              )
+                                            : customerValue != null
+                                                ? InvoiceAddItemWidget(
+                                                    title:
+                                                        customerValue?.name ??
+                                                            "NA",
+                                                    iconPath: IconAssets
+                                                        .invoiceCustomerIcon,
+                                                    onTap: () {
+                                                      _dialogBuilder(context);
+                                                    },
+                                                  )
+                                                : InvoiceAddItemWidget(
+                                                    title: "Add customer",
+                                                    iconPath: IconAssets
+                                                        .addCustomerIcon,
+                                                    onTap: () {
+                                                      _dialogBuilder(context);
+                                                    },
+                                                  ),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 16.0),
+                                          child: Divider(
+                                            thickness: 0.5,
+                                            height: 0.0,
+                                            color: AppColors.searchBarColor,
+                                          ),
+                                        ),
+                                        state is GetInvoiceTypesLoading
+                                            ? const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
+                                              )
+                                            : Column(
+                                                children: [
+                                                  InvoiceAddItemWidget(
+                                                    title: "Add item",
+                                                    iconPath:
+                                                        IconAssets.addItemIcon,
+                                                    onTap: () {
+                                                      setState(() {
+                                                        InvoicesLocalDataSource
+                                                                .taxTypes =
+                                                            taxTypes;
+                                                        InvoicesLocalDataSource
+                                                                .taxSubTypes =
+                                                            taxSubTypes;
+                                                        InvoicesLocalDataSource
+                                                            .items = items;
+                                                      });
+                                                      Navigator.of(context)
+                                                          .push(CustomPageRoute
+                                                              .createRoute(
+                                                                  page:
+                                                                      const AddInvoiceItems()))
+                                                          .then((_) =>
+                                                              setState(() {}));
+                                                    },
+                                                  ),
+                                                  ListView.builder(
+                                                    itemCount:
+                                                        InvoicesLocalDataSource
+                                                            .addedItems.length,
+                                                    physics:
+                                                        const ScrollPhysics(),
+                                                    shrinkWrap: true,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return Dismissible(
+                                                        background: Container(
+                                                            color: AppColors
+                                                                .errorColor),
+                                                        key: UniqueKey(),
+                                                        onDismissed:
+                                                            (direction) {
+                                                          setState(() {
+                                                            InvoicesLocalDataSource
+                                                                .addedItems
+                                                                .removeAt(
+                                                                    index);
+                                                          });
+                                                        },
+                                                        child: Container(
+                                                          color: AppColors
+                                                              .whiteColor,
+                                                          child:
+                                                              ItemInvoiceWidget(
+                                                            item: InvoicesLocalDataSource
+                                                                    .addedItems[
+                                                                index],
+                                                            name: InvoicesLocalDataSource
+                                                                    .selectedItemsNames[
+                                                                index],
+                                                            lastItem: index +
+                                                                    1 ==
+                                                                InvoicesLocalDataSource
+                                                                    .addedItems
+                                                                    .length,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                        const SizedBox(height: 16.0),
+                                        // AddPriceItemInCreateInvoice(
+                                        //   title: "Subtotal",
+                                        //   name: "subtotal",
+                                        //   initialValue: hasData
+                                        //       ? widget.invoice!.totalAmount.toString()
+                                        //       : null,
+                                        // ),
+                                        AddPriceItemInCreateInvoice(
+                                          title: "Extra Discount",
+                                          name: "extra_discount",
+                                          initialValue: hasData
+                                              ? widget.invoice!.totalAmount
+                                                  .toString()
+                                              : null,
+                                        ),
+                                        // AddPriceItemInCreateInvoice(
+                                        //   title: "Total sales",
+                                        //   name: "total_sales",
+                                        //   initialValue: hasData
+                                        //       ? widget.invoice!.totalAmount.toString()
+                                        //       : null,
+                                        // ),
+                                        // AddPriceItemInCreateInvoice(
+                                        //   title: "Net amount",
+                                        //   name: "net_amount",
+                                        //   initialValue: hasData
+                                        //       ? widget.invoice!.netAmount.toString()
+                                        //       : null,
+                                        // ),
+                                        // AddPriceItemInCreateInvoice(
+                                        //   title: "Tax Total",
+                                        //   name: "tax_total",
+                                        //   initialValue: hasData
+                                        //       ? widget.invoice!.totalSalesAmount.toString()
+                                        //       : null,
+                                        // ),
+                                        // AddPriceItemInCreateInvoice(
+                                        //   title: "Tax Discount",
+                                        //   name: "tax_discount",
+                                        //   initialValue: hasData
+                                        //       ? widget.invoice!.totalTaxAmount.toString()
+                                        //       : null,
+                                        // ),
+                                        // AddPriceItemInCreateInvoice(
+                                        //   title: "Total",
+                                        //   name: "total",
+                                        //   initialValue: hasData
+                                        //       ? widget.invoice!.totalAmount.toString()
+                                        //       : null,
+                                        // ),
+                                      ],
+                                    ),
                                   ),
-                                  // AddPriceItemInCreateInvoice(
-                                  //   title: "Total sales",
-                                  //   name: "total_sales",
-                                  //   initialValue: hasData
-                                  //       ? widget.invoice!.totalAmount.toString()
-                                  //       : null,
-                                  // ),
-                                  // AddPriceItemInCreateInvoice(
-                                  //   title: "Net amount",
-                                  //   name: "net_amount",
-                                  //   initialValue: hasData
-                                  //       ? widget.invoice!.netAmount.toString()
-                                  //       : null,
-                                  // ),
-                                  // AddPriceItemInCreateInvoice(
-                                  //   title: "Tax Total",
-                                  //   name: "tax_total",
-                                  //   initialValue: hasData
-                                  //       ? widget.invoice!.totalSalesAmount.toString()
-                                  //       : null,
-                                  // ),
-                                  // AddPriceItemInCreateInvoice(
-                                  //   title: "Tax Discount",
-                                  //   name: "tax_discount",
-                                  //   initialValue: hasData
-                                  //       ? widget.invoice!.totalTaxAmount.toString()
-                                  //       : null,
-                                  // ),
-                                  // AddPriceItemInCreateInvoice(
-                                  //   title: "Total",
-                                  //   name: "total",
-                                  //   initialValue: hasData
-                                  //       ? widget.invoice!.totalAmount.toString()
-                                  //       : null,
-                                  // ),
-                                ],
+                                ),
                               ),
-                            ),
+                              PrimaryAndSecondaryButton(
+                                primaryOnPressed: () {
+                                  var formState = formKey.currentState;
+                                  if (formState == null) return;
+                                  if (!formState.saveAndValidate()) {
+                                    return;
+                                  }
+                                  if (customerValue == null) {
+                                    getErrorDialogue(
+                                      context: context,
+                                      isUnAuthorized: false,
+                                      message: "customer_validate".tr(),
+                                    );
+                                  } else if (InvoicesLocalDataSource
+                                      .addedItems.isEmpty) {
+                                    getErrorDialogue(
+                                      context: context,
+                                      isUnAuthorized: false,
+                                      message: "items_validate".tr(),
+                                    );
+                                  } else {
+                                    invoiceType =
+                                        formState.value["invoice_type"];
+                                    extraDiscountAmount = num.parse(
+                                        formState.value["extra_discount"]);
+                                    BlocProvider.of<AddInvoiceCubit>(context)
+                                        .addInvoice(
+                                      InvoiceRequestModel(
+                                        id: 0,
+                                        invoiceType: invoiceType!.id.toString(),
+                                        invoiceDate:
+                                            formState.value["invoice_date"],
+                                        invoiceTypeId: invoiceType!.id,
+                                        customerId: customerValue!.id,
+                                        lines:
+                                            InvoicesLocalDataSource.addedItems,
+                                        extraDiscountAmount:
+                                            extraDiscountAmount,
+                                      ),
+                                    );
+                                  }
+                                },
+                                primaryTitle: "Submit Invoice",
+                                secondaryOnPressed: () {},
+                                secondaryTitle: "Preview",
+                              ),
+                            ],
                           ),
-                        ),
-                        PrimaryAndSecondaryButton(
-                          primaryOnPressed: () {
-                            var formState = formKey.currentState;
-                            if (formState == null) return;
-                            if (!formState.saveAndValidate()) {
-                              return;
-                            }
-                            invoiceType = formState.value["invoice_type"];
-                            extraDiscountAmount =
-                                num.parse(formState.value["extra_discount"]);
-                            BlocProvider.of<AddInvoiceCubit>(context)
-                                .addInvoice(
-                              InvoiceRequestModel(
-                                id: 0,
-                                invoiceType: invoiceType!.id.toString(),
-                                invoiceDate: formState.value["invoice_date"],
-                                invoiceTypeId: invoiceType!.id,
-                                customerId: customerValue!.id,
-                                lines: InvoicesLocalDataSource.addedItems,
-                                extraDiscountAmount: extraDiscountAmount,
-                              ),
-                            );
-                          },
-                          primaryTitle: "Submit Invoice",
-                          secondaryOnPressed: () {},
-                          secondaryTitle: "Preview",
-                        ),
-                      ],
-                    ),
-                  );
+                        );
                 },
               ),
             );

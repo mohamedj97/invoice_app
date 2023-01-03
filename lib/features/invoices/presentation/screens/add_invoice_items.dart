@@ -32,12 +32,12 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
   num? price;
   num? discountRate;
   LineTotal lineTotal =
-  LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
+      LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
   TextEditingController priceController = TextEditingController(text: "00");
 
   @override
   Widget build(BuildContext context) {
-    return  CustomScaffold(
+    return CustomScaffold(
       title: "add_item".tr(),
       actions: [
         Center(
@@ -55,10 +55,15 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 item = formState.value["item"] as ItemLookup;
                 price = num.parse(priceController.text);
                 setState(() {
-                  for (int i = 0; i < InvoicesLocalDataSource.addedItems.length; i++) {
-                    if (InvoicesLocalDataSource.addedItems[i].itemId == item!.id) {
-                      InvoicesLocalDataSource.addedItems.remove(InvoicesLocalDataSource.addedItems[i]);
-                      InvoicesLocalDataSource.selectedItemsNames.remove(InvoicesLocalDataSource.selectedItemsNames[i]);
+                  for (int i = 0;
+                      i < InvoicesLocalDataSource.addedItems.length;
+                      i++) {
+                    if (InvoicesLocalDataSource.addedItems[i].itemId ==
+                        item!.id) {
+                      InvoicesLocalDataSource.addedItems
+                          .remove(InvoicesLocalDataSource.addedItems[i]);
+                      InvoicesLocalDataSource.selectedItemsNames.remove(
+                          InvoicesLocalDataSource.selectedItemsNames[i]);
                     }
                   }
                   InvoicesLocalDataSource.addedItems.add(
@@ -76,7 +81,8 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                       exchangeRate: 0,
                     ),
                   );
-                  InvoicesLocalDataSource.selectedItemsNames.add(item?.name ?? "");
+                  InvoicesLocalDataSource.selectedItemsNames
+                      .add(item?.name ?? "");
                 });
                 Navigator.pop(context);
               },
@@ -91,97 +97,156 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
         ),
       ],
       leading: const CustomBackButton(),
-      body: FormBuilder(
-        key: formKeyItems,
-        child: Column(
-          children: [
-            const SizedBox(height: 16.0),
-            Container(
-              color: AppColors.whiteColor,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 8.0),
-                    const LWCustomText(
-                      title: "Item",
-                      color: AppColors.labelColor,
-                      fontFamily: FontAssets.avertaRegular,
-                    ),
-                    const SizedBox(height: 16.0),
-                    LWCustomDropdownFormField<ItemLookup>(
-                      iconColor: AppColors.labelColor,
-                      name: "item",
-                      showLabel: false,
-                      onChanged: (item) {
-                        setState(() {
-                          priceController.text = item!.price.toString();
-                        });
-                      },
-                      labelText: "",
-                      // initialValue: !hasData
-                      //     ? initialValueCountry
-                      //     : null,
-                      hintText: "choose_item".tr(),
-                      isRequired: true,
-                      isCard: false,
-                      items: InvoicesLocalDataSource.items,
-                      itemBuilder: (context, data) {
-                        return Text(data.name ?? "NA");
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            AddPriceItemInCreateInvoice(
-              hintText: "00",
-              showCurrency: false,
-              title: "quantity".tr(),
-              name: "quantity",
-              // initialValue: hasData
-              //     ? widget.invoice!.totalAmount.toString()
-              //     : null,
-            ),
-            AddPriceItemInCreateInvoice(
-              title: "price".tr(),
-              name: "price",
-              controller: priceController,
-            ),
-            const SizedBox(height: 16.0),
-            AddPriceItemInCreateInvoice(
-              title: "discount_rate".tr(),
-              name: "discount_rate",
-              isRequired: false,
-            ),
-            InvoiceAddItemWidget(
-              title: "add_tax".tr(),
-              iconPath: IconAssets.addCustomerIcon,
-              onTap: () {
-                Navigator.of(context).push(CustomPageRoute.createRoute(
-                    page: const AddInvoiceTaxes())).then((_) => setState(() {}));
-              },
-            ),
-            ListView.builder(
-              itemCount: InvoicesLocalDataSource.addedTaxes.length,
-              physics: const ScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Container(
-                  color: AppColors.whiteColor,
+      body: SingleChildScrollView(
+        child: FormBuilder(
+          key: formKeyItems,
+          child: Column(
+            children: [
+              const SizedBox(height: 16.0),
+              Container(
+                color: AppColors.whiteColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      LWCustomText(title: InvoicesLocalDataSource.mainTaxType?.name ?? ""),
-                       LWCustomText(title: InvoicesLocalDataSource.subTaxType?.name ?? ""),
-                       LWCustomText(title: InvoicesLocalDataSource.taxRate ==null ?"":InvoicesLocalDataSource.taxRate.toString()),
+                      const SizedBox(height: 8.0),
+                      const LWCustomText(
+                        title: "Item",
+                        color: AppColors.labelColor,
+                        fontFamily: FontAssets.avertaRegular,
+                      ),
+                      const SizedBox(height: 16.0),
+                      LWCustomDropdownFormField<ItemLookup>(
+                        iconColor: AppColors.labelColor,
+                        name: "item",
+                        showLabel: false,
+                        onChanged: (item) {
+                          setState(() {
+                            priceController.text = item!.price.toString();
+                          });
+                        },
+                        labelText: "",
+                        // initialValue: !hasData
+                        //     ? initialValueCountry
+                        //     : null,
+                        hintText: "choose_item".tr(),
+                        isRequired: true,
+                        isCard: false,
+                        items: InvoicesLocalDataSource.items,
+                        itemBuilder: (context, data) {
+                          return Text(data.name ?? "NA");
+                        },
+                      ),
                     ],
                   ),
-                );
-              },
-            ),
-          ],
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              AddPriceItemInCreateInvoice(
+                hintText: "00",
+                showCurrency: false,
+                title: "quantity".tr(),
+                name: "quantity",
+                // initialValue: hasData
+                //     ? widget.invoice!.totalAmount.toString()
+                //     : null,
+              ),
+              AddPriceItemInCreateInvoice(
+                title: "price".tr(),
+                name: "price",
+                controller: priceController,
+              ),
+              const SizedBox(height: 16.0),
+              AddPriceItemInCreateInvoice(
+                title: "discount_rate".tr(),
+                name: "discount_rate",
+                isRequired: false,
+              ),
+              InvoiceAddItemWidget(
+                title: "add_tax".tr(),
+                iconPath: IconAssets.addCustomerIcon,
+                onTap: () {
+                  Navigator.of(context)
+                      .push(CustomPageRoute.createRoute(
+                          page: const AddInvoiceTaxes()))
+                      .then((_) => setState(() {}));
+                },
+              ),
+              ListView.builder(
+                itemCount: InvoicesLocalDataSource.addedTaxes.length,
+                physics: const ScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: AppColors.whiteColor,
+                          border: Border.all(color: AppColors.labelColor)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            LWCustomText(
+                              title: "main_tax_type".tr(),
+                              color: AppColors.labelColor,
+                            ),
+                            const SizedBox(height: 8.0),
+                            LWCustomText(
+                                title:
+                                    InvoicesLocalDataSource.mainTaxType?.name ??
+                                        ""),
+                            const SizedBox(height: 8.0),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Divider(
+                                thickness: 0.5,
+                                height: 0.0,
+                                color: AppColors.searchBarColor,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            LWCustomText(
+                                title: "sub_tax_type".tr(),
+                                color: AppColors.labelColor),
+                            const SizedBox(height: 8.0),
+                            LWCustomText(
+                                title:
+                                    InvoicesLocalDataSource.subTaxType?.name ??
+                                        ""),
+                            const SizedBox(height: 8.0),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Divider(
+                                thickness: 0.5,
+                                height: 0.0,
+                                color: AppColors.searchBarColor,
+                              ),
+                            ),
+                            InvoicesLocalDataSource.taxRate == null
+                                ? const SizedBox()
+                                : const SizedBox(height: 8.0),
+                            InvoicesLocalDataSource.taxRate == null
+                                ? const SizedBox()
+                                : LWCustomText(
+                                    title: "tax_rate".tr(),
+                                    color: AppColors.labelColor),
+                            LWCustomText(
+                                title: InvoicesLocalDataSource.taxRate == null
+                                    ? ""
+                                    : InvoicesLocalDataSource.taxRate
+                                        .toString()),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
