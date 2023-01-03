@@ -31,8 +31,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
   ItemLookup? item;
   num? price;
   num? discountRate;
-  LineTotal lineTotal =
-      LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
+  LineTotal lineTotal = LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
   TextEditingController priceController = TextEditingController(text: "00");
 
   @override
@@ -55,15 +54,10 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 item = formState.value["item"] as ItemLookup;
                 price = num.parse(priceController.text);
                 setState(() {
-                  for (int i = 0;
-                      i < InvoicesLocalDataSource.addedItems.length;
-                      i++) {
-                    if (InvoicesLocalDataSource.addedItems[i].itemId ==
-                        item!.id) {
-                      InvoicesLocalDataSource.addedItems
-                          .remove(InvoicesLocalDataSource.addedItems[i]);
-                      InvoicesLocalDataSource.selectedItemsNames.remove(
-                          InvoicesLocalDataSource.selectedItemsNames[i]);
+                  for (int i = 0; i < InvoicesLocalDataSource.addedItems.length; i++) {
+                    if (InvoicesLocalDataSource.addedItems[i].itemId == item!.id) {
+                      InvoicesLocalDataSource.addedItems.remove(InvoicesLocalDataSource.addedItems[i]);
+                      InvoicesLocalDataSource.selectedItemsNames.remove(InvoicesLocalDataSource.selectedItemsNames[i]);
                     }
                   }
                   InvoicesLocalDataSource.addedItems.add(
@@ -81,8 +75,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                       exchangeRate: 0,
                     ),
                   );
-                  InvoicesLocalDataSource.selectedItemsNames
-                      .add(item?.name ?? "");
+                  InvoicesLocalDataSource.selectedItemsNames.add(item?.name ?? "");
                 });
                 Navigator.pop(context);
               },
@@ -168,8 +161,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 iconPath: IconAssets.addCustomerIcon,
                 onTap: () {
                   Navigator.of(context)
-                      .push(CustomPageRoute.createRoute(
-                          page: const AddInvoiceTaxes()))
+                      .push(CustomPageRoute.createRoute(page: const AddInvoiceTaxes()))
                       .then((_) => setState(() {}));
                 },
               ),
@@ -181,9 +173,8 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: AppColors.whiteColor,
-                          border: Border.all(color: AppColors.labelColor)),
+                      decoration:
+                          BoxDecoration(color: AppColors.whiteColor, border: Border.all(color: AppColors.labelColor)),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -194,10 +185,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                               color: AppColors.labelColor,
                             ),
                             const SizedBox(height: 8.0),
-                            LWCustomText(
-                                title:
-                                    InvoicesLocalDataSource.mainTaxType?.name ??
-                                        ""),
+                            LWCustomText(title: InvoicesLocalDataSource.mainTaxType?.name ?? ""),
                             const SizedBox(height: 8.0),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -208,14 +196,9 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                               ),
                             ),
                             const SizedBox(height: 8.0),
-                            LWCustomText(
-                                title: "sub_tax_type".tr(),
-                                color: AppColors.labelColor),
+                            LWCustomText(title: "sub_tax_type".tr(), color: AppColors.labelColor),
                             const SizedBox(height: 8.0),
-                            LWCustomText(
-                                title:
-                                    InvoicesLocalDataSource.subTaxType?.name ??
-                                        ""),
+                            LWCustomText(title: InvoicesLocalDataSource.subTaxType?.name ?? ""),
                             const SizedBox(height: 8.0),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -225,19 +208,14 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                                 color: AppColors.searchBarColor,
                               ),
                             ),
+                            InvoicesLocalDataSource.taxRate == null ? const SizedBox() : const SizedBox(height: 8.0),
                             InvoicesLocalDataSource.taxRate == null
                                 ? const SizedBox()
-                                : const SizedBox(height: 8.0),
-                            InvoicesLocalDataSource.taxRate == null
-                                ? const SizedBox()
-                                : LWCustomText(
-                                    title: "tax_rate".tr(),
-                                    color: AppColors.labelColor),
+                                : LWCustomText(title: "tax_rate".tr(), color: AppColors.labelColor),
                             LWCustomText(
                                 title: InvoicesLocalDataSource.taxRate == null
                                     ? ""
-                                    : InvoicesLocalDataSource.taxRate
-                                        .toString()),
+                                    : InvoicesLocalDataSource.taxRate.toString()),
                           ],
                         ),
                       ),
