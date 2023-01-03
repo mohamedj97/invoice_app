@@ -316,8 +316,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                         InvoicesLocalDataSource.items = items;
                                                       });
                                                       Navigator.of(context)
-                                                          .push(CustomPageRoute.createRoute(
-                                                              page: const AddInvoiceItems()))
+                                                          .push(CustomPageRoute.createRoute(page: AddInvoiceItems()))
                                                           .then((_) => setState(() {}));
                                                     },
                                                   ),
@@ -336,11 +335,27 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                         },
                                                         child: Container(
                                                           color: AppColors.whiteColor,
-                                                          child: ItemInvoiceWidget(
-                                                            item: InvoicesLocalDataSource.addedItems[index],
-                                                            name: InvoicesLocalDataSource.selectedItemsNames[index],
-                                                            lastItem:
-                                                                index + 1 == InvoicesLocalDataSource.addedItems.length,
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              Navigator.of(context)
+                                                                  .push(
+                                                                    CustomPageRoute.createRoute(
+                                                                      page: AddInvoiceItems(
+                                                                        existItem:
+                                                                            InvoicesLocalDataSource.addedItems[index],
+                                                                        itemName: InvoicesLocalDataSource
+                                                                            .selectedItemsNames[index],
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                  .then((_) => setState(() {}));
+                                                            },
+                                                            child: ItemInvoiceWidget(
+                                                              item: InvoicesLocalDataSource.addedItems[index],
+                                                              name: InvoicesLocalDataSource.selectedItemsNames[index],
+                                                              lastItem: index + 1 ==
+                                                                  InvoicesLocalDataSource.addedItems.length,
+                                                            ),
                                                           ),
                                                         ),
                                                       );

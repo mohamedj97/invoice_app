@@ -9,7 +9,6 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/widgets/custom_back_button.dart';
-import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import '../../data/data_sources/invoices_local_data_source.dart';
 import '../../domain/entities/invoice_line.dart';
 import '../../domain/entities/item_lookup.dart';
@@ -19,7 +18,10 @@ import '../widgets/invoice_add_item_widget.dart';
 import 'add_invoice_taxes.dart';
 
 class AddInvoiceItems extends StatefulWidget {
-  const AddInvoiceItems({Key? key}) : super(key: key);
+  final Line? existItem;
+  final String? itemName;
+
+  const AddInvoiceItems({Key? key, this.existItem, this.itemName}) : super(key: key);
 
   @override
   State<AddInvoiceItems> createState() => _AddInvoiceItemsState();
@@ -33,6 +35,29 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
   num? discountRate;
   LineTotal lineTotal = LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
   TextEditingController priceController = TextEditingController(text: "00");
+
+  @override
+  void initState() {
+    if (widget.existItem != null) {
+      item = ItemLookup(
+        unittypeID: widget.existItem?.unitType ?? 0,
+        price: widget.existItem?.priceEgp ?? 0.0,
+        id: widget.existItem?.itemId ?? 0,
+        name: widget.itemName ?? "",
+        description: widget.existItem?.itemDescription ?? "",
+        code: InvoicesLocalDataSource.items
+            .firstWhere((item) => item.id == widget.existItem!.itemId).code,
+        brickCode:InvoicesLocalDataSource.items
+            .firstWhere((item) => item.id == widget.existItem!.itemId).brickCode ,
+      );
+      quantity=widget.existItem?.quantity??0.0;
+      price = widget.existItem?.priceEgp ?? 0.0;
+      discountRate = widget.existItem?.discountRate ?? 0.0;
+      priceController.text =
+          widget.existItem?.priceEgp != null ? widget.existItem!.priceEgp.toString() : 0.0.toString();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +76,6 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 }
                 quantity = num.parse(formState.value["quantity"]);
                 discountRate = num.parse(formState.value["quantity"]);
-                item = formState.value["item"] as ItemLookup;
                 price = num.parse(priceController.text);
                 setState(() {
                   for (int i = 0; i < InvoicesLocalDataSource.addedItems.length; i++) {
@@ -110,26 +134,41 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                         fontFamily: FontAssets.avertaRegular,
                       ),
                       const SizedBox(height: 16.0),
-                      LWCustomDropdownFormField<ItemLookup>(
-                        iconColor: AppColors.labelColor,
-                        name: "item",
-                        showLabel: false,
-                        onChanged: (item) {
+                      DropdownButtonFormField<ItemLookup>(
+                        value: widget.existItem !=null ?InvoicesLocalDataSource.items
+                            .firstWhere((item) => item.id == widget.existItem!.itemId):null,
+                        onChanged: (itemValue) {
                           setState(() {
+                            item=itemValue;
                             priceController.text = item!.price.toString();
                           });
                         },
-                        labelText: "",
-                        // initialValue: !hasData
-                        //     ? initialValueCountry
-                        //     : null,
-                        hintText: "choose_item".tr(),
-                        isRequired: true,
-                        isCard: false,
-                        items: InvoicesLocalDataSource.items,
-                        itemBuilder: (context, data) {
-                          return Text(data.name ?? "NA");
+                        validator: (value) {
+                          if (value == null) {
+                            return '${"item".tr()} is required';
+                          }
                         },
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          fillColor: AppColors.labelColor,
+                          errorMaxLines: 10,
+                          hintText: "item".tr(),
+                          hintStyle:
+                          const TextStyle(color: AppColors.searchBarColor),
+                        ),
+                        items: InvoicesLocalDataSource.items.map((ItemLookup item) {
+                          return DropdownMenuItem<ItemLookup>(
+                            value: item,
+                            child: Text(
+                              item.name ?? "",
+                              style: const TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          );
+                        }).toList(),
                       ),
                     ],
                   ),
@@ -141,6 +180,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 showCurrency: false,
                 title: "quantity".tr(),
                 name: "quantity",
+                initialValue: widget.existItem != null ? quantity.toString() : "",
                 // initialValue: hasData
                 //     ? widget.invoice!.totalAmount.toString()
                 //     : null,
@@ -154,6 +194,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
               AddPriceItemInCreateInvoice(
                 title: "discount_rate".tr(),
                 name: "discount_rate",
+                initialValue: widget.existItem != null ? discountRate.toString() : "",
                 isRequired: false,
               ),
               InvoiceAddItemWidget(
