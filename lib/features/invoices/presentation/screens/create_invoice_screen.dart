@@ -314,6 +314,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                         InvoicesLocalDataSource.taxTypes = taxTypes;
                                                         InvoicesLocalDataSource.taxSubTypes = taxSubTypes;
                                                         InvoicesLocalDataSource.items = items;
+                                                        InvoicesLocalDataSource.addedTaxes=[];
                                                       });
                                                       Navigator.of(context)
                                                           .push(CustomPageRoute.createRoute(page: AddInvoiceItems()))
@@ -337,6 +338,9 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                           color: AppColors.whiteColor,
                                                           child: InkWell(
                                                             onTap: () {
+                                                              InvoicesLocalDataSource.addedTaxes =
+                                                                  InvoicesLocalDataSource.addedItems[index].lineTax ??
+                                                                      [];
                                                               Navigator.of(context)
                                                                   .push(
                                                                     CustomPageRoute.createRoute(
@@ -490,7 +494,6 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                             setState(() {
                               customerValue = customers[index];
                             });
-                            print('${customerValue!.name}  ${customerValue!.id}   sssssssssssssssssssssssssssss');
                             Navigator.pop(context);
                           },
                           child: LWCustomText(

@@ -28,4 +28,8 @@ class EndPoints {
   static const changePassword = 'Users/change-password';
 
 
+  //Statistics
+  static const receivedInvoices ="Statistics/getreceivedinvoices-dashboard";
+  static const submittedInvoices ="Statistics/getsubmittedinvoices-dashboard";
+
 }

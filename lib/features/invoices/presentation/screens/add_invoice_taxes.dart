@@ -40,7 +40,6 @@ class _AddInvoiceTaxesState extends State<AddInvoiceTaxes> {
                 if (!formState.saveAndValidate()) {
                   return;
                 }
-                Navigator.pop(context);
                 setState(() {
                   filteredTaxSubTypes.clear();
                   InvoicesLocalDataSource.mainTaxType = formState.value["main_tax_type"] as LookupCode;
@@ -56,6 +55,7 @@ class _AddInvoiceTaxesState extends State<AddInvoiceTaxes> {
                         taxtypecode: ""),
                   );
                 });
+                Navigator.pop(context);
               },
               child: LWCustomText(
                 title: "done".tr(),

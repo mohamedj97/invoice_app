@@ -21,7 +21,8 @@ class AddInvoiceItems extends StatefulWidget {
   final Line? existItem;
   final String? itemName;
 
-  const AddInvoiceItems({Key? key, this.existItem, this.itemName}) : super(key: key);
+  const AddInvoiceItems({Key? key, this.existItem, this.itemName})
+      : super(key: key);
 
   @override
   State<AddInvoiceItems> createState() => _AddInvoiceItemsState();
@@ -33,8 +34,10 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
   ItemLookup? item;
   num? price;
   num? discountRate;
-  LineTotal lineTotal = LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
+  LineTotal lineTotal =
+      LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
   TextEditingController priceController = TextEditingController(text: "00");
+  int? specificAddedItemIndex;
 
   @override
   void initState() {
@@ -46,15 +49,24 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
         name: widget.itemName ?? "",
         description: widget.existItem?.itemDescription ?? "",
         code: InvoicesLocalDataSource.items
-            .firstWhere((item) => item.id == widget.existItem!.itemId).code,
-        brickCode:InvoicesLocalDataSource.items
-            .firstWhere((item) => item.id == widget.existItem!.itemId).brickCode ,
+            .firstWhere((item) => item.id == widget.existItem!.itemId)
+            .code,
+        brickCode: InvoicesLocalDataSource.items
+            .firstWhere((item) => item.id == widget.existItem!.itemId)
+            .brickCode,
       );
-      quantity=widget.existItem?.quantity??0.0;
+      specificAddedItemIndex = InvoicesLocalDataSource.addedItems.indexOf(
+          InvoicesLocalDataSource.addedItems
+              .firstWhere((element) => element.itemId == item!.id));
+      InvoicesLocalDataSource.addedTaxes =
+          InvoicesLocalDataSource.addedItems[specificAddedItemIndex!].lineTax ??
+              [];
+      quantity = widget.existItem?.quantity ?? 0.0;
       price = widget.existItem?.priceEgp ?? 0.0;
       discountRate = widget.existItem?.discountRate ?? 0.0;
-      priceController.text =
-          widget.existItem?.priceEgp != null ? widget.existItem!.priceEgp.toString() : 0.0.toString();
+      priceController.text = widget.existItem?.priceEgp != null
+          ? widget.existItem!.priceEgp.toString()
+          : 0.0.toString();
     }
     super.initState();
   }
@@ -78,10 +90,15 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 discountRate = num.parse(formState.value["quantity"]);
                 price = num.parse(priceController.text);
                 setState(() {
-                  for (int i = 0; i < InvoicesLocalDataSource.addedItems.length; i++) {
-                    if (InvoicesLocalDataSource.addedItems[i].itemId == item!.id) {
-                      InvoicesLocalDataSource.addedItems.remove(InvoicesLocalDataSource.addedItems[i]);
-                      InvoicesLocalDataSource.selectedItemsNames.remove(InvoicesLocalDataSource.selectedItemsNames[i]);
+                  for (int i = 0;
+                      i < InvoicesLocalDataSource.addedItems.length;
+                      i++) {
+                    if (InvoicesLocalDataSource.addedItems[i].itemId ==
+                        item!.id) {
+                      InvoicesLocalDataSource.addedItems
+                          .remove(InvoicesLocalDataSource.addedItems[i]);
+                      InvoicesLocalDataSource.selectedItemsNames.remove(
+                          InvoicesLocalDataSource.selectedItemsNames[i]);
                     }
                   }
                   InvoicesLocalDataSource.addedItems.add(
@@ -99,7 +116,9 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                       exchangeRate: 0,
                     ),
                   );
-                  InvoicesLocalDataSource.selectedItemsNames.add(item?.name ?? "");
+                  InvoicesLocalDataSource.selectedItemsNames
+                      .add(item?.name ?? "");
+                  InvoicesLocalDataSource.addedTaxes = [];
                 });
                 Navigator.pop(context);
               },
@@ -135,11 +154,13 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                       ),
                       const SizedBox(height: 16.0),
                       DropdownButtonFormField<ItemLookup>(
-                        value: widget.existItem !=null ?InvoicesLocalDataSource.items
-                            .firstWhere((item) => item.id == widget.existItem!.itemId):null,
+                        value: widget.existItem != null
+                            ? InvoicesLocalDataSource.items.firstWhere(
+                                (item) => item.id == widget.existItem!.itemId)
+                            : null,
                         onChanged: (itemValue) {
                           setState(() {
-                            item=itemValue;
+                            item = itemValue;
                             priceController.text = item!.price.toString();
                           });
                         },
@@ -156,9 +177,10 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                           errorMaxLines: 10,
                           hintText: "item".tr(),
                           hintStyle:
-                          const TextStyle(color: AppColors.searchBarColor),
+                              const TextStyle(color: AppColors.searchBarColor),
                         ),
-                        items: InvoicesLocalDataSource.items.map((ItemLookup item) {
+                        items: InvoicesLocalDataSource.items
+                            .map((ItemLookup item) {
                           return DropdownMenuItem<ItemLookup>(
                             value: item,
                             child: Text(
@@ -180,7 +202,8 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 showCurrency: false,
                 title: "quantity".tr(),
                 name: "quantity",
-                initialValue: widget.existItem != null ? quantity.toString() : "",
+                initialValue:
+                    widget.existItem != null ? quantity.toString() : "",
                 // initialValue: hasData
                 //     ? widget.invoice!.totalAmount.toString()
                 //     : null,
@@ -194,7 +217,8 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
               AddPriceItemInCreateInvoice(
                 title: "discount_rate".tr(),
                 name: "discount_rate",
-                initialValue: widget.existItem != null ? discountRate.toString() : "",
+                initialValue:
+                    widget.existItem != null ? discountRate.toString() : "",
                 isRequired: false,
               ),
               InvoiceAddItemWidget(
@@ -202,7 +226,8 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 iconPath: IconAssets.addCustomerIcon,
                 onTap: () {
                   Navigator.of(context)
-                      .push(CustomPageRoute.createRoute(page: const AddInvoiceTaxes()))
+                      .push(CustomPageRoute.createRoute(
+                          page: const AddInvoiceTaxes()))
                       .then((_) => setState(() {}));
                 },
               ),
@@ -211,53 +236,80 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration:
-                          BoxDecoration(color: AppColors.whiteColor, border: Border.all(color: AppColors.labelColor)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LWCustomText(
-                              title: "main_tax_type".tr(),
-                              color: AppColors.labelColor,
-                            ),
-                            const SizedBox(height: 8.0),
-                            LWCustomText(title: InvoicesLocalDataSource.mainTaxType?.name ?? ""),
-                            const SizedBox(height: 8.0),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Divider(
-                                thickness: 0.5,
-                                height: 0.0,
-                                color: AppColors.searchBarColor,
+                  var taxRateValue=InvoicesLocalDataSource.addedTaxes[index].taxrate;
+                  var mainType = InvoicesLocalDataSource.taxTypes.firstWhere(
+                      (element) =>
+                          element.id ==
+                          InvoicesLocalDataSource.addedTaxes[index].taxTypeId);
+                  var mainTaxType = InvoicesLocalDataSource.taxSubTypes
+                      .firstWhere((element) =>
+                          element.id ==
+                          InvoicesLocalDataSource
+                              .addedTaxes[index].taxSubTypeId);
+                  return Dismissible(
+                    background: Container(color: AppColors.errorColor),
+                    key: UniqueKey(),
+                    onDismissed: (direction) {
+                      setState(() {
+                        InvoicesLocalDataSource.addedTaxes.removeAt(index);
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.whiteColor,
+                            border: Border.all(color: AppColors.labelColor)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              LWCustomText(
+                                title: "main_tax_type".tr(),
+                                color: AppColors.labelColor,
                               ),
-                            ),
-                            const SizedBox(height: 8.0),
-                            LWCustomText(title: "sub_tax_type".tr(), color: AppColors.labelColor),
-                            const SizedBox(height: 8.0),
-                            LWCustomText(title: InvoicesLocalDataSource.subTaxType?.name ?? ""),
-                            const SizedBox(height: 8.0),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Divider(
-                                thickness: 0.5,
-                                height: 0.0,
-                                color: AppColors.searchBarColor,
+                              const SizedBox(height: 8.0),
+                              LWCustomText(title: mainType.name ?? ""),
+                              const SizedBox(height: 8.0),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Divider(
+                                  thickness: 0.5,
+                                  height: 0.0,
+                                  color: AppColors.searchBarColor,
+                                ),
                               ),
-                            ),
-                            InvoicesLocalDataSource.taxRate == null ? const SizedBox() : const SizedBox(height: 8.0),
-                            InvoicesLocalDataSource.taxRate == null
-                                ? const SizedBox()
-                                : LWCustomText(title: "tax_rate".tr(), color: AppColors.labelColor),
-                            LWCustomText(
-                                title: InvoicesLocalDataSource.taxRate == null
-                                    ? ""
-                                    : InvoicesLocalDataSource.taxRate.toString()),
-                          ],
+                              const SizedBox(height: 8.0),
+                              LWCustomText(
+                                  title: "sub_tax_type".tr(),
+                                  color: AppColors.labelColor),
+                              const SizedBox(height: 8.0),
+                              LWCustomText(title: mainTaxType.name ?? ""),
+                              const SizedBox(height: 8.0),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Divider(
+                                  thickness: 0.5,
+                                  height: 0.0,
+                                  color: AppColors.searchBarColor,
+                                ),
+                              ),
+                              taxRateValue== null
+                                  ? const SizedBox()
+                                  : const SizedBox(height: 8.0),
+                              taxRateValue == null
+                                  ? const SizedBox()
+                                  : LWCustomText(
+                                      title: "tax_rate".tr(),
+                                      color: AppColors.labelColor),
+                              LWCustomText(
+                                  title: taxRateValue == null
+                                      ? ""
+                                      : taxRateValue
+                                          .toString()),
+                            ],
+                          ),
                         ),
                       ),
                     ),
