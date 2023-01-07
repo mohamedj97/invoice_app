@@ -46,14 +46,12 @@ class _HomeMorePageState extends State<HomeMorePage> {
   Widget build(BuildContext context) {
     return BlocProvider<GetProfileCubit>.value(
       value: cubit,
-      child: BlocConsumer<GetProfileCubit, GetProfileState>(
-          listener: (context, state) async {
+      child: BlocConsumer<GetProfileCubit, GetProfileState>(listener: (context, state) async {
         if (state.getProfileRequestState == RequestState.error) {
           getErrorDialogue(
             context: context,
             isUnAuthorized: state.getProfileResponse!.statuscode == 401,
-            message: state.getProfileResponse?.message ??
-                "something_went_wrong".tr(),
+            message: state.getProfileResponse?.message ?? "something_went_wrong".tr(),
           );
         }
       }, builder: (context, state) {
@@ -85,17 +83,13 @@ class _HomeMorePageState extends State<HomeMorePage> {
                           LWCustomText(
                               title: state.getProfileResponse!.statuscode == 0
                                   ? "no_internet_connection".tr()
-                                  : state.getProfileResponse?.result
-                                          ?.userName ??
-                                      "",
+                                  : state.getProfileResponse?.result?.userName ?? "",
                               color: AppColors.blackColor,
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold),
                           const SizedBox(height: 8.0),
                           LWCustomText(
-                              title: state.getProfileResponse?.result
-                                      ?.companies[0].companyInfo.name ??
-                                  "",
+                              title: state.getProfileResponse?.result?.companies[0].companyInfo.name ?? "",
                               color: AppColors.blackColor,
                               fontSize: 12.0),
                         ],
@@ -106,17 +100,13 @@ class _HomeMorePageState extends State<HomeMorePage> {
                       imagePath: IconAssets.profileIcon,
                       onTap: () {
                         state.getProfileResponse!.statuscode == 0
-                            ? ScaffoldMessenger.of(context)
-                                .showSnackBar(SnackBar(
+                            ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: LWCustomText(
-                                    title: state.getProfileResponse?.message ??
-                                        "no_internet_connection".tr()),
+                                    title: state.getProfileResponse?.message ?? "no_internet_connection".tr()),
                               ))
-                            : Navigator.of(context)
-                                .push(CustomPageRoute.createRoute(
-                                    page: ProfileDataScreen(
-                                user: state.getProfileResponse!.result
-                                    as UserInfoData,
+                            : Navigator.of(context).push(CustomPageRoute.createRoute(
+                                page: ProfileDataScreen(
+                                user: state.getProfileResponse!.result as UserInfoData,
                               )));
                       },
                     ),
@@ -125,17 +115,13 @@ class _HomeMorePageState extends State<HomeMorePage> {
                       imagePath: IconAssets.businessIcon,
                       onTap: () {
                         state.getProfileResponse!.statuscode == 0
-                            ? ScaffoldMessenger.of(context)
-                                .showSnackBar(SnackBar(
+                            ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: LWCustomText(
-                                    title: state.getProfileResponse?.message ??
-                                        "no_internet_connection".tr()),
+                                    title: state.getProfileResponse?.message ?? "no_internet_connection".tr()),
                               ))
-                            : Navigator.of(context)
-                                .push(CustomPageRoute.createRoute(
-                                    page: BusinessDataScreen(
-                                companyInfo: state.getProfileResponse?.result
-                                    ?.companies[0].companyInfo,
+                            : Navigator.of(context).push(CustomPageRoute.createRoute(
+                                page: BusinessDataScreen(
+                                companyInfo: state.getProfileResponse?.result?.companies[0].companyInfo,
                               )));
                       },
                     ),
@@ -144,15 +130,12 @@ class _HomeMorePageState extends State<HomeMorePage> {
                       imagePath: IconAssets.customersIcon,
                       onTap: () {
                         state.getProfileResponse!.statuscode == 0
-                            ? ScaffoldMessenger.of(context)
-                                .showSnackBar(SnackBar(
+                            ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: LWCustomText(
-                                    title: state.getProfileResponse?.message ??
-                                        "no_internet_connection".tr()),
+                                    title: state.getProfileResponse?.message ?? "no_internet_connection".tr()),
                               ))
-                            : Navigator.of(context).push(
-                                CustomPageRoute.createRoute(
-                                    page: const ProfileCustomersScreen()));
+                            : Navigator.of(context)
+                                .push(CustomPageRoute.createRoute(page: const ProfileCustomersScreen()));
                       },
                     ),
                     ProfileItemWidget(
@@ -160,18 +143,13 @@ class _HomeMorePageState extends State<HomeMorePage> {
                       imagePath: IconAssets.lockIcon,
                       onTap: () {
                         state.getProfileResponse!.statuscode == 0
-                            ? ScaffoldMessenger.of(context)
-                                .showSnackBar(SnackBar(
+                            ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: LWCustomText(
-                                    title: state.getProfileResponse?.message ??
-                                        "no_internet_connection".tr()),
+                                    title: state.getProfileResponse?.message ?? "no_internet_connection".tr()),
                               ))
-                            : Navigator.of(context)
-                                .push(CustomPageRoute.createRoute(
-                                    page: ChangePasswordScreen(
-                                userName: state
-                                        .getProfileResponse?.result?.userName ??
-                                    "user_name".tr(),
+                            : Navigator.of(context).push(CustomPageRoute.createRoute(
+                                page: ChangePasswordScreen(
+                                userName: state.getProfileResponse?.result?.userName ?? "user_name".tr(),
                               )));
                       },
                     ),
@@ -179,8 +157,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
                       title: "change_language".tr(),
                       imagePath: IconAssets.customersIcon,
                       onTap: () {
-                        Navigator.of(context).push(CustomPageRoute.createRoute(
-                            page: const ChangeLanguageScreen()));
+                        Navigator.of(context).push(CustomPageRoute.createRoute(page: const ChangeLanguageScreen()));
                       },
                     ),
                     // ProfileItemWidget(
@@ -190,7 +167,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
                     // ),
                     ProfileItemWidget(
                       title: "logout".tr(),
-                      imagePath: IconAssets.profileIcon,
+                      imagePath: IconAssets.logoutIcon,
                       onTap: () async {
                         await showDialog(
                           context: context,
@@ -199,8 +176,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 24.0, horizontal: 32.0),
+                              contentPadding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 32.0),
                               title: LWCustomText(
                                 textAlign: TextAlign.center,
                                 title: "logout_subtitle".tr(),
@@ -216,11 +192,9 @@ class _HomeMorePageState extends State<HomeMorePage> {
                                     color: AppColors.searchBarColor,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 24.0, right: 24.0, top: 16.0),
+                                    padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 16.0),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         TextButton(
                                           onPressed: () {
@@ -230,16 +204,14 @@ class _HomeMorePageState extends State<HomeMorePage> {
                                             title: "cancel".tr(),
                                             color: AppColors.iconsColor,
                                             fontSize: 15.0,
-                                            fontFamily:
-                                                FontAssets.avertaSemiBold,
+                                            fontFamily: FontAssets.avertaSemiBold,
                                           ),
                                         ),
                                         TextButton(
                                           onPressed: () async {
                                             await DiskRepo().deleteTokensData();
                                             MemoryRepo().deleteTokensData();
-                                            Navigator.of(context)
-                                                .pushAndRemoveUntil(
+                                            Navigator.of(context).pushAndRemoveUntil(
                                               CustomPageRoute.createRoute(
                                                 page: const LoginScreen(),
                                               ),
@@ -250,8 +222,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
                                             title: "logout".tr(),
                                             color: AppColors.errorColor,
                                             fontSize: 15.0,
-                                            fontFamily:
-                                                FontAssets.avertaSemiBold,
+                                            fontFamily: FontAssets.avertaSemiBold,
                                           ),
                                         ),
                                       ],

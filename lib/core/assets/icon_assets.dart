@@ -17,4 +17,5 @@ class IconAssets {
   static const addCustomerIcon="assets/icons/add_customer_icon.png";
   static const invoiceCustomerIcon="assets/icons/invoice_customer_icon.png";
   static const addDiscountIcon="assets/icons/add_discount_icon.png";
+  static const logoutIcon="assets/icons/logout_icon.png";
 }
