@@ -10,8 +10,10 @@ import 'package:invoice_app/features/invoices/data/data_sources/invoices_remote_
 import 'package:invoice_app/features/invoices/data/repositories/invoices_repository_impl.dart';
 import 'package:invoice_app/features/invoices/domain/repositories/invoices_repository.dart';
 import 'package:invoice_app/features/invoices/domain/use_cases/add_invoice_use_case.dart';
+import 'package:invoice_app/features/invoices/domain/use_cases/edit_single_invoice_use_case.dart';
 import 'package:invoice_app/features/invoices/domain/use_cases/get_invoice_types_use_case.dart';
 import 'package:invoice_app/features/invoices/domain/use_cases/get_invoices_use_case.dart';
+import 'package:invoice_app/features/invoices/domain/use_cases/get_single_invoice_use_case.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/add_invoice/add_invoice_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
 import 'package:invoice_app/features/products/domain/use_cases/add_product_usecase.dart';
@@ -54,9 +56,9 @@ Future<void> init() async {
 // Bloc
 
   sl.registerLazySingleton(() => LoginCubit(sl(),sl()));
-  sl.registerLazySingleton(() => GetInvoicesCubit(sl(),sl()));
+  sl.registerLazySingleton(() => GetInvoicesCubit(sl(),sl(),sl()));
   sl.registerLazySingleton(() => GetInvoiceTypesCubit(sl()));
-  sl.registerLazySingleton(() => AddInvoiceCubit(sl()));
+  sl.registerLazySingleton(() => AddInvoiceCubit(sl(),sl()));
   sl.registerLazySingleton(() => GetCustomersCubit(sl()));
   sl.registerLazySingleton(() => AddEditCustomerCubit(sl(),sl()));
   sl.registerLazySingleton(() => GetCustomerTypesCubit(sl()));
@@ -78,6 +80,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => GetInvoicesUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => FilterInvoicesUseCase(invoicesRepository: sl()));
+  sl.registerLazySingleton(() => EditSingleInvoiceUseCase(invoicesRepository: sl()));
+  sl.registerLazySingleton(() => GetSingleInvoiceUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => GetInvoiceTypesUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => AddInvoiceUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => GetCustomersUseCase(customersRepository: sl()));

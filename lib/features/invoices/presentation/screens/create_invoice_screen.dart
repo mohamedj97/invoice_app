@@ -74,7 +74,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
       title: hasData ? "Edit Invoice" : "Create invoice",
       leading: const CustomBackButton(),
       body: BlocProvider.value(
-        value: AddInvoiceCubit(sl()),
+        value: AddInvoiceCubit(sl(),sl()),
         child: BlocConsumer<AddInvoiceCubit, AddInvoiceState>(
           listener: (context, addInvoiceState) async {
             if (addInvoiceState.addInvoiceRequestState == RequestState.success) {
