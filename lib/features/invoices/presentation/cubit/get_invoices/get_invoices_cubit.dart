@@ -16,8 +16,6 @@ class GetInvoicesCubit extends Cubit<GetInvoicesState> {
   final GetInvoicesUseCase getInvoicesUseCase;
   final FilterInvoicesUseCase filterInvoicesUseCase;
   final GetSingleInvoiceUseCase getSingleInvoiceUseCase;
-  String username = "";
-  String? password;
 
   GetInvoicesCubit(
     this.getInvoicesUseCase,
