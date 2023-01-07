@@ -42,6 +42,56 @@ class _InvoicesClient implements InvoicesClient {
   }
 
   @override
+  Future<GetSingleInvoiceResponse> getSingleInvoices(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetSingleInvoiceResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'Invoices/$id',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GetSingleInvoiceResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<StringResponse> editSingleInvoices(
+    id,
+    invoiceRequestModel,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(invoiceRequestModel.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<StringResponse>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'Invoices/$id',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = StringResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<StringResponse> addInvoice(invoiceRequestModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
