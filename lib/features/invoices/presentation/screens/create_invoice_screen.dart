@@ -36,8 +36,7 @@ class CreateEditInvoiceScreen extends StatefulWidget {
   const CreateEditInvoiceScreen({Key? key, this.invoice}) : super(key: key);
 
   @override
-  State<CreateEditInvoiceScreen> createState() =>
-      _CreateEditInvoiceScreenState();
+  State<CreateEditInvoiceScreen> createState() => _CreateEditInvoiceScreenState();
 }
 
 class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
@@ -100,8 +99,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
           value: AddInvoiceCubit(sl(), sl()),
           child: BlocConsumer<AddInvoiceCubit, AddInvoiceState>(
             listener: (context, addInvoiceState) async {
-              if (addInvoiceState.addInvoiceRequestState ==
-                  RequestState.success) {
+              if (addInvoiceState.addInvoiceRequestState == RequestState.success) {
                 InvoicesLocalDataSource.mainTaxType = null;
                 InvoicesLocalDataSource.items = [];
                 InvoicesLocalDataSource.addedItems = [];
@@ -117,14 +115,11 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                   (Route<dynamic> route) => false,
                 );
               }
-              if (addInvoiceState.addInvoiceRequestState ==
-                  RequestState.error) {
+              if (addInvoiceState.addInvoiceRequestState == RequestState.error) {
                 getErrorDialogue(
                   context: context,
-                  isUnAuthorized:
-                      addInvoiceState.stringResponse!.statuscode == 401,
-                  message: addInvoiceState.stringResponse?.message ??
-                      "something_went_wrong".tr(),
+                  isUnAuthorized: addInvoiceState.stringResponse!.statuscode == 401,
+                  message: addInvoiceState.stringResponse?.message ?? "something_went_wrong".tr(),
                 );
               }
             },
@@ -133,94 +128,49 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                   ? const Center(child: CircularProgressIndicator())
                   : BlocProvider<GetInvoiceTypesCubit>.value(
                       value: getInvoiceTypesCubit,
-                      child: BlocConsumer<GetInvoiceTypesCubit,
-                          GetInvoiceTypesState>(
+                      child: BlocConsumer<GetInvoiceTypesCubit, GetInvoiceTypesState>(
                         listener: (context, state) async {
-                          if (state.getInvoiceTypesRequestState ==
-                              RequestState.success) {}
-                          if (state.getInvoiceTypesRequestState ==
-                              RequestState.error) {
+                          if (state.getInvoiceTypesRequestState == RequestState.success) {}
+                          if (state.getInvoiceTypesRequestState == RequestState.error) {
                             getErrorDialogue(
                               context: context,
-                              isUnAuthorized:
-                                  state.getInvoiceTypesResponse!.statuscode ==
-                                      401,
-                              message: state.getInvoiceTypesResponse?.message ??
-                                  "something_went_wrong".tr(),
+                              isUnAuthorized: state.getInvoiceTypesResponse!.statuscode == 401,
+                              message: state.getInvoiceTypesResponse?.message ?? "something_went_wrong".tr(),
                             );
                           }
                         },
                         builder: (context, state) {
-                          customers = state.getInvoiceTypesResponse?.result
-                                  ?.result.customers ??
-                              [];
-                          invoiceTypes = state.getInvoiceTypesResponse?.result
-                                  ?.result.invoiceTypes ??
-                              [];
-                          branches = state.getInvoiceTypesResponse?.result
-                                  ?.result.branches ??
-                              [];
-                          unitTypes = state.getInvoiceTypesResponse?.result
-                                  ?.result.unitTypes ??
-                              [];
-                          currencies = state.getInvoiceTypesResponse?.result
-                                  ?.result.currencies ??
-                              [];
-                          taxTypes = state.getInvoiceTypesResponse?.result
-                                  ?.result.taxTypes ??
-                              [];
-                          taxSubTypes = state.getInvoiceTypesResponse?.result
-                                  ?.result.taxSubTypes ??
-                              [];
-                          countries = state.getInvoiceTypesResponse?.result
-                                  ?.result.countries ??
-                              [];
-                          paymentTerms = state.getInvoiceTypesResponse?.result
-                                  ?.result.paymentTerms ??
-                              [];
-                          items = state.getInvoiceTypesResponse?.result?.result
-                                  .items ??
-                              [];
+                          customers = state.getInvoiceTypesResponse?.result?.result.customers ?? [];
+                          invoiceTypes = state.getInvoiceTypesResponse?.result?.result.invoiceTypes ?? [];
+                          branches = state.getInvoiceTypesResponse?.result?.result.branches ?? [];
+                          unitTypes = state.getInvoiceTypesResponse?.result?.result.unitTypes ?? [];
+                          currencies = state.getInvoiceTypesResponse?.result?.result.currencies ?? [];
+                          taxTypes = state.getInvoiceTypesResponse?.result?.result.taxTypes ?? [];
+                          taxSubTypes = state.getInvoiceTypesResponse?.result?.result.taxSubTypes ?? [];
+                          countries = state.getInvoiceTypesResponse?.result?.result.countries ?? [];
+                          paymentTerms = state.getInvoiceTypesResponse?.result?.result.paymentTerms ?? [];
+                          items = state.getInvoiceTypesResponse?.result?.result.items ?? [];
 
                           if (hasData) {
                             InvoicesLocalDataSource.taxTypes = taxTypes;
                             InvoicesLocalDataSource.taxSubTypes = taxSubTypes;
-                            extraDiscountAmount =
-                                widget.invoice?.extraDiscountAmount;
-                            customerValue = state.getInvoiceTypesResponse
-                                ?.result?.result.customers
-                                .firstWhere((element) =>
-                                    element.id == widget.invoice?.customerId);
-                            InvoicesLocalDataSource.customerId =
-                                widget.invoice!.customerId;
+                            extraDiscountAmount = widget.invoice?.extraDiscountAmount;
+                            customerValue = state.getInvoiceTypesResponse?.result?.result.customers
+                                .firstWhere((element) => element.id == widget.invoice?.customerId);
+                            InvoicesLocalDataSource.customerId = widget.invoice!.customerId;
                             InvoicesLocalDataSource.customerName = state
-                                .getInvoiceTypesResponse
-                                ?.result
-                                ?.result
-                                .customers
-                                .firstWhere((element) =>
-                                    element.id == widget.invoice?.customerId)
+                                .getInvoiceTypesResponse?.result?.result.customers
+                                .firstWhere((element) => element.id == widget.invoice?.customerId)
                                 .name;
-                            InvoicesLocalDataSource.invoiceDate =
-                                widget.invoice!.invoiceDate;
+                            InvoicesLocalDataSource.invoiceDate = widget.invoice!.invoiceDate;
                             InvoicesLocalDataSource.selectedItemsNames = [];
                             InvoicesLocalDataSource.invoiceType = state
-                                .getInvoiceTypesResponse
-                                ?.result
-                                ?.result
-                                .invoiceTypes
-                                .firstWhere((element) =>
-                                    element.id ==
-                                    widget.invoice?.invoiceTypeId);
+                                .getInvoiceTypesResponse?.result?.result.invoiceTypes
+                                .firstWhere((element) => element.id == widget.invoice?.invoiceTypeId);
                             for (var item in items) {
-                              for (int i = 0;
-                                  i < InvoicesLocalDataSource.addedItems.length;
-                                  i++) {
-                                if (item.id ==
-                                    InvoicesLocalDataSource
-                                        .addedItems[i].itemId) {
-                                  InvoicesLocalDataSource.selectedItemsNames
-                                      .add(item.name ?? "");
+                              for (int i = 0; i < InvoicesLocalDataSource.addedItems.length; i++) {
+                                if (item.id == InvoicesLocalDataSource.addedItems[i].itemId) {
+                                  InvoicesLocalDataSource.selectedItemsNames.add(item.name ?? "");
                                 }
                               }
                             }
@@ -246,15 +196,10 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                               ),
                                             ),
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 8.0,
-                                                      vertical: 16.0),
+                                              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
                                               child: LWCustomText(
-                                                  title:
-                                                      "Invoice#${widget.invoice?.id ?? ""}",
-                                                  fontFamily:
-                                                      FontAssets.avertaSemiBold,
+                                                  title: "Invoice#${widget.invoice?.id ?? ""}",
+                                                  fontFamily: FontAssets.avertaSemiBold,
                                                   fontWeight: FontWeight.bold,
                                                   color: AppColors.blackColor),
                                             ),
@@ -269,89 +214,53 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                               ),
                                             ),
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: const EdgeInsets.all(8.0),
                                               child: Column(
                                                 children: [
                                                   state is GetInvoiceTypesLoading
                                                       ? const Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: Center(
-                                                              child:
-                                                                  CircularProgressIndicator()),
+                                                          padding: EdgeInsets.all(8.0),
+                                                          child: Center(child: CircularProgressIndicator()),
                                                         )
                                                       : Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: [
-                                                            const SizedBox(
-                                                                height: 8.0),
+                                                            const SizedBox(height: 8.0),
                                                             const LWCustomText(
-                                                              title:
-                                                                  "Invoice Type",
-                                                              color: AppColors
-                                                                  .labelColor,
-                                                              fontFamily: FontAssets
-                                                                  .avertaRegular,
+                                                              title: "Invoice Type",
+                                                              color: AppColors.labelColor,
+                                                              fontFamily: FontAssets.avertaRegular,
                                                             ),
-                                                            const SizedBox(
-                                                                height: 16.0),
-                                                            DropdownButtonFormField<
-                                                                BaseLookup>(
-                                                              onChanged:
-                                                                  (type) {
+                                                            const SizedBox(height: 16.0),
+                                                            DropdownButtonFormField<BaseLookup>(
+                                                              onChanged: (type) {
                                                                 setState(() {
-                                                                  InvoicesLocalDataSource
-                                                                          .invoiceType =
-                                                                      type;
+                                                                  InvoicesLocalDataSource.invoiceType = type;
                                                                 });
                                                               },
-                                                              value: InvoicesLocalDataSource
-                                                                  .invoiceType,
-                                                              validator:
-                                                                  (value) {
-                                                                if (value ==
-                                                                    null) {
+                                                              value: InvoicesLocalDataSource.invoiceType,
+                                                              validator: (value) {
+                                                                if (value == null) {
                                                                   return '${"invoice_type".tr()} is required';
                                                                 }
                                                               },
                                                               isExpanded: true,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                enabledBorder:
-                                                                    InputBorder
-                                                                        .none,
-                                                                focusedBorder:
-                                                                    InputBorder
-                                                                        .none,
-                                                                fillColor: AppColors
-                                                                    .labelColor,
-                                                                errorMaxLines:
-                                                                    10,
-                                                                hintText:
-                                                                    "invoice_type"
-                                                                        .tr(),
-                                                                hintStyle: const TextStyle(
-                                                                    color: AppColors
-                                                                        .searchBarColor),
+                                                              decoration: InputDecoration(
+                                                                enabledBorder: InputBorder.none,
+                                                                focusedBorder: InputBorder.none,
+                                                                fillColor: AppColors.labelColor,
+                                                                errorMaxLines: 10,
+                                                                hintText: "invoice_type".tr(),
+                                                                hintStyle:
+                                                                    const TextStyle(color: AppColors.searchBarColor),
                                                               ),
-                                                              items: invoiceTypes
-                                                                  .map((BaseLookup
-                                                                      item) {
-                                                                return DropdownMenuItem<
-                                                                    BaseLookup>(
+                                                              items: invoiceTypes.map((BaseLookup item) {
+                                                                return DropdownMenuItem<BaseLookup>(
                                                                   value: item,
                                                                   child: Text(
-                                                                    item.name ??
-                                                                        "",
-                                                                    style:
-                                                                        const TextStyle(
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .ellipsis,
+                                                                    item.name ?? "",
+                                                                    style: const TextStyle(
+                                                                      overflow: TextOverflow.ellipsis,
                                                                     ),
                                                                   ),
                                                                 );
@@ -360,54 +269,37 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                           ],
                                                         ),
                                                   const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 16.0),
+                                                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                                                     child: Divider(
                                                       thickness: 0.5,
                                                       height: 0.0,
-                                                      color: AppColors
-                                                          .searchBarColor,
+                                                      color: AppColors.searchBarColor,
                                                     ),
                                                   ),
                                                   Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       const LWCustomText(
                                                         title: "Invoice Date",
-                                                        color: AppColors
-                                                            .labelColor,
-                                                        fontFamily: FontAssets
-                                                            .avertaRegular,
+                                                        color: AppColors.labelColor,
+                                                        fontFamily: FontAssets.avertaRegular,
                                                       ),
                                                       SizedBox(
                                                         width: 150,
                                                         child: hasData
                                                             ? LWCustomDateFormField(
-                                                                isRequired:
-                                                                    true,
-                                                                name:
-                                                                    "invoice_date",
+                                                                isRequired: true,
+                                                                name: "invoice_date",
                                                                 labelText: "",
-                                                                initialValue: widget
-                                                                    .invoice!
-                                                                    .invoiceDate,
-                                                                hintText:
-                                                                    "Choose date",
+                                                                initialValue: widget.invoice!.invoiceDate,
+                                                                hintText: "Choose date",
                                                               )
                                                             : const LWCustomDateFormField(
-                                                                isRequired:
-                                                                    true,
-                                                                name:
-                                                                    "invoice_date",
+                                                                isRequired: true,
+                                                                name: "invoice_date",
                                                                 labelText: "",
-                                                                hintText:
-                                                                    "Choose date",
+                                                                hintText: "Choose date",
                                                               ),
                                                       ),
                                                     ],
@@ -421,32 +313,26 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                               ? const Padding(
                                                   padding: EdgeInsets.all(8.0),
                                                   child: Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
+                                                    child: CircularProgressIndicator(),
                                                   ),
                                                 )
                                               : customerValue != null
                                                   ? InvoiceAddItemWidget(
-                                                      title:
-                                                          customerValue?.name ??
-                                                              "NA",
-                                                      iconPath: IconAssets
-                                                          .invoiceCustomerIcon,
+                                                      title: customerValue?.name ?? "NA",
+                                                      iconPath: IconAssets.invoiceCustomerIcon,
                                                       onTap: () {
                                                         _dialogBuilder(context);
                                                       },
                                                     )
                                                   : InvoiceAddItemWidget(
                                                       title: "Add customer",
-                                                      iconPath: IconAssets
-                                                          .addCustomerIcon,
+                                                      iconPath: IconAssets.addCustomerIcon,
                                                       onTap: () {
                                                         _dialogBuilder(context);
                                                       },
                                                     ),
                                           const Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 16.0),
+                                            padding: EdgeInsets.symmetric(horizontal: 16.0),
                                             child: Divider(
                                               thickness: 0.5,
                                               height: 0.0,
@@ -457,108 +343,65 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                               ? const Padding(
                                                   padding: EdgeInsets.all(8.0),
                                                   child: Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
+                                                    child: CircularProgressIndicator(),
                                                   ),
                                                 )
                                               : Column(
                                                   children: [
                                                     InvoiceAddItemWidget(
                                                       title: "Add item",
-                                                      iconPath: IconAssets
-                                                          .addItemIcon,
+                                                      iconPath: IconAssets.addItemIcon,
                                                       onTap: () {
                                                         setState(() {
-                                                          InvoicesLocalDataSource
-                                                                  .taxTypes =
-                                                              taxTypes;
-                                                          InvoicesLocalDataSource
-                                                                  .taxSubTypes =
-                                                              taxSubTypes;
-                                                          InvoicesLocalDataSource
-                                                              .items = items;
-                                                          InvoicesLocalDataSource
-                                                              .addedTaxes = [];
+                                                          InvoicesLocalDataSource.taxTypes = taxTypes;
+                                                          InvoicesLocalDataSource.taxSubTypes = taxSubTypes;
+                                                          InvoicesLocalDataSource.items = items;
+                                                          InvoicesLocalDataSource.addedTaxes = [];
                                                         });
                                                         Navigator.of(context)
-                                                            .push(CustomPageRoute
-                                                                .createRoute(
-                                                                    page:
-                                                                        AddInvoiceItems()))
-                                                            .then((_) =>
-                                                                setState(
-                                                                    () {}));
+                                                            .push(CustomPageRoute.createRoute(page: AddInvoiceItems()))
+                                                            .then((_) => setState(() {}));
                                                       },
                                                     ),
                                                     ListView.builder(
-                                                      itemCount:
-                                                          InvoicesLocalDataSource
-                                                              .addedItems
-                                                              .length,
-                                                      physics:
-                                                          const ScrollPhysics(),
+                                                      itemCount: InvoicesLocalDataSource.addedItems.length,
+                                                      physics: const ScrollPhysics(),
                                                       shrinkWrap: true,
-                                                      itemBuilder:
-                                                          (context, index) {
+                                                      itemBuilder: (context, index) {
                                                         return Dismissible(
-                                                          background: Container(
-                                                              color: AppColors
-                                                                  .errorColor),
+                                                          background: Container(color: AppColors.errorColor),
                                                           key: UniqueKey(),
-                                                          onDismissed:
-                                                              (direction) {
+                                                          onDismissed: (direction) {
                                                             setState(() {
-                                                              InvoicesLocalDataSource
-                                                                  .addedItems
-                                                                  .removeAt(
-                                                                      index);
+                                                              InvoicesLocalDataSource.addedItems.removeAt(index);
                                                             });
                                                           },
                                                           child: Container(
-                                                            color: AppColors
-                                                                .whiteColor,
+                                                            color: AppColors.whiteColor,
                                                             child: InkWell(
                                                               onTap: () {
-                                                                InvoicesLocalDataSource
-                                                                        .items =
-                                                                    items;
-                                                                InvoicesLocalDataSource
-                                                                    .addedTaxes = InvoicesLocalDataSource
-                                                                        .addedItems[
-                                                                            index]
-                                                                        .lineTax ??
-                                                                    [];
-                                                                Navigator.of(
-                                                                        context)
+                                                                InvoicesLocalDataSource.items = items;
+                                                                InvoicesLocalDataSource.addedTaxes =
+                                                                    InvoicesLocalDataSource.addedItems[index].lineTax ??
+                                                                        [];
+                                                                Navigator.of(context)
                                                                     .push(
-                                                                      CustomPageRoute
-                                                                          .createRoute(
-                                                                        page:
-                                                                            AddInvoiceItems(
+                                                                      CustomPageRoute.createRoute(
+                                                                        page: AddInvoiceItems(
                                                                           existItem:
                                                                               InvoicesLocalDataSource.addedItems[index],
-                                                                          itemName:
-                                                                              InvoicesLocalDataSource.selectedItemsNames[index],
+                                                                          itemName: InvoicesLocalDataSource
+                                                                              .selectedItemsNames[index],
                                                                         ),
                                                                       ),
                                                                     )
-                                                                    .then((_) =>
-                                                                        setState(
-                                                                            () {}));
+                                                                    .then((_) => setState(() {}));
                                                               },
-                                                              child:
-                                                                  ItemInvoiceWidget(
-                                                                item: InvoicesLocalDataSource
-                                                                        .addedItems[
-                                                                    index],
-                                                                name: InvoicesLocalDataSource
-                                                                        .selectedItemsNames[
-                                                                    index],
-                                                                lastItem: index +
-                                                                        1 ==
-                                                                    InvoicesLocalDataSource
-                                                                        .addedItems
-                                                                        .length,
+                                                              child: ItemInvoiceWidget(
+                                                                item: InvoicesLocalDataSource.addedItems[index],
+                                                                name: InvoicesLocalDataSource.selectedItemsNames[index],
+                                                                lastItem: index + 1 ==
+                                                                    InvoicesLocalDataSource.addedItems.length,
                                                               ),
                                                             ),
                                                           ),
@@ -633,32 +476,23 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                         isUnAuthorized: false,
                                         message: "customer_validate".tr(),
                                       );
-                                    } else if (InvoicesLocalDataSource
-                                        .addedItems.isEmpty) {
+                                    } else if (InvoicesLocalDataSource.addedItems.isEmpty) {
                                       getErrorDialogue(
                                         context: context,
                                         isUnAuthorized: false,
                                         message: "items_validate".tr(),
                                       );
                                     } else {
-                                      extraDiscountAmount = num.parse(
-                                          extraDiscountController.text);
-                                      BlocProvider.of<AddInvoiceCubit>(context)
-                                          .addInvoice(
+                                      extraDiscountAmount = num.parse(extraDiscountController.text);
+                                      BlocProvider.of<AddInvoiceCubit>(context).addInvoice(
                                         InvoiceRequestModel(
                                           id: 0,
-                                          invoiceType: InvoicesLocalDataSource
-                                              .invoiceType!.id
-                                              .toString(),
-                                          invoiceDate:
-                                              formState.value["invoice_date"],
-                                          invoiceTypeId: InvoicesLocalDataSource
-                                              .invoiceType!.id,
+                                          invoiceType: InvoicesLocalDataSource.invoiceType!.id.toString(),
+                                          invoiceDate: formState.value["invoice_date"],
+                                          invoiceTypeId: InvoicesLocalDataSource.invoiceType!.id,
                                           customerId: customerValue!.id,
-                                          lines: InvoicesLocalDataSource
-                                              .addedItems,
-                                          extraDiscountAmount:
-                                              extraDiscountAmount,
+                                          lines: InvoicesLocalDataSource.addedItems,
+                                          extraDiscountAmount: extraDiscountAmount,
                                         ),
                                       );
                                     }
@@ -686,9 +520,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: LWCustomText(
-              title: 'choose_customer'.tr(),
-              color: AppColors.blackColor,
-              fontFamily: FontAssets.avertaSemiBold),
+              title: 'choose_customer'.tr(), color: AppColors.blackColor, fontFamily: FontAssets.avertaSemiBold),
           content: SizedBox(
             height: MediaQuery.of(context).size.height / 2,
             width: MediaQuery.of(context).size.width,
