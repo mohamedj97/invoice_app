@@ -7,9 +7,9 @@ part of 'line_total.dart';
 // **************************************************************************
 
 LineTotal _$LineTotalFromJson(Map<String, dynamic> json) => LineTotal(
-      salesTotal: json['salesTotal'] as num,
-      netTotal: json['netTotal'] as num,
-      total: json['total'] as num,
+      salesTotal: json['salesTotal'] as num?,
+      netTotal: json['netTotal'] as num?,
+      total: json['total'] as num?,
       lineTaxTotal: (json['lineTaxTotal'] as List<dynamic>?)
           ?.map((e) => LineTaxTotal.fromJson(e as Map<String, dynamic>))
           .toList(),

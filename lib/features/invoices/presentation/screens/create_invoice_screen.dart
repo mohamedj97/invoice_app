@@ -9,6 +9,7 @@ import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/features/invoices/data/data_sources/invoices_local_data_source.dart';
 import 'package:invoice_app/features/invoices/data/models/requests/invoice_request_model.dart';
 import 'package:invoice_app/features/invoices/domain/entities/lookup_code.dart';
+import 'package:invoice_app/features/invoices/domain/entities/single_invoice_response.dart';
 import 'package:invoice_app/features/invoices/domain/entities/tax_subtype_lookup.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/add_invoice/add_invoice_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_types/get_invoice_types_cubit.dart';
@@ -22,7 +23,6 @@ import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_date_form_field.dart';
 import '../../../../injection_container.dart';
 import '../../../products/domain/entities/base_lookup.dart';
-import '../../domain/entities/invoice_head_model.dart';
 import '../../domain/entities/item_lookup.dart';
 import '../widgets/add_price_item_in_create_invoice.dart';
 import '../widgets/invoice_add_item_widget.dart';
@@ -30,7 +30,7 @@ import '../widgets/item_invoice_widget.dart';
 import '../widgets/primary_and_secondary_button.dart';
 
 class CreateEditInvoiceScreen extends StatefulWidget {
-  final InvoiceHeadModel? invoice;
+  final SingleInvoiceResponse? invoice;
 
   const CreateEditInvoiceScreen({Key? key, this.invoice}) : super(key: key);
 

@@ -10,7 +10,7 @@ GetSingleInvoiceResponseDataModel _$GetSingleInvoiceResponseDataModelFromJson(
         Map<String, dynamic> json) =>
     GetSingleInvoiceResponseDataModel(
       id: json['id'] as int,
-      invoiceType: json['invoiceType'] as String,
+      invoiceType: json['invoiceType'] as int,
       extraDiscountAmount: json['extraDiscountAmount'] as num?,
       addedDate: json['addedDate'] == null
           ? null

@@ -6,13 +6,17 @@ import 'package:invoice_app/core/assets/image_assets.dart';
 import 'package:invoice_app/core/utils/string_validation_extension.dart';
 import 'package:invoice_app/features/invoices/data/data_sources/invoices_local_data_source.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
+import 'package:invoice_app/features/invoices/presentation/screens/create_invoice_screen.dart';
+import 'package:invoice_app/features/products/domain/entities/base_lookup.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
 import '../../../../core/common_widgets/search_bar.dart';
+import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
 import '../../../invoices/data/models/requests/invoice_filter_model.dart';
 import '../../../invoices/domain/entities/invoice_head_model.dart';
+import '../../../invoices/domain/entities/single_invoice_response.dart';
 import '../../../invoices/presentation/widgets/invoice_list_item.dart';
 
 class HomeInvoicesPage extends StatefulWidget {
@@ -25,7 +29,9 @@ class HomeInvoicesPage extends StatefulWidget {
 class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
   TextEditingController searchController = TextEditingController();
   List<InvoiceHeadModel> invoices = [];
-  final cubit = GetInvoicesCubit(sl(), sl(),sl());
+  final cubit = GetInvoicesCubit(sl(), sl(), sl());
+  bool tapped = false;
+  SingleInvoiceResponse? singleInvoiceResponse;
 
   @override
   void initState() {
@@ -55,6 +61,26 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
       value: cubit,
       child: BlocConsumer<GetInvoicesCubit, GetInvoicesState>(
         listener: (context, state) async {
+          if(state.getInvoicesRequestState == RequestState.success && tapped)
+          {
+            singleInvoiceResponse = state.getSingleInvoiceResponse?.result ;
+            setState(() {
+              if(singleInvoiceResponse !=null)
+              {
+                InvoicesLocalDataSource.addedItems = singleInvoiceResponse?.lines ??[];
+                InvoicesLocalDataSource.customerName = null;
+                InvoicesLocalDataSource.customerId = singleInvoiceResponse!.customerId;
+                InvoicesLocalDataSource.invoiceDate = singleInvoiceResponse!.invoiceDate;
+              }
+            });
+            Navigator.of(context).push(
+              CustomPageRoute.createRoute(
+                page: CreateEditInvoiceScreen(
+                  invoice: singleInvoiceResponse,
+                ),
+              ),
+            );
+          }
           if (state.getInvoicesRequestState == RequestState.error) {
             getErrorDialogue(
               context: context,
@@ -99,10 +125,10 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                             onRefresh: () async {
                               await BlocProvider.of<GetInvoicesCubit>(context).getInvoices();
                               setState(() {
-                                 InvoicesLocalDataSource.status= null;
-                                 InvoicesLocalDataSource.customerName= null;
-                                 InvoicesLocalDataSource.customerId= null;
-                                 InvoicesLocalDataSource.invoiceDate= null;
+                                InvoicesLocalDataSource.status = null;
+                                InvoicesLocalDataSource.customerName = null;
+                                InvoicesLocalDataSource.customerId = null;
+                                InvoicesLocalDataSource.invoiceDate = null;
                               });
                               searchController.clear();
                             },
@@ -122,10 +148,10 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                             onRefresh: () async {
                               await BlocProvider.of<GetInvoicesCubit>(context).getInvoices();
                               setState(() {
-                                InvoicesLocalDataSource.status= null;
-                                InvoicesLocalDataSource.customerName= null;
-                                InvoicesLocalDataSource.customerId= null;
-                                InvoicesLocalDataSource.invoiceDate= null;
+                                InvoicesLocalDataSource.status = null;
+                                InvoicesLocalDataSource.customerName = null;
+                                InvoicesLocalDataSource.customerId = null;
+                                InvoicesLocalDataSource.invoiceDate = null;
                               });
                               searchController.clear();
                             },
@@ -135,7 +161,15 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                                 physics: const AlwaysScrollableScrollPhysics(),
                                 itemCount: invoices.length,
                                 itemBuilder: (context, index) {
-                                  return InvoiceListItem(invoice: invoices[index]);
+                                  return InvoiceListItem(
+                                      invoice: invoices[index],
+                                      onTap: () async {
+                                        setState(() {
+                                          tapped = true;
+                                        });
+                                        await BlocProvider.of<GetInvoicesCubit>(context)
+                                            .getSingleInvoice(id: invoices[index].id);
+                                      });
                                 },
                               ),
                             ),

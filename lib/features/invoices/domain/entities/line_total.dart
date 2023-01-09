@@ -7,15 +7,15 @@ part 'line_total.g.dart';
 @JsonSerializable()
 class LineTotal {
   LineTotal({
-  required  this.salesTotal,
-  required this.netTotal,
-  required this.total,
+    this.salesTotal,
+   this.netTotal,
+   this.total,
     this.lineTaxTotal,
   });
 
-  num salesTotal;
-  num netTotal;
-  num total;
+  num? salesTotal;
+  num? netTotal;
+  num? total;
   List<LineTaxTotal>? lineTaxTotal;
 
   Map<String, dynamic> toJson() => {

@@ -9,15 +9,13 @@ import '../../domain/entities/invoice_head_model.dart';
 
 class InvoiceListItem extends StatelessWidget {
   final InvoiceHeadModel invoice;
-  const InvoiceListItem({Key? key, required this.invoice}) : super(key: key);
+  final void Function()? onTap;
+  const InvoiceListItem({Key? key, required this.invoice, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        Navigator.of(context).push(CustomPageRoute.createRoute(
-            page: CreateEditInvoiceScreen()));
-      },
+      onTap: onTap,
       child: Container(
         color: AppColors.whiteColor,
         child: Padding(

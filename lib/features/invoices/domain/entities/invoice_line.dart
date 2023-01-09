@@ -24,16 +24,16 @@ class Line {
   });
 
   String itemDescription;
-  int? exchangeRate;
+  num? exchangeRate;
   num? discountRate;
-  int? discountAmount;
+  num? discountAmount;
   int itemId;
   int unitType;
   num quantity;
   int currencyId;
   num priceEgp;
   List<LineTax>? lineTax;
-  LineTotal lineTotal;
+  LineTotal? lineTotal;
 
   Map<String, dynamic> toJson() => {
     "ItemDescription": itemDescription,
@@ -46,7 +46,7 @@ class Line {
     "CurrencyId": currencyId,
     "PriceEgp": priceEgp,
     "LineTax": lineTax?.map((e) => e.toJson()).toList() ??[],
-    "LineTotal": lineTotal.toJson(),
+    "LineTotal": lineTotal?.toJson(),
   };
   factory Line.fromJson(Map<String, dynamic> json) => _$LineFromJson(json);
 }

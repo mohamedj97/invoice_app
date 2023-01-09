@@ -18,7 +18,7 @@ class SingleInvoiceResponse {
   });
 
   int id;
-  String invoiceType;
+  int invoiceType;
   DateTime? addedDate;
   DateTime? updatedDate;
   DateTime? dueDate;
