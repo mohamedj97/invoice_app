@@ -47,6 +47,12 @@ import 'features/products/domain/repositories/products_repositories.dart';
 import 'features/products/domain/use_cases/get_products_use_case.dart';
 import 'features/profile/data/data_sources/profile_remote_data_source.dart';
 import 'features/profile/data/repositories/profile_repository_impl.dart';
+import 'features/statistics/data/data_sources/submitted_invoices_remote_data_sources.dart';
+import 'features/statistics/data/repositories/submitted_invoices_repository_impl.dart';
+import 'features/statistics/domain/repositories/submited_invoices_repository.dart';
+import 'features/statistics/domain/use_cases/get_recieved_invoices_use_case.dart';
+import 'features/statistics/domain/use_cases/get_submitted_invoices_use_case.dart';
+import 'features/statistics/presentation/cubit/get_submitted_invoices_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -67,6 +73,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ChangePasswordCubit(sl()));
   sl.registerLazySingleton(() => AddEditProductCubit(sl(),sl()));
   sl.registerLazySingleton(() => GetItemTypesCubit(sl()));
+  sl.registerLazySingleton(() => GetSubmittedInvoicesCubit(sl(),sl()));
   //
 
 //   sl.registerFactory(() => CreateUpdateDeletePostCubit(
@@ -94,8 +101,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetItemTypesUseCase(productsRepository: sl()));
   sl.registerLazySingleton(() => GetProfileUseCase(profileRepository: sl()));
   sl.registerLazySingleton(() => ChangePasswordUseCase(profileRepository: sl()));
-//   sl.registerLazySingleton(() => DeletePostUseCase(sl()));
-//   sl.registerLazySingleton(() => UpdatePostUseCase(sl()));
+  sl.registerLazySingleton(() => GetReceivedInvoiceUseCase(submittedInvoicesRepository: sl()));
+  sl.registerLazySingleton(() => GetSubmittedInvoiceUseCase(submittedInvoicesRepository: sl()));
+
 
 // Repository
 
@@ -104,6 +112,7 @@ Future<void> init() async {
   sl.registerLazySingleton<CustomersRepository>(() => CustomersRepositoryImpl(sl()));
   sl.registerLazySingleton<ProductsRepository>(() => ProductsRepositoryImpl(sl()));
   sl.registerLazySingleton<ProfileRepository>(() => ProfileRepositoryImpl(sl()));
+  sl.registerLazySingleton<SubmittedInvoicesRepository>(() => SubmittedInvoicesRepositoryImpl(sl()));
 
 // Datasources
 
@@ -124,6 +133,10 @@ Future<void> init() async {
 
   sl.registerLazySingleton<ProfileRemoteDataSource>(
           () => ProfileRemoteDataSourceImpl(apiRepo: sl()));
+
+  sl.registerLazySingleton<SubmittedInvoicesRemoteDataSource>(
+          () => SubmittedInvoicesRemoteDataSourceImpl(apiRepo: sl()));
+
 //! Core
 
 //   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));

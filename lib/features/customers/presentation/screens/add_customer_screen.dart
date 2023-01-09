@@ -40,7 +40,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
   @override
   void initState() {
     getCustomerTypesCubit.getCustomersLookUps();
-    initState();
+    super.initState();
   }
 
   @override

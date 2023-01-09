@@ -17,5 +17,6 @@ class AppColors {
   static const Color iconsColor = Color(0xff8EA1B0);
   static const Color profileItemColor = Color(0xff1A3365);
   static const Color dialogueTitleColor = Color(0xff5D6870);
+  static const Color tabTitleColor = Color(0xffB4C5DB);
 
 }

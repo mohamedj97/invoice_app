@@ -12,6 +12,7 @@ class CustomScaffold extends StatelessWidget {
   final double? leadingWidth;
   final Widget? floatingActionButton;
   final Color? backGroundColor;
+  final bool showAppbar;
 
   const CustomScaffold({
     Key? key,
@@ -22,7 +23,7 @@ class CustomScaffold extends StatelessWidget {
     this.leadingWidth,
     this.bottomNavigationBar,
     this.floatingActionButton,
-    this.backGroundColor,
+    this.backGroundColor, this.showAppbar=true,
   }) : super(key: key);
 
   @override
@@ -33,7 +34,7 @@ class CustomScaffold extends StatelessWidget {
       floatingActionButton: floatingActionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: bottomNavigationBar,
-      appBar: AppBar(
+      appBar: showAppbar? AppBar(
         leading: leading,
         leadingWidth: leadingWidth,
         shape: const UnderlineInputBorder(
@@ -50,7 +51,7 @@ class CustomScaffold extends StatelessWidget {
         ),
         centerTitle: true,
         actions: actions,
-      ),
+      ):null,
       body: body,
     );
   }

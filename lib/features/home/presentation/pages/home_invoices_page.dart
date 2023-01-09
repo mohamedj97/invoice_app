@@ -7,7 +7,6 @@ import 'package:invoice_app/core/utils/string_validation_extension.dart';
 import 'package:invoice_app/features/invoices/data/data_sources/invoices_local_data_source.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/create_invoice_screen.dart';
-import 'package:invoice_app/features/products/domain/entities/base_lookup.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
 import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/navigation/custom_page_route.dart';
@@ -60,7 +59,8 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
     return BlocProvider<GetInvoicesCubit>.value(
       value: cubit,
       child: BlocConsumer<GetInvoicesCubit, GetInvoicesState>(
-        listener: (context, state) async {
+        listener: (context,
+            state) async {
           if(state.getInvoicesRequestState == RequestState.success && tapped)
           {
             singleInvoiceResponse = state.getSingleInvoiceResponse?.result ;

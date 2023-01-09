@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     PageController controller = PageController(initialPage: widget.index ?? 0);
     return CustomScaffold(
+      showAppbar: pageIndex!=0,
       title: pageIndex == 3 ? "menu".tr() : BottomAppBarItemsData.labelList[pageIndex],
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,

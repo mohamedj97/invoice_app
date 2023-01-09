@@ -3,10 +3,10 @@ part 'invoices_totals.g.dart';
 
 @JsonSerializable()
 class InvoicesTotals {
- late int noOfInvoices;
- late int totalSales;
- late int totalTax;
- late int total;
+ late num noOfInvoices;
+ late num totalSales;
+ late num totalTax;
+ late num total;
 
 
  InvoicesTotals({

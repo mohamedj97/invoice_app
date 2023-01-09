@@ -18,4 +18,5 @@ class IconAssets {
   static const invoiceCustomerIcon="assets/icons/invoice_customer_icon.png";
   static const addDiscountIcon="assets/icons/add_discount_icon.png";
   static const logoutIcon="assets/icons/logout_icon.png";
+  static const handIcon="assets/icons/hand_icon.png";
 }

@@ -8,10 +8,10 @@ part of 'invoices_totals.dart';
 
 InvoicesTotals _$InvoicesTotalsFromJson(Map<String, dynamic> json) =>
     InvoicesTotals(
-      noOfInvoices: json['noOfInvoices'] as int,
-      totalSales: json['totalSales'] as int,
-      totalTax: json['totalTax'] as int,
-      total: json['total'] as int,
+      noOfInvoices: json['noOfInvoices'] as num,
+      totalSales: json['totalSales'] as num,
+      totalTax: json['totalTax'] as num,
+      total: json['total'] as num,
     );
 
 Map<String, dynamic> _$InvoicesTotalsToJson(InvoicesTotals instance) =>
