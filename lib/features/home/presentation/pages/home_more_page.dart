@@ -211,6 +211,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
                                           onPressed: () async {
                                             await DiskRepo().deleteTokensData();
                                             MemoryRepo().deleteTokensData();
+                                            await DiskRepo().deleteUserName();
                                             Navigator.of(context).pushAndRemoveUntil(
                                               CustomPageRoute.createRoute(
                                                 page: const LoginScreen(),

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invoice_app/core/api/repository/disk_repo.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
@@ -46,7 +47,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                 const SizedBox(width: 16.0),
                 Image.asset(IconAssets.handIcon, width: 30.0, height: 30.0),
                 LWCustomText(
-                    title: "${"hi".tr()}, ${"Hazem"} ",
+                    title: "${"hi".tr()}, ${ DiskRepo().loadUserName()} ",
                     fontSize: 16.0,
                     fontFamily: FontAssets.avertaRegular,
                     color: AppColors.whiteColor),

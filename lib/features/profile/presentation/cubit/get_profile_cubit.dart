@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,8 +13,8 @@ class GetProfileCubit extends Cubit<GetProfileState> {
   String? password;
 
   GetProfileCubit(
-      this.getProfileUseCase,
-      ) : super(GetProfileInitial());
+    this.getProfileUseCase,
+  ) : super(GetProfileInitial());
 
   Future<void> getProfile() async {
     emit(GetProfileLoading());
