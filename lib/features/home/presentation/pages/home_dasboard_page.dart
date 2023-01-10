@@ -68,7 +68,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                     topLeft: Radius.circular(40.0),
                   ),
                 ),
-                child: Stack(
+                child: Column(
                   children: <Widget>[
                     DefaultTabController(
                       length: 2, // length of tabs
