@@ -85,7 +85,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                           ],
                         ),
                         Container(
-                          height: 1000,
+                          height: 300,
                           decoration: const BoxDecoration(
                             border: Border(
                               top: BorderSide(color: AppColors.tabTitleColor, width: 0.5),
@@ -107,7 +107,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                     }
                                   },
                                   builder: (context, totalState) {
-                                    return totalState.getSubmittedInvoicesRequestState == RequestState.loading
+                                    return totalState is GetSubmittedInvoicesLoading
                                         ? const Center(child: CircularProgressIndicator())
                                         : ListView(
                                             children: [
