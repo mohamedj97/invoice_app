@@ -58,7 +58,7 @@ class StatisticsItem extends StatelessWidget {
                             children: [
                               LWCustomText(
                                 title: invoicesTotals?.totalSales.toString() ?? "0.0",
-                                fontSize: 30.0,
+                                fontSize: 25.0,
                                 color: AppColors.primary,
                                 fontFamily: FontAssets.avertaSemiBold,
                               ),
@@ -95,7 +95,7 @@ class StatisticsItem extends StatelessWidget {
                             children: [
                               LWCustomText(
                                 title: invoicesTotals?.totalTax.toString() ?? "0.0",
-                                fontSize: 30.0,
+                                fontSize: 25.0,
                                 color: AppColors.primary,
                                 fontFamily: FontAssets.avertaSemiBold,
                               ),
