@@ -17,89 +17,108 @@ class StatisticsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: backgroundColor,
-      ),
-      child: Column(
-        children: [
-          LWCustomText(
-            title: title,
-            fontSize: 16.0,
-            color: AppColors.blackColor,
-            fontFamily: FontAssets.avertaRegular,
-          ),
-          const SizedBox(height: 24.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.tabTitleColor),
-                  color: Colors.transparent,
-                ),
-                child: Column(
-                  children: [
-                    LWCustomText(
-                      title: "total_amount".tr(),
-                      fontSize: 16.0,
-                      color: AppColors.blackColor,
-                      fontFamily: FontAssets.avertaSemiBold,
-                    ),
-                    Row(
-                      children: [
-                        LWCustomText(
-                          title: invoicesTotals?.totalSales.toString() ?? "0.0",
-                          fontSize: 40.0,
-                          color: AppColors.primary,
-                          fontFamily: FontAssets.avertaSemiBold,
-                        ),
-                        LWCustomText(
-                          title: "currency_egp".tr(),
-                          fontSize: 16.0,
-                          color: AppColors.blackColor,
-                          fontFamily: FontAssets.avertaSemiBold,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              const SizedBox(height: 8.0),
+              LWCustomText(
+                title: title,
+                fontSize: 16.0,
+                color: AppColors.blackColor,
+                fontFamily: FontAssets.avertaRegular,
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border.all(color: AppColors.tabTitleColor),
-                ),
-                child: Column(
-                  children: [
-                    LWCustomText(
-                      title: "tax_amount".tr(),
-                      fontSize: 16.0,
-                      color: AppColors.blackColor,
-                      fontFamily: FontAssets.avertaSemiBold,
+              const SizedBox(height: 24.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.tabTitleColor),
+                      color: Colors.transparent,
                     ),
-                    Row(
-                      children: [
-                        LWCustomText(
-                          title: invoicesTotals?.totalTax.toString() ?? "0.0",
-                          fontSize: 40.0,
-                          color: AppColors.primary,
-                          fontFamily: FontAssets.avertaSemiBold,
-                        ),
-                        LWCustomText(
-                          title: "currency_egp".tr(),
-                          fontSize: 16.0,
-                          color: AppColors.blackColor,
-                          fontFamily: FontAssets.avertaSemiBold,
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          LWCustomText(
+                            title: "total_amount".tr(),
+                            fontSize: 14.0,
+                            color: AppColors.blackColor,
+                            fontFamily: FontAssets.avertaSemiBold,
+                          ),
+                          Row(
+                            children: [
+                              LWCustomText(
+                                title: invoicesTotals?.totalSales.toString() ?? "0.0",
+                                fontSize: 30.0,
+                                color: AppColors.primary,
+                                fontFamily: FontAssets.avertaSemiBold,
+                              ),
+                              const SizedBox(width: 4.0),
+                              LWCustomText(
+                                title: "currency_egp".tr(),
+                                fontSize: 16.0,
+                                color: AppColors.blackColor,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: FontAssets.avertaSemiBold,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(color: AppColors.tabTitleColor),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          LWCustomText(
+                            title: "tax_amount".tr(),
+                            fontSize: 14.0,
+                            color: AppColors.blackColor,
+                            fontFamily: FontAssets.avertaSemiBold,
+                          ),
+                          Row(
+                            children: [
+                              LWCustomText(
+                                title: invoicesTotals?.totalTax.toString() ?? "0.0",
+                                fontSize: 30.0,
+                                color: AppColors.primary,
+                                fontFamily: FontAssets.avertaSemiBold,
+                              ),
+                              const SizedBox(width: 4.0),
+                              LWCustomText(
+                                title: "currency_egp".tr(),
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.blackColor,
+                                fontFamily: FontAssets.avertaSemiBold,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
+              const SizedBox(height: 8.0),
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

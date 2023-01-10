@@ -2,14 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
-import 'package:invoice_app/features/invoices/presentation/screens/create_invoice_screen.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
-import '../../../../core/navigation/custom_page_route.dart';
 import '../../domain/entities/invoice_head_model.dart';
 
 class InvoiceListItem extends StatelessWidget {
   final InvoiceHeadModel invoice;
   final void Function()? onTap;
+
   const InvoiceListItem({Key? key, required this.invoice, this.onTap}) : super(key: key);
 
   @override
@@ -19,7 +18,7 @@ class InvoiceListItem extends StatelessWidget {
       child: Container(
         color: AppColors.whiteColor,
         child: Padding(
-          padding: const EdgeInsets.only(left: 8.0,right: 8.0,top: 16.0),
+          padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,7 +45,7 @@ class InvoiceListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LWCustomText(
-                    title: "${'to'.tr()} : ${invoice.customerName??"NA"}",
+                    title: "${'to'.tr()} : ${invoice.customerName ?? "NA"}",
                     color: AppColors.disabledBottomItemColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 12.0,
@@ -65,7 +64,7 @@ class InvoiceListItem extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: LWCustomText(
-                      title: invoice.status??"NA",
+                      title: invoice.status ?? "NA",
                       color: AppColors.greenColor,
                       fontSize: 10.0,
                       fontFamily: FontAssets.avertaSemiBold,
