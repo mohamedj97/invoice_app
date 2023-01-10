@@ -29,10 +29,12 @@ class ProductTileItem extends StatelessWidget {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  LWCustomText(
-                    title: product.name,
-                    color: AppColors.labelColor,
-                    fontFamily: FontAssets.avertaRegular,
+                  Expanded(
+                    child: LWCustomText(
+                      title: product.name,
+                      color: AppColors.labelColor,
+                      fontFamily: FontAssets.avertaRegular,
+                    ),
                   ),
                   LWCustomText(
                     title: "${product.price??"NA"} ${'currency_egp'.tr()}",
