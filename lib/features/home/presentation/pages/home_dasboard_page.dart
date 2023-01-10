@@ -6,8 +6,6 @@ import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/features/splash/presentation/widgets/splash_scaffold.dart';
-import 'package:invoice_app/features/statistics/domain/entities/invoices_totals.dart';
-
 import '../../../../core/assets/image_assets.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
@@ -25,12 +23,6 @@ class HomeDashboardPage extends StatefulWidget {
 class _HomeDashboardPageState extends State<HomeDashboardPage> {
   final cubitSales = GetSubmittedInvoicesCubit(sl(), sl());
   final cubitPurchase = GetSubmittedInvoicesCubit(sl(), sl());
-  InvoicesTotals? daily;
-  InvoicesTotals? dailyTax;
-  InvoicesTotals? monthly;
-  InvoicesTotals? monthlyTax;
-  InvoicesTotals? yearly;
-  InvoicesTotals? yearlyTax;
 
 
   @override
@@ -105,13 +97,6 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                 value: cubitPurchase,
                                 child: BlocConsumer<GetSubmittedInvoicesCubit, GetSubmittedInvoicesState>(
                                   listener: (context, totalState) async {
-                                    if (totalState.getSubmittedInvoicesRequestState == RequestState.success) {
-                                      setState(() {
-                                        daily=totalState.getSubmittedInvoiceResponse?.result?.total_Daily;
-                                        monthly=totalState.getSubmittedInvoiceResponse?.result?.total_Monthly;
-                                        yearly=totalState.getSubmittedInvoiceResponse?.result?.total_Yearly;
-                                      });
-                                    }
                                     if (totalState.getSubmittedInvoicesRequestState == RequestState.error) {
                                       await getErrorDialogue(
                                         context: context,
@@ -129,18 +114,18 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                               StatisticsItem(
                                                 title: "daily".tr(),
                                                 invoicesTotals:
-                                                    daily,
+                                                totalState.getSubmittedInvoiceResponse?.result?.total_Daily,
                                               ),
                                               StatisticsItem(
                                                 title: "monthly".tr(),
                                                 invoicesTotals:
-                                                    monthly,
+                                                totalState.getSubmittedInvoiceResponse?.result?.total_Monthly,
                                                 backgroundColor: AppColors.scaffoldColor,
                                               ),
                                               StatisticsItem(
                                                 title: "yearly".tr(),
                                                 invoicesTotals:
-                                                    yearly,
+                                                totalState.getSubmittedInvoiceResponse?.result?.total_Yearly,
                                               ),
                                             ],
                                           );
@@ -151,13 +136,6 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                 value: cubitSales,
                                 child: BlocConsumer<GetSubmittedInvoicesCubit, GetSubmittedInvoicesState>(
                                   listener: (context, totalTax) async {
-                                    if (totalTax.getSubmittedInvoicesRequestState == RequestState.success) {
-                                      setState(() {
-                                        dailyTax=totalTax.getSubmittedInvoiceResponse?.result?.total_Daily;
-                                        monthlyTax=totalTax.getSubmittedInvoiceResponse?.result?.total_Monthly;
-                                        yearlyTax=totalTax.getSubmittedInvoiceResponse?.result?.total_Yearly;
-                                      });
-                                    }
                                     if (totalTax.getSubmittedInvoicesRequestState == RequestState.error) {
                                       await getErrorDialogue(
                                         context: context,
@@ -175,18 +153,18 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                               StatisticsItem(
                                                 title: "daily".tr(),
                                                 invoicesTotals:
-                                                    dailyTax,
+                                                totalTax.getSubmittedInvoiceResponse?.result?.total_Daily,
                                               ),
                                               StatisticsItem(
                                                 title: "monthly".tr(),
                                                 invoicesTotals:
-                                                    monthlyTax,
+                                                totalTax.getSubmittedInvoiceResponse?.result?.total_Monthly,
                                                 backgroundColor: AppColors.scaffoldColor,
                                               ),
                                               StatisticsItem(
                                                 title: "yearly".tr(),
                                                 invoicesTotals:
-                                                    yearlyTax,
+                                                totalTax.getSubmittedInvoiceResponse?.result?.total_Yearly,
                                               ),
                                             ],
                                           );
