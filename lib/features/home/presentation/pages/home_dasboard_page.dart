@@ -8,6 +8,7 @@ import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/features/splash/presentation/widgets/splash_scaffold.dart';
 import '../../../../core/assets/image_assets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
@@ -86,7 +87,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                             ],
                           ),
                           Container(
-                            height: 500,
+                            height: 400.sp,
                             decoration: const BoxDecoration(
                               border: Border(
                                 top: BorderSide(color: AppColors.tabTitleColor, width: 0.5),
