@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:invoice_app/core/assets/icon_assets.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/features/home/presentation/pages/home_dasboard_page.dart';
@@ -38,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     PageController controller = PageController(initialPage: widget.index ?? 0);
     return CustomScaffold(
-      showAppbar: pageIndex!=0,
+      showAppbar: pageIndex != 0,
       title: pageIndex == 3 ? "menu".tr() : BottomAppBarItemsData.labelList[pageIndex],
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
@@ -63,10 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               },
-              icon: const Icon(
-                Icons.filter_vintage_rounded,
-                color: AppColors.primary,
-              ))
+              icon: SvgPicture.asset(IconAssets.filterIcon))
           : const SizedBox(),
       actions: pageIndex == 0 || pageIndex == 3
           ? null

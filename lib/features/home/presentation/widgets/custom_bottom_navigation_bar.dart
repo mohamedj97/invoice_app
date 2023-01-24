@@ -1,5 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/assets/colors.dart';
@@ -35,7 +36,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
+              SvgPicture.asset(
                   height: isActive ? 22.0 : 20.0,
                   isActive
                       ? BottomAppBarItemsData.activeIconsList[index]

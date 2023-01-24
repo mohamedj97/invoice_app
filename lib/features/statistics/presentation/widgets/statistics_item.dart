@@ -20,9 +20,7 @@ class StatisticsItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-        ),
+        decoration: BoxDecoration(color: backgroundColor),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(

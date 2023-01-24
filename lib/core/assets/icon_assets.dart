@@ -1,14 +1,14 @@
 class IconAssets {
   static const splashIcon="assets/icons/splash_icon.png";
   static const englishIcon="assets/icons/english_icon.png";
-  static const invoiceDisabledIcon="assets/icons/invoice_disabled_icon.png";
-  static const invoiceActiveIcon="assets/icons/invoices_active_icon.png";
-  static const productsActiveIcon="assets/icons/products_active_icon.png";
-  static const productsDisabledIcon="assets/icons/products_disabled_icon.png";
-  static const homeDisabledIcon="assets/icons/home_disabled_icon.png";
-  static const homeActiveIcon="assets/icons/home_active_icon.png";
-  static const moreDisabledIcon="assets/icons/more_disabled_icon.png";
-  static const moreActiveIcon="assets/icons/more_disabled_icon.png";
+  static const invoiceDisabledIcon="assets/icons/disabled_invoice_icon.svg";
+  static const invoiceActiveIcon="assets/icons/enabled_invoice_icon.svg";
+  static const productsActiveIcon="assets/icons/enabled_products_icon.svg";
+  static const productsDisabledIcon="assets/icons/disabled_products_icon.svg";
+  static const homeDisabledIcon="assets/icons/disabled_home_icon.svg";
+  static const homeActiveIcon="assets/icons/enabled_home_icon.svg";
+  static const moreDisabledIcon="assets/icons/disabled_more_icon.svg";
+  static const moreActiveIcon="assets/icons/enabled_more_icon.svg";
   static const profileIcon="assets/icons/profile_icon.png";
   static const lockIcon="assets/icons/lock_icon.png";
   static const customersIcon="assets/icons/customer_icon.png";
@@ -19,4 +19,5 @@ class IconAssets {
   static const addDiscountIcon="assets/icons/add_discount_icon.png";
   static const logoutIcon="assets/icons/logout_icon.png";
   static const handIcon="assets/icons/hand_icon.png";
+  static const filterIcon="assets/icons/filter_icon.svg";
 }

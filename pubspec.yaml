@@ -18,6 +18,7 @@ dependencies:
   introduction_screen: ^3.0.2
   animated_bottom_navigation_bar: ^1.1.0
   flutter_screenutil: ^5.6.0
+  flutter_svg: ^1.1.6
   equatable: ^2.0.5
   easy_localization: ^3.0.1
   connectivity_plus: ^3.0.2
