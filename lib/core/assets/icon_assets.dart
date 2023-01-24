@@ -20,4 +20,5 @@ class IconAssets {
   static const logoutIcon="assets/icons/logout_icon.png";
   static const handIcon="assets/icons/hand_icon.png";
   static const filterIcon="assets/icons/filter_icon.svg";
+  static const languageIcon="assets/icons/language.png";
 }

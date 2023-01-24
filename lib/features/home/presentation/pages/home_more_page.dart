@@ -155,7 +155,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
                     ),
                     ProfileItemWidget(
                       title: "change_language".tr(),
-                      imagePath: IconAssets.customersIcon,
+                      imagePath: IconAssets.languageIcon,
                       onTap: () {
                         Navigator.of(context).push(CustomPageRoute.createRoute(page: const ChangeLanguageScreen()));
                       },

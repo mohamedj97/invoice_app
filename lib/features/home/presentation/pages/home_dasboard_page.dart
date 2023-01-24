@@ -82,8 +82,8 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                             unselectedLabelColor: AppColors.tabTitleColor,
                             indicatorColor: AppColors.primary,
                             tabs: [
-                              Tab(text: 'purchase'.tr()),
                               Tab(text: 'sales'.tr()),
+                              Tab(text: 'purchase'.tr()),
                             ],
                           ),
                           Container(
@@ -95,45 +95,6 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                             ),
                             child: TabBarView(
                               children: <Widget>[
-                                BlocProvider<GetSubmittedInvoicesCubit>.value(
-                                  value: cubitPurchase,
-                                  child: BlocConsumer<GetSubmittedInvoicesCubit, GetSubmittedInvoicesState>(
-                                    listener: (context, totalState) async {
-                                      if (totalState.getSubmittedInvoicesRequestState == RequestState.error) {
-                                        await getErrorDialogue(
-                                          context: context,
-                                          isUnAuthorized: totalState.getSubmittedInvoiceResponse!.statuscode == 401,
-                                          message: totalState.getSubmittedInvoiceResponse?.message ??
-                                              "something_went_wrong".tr(),
-                                        );
-                                      }
-                                    },
-                                    builder: (context, totalState) {
-                                      return totalState is GetSubmittedInvoicesLoading
-                                          ? const Center(child: CircularProgressIndicator())
-                                          : ListView(
-                                        children: [
-                                          StatisticsItem(
-                                            title: "daily".tr(),
-                                            invoicesTotals:
-                                            totalState.getSubmittedInvoiceResponse?.result?.total_Daily,
-                                          ),
-                                          StatisticsItem(
-                                            title: "monthly".tr(),
-                                            invoicesTotals:
-                                            totalState.getSubmittedInvoiceResponse?.result?.total_Monthly,
-                                            backgroundColor: AppColors.scaffoldColor,
-                                          ),
-                                          StatisticsItem(
-                                            title: "yearly".tr(),
-                                            invoicesTotals:
-                                            totalState.getSubmittedInvoiceResponse?.result?.total_Yearly,
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                ),
                                 BlocProvider<GetSubmittedInvoicesCubit>.value(
                                   value: cubitSales,
                                   child: BlocConsumer<GetSubmittedInvoicesCubit, GetSubmittedInvoicesState>(
@@ -167,6 +128,45 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                             title: "yearly".tr(),
                                             invoicesTotals:
                                             totalTax.getSubmittedInvoiceResponse?.result?.total_Yearly,
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ),
+                                BlocProvider<GetSubmittedInvoicesCubit>.value(
+                                  value: cubitPurchase,
+                                  child: BlocConsumer<GetSubmittedInvoicesCubit, GetSubmittedInvoicesState>(
+                                    listener: (context, totalState) async {
+                                      if (totalState.getSubmittedInvoicesRequestState == RequestState.error) {
+                                        await getErrorDialogue(
+                                          context: context,
+                                          isUnAuthorized: totalState.getSubmittedInvoiceResponse!.statuscode == 401,
+                                          message: totalState.getSubmittedInvoiceResponse?.message ??
+                                              "something_went_wrong".tr(),
+                                        );
+                                      }
+                                    },
+                                    builder: (context, totalState) {
+                                      return totalState is GetSubmittedInvoicesLoading
+                                          ? const Center(child: CircularProgressIndicator())
+                                          : ListView(
+                                        children: [
+                                          StatisticsItem(
+                                            title: "daily".tr(),
+                                            invoicesTotals:
+                                            totalState.getSubmittedInvoiceResponse?.result?.total_Daily,
+                                          ),
+                                          StatisticsItem(
+                                            title: "monthly".tr(),
+                                            invoicesTotals:
+                                            totalState.getSubmittedInvoiceResponse?.result?.total_Monthly,
+                                            backgroundColor: AppColors.scaffoldColor,
+                                          ),
+                                          StatisticsItem(
+                                            title: "yearly".tr(),
+                                            invoicesTotals:
+                                            totalState.getSubmittedInvoiceResponse?.result?.total_Yearly,
                                           ),
                                         ],
                                       );
