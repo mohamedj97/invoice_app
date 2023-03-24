@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/features/auth/presentation/screens/login_screen.dart';
+import 'package:invoice_app/features/auth/presentation/screens/verification_screen.dart';
 import '../../../../core/assets/colors.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/assets/icon_assets.dart';
@@ -175,6 +176,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: CustomElevatedButton(
                           title: "sign_up".tr(),
                           onPressed: () async {
+                            Navigator.of(context).push(
+                                CustomPageRoute.createRoute(page: const VerificationScreen()));
                             // var formState = formKey.currentState;
                             // if (formState == null) return;
                             // bool isValid = formState.validate();

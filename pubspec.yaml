@@ -23,7 +23,9 @@ dependencies:
   easy_localization: ^3.0.1
   connectivity_plus: ^3.0.2
   alice: ^0.3.2
+  font_awesome_flutter: ^10.4.0
   pretty_dio_logger: ^1.1.1
+  dotted_border: ^2.0.0+3
   shared_preferences: ^2.0.15
   device_preview: ^1.1.0
   flutter_bloc: ^8.1.1

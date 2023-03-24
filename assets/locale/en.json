@@ -1,8 +1,24 @@
 {
   "no_internet_connection": "No internet connection",
   "hi": "Hi",
+  "proceed": "Proceed",
+  "individuals": "Individuals",
+  "business_activity": "Business activity",
+  "choose_business_activity": "Choose Business activity",
+  "verify": "Verify",
+  "upload": "Upload",
+  "logo": "Logo",
+  "company": "Company",
+  "account_type": "Account type",
+  "company_name": "Company name",
+  "tax_no": "Tax no",
+  "complete_company_data": "Complete Company Data",
+  "please_write_down": "Please write down",
+  "verification": "Verification",
+  "we_sent_a_code_to": "We sent a code to",
   "network_error": "Network error please check your internet connection",
   "warning": "Warning",
+  "email_verification": "Email Verification",
   "no_products": "You Have No Products",
   "no_customers": "You Have No Customers",
   "no_products_subtitle": "No Products, Start Add New Products",
@@ -116,5 +132,6 @@
   "identity_id": "Identity id",
   "address_information": "ADDRESS INFORMATION",
   "price": "Price",
-  "lang": "Eng"
+  "lang": "Eng",
+  "address": "Address"
 }

@@ -9,5 +9,7 @@ class ImageAssets {
   static const noProducts="assets/images/no_products.png";
   static const noCustomers="assets/images/no_customers.png";
   static const noInvoices="assets/images/no_invoices.png";
+  static const company="assets/images/company.png";
+  static const person="assets/images/person.png";
 
 }

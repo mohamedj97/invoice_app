@@ -1,6 +1,21 @@
 {
   "no_internet_connection": "الاتصال بالانترنتغير متوفر",
   "hi": "اهلا",
+  "proceed": "استمر",
+  "company": "شركة",
+  "individuals": "افراد",
+  "business_activity": "النشاط التجاري",
+  "choose_business_activity": "اختر النشاط التجاري",
+  "please_write_down": "الرجاء الكتابة",
+  "verification": "التحقق",
+  "account_type": "نوع الحساب",
+  "company_name": "اسم الشركة",
+  "tax_no": "الرقم الضريبي",
+  "complete_company_data": "اكمل بيانات الشركة",
+  "verify": "تحقق",
+  "logo": "الصورة",
+  "upload": "رفع",
+  "we_sent_a_code_to": "لقد ارسلنا كود الي",
   "network_error": "خطأ في الشبكة يرجى التحقق من اتصالك بالإنترنت",
   "warning": "تحذير",
   "no_products": "لا يوجد لديك منتجات",
@@ -116,5 +131,6 @@
   "identity_id": "رقم البطاقة الشخصية",
   "address_information": "بيانات العنوان",
   "price": "السعر",
-  "lang": "الإنجليزية"
+  "lang": "الإنجليزية",
+  "address": "العنوان"
 }

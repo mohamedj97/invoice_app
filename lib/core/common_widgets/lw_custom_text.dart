@@ -43,6 +43,7 @@ class LWCustomText extends StatelessWidget {
     return Text(
       title,
       textAlign: textAlign,
+      softWrap: true,
       style: TextStyle(
         backgroundColor: backgroundColor,
         color: color,
