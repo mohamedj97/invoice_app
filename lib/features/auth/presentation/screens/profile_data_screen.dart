@@ -349,7 +349,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                   Expanded(
                     flex: 3,
                     child: CustomElevatedButton(
-                      title: "proceed",
+                      title: "proceed".tr(),
                       onPressed: () {},
                     ),
                   ),
