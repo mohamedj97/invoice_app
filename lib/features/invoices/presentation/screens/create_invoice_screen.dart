@@ -119,7 +119,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                 getErrorDialogue(
                   context: context,
                   isUnAuthorized: addInvoiceState.stringResponse!.statuscode == 401,
-                  message: addInvoiceState.stringResponse?.message ?? "something_went_wrong".tr(),
+                  message: addInvoiceState.stringResponse?.message?.first ?? "something_went_wrong".tr(),
                 );
               }
             },
@@ -135,7 +135,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                             getErrorDialogue(
                               context: context,
                               isUnAuthorized: state.getInvoiceTypesResponse!.statuscode == 401,
-                              message: state.getInvoiceTypesResponse?.message ?? "something_went_wrong".tr(),
+                              message: state.getInvoiceTypesResponse?.message?.first ?? "something_went_wrong".tr(),
                             );
                           }
                         },

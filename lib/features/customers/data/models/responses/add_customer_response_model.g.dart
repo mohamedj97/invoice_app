@@ -122,7 +122,8 @@ Map<String, dynamic> _$AddCustomerResponseDataModelToJson(
 AddCustomerResponse _$AddCustomerResponseFromJson(Map<String, dynamic> json) =>
     AddCustomerResponse(
       statuscode: json['statuscode'] as int?,
-      message: json['message'] as String?,
+      message:
+          (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),
       result: json['result'] == null
           ? null
           : AddCustomerResponseDataModel.fromJson(

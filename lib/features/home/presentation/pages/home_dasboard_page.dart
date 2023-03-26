@@ -103,7 +103,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                         await getErrorDialogue(
                                           context: context,
                                           isUnAuthorized: totalTax.getSubmittedInvoiceResponse!.statuscode == 401,
-                                          message: totalTax.getSubmittedInvoiceResponse?.message ??
+                                          message: totalTax.getSubmittedInvoiceResponse?.message?.first ??
                                               "something_went_wrong".tr(),
                                         );
                                       }
@@ -142,7 +142,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                         await getErrorDialogue(
                                           context: context,
                                           isUnAuthorized: totalState.getSubmittedInvoiceResponse!.statuscode == 401,
-                                          message: totalState.getSubmittedInvoiceResponse?.message ??
+                                          message: totalState.getSubmittedInvoiceResponse?.message?.first ??
                                               "something_went_wrong".tr(),
                                         );
                                       }

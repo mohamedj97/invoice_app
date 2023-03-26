@@ -46,7 +46,7 @@ class GetInvoicesCubit extends Cubit<GetInvoicesState> {
           ),
         );
       } else {
-        emit(GetInvoicesFailure(failure: response.message ?? ""));
+        emit(GetInvoicesFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getInvoicesRequestState: RequestState.error,
@@ -80,7 +80,7 @@ class GetInvoicesCubit extends Cubit<GetInvoicesState> {
           ),
         );
       } else {
-        emit(GetInvoicesFailure(failure: response.message ?? ""));
+        emit(GetInvoicesFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getInvoicesRequestState: RequestState.error,
@@ -114,7 +114,7 @@ class GetInvoicesCubit extends Cubit<GetInvoicesState> {
           ),
         );
       } else {
-        emit(GetInvoicesFailure(failure: response.message ?? ""));
+        emit(GetInvoicesFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getInvoicesRequestState: RequestState.error,

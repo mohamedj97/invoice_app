@@ -39,7 +39,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
           ),
         );
       } else {
-        emit(ChangePasswordFailure(failure: response.message ?? ""));
+        emit(ChangePasswordFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             changePasswordRequestState: RequestState.error,

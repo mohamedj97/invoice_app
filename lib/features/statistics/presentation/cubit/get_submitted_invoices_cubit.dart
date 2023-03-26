@@ -41,7 +41,7 @@ class GetSubmittedInvoicesCubit extends Cubit<GetSubmittedInvoicesState> {
           ),
         );
       } else {
-        emit(GetSubmittedInvoicesFailure(failure: response.message ?? ""));
+        emit(GetSubmittedInvoicesFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getSubmittedInvoicesRequestState: RequestState.error,
@@ -75,7 +75,7 @@ class GetSubmittedInvoicesCubit extends Cubit<GetSubmittedInvoicesState> {
           ),
         );
       } else {
-        emit(GetSubmittedInvoicesFailure(failure: response.message ?? ""));
+        emit(GetSubmittedInvoicesFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getSubmittedInvoicesRequestState: RequestState.error,

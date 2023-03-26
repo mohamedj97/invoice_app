@@ -44,7 +44,7 @@ class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
           ),
         );
       } else {
-        emit(AddEditCustomerFailure(failure: response.message ?? ""));
+        emit(AddEditCustomerFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             addEditCustomerRequestState: RequestState.error,
@@ -78,7 +78,7 @@ class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
           ),
         );
       } else {
-        emit(AddEditCustomerFailure(failure: response.message ?? ""));
+        emit(AddEditCustomerFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             addEditCustomerRequestState: RequestState.error,

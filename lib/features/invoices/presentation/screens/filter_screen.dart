@@ -52,7 +52,7 @@ class _FilterScreenState extends State<FilterScreen> {
             getErrorDialogue(
               context: context,
               isUnAuthorized: state.getInvoiceTypesResponse!.statuscode == 401,
-              message: state.getInvoiceTypesResponse?.message ??
+              message: state.getInvoiceTypesResponse?.message?.first ??
                   "something_went_wrong".tr(),
             );
           }

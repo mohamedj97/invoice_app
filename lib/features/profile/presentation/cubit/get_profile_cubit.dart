@@ -39,7 +39,7 @@ class GetProfileCubit extends Cubit<GetProfileState> {
           ),
         );
       } else {
-        emit(GetProfileFailure(failure: response.message ?? ""));
+        emit(GetProfileFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getProfileRequestState: RequestState.error,

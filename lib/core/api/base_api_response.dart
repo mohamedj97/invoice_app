@@ -3,7 +3,7 @@ part 'base_api_response.g.dart';
 
 @JsonSerializable()
 class BaseAPIResponse {
-  String? message;
+  List<String>? message;
   late int? statuscode;
 
   BaseAPIResponse(

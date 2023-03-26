@@ -43,7 +43,7 @@ class AddInvoiceCubit extends Cubit<AddInvoiceState> {
           ),
         );
       } else {
-        emit(AddInvoiceFailure(failure: response.message ?? ""));
+        emit(AddInvoiceFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             addInvoiceRequestState: RequestState.error,
@@ -77,7 +77,7 @@ class AddInvoiceCubit extends Cubit<AddInvoiceState> {
           ),
         );
       } else {
-        emit(AddInvoiceFailure(failure: response.message ?? ""));
+        emit(AddInvoiceFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             addInvoiceRequestState: RequestState.error,

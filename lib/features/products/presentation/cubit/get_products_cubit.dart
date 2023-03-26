@@ -41,7 +41,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
           ),
         );
       } else {
-        emit(GetProductsFailure(failure: response.message ?? ""));
+        emit(GetProductsFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getProductsRequestState: RequestState.error,

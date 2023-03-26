@@ -4,6 +4,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/common/lw_custom_form_field_wrapper.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_validators.dart';
 
+import '../../assets/colors.dart';
 
 class LWCustomRepeatPasswordFormField extends StatefulWidget {
   final String? initialValue;
@@ -30,7 +31,9 @@ class LWCustomRepeatPasswordFormField extends StatefulWidget {
     this.isCard = true,
     this.showLabel = true,
     required this.passwordController,
-    this.validators = const [], this.decoration, this.height,
+    this.validators = const [],
+    this.decoration,
+    this.height,
   }) : super(key: key);
 
   @override
@@ -42,28 +45,35 @@ class _LWCustomRepeatPasswordFormFieldState extends State<LWCustomRepeatPassword
 
   @override
   Widget build(BuildContext context) {
-    var child=FormBuilderTextField(
+    var child = FormBuilderTextField(
       initialValue: widget.initialValue,
       name: widget.name,
-      decoration:widget.decoration?? InputDecoration(
-        suffixIcon: IconButton(
-          icon: Icon(
-            obscureText ? Icons.visibility_off : Icons.visibility,
-            color: Colors.grey,
+      decoration: widget.decoration ??
+          InputDecoration(
+            focusedBorder:  const UnderlineInputBorder(
+              borderSide: BorderSide(color: AppColors.dataFieldColor, width: 1.0),
+            ),
+            enabledBorder:  const UnderlineInputBorder(
+              borderSide: BorderSide(color: AppColors.dataFieldBorderColor, width: 0.5),
+            ),
+            suffixIcon: IconButton(
+              icon: Icon(
+                obscureText ? Icons.visibility_off : Icons.visibility,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                setState(() => obscureText = !obscureText);
+              },
+            ),
+            errorMaxLines: 10,
+            hintText: widget.hintText,
           ),
-          onPressed: () {
-            setState(() => obscureText = !obscureText);
-          },
-        ),
-        errorMaxLines: 10,
-        hintText: widget.hintText,
-      ),
       obscureText: obscureText,
       obscuringCharacter: "*",
       validator: FormBuilderValidators.compose(
         <String? Function(String?)>[
           if (widget.isRequired) (value) => LWValidators.isNotNullNorEmpty(value, widget.labelText),
-              (value) {
+          (value) {
             if (value != widget.passwordController.text) {
               return "Passwords are not matching, please re-enter the password";
             }
@@ -73,20 +83,15 @@ class _LWCustomRepeatPasswordFormFieldState extends State<LWCustomRepeatPassword
       ),
     );
     return widget.showLabel
-        ? LWCustomFormFieldWrapper(
-      labelText: widget.isRequired
-          ? "${widget.labelText}${widget.showRequiredSymbol ? "*" : ""}"
-          : widget.labelText,
-      child: widget.isCard
-          ? Card(
-          elevation: 4.0,
-          margin: const EdgeInsets.all(0),
-          child: child)
-          : SizedBox(child: child),
+        ? Material(
+      color: Colors.transparent,
+      child: LWCustomFormFieldWrapper(
+        labelText: widget.isRequired
+            ? "${widget.labelText}${widget.showRequiredSymbol ? "*" : ""}"
+            : widget.labelText,
+        child: child,
+      ),
     )
-        : widget.isCard
-        ? Card(
-        elevation: 4.0, margin: const EdgeInsets.all(0), child: child)
-        : SizedBox(child: child);
+        : Material(color: Colors.transparent, child: child);
   }
 }

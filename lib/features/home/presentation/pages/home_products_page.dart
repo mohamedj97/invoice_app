@@ -41,7 +41,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
           getErrorDialogue(
             context: context,
             isUnAuthorized: state.getProductsResponse!.statuscode == 401,
-            message: state.getProductsResponse?.message ??
+            message: state.getProductsResponse?.message?.first ??
                 "something_went_wrong".tr(),
           );
         }

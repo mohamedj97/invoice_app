@@ -51,7 +51,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
           getErrorDialogue(
             context: context,
             isUnAuthorized: state.getProfileResponse!.statuscode == 401,
-            message: state.getProfileResponse?.message ?? "something_went_wrong".tr(),
+            message: state.getProfileResponse?.message?.first ?? "something_went_wrong".tr(),
           );
         }
       }, builder: (context, state) {
@@ -102,7 +102,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
                         state.getProfileResponse!.statuscode == 0
                             ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: LWCustomText(
-                                    title: state.getProfileResponse?.message ?? "no_internet_connection".tr()),
+                                    title: state.getProfileResponse?.message?.first ?? "no_internet_connection".tr()),
                               ))
                             : Navigator.of(context).push(CustomPageRoute.createRoute(
                                 page: ProfileDataScreen(
@@ -117,7 +117,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
                         state.getProfileResponse!.statuscode == 0
                             ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: LWCustomText(
-                                    title: state.getProfileResponse?.message ?? "no_internet_connection".tr()),
+                                    title: state.getProfileResponse?.message?.first ?? "no_internet_connection".tr()),
                               ))
                             : Navigator.of(context).push(CustomPageRoute.createRoute(
                                 page: BusinessDataScreen(
@@ -132,7 +132,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
                         state.getProfileResponse!.statuscode == 0
                             ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: LWCustomText(
-                                    title: state.getProfileResponse?.message ?? "no_internet_connection".tr()),
+                                    title: state.getProfileResponse?.message?.first ?? "no_internet_connection".tr()),
                               ))
                             : Navigator.of(context)
                                 .push(CustomPageRoute.createRoute(page: const ProfileCustomersScreen()));
@@ -145,7 +145,7 @@ class _HomeMorePageState extends State<HomeMorePage> {
                         state.getProfileResponse!.statuscode == 0
                             ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: LWCustomText(
-                                    title: state.getProfileResponse?.message ?? "no_internet_connection".tr()),
+                                    title: state.getProfileResponse?.message?.first ?? "no_internet_connection".tr()),
                               ))
                             : Navigator.of(context).push(CustomPageRoute.createRoute(
                                 page: ChangePasswordScreen(

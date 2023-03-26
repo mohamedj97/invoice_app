@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
             await getErrorDialogue(
               context: context,
               isUnAuthorized: profileState.getProfileResponse!.statuscode == 401,
-              message: profileState.getProfileResponse?.message ?? "something_went_wrong".tr(),
+              message: profileState.getProfileResponse?.message?.first ?? "something_went_wrong".tr(),
             );
           }
         },
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: AppColors.primary,
                       size: 80.0,
                     ),
-                    content: Text(state.loginResponse?.message ?? "something_went_wrong".tr()),
+                    content: Text(state.loginResponse?.message?.first ?? "something_went_wrong".tr()),
                     actions: [
                       TextButton(
                         child: LWCustomText(

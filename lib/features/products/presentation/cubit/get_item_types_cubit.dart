@@ -39,7 +39,7 @@ class GetItemTypesCubit extends Cubit<GetItemTypesState> {
           ),
         );
       } else {
-        emit(GetItemTypesFailure(failure: response.message ?? ""));
+        emit(GetItemTypesFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getItemTypesRequestState: RequestState.error,

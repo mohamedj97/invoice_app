@@ -38,7 +38,7 @@ class GetCustomersCubit extends Cubit<GetCustomersState> {
           ),
         );
       } else {
-        emit(GetCustomersFailure(failure: response.message ?? ""));
+        emit(GetCustomersFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getCustomersRequestState: RequestState.error,

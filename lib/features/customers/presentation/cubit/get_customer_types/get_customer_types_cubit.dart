@@ -39,7 +39,7 @@ class GetCustomerTypesCubit extends Cubit<GetCustomerTypesState> {
           ),
         );
       } else {
-        emit(GetCustomerTypesFailure(failure: response.message ?? ""));
+        emit(GetCustomerTypesFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getCustomerTypesRequestState: RequestState.error,

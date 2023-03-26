@@ -30,7 +30,8 @@ GetCustomersResponse _$GetCustomersResponseFromJson(
         Map<String, dynamic> json) =>
     GetCustomersResponse(
       statuscode: json['statuscode'] as int?,
-      message: json['message'] as String?,
+      message:
+          (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),
       result: json['result'] == null
           ? null
           : GetCustomersResponseDataModel.fromJson(

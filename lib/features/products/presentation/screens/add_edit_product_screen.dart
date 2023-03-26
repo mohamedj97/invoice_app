@@ -67,7 +67,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                     color: AppColors.primary,
                     size: 80.0,
                   ),
-                  content: Text(state.addProductResponse?.message ??
+                  content: Text(state.addProductResponse?.message?.first ??
                       "something_went_wrong".tr()),
                   actions: [
                     TextButton(
@@ -176,7 +176,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                             isUnAuthorized:
                             state.stringResponse!.statuscode ==
                                 401,
-                            message: state.stringResponse!.message??"something_went_wrong".tr(),
+                            message: state.stringResponse!.message?.first??"something_went_wrong".tr(),
                           );
                         }
                       }
@@ -368,7 +368,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                 isUnAuthorized:
                                     state.getItemTypesResponse!.statuscode ==
                                         401,
-                                message: state.getItemTypesResponse?.message ??
+                                message: state.getItemTypesResponse?.message?.first ??
                                     "something_went_wrong".tr(),
                               );
                             }

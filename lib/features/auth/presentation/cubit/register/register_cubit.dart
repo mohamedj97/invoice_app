@@ -16,6 +16,8 @@ class RegisterCubit extends Cubit<RegisterState> {
   final AuthLocalDataSource authLocalDataSource;
   String username = "";
   String? password;
+  String? email;
+  String? confirmPassword;
 
   RegisterCubit(
       this.registerUseCase,
@@ -46,7 +48,7 @@ class RegisterCubit extends Cubit<RegisterState> {
           ),
         );
       } else {
-        emit(RegisterFailure(failure: response.message ?? ""));
+        emit(RegisterFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             registerRequestState: RequestState.error,
@@ -67,6 +69,8 @@ class RegisterCubit extends Cubit<RegisterState> {
 
     formState.save();
     username = formState.value["username"];
+    email = formState.value["email"];
+    confirmPassword = formState.value["confirm_password"];
     password = formState.value["password"];
   }
 }

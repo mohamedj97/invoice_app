@@ -33,7 +33,8 @@ Map<String, dynamic> _$RegisterResponseDataModelToJson(
 RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) =>
     RegisterResponse(
       statuscode: json['statuscode'] as int?,
-      message: json['message'] as String?,
+      message:
+          (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),
       result: json['result'] == null
           ? null
           : RegisterResponseDataModel.fromJson(

@@ -29,7 +29,8 @@ GetInvoiceTypesResponse _$GetInvoiceTypesResponseFromJson(
         Map<String, dynamic> json) =>
     GetInvoiceTypesResponse(
       statuscode: json['statuscode'] as int?,
-      message: json['message'] as String?,
+      message:
+          (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),
       result: json['result'] == null
           ? null
           : GetInvoiceTypesResponseDataModel.fromJson(

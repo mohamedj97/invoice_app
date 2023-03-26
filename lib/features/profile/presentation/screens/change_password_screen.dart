@@ -59,7 +59,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             getErrorDialogue(
               context: context,
               isUnAuthorized: state.stringResponse!.statuscode==401,
-              message: state.stringResponse?.message ?? "something_went_wrong".tr(),
+              message: state.stringResponse?.message?.first ?? "something_went_wrong".tr(),
             );
           }
         },

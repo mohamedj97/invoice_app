@@ -39,7 +39,7 @@ class GetInvoiceTypesCubit extends Cubit<GetInvoiceTypesState> {
           ),
         );
       } else {
-        emit(GetInvoiceTypesFailure(failure: response.message ?? ""));
+        emit(GetInvoiceTypesFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             getInvoiceTypesRequestState: RequestState.error,

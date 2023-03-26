@@ -8,7 +8,8 @@ part of 'base_api_response.dart';
 
 BaseAPIResponse _$BaseAPIResponseFromJson(Map<String, dynamic> json) =>
     BaseAPIResponse(
-      message: json['message'] as String?,
+      message:
+          (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),
       statuscode: json['statuscode'] as int?,
     );
 
@@ -20,7 +21,8 @@ Map<String, dynamic> _$BaseAPIResponseToJson(BaseAPIResponse instance) =>
 
 BoolResponse _$BoolResponseFromJson(Map<String, dynamic> json) => BoolResponse(
       result: json['result'] as bool?,
-      message: json['message'] as String?,
+      message:
+          (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),
       statuscode: json['statuscode'] as int?,
     );
 
@@ -35,7 +37,8 @@ StringResponse _$StringResponseFromJson(Map<String, dynamic> json) =>
     StringResponse(
       result: json['result'] as String?,
       statuscode: json['statuscode'] as int?,
-      message: json['message'] as String?,
+      message:
+          (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$StringResponseToJson(StringResponse instance) =>
@@ -50,7 +53,8 @@ StringsListResponse _$StringsListResponseFromJson(Map<String, dynamic> json) =>
       result:
           (json['result'] as List<dynamic>).map((e) => e as String).toList(),
       statuscode: json['statuscode'] as int?,
-      message: json['message'] as String?,
+      message:
+          (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$StringsListResponseToJson(
@@ -64,7 +68,8 @@ Map<String, dynamic> _$StringsListResponseToJson(
 IntResponse _$IntResponseFromJson(Map<String, dynamic> json) => IntResponse(
       result: json['result'] as int,
       statuscode: json['statuscode'] as int?,
-      message: json['message'] as String?,
+      message:
+          (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$IntResponseToJson(IntResponse instance) =>

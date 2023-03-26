@@ -15,7 +15,7 @@ class ErrorInterceptor extends Interceptor {
         final networkOperationResult = BaseAPIResponse(
             statuscode: 0,
             message:
-                "network_error".tr());
+                ["network_error".tr()]);
         final networkErrorResponse = Response(
           requestOptions: err.requestOptions,
           data: networkOperationResult.toJson(),

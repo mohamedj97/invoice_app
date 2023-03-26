@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invoice_app/features/auth/presentation/cubit/register/register_cubit.dart';
 import 'package:invoice_app/features/splash/presentation/screens/splash_screen.dart';
 import 'core/utils/theme/theme.dart';
 import 'features/auth/presentation/cubit/form_submit/formsubmit_cubit.dart';
@@ -43,6 +44,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<LoginCubit>(
           create: (context) => di.sl<LoginCubit>(),
+        ),
+        BlocProvider<RegisterCubit>(
+          create: (context) => di.sl<RegisterCubit>(),
         ),
       ],
       child: ScreenUtilInit(

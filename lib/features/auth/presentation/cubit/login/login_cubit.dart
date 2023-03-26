@@ -47,7 +47,7 @@ class LoginCubit extends Cubit<LoginState> {
           ),
         );
       } else {
-        emit(LoginFailure(failure: response.message ?? ""));
+        emit(LoginFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             loginRequestState: RequestState.error,

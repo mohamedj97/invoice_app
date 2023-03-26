@@ -62,7 +62,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
           await getErrorDialogue(
             context: context,
             isUnAuthorized: state.addCustomerResponse!.statuscode == 401,
-            message: state.addCustomerResponse?.message ??
+            message: state.addCustomerResponse?.message?.first ??
                 "something_went_wrong".tr(),
           );
         }
@@ -169,7 +169,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
                             context: context,
                             isUnAuthorized:
                                 state.stringResponse!.statuscode == 401,
-                            message: state.stringResponse!.message ??
+                            message: state.stringResponse!.message?.first ??
                                 "something_went_wrong".tr(),
                           );
                         }
@@ -197,7 +197,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
                     context: context,
                     isUnAuthorized:
                         state.getCustomerTypesResponse!.statuscode == 401,
-                    message: state.getCustomerTypesResponse?.message ??
+                    message: state.getCustomerTypesResponse?.message?.first ??
                         "something_went_wrong".tr(),
                   );
                 }

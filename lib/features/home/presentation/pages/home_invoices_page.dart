@@ -85,7 +85,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
             getErrorDialogue(
               context: context,
               isUnAuthorized: state.getInvoicesResponse!.statuscode == 401,
-              message: state.getInvoicesResponse?.message ?? "something_went_wrong".tr(),
+              message: state.getInvoicesResponse?.message?.first ?? "something_went_wrong".tr(),
             );
           }
         },

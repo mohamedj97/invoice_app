@@ -44,7 +44,7 @@ class AddEditProductCubit extends Cubit<AddEditProductState> {
           ),
         );
       } else {
-        emit(AddEditProductFailure(failure: response.message ?? ""));
+        emit(AddEditProductFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             addProductRequestState: RequestState.error,
@@ -78,7 +78,7 @@ class AddEditProductCubit extends Cubit<AddEditProductState> {
           ),
         );
       } else {
-        emit(AddEditProductFailure(failure: response.message ?? ""));
+        emit(AddEditProductFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
             addProductRequestState: RequestState.error,

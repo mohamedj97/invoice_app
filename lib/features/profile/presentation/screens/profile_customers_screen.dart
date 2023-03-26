@@ -49,7 +49,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
             getErrorDialogue(
               context: context,
               isUnAuthorized: state.getCustomersResponse!.statuscode == 401,
-              message: state.getCustomersResponse?.message ??
+              message: state.getCustomersResponse?.message?.first ??
                   "something_went_wrong".tr(),
             );
           }

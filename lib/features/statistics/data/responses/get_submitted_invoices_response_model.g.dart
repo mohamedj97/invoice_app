@@ -47,7 +47,8 @@ GetSubmittedInvoiceResponse _$GetSubmittedInvoiceResponseFromJson(
         Map<String, dynamic> json) =>
     GetSubmittedInvoiceResponse(
       statuscode: json['statuscode'] as int?,
-      message: json['message'] as String?,
+      message:
+          (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),
       result: json['result'] == null
           ? null
           : GetSubmittedInvoiceResponseDataModel.fromJson(
