@@ -13,11 +13,14 @@ class LWCustomRepeatPasswordFormField extends StatefulWidget {
   final String? hintText;
   final bool isRequired;
   final TextEditingController passwordController;
+  final TextEditingController? controller;
   final List<String? Function(String?, String?)> validators;
   final InputDecoration? decoration;
   final bool showRequiredSymbol;
   final bool isCard;
   final bool showLabel;
+  final void Function(String?)? onSaved;
+  final void Function(String?)? onSubmitted;
   final double? height;
 
   const LWCustomRepeatPasswordFormField({
@@ -33,7 +36,7 @@ class LWCustomRepeatPasswordFormField extends StatefulWidget {
     required this.passwordController,
     this.validators = const [],
     this.decoration,
-    this.height,
+    this.height, this.onSaved, this.onSubmitted, this.controller,
   }) : super(key: key);
 
   @override
@@ -48,6 +51,9 @@ class _LWCustomRepeatPasswordFormFieldState extends State<LWCustomRepeatPassword
     var child = FormBuilderTextField(
       initialValue: widget.initialValue,
       name: widget.name,
+      controller: widget.controller,
+      onSaved: widget.onSaved,
+      onSubmitted: widget.onSubmitted,
       decoration: widget.decoration ??
           InputDecoration(
             focusedBorder:  const UnderlineInputBorder(

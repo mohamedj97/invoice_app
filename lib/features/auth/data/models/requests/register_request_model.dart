@@ -5,11 +5,11 @@ part 'register_request_model.g.dart';
 
 @JsonSerializable()
 class RegisterModel extends RegisterRequest {
-  RegisterModel({required super.username, required super.password, required super.confirmPassword, required super.email});
+  RegisterModel({required super.Username, required super.Password, required super.ConfirmedPassword, required super.Email});
 
   @override
   String toString() {
-    return 'RegisterModel[Username=$username, Password=$password, ConfirmedPassword=$confirmPassword, Email=$email, ]';
+    return 'RegisterModel[Username=$Username, Password=$Password, ConfirmedPassword=$ConfirmedPassword, Email=$Email, ]';
   }
 
   factory RegisterModel.fromJson(Map<String, dynamic> json) =>

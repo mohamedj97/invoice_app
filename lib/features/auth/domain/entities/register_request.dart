@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class RegisterRequest extends Equatable {
-  String username;
+  String Username;
 
-  String password;
-  String confirmPassword;
-  String email;
+  String Password;
+  String ConfirmedPassword;
+  String Email;
 
-  RegisterRequest({required this.username, required this.password, required this.confirmPassword, required this.email});
+  RegisterRequest({required this.Username, required this.Password, required this.ConfirmedPassword, required this.Email});
 
   @override
-  List<Object> get props => [username, password, confirmPassword, email];
+  List<Object> get props => [Username, Password, ConfirmedPassword, Email];
 }

@@ -37,10 +37,10 @@ class AuthRepositoryImpl extends AuthRepository with ConnectivityMixin {
       RegisterRequest registerRequest) async {
     try {
       final response = await remoteDataSource.register(RegisterModel(
-        confirmPassword: registerRequest.confirmPassword,
-        password: registerRequest.password,
-        email: registerRequest.email,
-        username: registerRequest.username,
+        ConfirmedPassword: registerRequest.ConfirmedPassword,
+        Password: registerRequest.Password,
+        Email: registerRequest.Email,
+        Username: registerRequest.Username,
       ));
 
       return Right(response);

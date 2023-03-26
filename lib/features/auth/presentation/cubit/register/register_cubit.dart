@@ -68,7 +68,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
 
     formState.save();
-    username = formState.value["username"];
+    username = formState.value["name"];
     email = formState.value["email"];
     confirmPassword = formState.value["confirm_password"];
     password = formState.value["password"];
