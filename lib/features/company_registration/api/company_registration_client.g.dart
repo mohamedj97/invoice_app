@@ -53,13 +53,13 @@ class _CompanyRegistrationClient implements CompanyRegistrationClient {
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<GetCompanyLookupsResponse>(Options(
-      method: 'POST',
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'CompanyRegistration/getcompanyinfo-lookups/',
+              'CompanyRegistration/getcompanyinfo-lookups/$userId',
               queryParameters: queryParameters,
               data: _data,
             )

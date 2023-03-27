@@ -14,7 +14,7 @@ abstract class CompanyRegistrationClient {
   @POST(EndPoints.registerCompany)
   Future<IntResponse> registerCompany(@Body() CompanyRegisterRequestModel companyRegisterRequest, int userId);
 
-  @POST(EndPoints.getCompanyLookups)
+  @GET(EndPoints.getCompanyLookups)
   Future<GetCompanyLookupsResponse> getCompanyLookups({required int userId});
 
 }
