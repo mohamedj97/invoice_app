@@ -2,16 +2,19 @@ part of 'company_register_cubit.dart';
 
 class CompanyRegisterState extends Equatable {
   final IntResponse? intResponse;
+  final GetCompanyLookupsResponse? getCompanyLookupsResponse;
   final String? failure;
   final RequestState companyRegisterRequestState;
 
   const CompanyRegisterState({
     this.intResponse,
+    this.getCompanyLookupsResponse,
     this.companyRegisterRequestState = RequestState.loading,
     this.failure = "",
   });
   CompanyRegisterState copyWith({
     IntResponse? intResponse,
+    GetCompanyLookupsResponse? getCompanyLookupsResponse,
     String? failure,
     RequestState? companyRegisterRequestState,
   }) {
@@ -19,6 +22,7 @@ class CompanyRegisterState extends Equatable {
       failure: failure ?? this.failure,
       companyRegisterRequestState: companyRegisterRequestState ?? this.companyRegisterRequestState,
       intResponse: intResponse ?? this.intResponse,
+      getCompanyLookupsResponse: getCompanyLookupsResponse ?? this.getCompanyLookupsResponse,
     );
   }
 
@@ -27,16 +31,20 @@ class CompanyRegisterState extends Equatable {
     companyRegisterRequestState,
     failure!,
     intResponse ??
-        IntResponse(statuscode: 0, result: null)
+        IntResponse(statuscode: 0, result: null),
+    getCompanyLookupsResponse ??
+        GetCompanyLookupsResponse(statuscode: 0, result: null),
   ];
 }
 
 class CompanyRegisterInitial extends CompanyRegisterState {}
 
 class CompanyRegisterSuccess extends CompanyRegisterState {
-  final IntResponse intResponse;
+  final IntResponse? intResponse;
+  final GetCompanyLookupsResponse? getCompanyLookupsResponse;
   const CompanyRegisterSuccess({
-    required this.intResponse,
+     this.intResponse,
+     this.getCompanyLookupsResponse,
   });
 }
 
