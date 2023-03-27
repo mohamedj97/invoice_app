@@ -45,6 +45,7 @@ import 'features/company_registration/data/data_sources/remote_data_source/compa
 import 'features/company_registration/data/repositories/comapny_registration_repository_impl.dart';
 import 'features/company_registration/domain/repositories/company_registration_repository.dart';
 import 'features/company_registration/domain/use_cases/register_company_usecase.dart';
+import 'features/company_registration/presentation/cubit/company_register_cubit.dart';
 import 'features/customers/domain/use_cases/get_customer_types_use_case.dart';
 import 'features/customers/domain/use_cases/get_customers_use_case.dart';
 import 'features/customers/presentation/cubit/get_customer_types/get_customer_types_cubit.dart';
@@ -71,6 +72,7 @@ Future<void> init() async {
 // Bloc
 
   sl.registerLazySingleton(() => LoginCubit(sl(), sl()));
+  sl.registerLazySingleton(() => CompanyRegisterCubit(sl()));
   sl.registerLazySingleton(() => ValidateCodeCubit(sl(), sl(), sl()));
   sl.registerLazySingleton(() => RegisterCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetInvoicesCubit(sl(), sl(), sl()));
