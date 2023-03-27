@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:invoice_app/features/auth/domain/use_cases/register_usecase.dart';
+import 'package:invoice_app/features/auth/domain/use_cases/validate_code_usecase.dart';
 import 'package:invoice_app/features/auth/presentation/cubit/register/register_cubit.dart';
 import 'package:invoice_app/features/customers/data/data_sources/customers_remote_data_source.dart';
 import 'package:invoice_app/features/customers/data/repositories/customers_repository_impl.dart';
@@ -38,6 +39,7 @@ import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
 import 'features/auth/domain/use_cases/login_usecase.dart';
 import 'features/auth/presentation/cubit/login/login_cubit.dart';
+import 'features/auth/presentation/cubit/validate_code/validate_code_cubit.dart';
 import 'features/customers/domain/use_cases/get_customer_types_use_case.dart';
 import 'features/customers/domain/use_cases/get_customers_use_case.dart';
 import 'features/customers/presentation/cubit/get_customer_types/get_customer_types_cubit.dart';
@@ -64,6 +66,7 @@ Future<void> init() async {
 // Bloc
 
   sl.registerLazySingleton(() => LoginCubit(sl(),sl()));
+  sl.registerLazySingleton(() => ValidateCodeCubit(sl(),sl()));
   sl.registerLazySingleton(() => RegisterCubit(sl(),sl()));
   sl.registerLazySingleton(() => GetInvoicesCubit(sl(),sl(),sl()));
   sl.registerLazySingleton(() => GetInvoiceTypesCubit(sl()));
@@ -89,6 +92,7 @@ Future<void> init() async {
 //
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => RegisterUseCase(authRepository: sl()));
+  sl.registerLazySingleton(() => ValidateCodeUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => GetInvoicesUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => FilterInvoicesUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => EditSingleInvoiceUseCase(invoicesRepository: sl()));
