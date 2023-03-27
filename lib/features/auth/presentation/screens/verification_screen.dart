@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:invoice_app/core/api/repository/disk_repo.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/features/auth/presentation/screens/profile_data_screen.dart';
@@ -18,6 +19,13 @@ class VerificationScreen extends StatefulWidget {
 
 class _VerificationScreenState extends State<VerificationScreen> {
   TextEditingController? otpTEC;
+  String? email;
+
+  @override
+  void initState() {
+    email =DiskRepo().loadEmail();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +54,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   fontSize: 16.0,
                 ),
                 const SizedBox(width: 8.0),
-                const Expanded(
+                 Expanded(
                   child: LWCustomText(
-                    title: "ahmed7ragab10@gmail.com",
+                    title: email??"your mail".tr(),
                     color: AppColors.primary,
                     fontSize: 16.0,
                   ),
