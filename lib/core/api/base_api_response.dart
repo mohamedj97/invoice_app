@@ -68,7 +68,7 @@ class StringsListResponse extends BaseAPIResponse {
 
 @JsonSerializable()
 class IntResponse extends BaseAPIResponse {
-  final int result;
+  final int? result;
 
   IntResponse({
     required this.result,

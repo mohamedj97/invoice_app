@@ -41,6 +41,10 @@ import 'features/auth/domain/use_cases/login_usecase.dart';
 import 'features/auth/domain/use_cases/resend_code_usecase.dart';
 import 'features/auth/presentation/cubit/login/login_cubit.dart';
 import 'features/auth/presentation/cubit/validate_code/validate_code_cubit.dart';
+import 'features/company_registration/data/data_sources/remote_data_source/company_registration_remote_data_source.dart';
+import 'features/company_registration/data/repositories/comapny_registration_repository_impl.dart';
+import 'features/company_registration/domain/repositories/company_registration_repository.dart';
+import 'features/company_registration/domain/use_cases/register_company_usecase.dart';
 import 'features/customers/domain/use_cases/get_customer_types_use_case.dart';
 import 'features/customers/domain/use_cases/get_customers_use_case.dart';
 import 'features/customers/presentation/cubit/get_customer_types/get_customer_types_cubit.dart';
@@ -66,21 +70,21 @@ Future<void> init() async {
 
 // Bloc
 
-  sl.registerLazySingleton(() => LoginCubit(sl(),sl()));
-  sl.registerLazySingleton(() => ValidateCodeCubit(sl(),sl(),sl()));
-  sl.registerLazySingleton(() => RegisterCubit(sl(),sl()));
-  sl.registerLazySingleton(() => GetInvoicesCubit(sl(),sl(),sl()));
+  sl.registerLazySingleton(() => LoginCubit(sl(), sl()));
+  sl.registerLazySingleton(() => ValidateCodeCubit(sl(), sl(), sl()));
+  sl.registerLazySingleton(() => RegisterCubit(sl(), sl()));
+  sl.registerLazySingleton(() => GetInvoicesCubit(sl(), sl(), sl()));
   sl.registerLazySingleton(() => GetInvoiceTypesCubit(sl()));
-  sl.registerLazySingleton(() => AddInvoiceCubit(sl(),sl()));
+  sl.registerLazySingleton(() => AddInvoiceCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetCustomersCubit(sl()));
-  sl.registerLazySingleton(() => AddEditCustomerCubit(sl(),sl()));
+  sl.registerLazySingleton(() => AddEditCustomerCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetCustomerTypesCubit(sl()));
   sl.registerLazySingleton(() => GetProductsCubit(sl()));
   sl.registerLazySingleton(() => GetProfileCubit(sl()));
   sl.registerLazySingleton(() => ChangePasswordCubit(sl()));
-  sl.registerLazySingleton(() => AddEditProductCubit(sl(),sl()));
+  sl.registerLazySingleton(() => AddEditProductCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetItemTypesCubit(sl()));
-  sl.registerLazySingleton(() => GetSubmittedInvoicesCubit(sl(),sl()));
+  sl.registerLazySingleton(() => GetSubmittedInvoicesCubit(sl(), sl()));
   //
 
 //   sl.registerFactory(() => CreateUpdateDeletePostCubit(
@@ -113,11 +117,12 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ChangePasswordUseCase(profileRepository: sl()));
   sl.registerLazySingleton(() => GetReceivedInvoiceUseCase(submittedInvoicesRepository: sl()));
   sl.registerLazySingleton(() => GetSubmittedInvoiceUseCase(submittedInvoicesRepository: sl()));
-
+  sl.registerLazySingleton(() => RegisterCompanyUseCase(companyRegistrationRepository: sl()));
 
 // Repository
 
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
+  sl.registerLazySingleton<CompanyRegistrationRepository>(() => CompanyRegistrationRepositoryImpl(sl()));
   sl.registerLazySingleton<InvoicesRepository>(() => InvoicesRepositoryImpl(sl()));
   sl.registerLazySingleton<CustomersRepository>(() => CustomersRepositoryImpl(sl()));
   sl.registerLazySingleton<ProductsRepository>(() => ProductsRepositoryImpl(sl()));
@@ -126,26 +131,22 @@ Future<void> init() async {
 
 // Datasources
 
-  sl.registerLazySingleton<AuthRemoteDataSource>(
-      () => AuthRemoteDataSourceImpl(apiRepo: sl()));
-  sl.registerLazySingleton<AuthLocalDataSource>(
-      () => AuthLocalDataSourceImpl(sharedPreferences: sl()));
+  sl.registerLazySingleton<AuthRemoteDataSource>(() => AuthRemoteDataSourceImpl(apiRepo: sl()));
+  sl.registerLazySingleton<AuthLocalDataSource>(() => AuthLocalDataSourceImpl(sharedPreferences: sl()));
 
+  sl.registerLazySingleton<InvoicesRemoteDataSource>(() => InvoicesRemoteDataSourceImpl(apiRepo: sl()));
 
-  sl.registerLazySingleton<InvoicesRemoteDataSource>(
-          () => InvoicesRemoteDataSourceImpl(apiRepo: sl()));
+  sl.registerLazySingleton<CompanyRegistrationRemoteDataSource>(
+      () => CompanyRegistrationRemoteDataSourceImpl(apiRepo: sl()));
 
-  sl.registerLazySingleton<CustomersRemoteDataSource>(
-          () => CustomersRemoteDataSourceImpl(apiRepo: sl()));
+  sl.registerLazySingleton<CustomersRemoteDataSource>(() => CustomersRemoteDataSourceImpl(apiRepo: sl()));
 
-  sl.registerLazySingleton<ProductsRemoteDataSource>(
-          () => ProductsRemoteDataSourceImpl(apiRepo: sl()));
+  sl.registerLazySingleton<ProductsRemoteDataSource>(() => ProductsRemoteDataSourceImpl(apiRepo: sl()));
 
-  sl.registerLazySingleton<ProfileRemoteDataSource>(
-          () => ProfileRemoteDataSourceImpl(apiRepo: sl()));
+  sl.registerLazySingleton<ProfileRemoteDataSource>(() => ProfileRemoteDataSourceImpl(apiRepo: sl()));
 
   sl.registerLazySingleton<SubmittedInvoicesRemoteDataSource>(
-          () => SubmittedInvoicesRemoteDataSourceImpl(apiRepo: sl()));
+      () => SubmittedInvoicesRemoteDataSourceImpl(apiRepo: sl()));
 
 //! Core
 
