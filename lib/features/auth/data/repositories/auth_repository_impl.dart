@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:invoice_app/features/auth/data/models/responses/register_response_model.dart';
+import 'package:invoice_app/features/auth/data/models/responses/validate_code_response_model.dart';
 import 'package:invoice_app/features/auth/domain/entities/register_request.dart';
 
 import '../../../../core/error/exception.dart';
@@ -42,6 +43,17 @@ class AuthRepositoryImpl extends AuthRepository with ConnectivityMixin {
         Email: registerRequest.Email,
         Username: registerRequest.Username,
       ));
+
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidateCodeResponse>> validateSecurityCode({required int userId, required String securityCode}) async{
+    try {
+      final response = await remoteDataSource.validateSecurityCode(userId: userId,securityCode: securityCode);
 
       return Right(response);
     } on ServerException catch (e) {

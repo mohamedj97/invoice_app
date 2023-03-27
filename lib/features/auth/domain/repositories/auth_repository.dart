@@ -3,9 +3,11 @@ import 'package:invoice_app/features/auth/data/models/responses/register_respons
 import 'package:invoice_app/features/auth/domain/entities/register_request.dart';
 import '../../../../core/error/failure.dart';
 import '../../data/models/responses/login_response_model.dart';
+import '../../data/models/responses/validate_code_response_model.dart';
 import '../entities/login_request.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, LoginResponse>> login(LoginRequest loginRequest);
   Future<Either<Failure, RegisterResponse>> register(RegisterRequest registerRequest);
+  Future<Either<Failure, ValidateCodeResponse>> validateSecurityCode({required int userId,required String securityCode});
 }

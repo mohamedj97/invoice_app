@@ -4,10 +4,12 @@ import 'package:invoice_app/features/auth/data/models/responses/register_respons
 import '../../../../../core/api/api_repo.dart';
 import '../../models/requests/login_request_model.dart';
 import '../../models/responses/login_response_model.dart';
+import '../../models/responses/validate_code_response_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<LoginResponse> login(LoginModel loginRequest);
   Future<RegisterResponse> register(RegisterModel registerRequest);
+  Future<ValidateCodeResponse> validateSecurityCode({required int userId,required String securityCode});
 }
 
 class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
@@ -28,14 +30,11 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
     return response;
   }
+
+  @override
+  Future<ValidateCodeResponse> validateSecurityCode({required int userId, required String securityCode}) async{
+    final response = await apiRepo.authClient.validateSecurityCode(securityCode: securityCode,userId: userId);
+
+    return response;
+  }
 }
-
-
-//   Future<OrganizationDTOResponse> getMyOrganizationDetails() async {
-//   try {
-//     final response = await _client.get(Urls.getMyOrganizationInfo);
-//     return OrganizationDTOResponse.fromJson(response.data);
-//   } catch (e) {
-//     return OrganizationDTOResponse.fromJson(getErrorResponse(e).toJson());
-//   }
-// }
