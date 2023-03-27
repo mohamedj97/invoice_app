@@ -7,7 +7,7 @@ import '../../models/responses/login_response_model.dart';
 
 abstract class AuthLocalDataSource {
   Future<void> updateTokenData(LoginResponse? result);
-  Future<void> updateUserIdAndValidateTime(RegisterResponse? result);
+  Future<void> updateUserIdAndValidateTimeAndEmail(RegisterResponse? result);
 }
 
 class AuthLocalDataSourceImpl extends AuthLocalDataSource {
@@ -23,9 +23,10 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
   }
 
   @override
-  Future<void> updateUserIdAndValidateTime(RegisterResponse? result) async {
+  Future<void> updateUserIdAndValidateTimeAndEmail(RegisterResponse? result) async {
 
     await DiskRepo().updateUserId(result!.result!.userId);
     await DiskRepo().updateValidateTime(result.result!.securityCodeValideTime);
+    await DiskRepo().updateEmail(result.result!.email);
   }
 }

@@ -7,6 +7,7 @@ const String _tokensDataKey = "tokens_data";
 const String _firstLoginKey = "first_login";
 const String _userNameKey = "user_name";
 const String _userIdKey = "user_id ";
+const String _emailKey = "email ";
 const String _securityCodeValidateTimeKey = "security_code_validate_time";
 
 class DiskRepo {
@@ -77,6 +78,26 @@ class DiskRepo {
 
   Future deleteUserName() async {
     await sharedPreferences.remove(_userNameKey);
+  }
+
+
+  String? loadEmail() {
+    if (!sharedPreferences.containsKey(_emailKey)) {
+      return null;
+    }
+    final value = sharedPreferences.getString(_emailKey);
+    if (value == null) {
+      return null;
+    }
+    return value;
+  }
+
+  Future updateEmail(String email) async {
+    await sharedPreferences.setString(_emailKey, email);
+  }
+
+  Future deleteEmail() async {
+    await sharedPreferences.remove(_emailKey);
   }
 
   int? loadUserId() {

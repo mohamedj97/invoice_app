@@ -40,7 +40,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     }, (response) {
       if (response.statuscode == 200 && response.result != null) {
         emit(RegisterSuccess(registerResponse: response));
-        authLocalDataSource.updateUserIdAndValidateTime(response);
+        authLocalDataSource.updateUserIdAndValidateTimeAndEmail(response);
         return emit(
           state.copyWith(
             registerRequestState: RequestState.success,
