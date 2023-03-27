@@ -55,7 +55,7 @@ class _InvoicesClient implements InvoicesClient {
     )
             .compose(
               _dio.options,
-              'Invoices/$id',
+              'Invoices',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -82,7 +82,7 @@ class _InvoicesClient implements InvoicesClient {
     )
             .compose(
               _dio.options,
-              'Invoices/$id',
+              'Invoices',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -170,8 +170,6 @@ class _InvoicesClient implements InvoicesClient {
         requestOptions.responseType = ResponseType.plain;
       } else {
         requestOptions.responseType = ResponseType.json;
-        requestOptions.headers["Authorization"] =
-        "Bearer ${MemoryRepo().tokensData?.token ?? ""}";
       }
     }
     return requestOptions;

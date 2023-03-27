@@ -9,6 +9,7 @@ import '../../models/responses/validate_code_response_model.dart';
 abstract class AuthRemoteDataSource {
   Future<LoginResponse> login(LoginModel loginRequest);
   Future<RegisterResponse> register(RegisterModel registerRequest);
+  Future<RegisterResponse> resendCode({required int userId});
   Future<ValidateCodeResponse> validateSecurityCode({required int userId,required String securityCode});
 }
 
@@ -34,6 +35,13 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<ValidateCodeResponse> validateSecurityCode({required int userId, required String securityCode}) async{
     final response = await apiRepo.authClient.validateSecurityCode(securityCode: securityCode,userId: userId);
+
+    return response;
+  }
+
+  @override
+  Future<RegisterResponse> resendCode({required int userId}) async{
+    final response = await apiRepo.authClient.resendCode(userId: userId);
 
     return response;
   }

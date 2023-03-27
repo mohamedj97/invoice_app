@@ -20,6 +20,9 @@ abstract class AuthClient {
   @POST(EndPoints.register)
   Future<RegisterResponse> register(@Body() RegisterModel registerRequest);
 
+  @POST(EndPoints.resendCode)
+  Future<RegisterResponse> resendCode({required int userId});
+
   @POST(EndPoints.validateSecurityCode)
   Future<ValidateCodeResponse> validateSecurityCode({required int userId,required String securityCode});
 }

@@ -60,4 +60,15 @@ class AuthRepositoryImpl extends AuthRepository with ConnectivityMixin {
       return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, RegisterResponse>> resendCode({required int userId}) async{
+    try {
+      final response = await remoteDataSource.resendCode(userId: userId);
+
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
+    }
+  }
 }

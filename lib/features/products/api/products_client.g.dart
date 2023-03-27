@@ -106,7 +106,7 @@ class _ProductsClient implements ProductsClient {
     )
             .compose(
               _dio.options,
-              'Items/$id',
+              'Items',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -123,8 +123,6 @@ class _ProductsClient implements ProductsClient {
         requestOptions.responseType = ResponseType.plain;
       } else {
         requestOptions.responseType = ResponseType.json;
-        requestOptions.headers["Authorization"] =
-        "Bearer ${MemoryRepo().tokensData?.token ?? ""}";
       }
     }
     return requestOptions;

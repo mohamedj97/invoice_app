@@ -3,6 +3,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:invoice_app/features/auth/data/models/responses/register_response_model.dart';
+import 'package:invoice_app/features/auth/domain/use_cases/resend_code_usecase.dart';
 import '../../../../../core/utils/enums.dart';
 import '../../../data/data_sources/local_data_sources/auth_local_data_source.dart';
 import '../../../data/models/responses/validate_code_response_model.dart';
@@ -12,10 +14,12 @@ part 'validate_code_state.dart';
 
 class ValidateCodeCubit extends Cubit<ValidateCodeState> {
   final ValidateCodeUseCase validateCodeUseCase;
+  final ResendCodeUseCase resendCodeUseCase;
   final AuthLocalDataSource authLocalDataSource;
 
   ValidateCodeCubit(
       this.validateCodeUseCase,
+      this.resendCodeUseCase,
       this.authLocalDataSource,
       ) : super(ValidateCodeInitial());
 
@@ -47,6 +51,41 @@ class ValidateCodeCubit extends Cubit<ValidateCodeState> {
           state.copyWith(
             validateCodeRequestState: RequestState.error,
             validateCodeResponse: response,
+          ),
+        );
+      }
+    });
+  }
+
+
+  Future<void> resendCode({required int userId}) async {
+    emit(ValidateCodeLoading());
+    final response = await resendCodeUseCase.call(userId: userId);
+
+    response.fold((failure) {
+      emit(ValidateCodeFailure(failure: failure.message));
+
+      return emit(
+        state.copyWith(
+          validateCodeRequestState: RequestState.error,
+          failure: failure.message,
+        ),
+      );
+    }, (response) {
+      if (response.statuscode == 200 && response.result != null) {
+        emit(ValidateCodeSuccess(registerResponse: response));
+        return emit(
+          state.copyWith(
+            validateCodeRequestState: RequestState.success,
+            registerResponse: response,
+          ),
+        );
+      } else {
+        emit(ValidateCodeFailure(failure: response.message?.first ?? ""));
+        return emit(
+          state.copyWith(
+            validateCodeRequestState: RequestState.error,
+            registerResponse: response,
           ),
         );
       }

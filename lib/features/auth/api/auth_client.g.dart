@@ -67,6 +67,29 @@ class _AuthClient implements AuthClient {
   }
 
   @override
+  Future<RegisterResponse> resendCode({required userId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<RegisterResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'Authenticate/Resend/$userId',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = RegisterResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ValidateCodeResponse> validateSecurityCode({
     required userId,
     required securityCode,
@@ -83,7 +106,7 @@ class _AuthClient implements AuthClient {
     )
             .compose(
               _dio.options,
-              'Authenticate/validatesecuritycode/$userId/$securityCode',
+              'Authenticate/validatesecuritycode/',
               queryParameters: queryParameters,
               data: _data,
             )

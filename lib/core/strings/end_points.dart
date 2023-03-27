@@ -8,6 +8,7 @@ class EndPoints {
   static const login = 'Authenticate/login';
   static const register = 'Authenticate/register';
   static const validateSecurityCode = 'Authenticate/validatesecuritycode/';
+  static const resendCode = 'Authenticate/Resend/';
 
 
   //invoices

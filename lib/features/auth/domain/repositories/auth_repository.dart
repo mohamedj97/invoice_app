@@ -9,5 +9,6 @@ import '../entities/login_request.dart';
 abstract class AuthRepository {
   Future<Either<Failure, LoginResponse>> login(LoginRequest loginRequest);
   Future<Either<Failure, RegisterResponse>> register(RegisterRequest registerRequest);
+  Future<Either<Failure, RegisterResponse>> resendCode({required int userId});
   Future<Either<Failure, ValidateCodeResponse>> validateSecurityCode({required int userId,required String securityCode});
 }

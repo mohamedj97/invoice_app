@@ -2,16 +2,19 @@ part of 'validate_code_cubit.dart';
 
 class ValidateCodeState extends Equatable {
   final ValidateCodeResponse? validateCodeResponse;
+  final RegisterResponse? registerResponse;
   final String? failure;
   final RequestState validateCodeRequestState;
 
   const ValidateCodeState({
+    this.registerResponse,
     this.validateCodeResponse,
     this.validateCodeRequestState = RequestState.loading,
     this.failure = "",
   });
   ValidateCodeState copyWith({
     ValidateCodeResponse? validateCodeResponse,
+    RegisterResponse? registerResponse,
     String? failure,
     RequestState? validateCodeRequestState,
   }) {
@@ -19,6 +22,7 @@ class ValidateCodeState extends Equatable {
       failure: failure ?? this.failure,
       validateCodeRequestState: validateCodeRequestState ?? this.validateCodeRequestState,
       validateCodeResponse: validateCodeResponse ?? this.validateCodeResponse,
+      registerResponse: registerResponse ?? this.registerResponse,
     );
   }
 
@@ -27,16 +31,20 @@ class ValidateCodeState extends Equatable {
     validateCodeRequestState,
     failure!,
     validateCodeResponse ??
-        ValidateCodeResponse(statuscode: 0, result: null)
+        ValidateCodeResponse(statuscode: 0, result: null),
+    registerResponse ??
+        RegisterResponse(statuscode: 0, result: null)
   ];
 }
 
 class ValidateCodeInitial extends ValidateCodeState {}
 
 class ValidateCodeSuccess extends ValidateCodeState {
-  final ValidateCodeResponse validateCodeResponse;
+  final ValidateCodeResponse? validateCodeResponse;
+  final RegisterResponse? registerResponse;
   const ValidateCodeSuccess({
-    required this.validateCodeResponse,
+     this.validateCodeResponse,
+     this.registerResponse,
   });
 }
 
