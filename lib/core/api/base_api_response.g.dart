@@ -66,7 +66,7 @@ Map<String, dynamic> _$StringsListResponseToJson(
     };
 
 IntResponse _$IntResponseFromJson(Map<String, dynamic> json) => IntResponse(
-      result: json['result'] as int,
+      result: json['result'] as int?,
       statuscode: json['statuscode'] as int?,
       message:
           (json['message'] as List<dynamic>?)?.map((e) => e as String).toList(),

@@ -3,6 +3,7 @@ import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../core/strings/end_points.dart';
 import '../data/models/requests/company_register_request_model.dart';
+import '../data/models/responses/get_company_lookups_response_model.dart';
 
 part 'company_registration_client.g.dart';
 
@@ -12,5 +13,8 @@ abstract class CompanyRegistrationClient {
 
   @POST(EndPoints.registerCompany)
   Future<IntResponse> registerCompany(@Body() CompanyRegisterRequestModel companyRegisterRequest, int userId);
+
+  @POST(EndPoints.getCompanyLookups)
+  Future<GetCompanyLookupsResponse> getCompanyLookups({required int userId});
 
 }
