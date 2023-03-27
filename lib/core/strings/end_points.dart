@@ -10,6 +10,8 @@ class EndPoints {
   static const validateSecurityCode = 'Authenticate/validatesecuritycode/';
   static const resendCode = 'Authenticate/Resend/';
 
+  //company-registration
+  static const registerCompany = 'CompanyRegistration/';
 
   //invoices
   static const getInvoices = 'Invoices';

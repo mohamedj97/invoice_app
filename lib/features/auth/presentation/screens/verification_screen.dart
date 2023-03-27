@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoice_app/core/api/repository/disk_repo.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
-import 'package:invoice_app/features/auth/presentation/screens/profile_data_screen.dart';
+import 'package:invoice_app/features/company_registration/presentation/screens/profile_data_screen.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import '../../../../core/common_widgets/custom_elevated_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';

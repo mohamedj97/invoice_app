@@ -8,6 +8,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../config.dart';
 import '../../features/auth/api/auth_client.dart';
+import '../../features/company_registration/api/company_registration_client.dart';
 import '../../features/statistics/api/statistics_client.dart';
 import 'interceptors/auth_interceptor.dart';
 import 'interceptors/error_interceptor.dart';
@@ -19,6 +20,7 @@ class APIRepository {
   late ProductsClient productsClient;
   late ProfileClient profileClient;
   late StatisticsClient statisticsClient;
+  late CompanyRegistrationClient companyRegistrationClient;
 
   // APIRepository();
   APIRepository.internal() {
@@ -92,6 +94,7 @@ class APIRepository {
     productsClient = ProductsClient(authDio, baseUrl: apiBaseUrl);
     profileClient = ProfileClient(authDio, baseUrl: apiBaseUrl);
     statisticsClient = StatisticsClient(authDio, baseUrl: apiBaseUrl);
+    companyRegistrationClient = CompanyRegistrationClient(authDio, baseUrl: apiBaseUrl);
   }
   Future ensureInitialized() async => true;
 }
