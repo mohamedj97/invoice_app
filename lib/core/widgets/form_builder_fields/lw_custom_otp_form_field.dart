@@ -84,7 +84,7 @@ class LWCustomOTPFormField extends StatelessWidget {
                 pinBoxRadius: 2,
                 pinBoxHeight: fieldWidth,
                 pinBoxBorderWidth: 2.0,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 controller: controller,
               ),
             ),

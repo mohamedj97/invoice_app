@@ -106,7 +106,7 @@ class _AuthClient implements AuthClient {
     )
             .compose(
               _dio.options,
-              'Authenticate/validatesecuritycode/',
+              'Authenticate/validatesecuritycode/$userId/$securityCode',
               queryParameters: queryParameters,
               data: _data,
             )

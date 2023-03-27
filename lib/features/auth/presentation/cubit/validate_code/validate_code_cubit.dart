@@ -6,7 +6,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/features/auth/data/models/responses/register_response_model.dart';
 import 'package:invoice_app/features/auth/domain/use_cases/resend_code_usecase.dart';
 import '../../../../../core/utils/enums.dart';
-import '../../../data/data_sources/local_data_sources/auth_local_data_source.dart';
 import '../../../data/models/responses/validate_code_response_model.dart';
 import '../../../domain/use_cases/validate_code_usecase.dart';
 
@@ -15,12 +14,10 @@ part 'validate_code_state.dart';
 class ValidateCodeCubit extends Cubit<ValidateCodeState> {
   final ValidateCodeUseCase validateCodeUseCase;
   final ResendCodeUseCase resendCodeUseCase;
-  final AuthLocalDataSource authLocalDataSource;
-
+  String? otp;
   ValidateCodeCubit(
       this.validateCodeUseCase,
       this.resendCodeUseCase,
-      this.authLocalDataSource,
       ) : super(ValidateCodeInitial());
 
   Future<void> validateCode({required int userId,required String securityCode}) async {
@@ -101,9 +98,6 @@ class ValidateCodeCubit extends Cubit<ValidateCodeState> {
     }
 
     formState.save();
-    // username = formState.value["name"];
-    // email = formState.value["email"];
-    // confirmPassword = formState.value["confirm_password"];
-    // password = formState.value["password"];
+     otp = formState.value["otp"];
   }
 }
