@@ -11,7 +11,7 @@ RegisterResponseDataModel _$RegisterResponseDataModelFromJson(
     RegisterResponseDataModel(
       securityCodeValideTime: json['securityCodeValideTime'] as int,
       userId: json['userId'] as int,
-      email: json['email'] as String,
+      email: json['email'] as String?,
       active: json['active'] as bool,
       selcompany: json['selcompany'] as int,
       token: json['token'] as String?,

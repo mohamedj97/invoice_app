@@ -96,7 +96,6 @@ class ValidateCodeCubit extends Cubit<ValidateCodeState> {
     if (!isValid) {
       return;
     }
-
     formState.save();
      otp = formState.value["otp"];
   }

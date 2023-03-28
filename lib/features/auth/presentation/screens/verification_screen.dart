@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoice_app/core/api/repository/disk_repo.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
@@ -25,14 +28,60 @@ class VerificationScreen extends StatefulWidget {
 }
 
 class _VerificationScreenState extends State<VerificationScreen> {
-  TextEditingController? otpTEC;
+  final TextEditingController? _otpController = TextEditingController();
   String? email;
-  String? otp;
   final formKey = GlobalKey<FormBuilderState>();
+  Timer? _timer;
+  int _start = 0;
+
+  String formatHHMMSS(int seconds) {
+    final hours = (seconds / 3600).truncate();
+    seconds = (seconds % 3600).truncate();
+    final minutes = (seconds / 60).truncate();
+
+    final hoursStr = (hours).toString().padLeft(2, '0');
+    final minutesStr = (minutes).toString().padLeft(2, '0');
+    final secondsStr = (seconds % 60).toString().padLeft(2, '0');
+
+    if (hours == 0) {
+      return '$minutesStr:$secondsStr';
+    }
+
+    return '$hoursStr:$minutesStr:$secondsStr';
+  }
+
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    if (_timer != null) {
+      _timer?.cancel();
+    }
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+            _start = DiskRepo().loadValidateTime()??5;
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
     email = DiskRepo().loadEmail();
+    _start=DiskRepo().loadValidateTime()??5;
     super.initState();
   }
 
@@ -47,7 +96,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
           child: BlocConsumer<ValidateCodeCubit, ValidateCodeState>(
             listener: (context, state) async {
               if (state.validateCodeRequestState == RequestState.success) {
-                Navigator.of(context).pushAndRemoveUntil(CustomPageRoute.createRoute(page: const ProfileDataScreen()),(Route<dynamic> route) => false,);
+                Navigator.of(context).pushAndRemoveUntil(
+                  CustomPageRoute.createRoute(page: const ProfileDataScreen()),
+                  (Route<dynamic> route) => false,
+                );
               }
               if (state.validateCodeRequestState == RequestState.error) {
                 await getErrorDialogue(
@@ -85,7 +137,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 const SizedBox(width: 8.0),
                                 Expanded(
                                   child: LWCustomText(
-                                    title: email ?? "your mail".tr(),
+                                    title: email ?? "your_mail".tr(),
                                     color: AppColors.primary,
                                     fontSize: 16.0,
                                   ),
@@ -103,29 +155,53 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               child: LWCustomOTPFormField(
                                 name: "otp",
                                 isRequired: true,
-                                controller: otpTEC,
-                                length: 6,
-                                onChanged: (v) {
-                                  setState(() {
-                                    otp = v??"";
-                                  });
-                                },
+                                controller: _otpController,
                               ),
+                            ),
+                            const SizedBox(height: 32.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                LWCustomText(title: formatHHMMSS(_start), fontSize: 16.0),
+                                const SizedBox(width: 32.0),
+                                InkWell(
+                                  onTap: _start != DiskRepo().loadValidateTime()
+                                      ? null
+                                      : () async {
+                                          startTimer();
+                                          await DiskRepo().ensureInitialized();
+                                          BlocProvider.of<ValidateCodeCubit>(context)
+                                              .resendCode(userId: DiskRepo().loadUserId() ?? 0);
+                                        },
+                                  child: Row(
+                                    children: [
+                                      FaIcon(FontAwesomeIcons.arrowsRotate,
+                                          color: _start == DiskRepo().loadValidateTime() ? AppColors.primary : AppColors.searchBarColor,
+                                          size: 20.0),
+                                      const SizedBox(width: 8.0),
+                                      LWCustomText(
+                                          title: "resend_code".tr(),
+                                          fontSize: 20.0,
+                                          color: _start == DiskRepo().loadValidateTime() ? AppColors.primary : AppColors.searchBarColor),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                             const Spacer(),
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: CustomElevatedButton(
-                                title: "verify".tr(),
-                                onPressed: () async {
-                                  await DiskRepo().ensureInitialized();
-                                  BlocProvider.of<ValidateCodeCubit>(context).validateValidateCodeForm(formKey);
-                                  BlocProvider.of<FormSubmitCubit>(context).isSubmitField(isSubmit: true);
-                                  BlocProvider.of<ValidateCodeCubit>(context).validateCode(
-                                      userId: DiskRepo().loadUserId() ?? 0, securityCode: otp?.toUpperCase()?? "");
-                                  BlocProvider.of<FormSubmitCubit>(context).isSubmitField(isSubmit: false);
-                                },
-                              ),
+                                  title: "verify".tr(),
+                                  onPressed: () async {
+                                    await DiskRepo().ensureInitialized();
+                                    BlocProvider.of<ValidateCodeCubit>(context).validateValidateCodeForm(formKey);
+                                    BlocProvider.of<FormSubmitCubit>(context).isSubmitField(isSubmit: true);
+                                    BlocProvider.of<ValidateCodeCubit>(context).validateCode(
+                                        userId: DiskRepo().loadUserId() ?? 0,
+                                        securityCode: _otpController?.text.toUpperCase() ?? "");
+                                    BlocProvider.of<FormSubmitCubit>(context).isSubmitField(isSubmit: false);
+                                  }),
                             )
                           ],
                         ),

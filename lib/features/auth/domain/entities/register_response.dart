@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class RegisterResponseData extends Equatable {
   late int securityCodeValideTime;
   late int userId;
-  late String email;
+  late String? email;
   String? token;
   String? loginId;
   late bool active;
@@ -14,7 +14,7 @@ class RegisterResponseData extends Equatable {
     this.loginId,
     required this.securityCodeValideTime,
     required this.userId,
-    required this.email,
+     this.email,
     required this.selcompany,
     required this.active,
   });

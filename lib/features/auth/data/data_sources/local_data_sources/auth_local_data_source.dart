@@ -27,6 +27,6 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
 
     await DiskRepo().updateUserId(result!.result!.userId);
     await DiskRepo().updateValidateTime(result.result!.securityCodeValideTime);
-    await DiskRepo().updateEmail(result.result!.email);
+    await DiskRepo().updateEmail(result.result!.email ??"");
   }
 }

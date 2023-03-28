@@ -9,7 +9,7 @@ class RegisterResponseDataModel extends RegisterResponseData {
   RegisterResponseDataModel({
     required super.securityCodeValideTime,
     required super.userId,
-    required super.email,
+     super.email,
     required super.active,
     required super.selcompany,
     super.token,
