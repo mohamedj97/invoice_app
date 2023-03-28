@@ -4,10 +4,12 @@ class CompanyRegisterState extends Equatable {
   final IntResponse? intResponse;
   final GetCompanyLookupsResponse? getCompanyLookupsResponse;
   final String? failure;
-  final RequestState companyRegisterRequestState;
+  final RequestState? companyRegisterRequestState;
+  final RequestState? companyLookupsRequestState;
 
   const CompanyRegisterState({
     this.intResponse,
+    this.companyLookupsRequestState,
     this.getCompanyLookupsResponse,
     this.companyRegisterRequestState = RequestState.loading,
     this.failure = "",
@@ -17,18 +19,21 @@ class CompanyRegisterState extends Equatable {
     GetCompanyLookupsResponse? getCompanyLookupsResponse,
     String? failure,
     RequestState? companyRegisterRequestState,
+    RequestState? companyLookupsRequestState,
   }) {
     return CompanyRegisterState(
       failure: failure ?? this.failure,
       companyRegisterRequestState: companyRegisterRequestState ?? this.companyRegisterRequestState,
+      companyLookupsRequestState: companyLookupsRequestState ?? this.companyLookupsRequestState,
       intResponse: intResponse ?? this.intResponse,
       getCompanyLookupsResponse: getCompanyLookupsResponse ?? this.getCompanyLookupsResponse,
     );
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
     companyRegisterRequestState,
+    companyLookupsRequestState,
     failure!,
     intResponse ??
         IntResponse(statuscode: 0, result: null),

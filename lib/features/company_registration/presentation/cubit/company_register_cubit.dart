@@ -66,7 +66,7 @@ class CompanyRegisterCubit extends Cubit<CompanyRegisterState> {
 
       return emit(
         state.copyWith(
-          companyRegisterRequestState: RequestState.error,
+          companyLookupsRequestState: RequestState.error,
           failure: failure.message,
         ),
       );
@@ -75,7 +75,7 @@ class CompanyRegisterCubit extends Cubit<CompanyRegisterState> {
         emit(CompanyRegisterSuccess(getCompanyLookupsResponse: response));
         return emit(
           state.copyWith(
-            companyRegisterRequestState: RequestState.success,
+            companyLookupsRequestState: RequestState.success,
             getCompanyLookupsResponse: response,
           ),
         );
@@ -83,7 +83,7 @@ class CompanyRegisterCubit extends Cubit<CompanyRegisterState> {
         emit(CompanyRegisterFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
-            companyRegisterRequestState: RequestState.error,
+            companyLookupsRequestState: RequestState.error,
             getCompanyLookupsResponse: response,
           ),
         );

@@ -10,7 +10,7 @@ class GovernateLookup {
     this.name,
   });
 
-  String? countryId;
+  int? countryId;
   int id;
   String? name;
 

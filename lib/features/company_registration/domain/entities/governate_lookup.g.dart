@@ -8,7 +8,7 @@ part of 'governate_lookup.dart';
 
 GovernateLookup _$GovernateLookupFromJson(Map<String, dynamic> json) =>
     GovernateLookup(
-      countryId: json['countryId'] as String?,
+      countryId: json['countryId'] as int?,
       id: json['id'] as int,
       name: json['name'] as String?,
     );
