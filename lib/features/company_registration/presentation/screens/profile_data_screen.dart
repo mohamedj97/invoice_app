@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:invoice_app/core/assets/image_assets.dart';
 import 'package:invoice_app/core/common_widgets/custom_elevated_button.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
@@ -265,19 +266,25 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                                   const SizedBox(height: 16.0),
                                   LWCustomText(title: "logo".tr(), color: AppColors.primary, fontSize: 16.0),
                                   const SizedBox(height: 8.0),
-                                  DottedBorder(
-                                    color: Colors.grey[400]!,
-                                    child: Container(
-                                      color: Colors.grey[100],
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 100.0,
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          const Icon(FontAwesomeIcons.arrowUpFromBracket,
-                                              color: AppColors.disabledBottomItemColor),
-                                          LWCustomText(title: "upload".tr(), color: AppColors.disabledBottomItemColor)
-                                        ],
+                                  InkWell(
+                                    onTap: ()async{
+                                      final ImagePicker picker = ImagePicker();
+                                      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+                                    },
+                                    child: DottedBorder(
+                                      color: Colors.grey[400]!,
+                                      child: Container(
+                                        color: Colors.grey[100],
+                                        width: MediaQuery.of(context).size.width,
+                                        height: 100.0,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(FontAwesomeIcons.arrowUpFromBracket,
+                                                color: AppColors.disabledBottomItemColor),
+                                            LWCustomText(title: "upload".tr(), color: AppColors.disabledBottomItemColor)
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
