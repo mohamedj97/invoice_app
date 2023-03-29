@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +11,7 @@ import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import 'package:invoice_app/features/company_registration/data/models/requests/company_register_request_model.dart';
+import 'package:invoice_app/features/company_registration/presentation/screens/pricing_screen.dart';
 import 'package:invoice_app/features/products/domain/entities/base_lookup.dart';
 import '../../../../core/api/repository/disk_repo.dart';
 import '../../../../core/assets/colors.dart';
@@ -19,7 +22,6 @@ import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import '../../../../injection_container.dart';
-import '../../../home/presentation/screens/home_screen.dart';
 import '../../domain/entities/governate_lookup.dart';
 import '../cubit/company_register_cubit.dart';
 
@@ -41,6 +43,8 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
   final formKey = GlobalKey<FormBuilderState>();
   List<GovernateLookup> governates = [];
   List<BaseLookup> businessActivity = [];
+  File? file;
+  bool isFile = false;
 
   @override
   void initState() {
@@ -57,7 +61,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
           if (state.companyRegisterRequestState == RequestState.success) {
             Navigator.of(context).push(
               CustomPageRoute.createRoute(
-                page: const HomeScreen(),
+                page: const PricingScreen(),
               ),
               //(Route<dynamic> route) => false,
             );
@@ -166,7 +170,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                                         //     ),
                                         //   ),
                                         // ),
-                                       // const SizedBox(width: 16.0),
+                                        // const SizedBox(width: 16.0),
                                         GestureDetector(
                                           onTap: () => setState(() => _value = 1),
                                           child: Center(
@@ -267,25 +271,38 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                                   LWCustomText(title: "logo".tr(), color: AppColors.primary, fontSize: 16.0),
                                   const SizedBox(height: 8.0),
                                   InkWell(
-                                    onTap: ()async{
+                                    onTap: () async {
                                       final ImagePicker picker = ImagePicker();
-                                      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+                                      final XFile? xFileImage = await picker.pickImage(source: ImageSource.gallery);
+                                      File image = File(xFileImage!.path);
+                                      print("path ${xFileImage.path}");
+                                      print("Bytes ${xFileImage.readAsBytes()}");
+                                      setState(() {
+                                        file = image;
+                                        isFile = true;
+                                      });
                                     },
                                     child: DottedBorder(
                                       color: Colors.grey[400]!,
-                                      child: Container(
-                                        color: Colors.grey[100],
-                                        width: MediaQuery.of(context).size.width,
-                                        height: 100.0,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            const Icon(FontAwesomeIcons.arrowUpFromBracket,
-                                                color: AppColors.disabledBottomItemColor),
-                                            LWCustomText(title: "upload".tr(), color: AppColors.disabledBottomItemColor)
-                                          ],
-                                        ),
-                                      ),
+                                      child: isFile
+                                          ? Image.file(
+                                              file!,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Container(
+                                              color: Colors.grey[100],
+                                              width: MediaQuery.of(context).size.width,
+                                              height: 100.0,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  const Icon(FontAwesomeIcons.arrowUpFromBracket,
+                                                      color: AppColors.disabledBottomItemColor),
+                                                  LWCustomText(
+                                                      title: "upload".tr(), color: AppColors.disabledBottomItemColor)
+                                                ],
+                                              ),
+                                            ),
                                     ),
                                   ),
                                   const SizedBox(height: 16.0),
@@ -407,7 +424,23 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                               Expanded(
                                 flex: 2,
                                 child: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () async {
+                                    //To remove the keyboard when button is pressed
+                                    FocusManager.instance.primaryFocus?.unfocus();
+
+                                    var whatsappUrl =
+                                        "whatsapp://send?phone=201007117763" +
+                                            "&text=${Uri.encodeComponent("Hello")}";
+                                    try {
+                                      launch(whatsappUrl);
+                                    } catch (e) {
+                                      await getErrorDialogue(
+                                        context: context,
+                                        isUnAuthorized: false,
+                                        message: "something_went_wrong".tr(),
+                                      );
+                                    }
+                                  },
                                   child: Container(
                                     padding: const EdgeInsets.all(12.0),
                                     decoration: BoxDecoration(
