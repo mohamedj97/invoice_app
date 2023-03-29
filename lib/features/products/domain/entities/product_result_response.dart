@@ -5,9 +5,9 @@ import 'meta.dart';
 class ProductsResultResponse{
   late List<Product> items=[];
   late ListMetaData listMetadata;
-  late List<Meta> meta=[];
+  List<Meta>? meta;
 
-  ProductsResultResponse({required this.items,required this.listMetadata,required this.meta});
+  ProductsResultResponse({required this.items,required this.listMetadata, this.meta});
 
   @override
   List<Object?> get props => [items, listMetadata, meta];

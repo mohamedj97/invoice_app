@@ -12,8 +12,8 @@ GetProductsResponseDataModel _$GetProductsResponseDataModelFromJson(
       items: (json['items'] as List<dynamic>)
           .map((e) => Product.fromJson(e as Map<String, dynamic>))
           .toList(),
-      meta: (json['meta'] as List<dynamic>)
-          .map((e) => Meta.fromJson(e as Map<String, dynamic>))
+      meta: (json['meta'] as List<dynamic>?)
+          ?.map((e) => Meta.fromJson(e as Map<String, dynamic>))
           .toList(),
       listMetadata:
           ListMetaData.fromJson(json['listMetadata'] as Map<String, dynamic>),

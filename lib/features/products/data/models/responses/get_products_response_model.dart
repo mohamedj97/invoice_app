@@ -11,7 +11,7 @@ part 'get_products_response_model.g.dart';
 class GetProductsResponseDataModel extends ProductsResultResponse {
   GetProductsResponseDataModel({
     required super.items,
-    required super.meta,
+    super.meta,
     required super.listMetadata,
   });
 
