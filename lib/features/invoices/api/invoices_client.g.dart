@@ -118,30 +118,6 @@ class _InvoicesClient implements InvoicesClient {
   }
 
   @override
-  Future<GetInvoicesResponse> filterInvoices(invoiceFilterModel) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(invoiceFilterModel.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GetInvoicesResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              'Invoices/getinvoicelist',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GetInvoicesResponse.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
   Future<GetInvoiceTypesResponse> getInvoiceLookups() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
