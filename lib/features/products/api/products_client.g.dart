@@ -108,7 +108,7 @@ class _ProductsClient implements ProductsClient {
     )
             .compose(
               _dio.options,
-              'Items',
+              'Items/$id',
               queryParameters: queryParameters,
               data: _data,
             )

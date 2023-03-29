@@ -57,7 +57,7 @@ class _InvoicesClient implements InvoicesClient {
     )
             .compose(
               _dio.options,
-              'Invoices/getinvoices',
+              'Invoices/getinvoices/$id',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -84,7 +84,7 @@ class _InvoicesClient implements InvoicesClient {
     )
             .compose(
               _dio.options,
-              'Invoices/getinvoices',
+              'Invoices/getinvoices/$id',
               queryParameters: queryParameters,
               data: _data,
             )
