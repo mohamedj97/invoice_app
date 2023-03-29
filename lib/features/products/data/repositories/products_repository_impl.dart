@@ -9,6 +9,7 @@ import 'package:invoice_app/features/products/domain/repositories/products_repos
 import '../../../../core/error/exception.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/mixins/app_mixins.dart';
+import '../models/requests/get_products_request_model.dart';
 import '../models/responses/add_product_response_model.dart';
 
 class ProductsRepositoryImpl extends ProductsRepository with ConnectivityMixin {
@@ -17,9 +18,9 @@ class ProductsRepositoryImpl extends ProductsRepository with ConnectivityMixin {
   ProductsRepositoryImpl(this.productsRemoteDataSource);
 
   @override
-  Future<Either<Failure, GetProductsResponse>> getProducts() async {
+  Future<Either<Failure, GetProductsResponse>> getProducts(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
     try {
-      final response = await productsRemoteDataSource.getProducts();
+      final response = await productsRemoteDataSource.getProducts(invoiceFilterGenericFilterModel);
 
       return Right(response);
     } on ServerException catch (e) {

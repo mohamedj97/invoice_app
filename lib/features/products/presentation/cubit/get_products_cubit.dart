@@ -6,6 +6,7 @@ import 'package:invoice_app/features/products/data/models/responses/get_products
 import 'package:invoice_app/features/products/domain/use_cases/get_products_use_case.dart';
 
 import '../../../../../core/utils/enums.dart';
+import '../../data/models/requests/get_products_request_model.dart';
 
 part 'get_products_state.dart';
 
@@ -18,9 +19,9 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       this.getProductsUseCase,
       ) : super(GetProductsInitial());
 
-  Future<void> getProducts() async {
+  Future<void> getProducts(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
     emit(GetProductsLoading());
-    final response = await getProductsUseCase.call();
+    final response = await getProductsUseCase.call(invoiceFilterGenericFilterModel);
 
     response.fold((failure) {
       emit(GetProductsFailure(failure: failure.message));

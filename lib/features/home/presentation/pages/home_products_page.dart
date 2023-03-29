@@ -10,6 +10,7 @@ import '../../../../core/common_widgets/empty_screen.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
+import '../../../products/data/models/requests/get_products_request_model.dart';
 import '../../../products/presentation/cubit/get_products_cubit.dart';
 import '../../../products/presentation/widgets/product_tile_item.dart';
 
@@ -27,7 +28,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
 
   @override
   void initState() {
-    cubit.getProducts();
+    cubit.getProducts(InvoiceFilterGenericFilterModel(pageNo: 1,pageSize: 10));
     super.initState();
   }
 
@@ -85,7 +86,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
                       ? RefreshIndicator(
                           onRefresh: () async {
                             await BlocProvider.of<GetProductsCubit>(context)
-                                .getProducts();
+                                .getProducts(InvoiceFilterGenericFilterModel(pageNo: 1,pageSize: 10));
                             searchController.clear();
                           },
                           child: SingleChildScrollView(
@@ -103,7 +104,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
                       : RefreshIndicator(
                           onRefresh: () async {
                             await BlocProvider.of<GetProductsCubit>(context)
-                                .getProducts();
+                                .getProducts(InvoiceFilterGenericFilterModel(pageNo: 1,pageSize: 10));
                             searchController.clear();
                           },
                           child: Container(

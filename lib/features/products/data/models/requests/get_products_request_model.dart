@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../../domain/entities/item_filter.dart';
 import '../../../domain/entities/product_filter_request.dart';
 
 
@@ -10,7 +11,7 @@ class InvoiceFilterGenericFilterModel extends ProductFilterRequest {
   InvoiceFilterGenericFilterModel({
     super.sortBy,
     super.sortDir,
-    required super.filter,
+    super.filter,
     required super.pageNo,
     required super.pageSize,
   }

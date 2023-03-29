@@ -4,14 +4,14 @@ import 'item_filter.dart';
 
 class ProductFilterRequest extends Equatable {
 
-  ItemFilter filter;
+  ItemFilter? filter;
   int pageNo;
   int pageSize;
   String? sortBy;
   String? sortDir;
 
   ProductFilterRequest({
-    required this.filter,
+    this.filter,
     required this.pageNo,
     required this.pageSize,
      this.sortBy,
