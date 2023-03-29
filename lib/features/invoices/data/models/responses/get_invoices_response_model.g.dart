@@ -9,9 +9,10 @@ part of 'get_invoices_response_model.dart';
 GetInvoicesResponseDataModel _$GetInvoicesResponseDataModelFromJson(
         Map<String, dynamic> json) =>
     GetInvoicesResponseDataModel(
-      result: (json['result'] as List<dynamic>)
+      invoices: (json['invoices'] as List<dynamic>)
           .map((e) => InvoiceHeadModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      signingRequired: json['signingRequired'] as bool,
       metaData: (json['metaData'] as List<dynamic>)
           .map((e) => MetaDataData.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -22,8 +23,9 @@ GetInvoicesResponseDataModel _$GetInvoicesResponseDataModelFromJson(
 Map<String, dynamic> _$GetInvoicesResponseDataModelToJson(
         GetInvoicesResponseDataModel instance) =>
     <String, dynamic>{
-      'result': instance.result,
+      'invoices': instance.invoices,
       'listMetadata': instance.listMetadata,
+      'signingRequired': instance.signingRequired,
       'metaData': instance.metaData,
     };
 

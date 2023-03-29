@@ -3,12 +3,18 @@ import '../../../products/domain/entities/list_meta_data.dart';
 import 'invoice_head_model.dart';
 
 class InvoiceResultResponse {
-  late List<InvoiceHeadModel> result=[];
+  late List<InvoiceHeadModel> invoices = [];
   late ListMetaData listMetadata;
-   late List<MetaDataData> metaData=[];
+  late bool signingRequired;
+  late List<MetaDataData> metaData = [];
 
-  InvoiceResultResponse({required this.result,required this.listMetadata,required this.metaData});
+  InvoiceResultResponse({
+    required this.invoices,
+    required this.listMetadata,
+    required this.metaData,
+    required this.signingRequired,
+  });
 
   @override
-  List<Object?> get props => [result, listMetadata, metaData];
+  List<Object?> get props => [invoices, listMetadata, metaData,signingRequired];
 }

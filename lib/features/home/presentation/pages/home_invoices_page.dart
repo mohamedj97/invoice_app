@@ -90,10 +90,10 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
           }
         },
         builder: (context, state) {
-          invoices = state.getInvoicesResponse?.result?.result
+          invoices = state.getInvoicesResponse?.result?.invoices
                   .where((invoice) => invoice.id.toString().contains(searchController.text))
                   .toList() ??
-              state.getInvoicesResponse?.result?.result ??
+              state.getInvoicesResponse?.result?.invoices ??
               [];
           return Column(
             children: [
@@ -102,7 +102,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                 onChanged: (value) {
                   if (value.isEmptyOrNull) {
                     setState(() {
-                      invoices = state.getInvoicesResponse?.result?.result ?? [];
+                      invoices = state.getInvoicesResponse?.result?.invoices ?? [];
                     });
                   } else {
                     setState(() {

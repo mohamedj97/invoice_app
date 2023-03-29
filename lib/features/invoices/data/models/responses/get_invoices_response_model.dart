@@ -10,7 +10,8 @@ part 'get_invoices_response_model.g.dart';
 @JsonSerializable()
 class GetInvoicesResponseDataModel extends InvoiceResultResponse {
   GetInvoicesResponseDataModel({
-    required super.result,
+    required super.invoices,
+    required super.signingRequired,
     required super.metaData,
     required super.listMetadata,
   });
