@@ -15,7 +15,7 @@ part 'invoices_client.g.dart';
 abstract class InvoicesClient {
   factory InvoicesClient(Dio dio, {String baseUrl}) = _InvoicesClient;
 
-  @GET(EndPoints.getInvoices)
+  @POST(EndPoints.getInvoices)
   Future<GetInvoicesResponse> getInvoices(@Body() InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel);
 
   @GET(EndPoints.getInvoices)
