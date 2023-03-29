@@ -19,20 +19,22 @@ class _ProductsClient implements ProductsClient {
   String? baseUrl;
 
   @override
-  Future<GetProductsResponse> getProducts() async {
+  Future<GetProductsResponse> getProducts(
+      invoiceFilterGenericFilterModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
+    _data.addAll(invoiceFilterGenericFilterModel.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<GetProductsResponse>(Options(
-      method: 'GET',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'Items',
+              'Items/getitems',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -123,8 +125,6 @@ class _ProductsClient implements ProductsClient {
         requestOptions.responseType = ResponseType.plain;
       } else {
         requestOptions.responseType = ResponseType.json;
-        requestOptions.headers["Authorization"] =
-        "Bearer ${MemoryRepo().tokensData?.token ?? ""}";
       }
     }
     return requestOptions;

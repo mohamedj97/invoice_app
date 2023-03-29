@@ -24,7 +24,7 @@ class EndPoints {
   static const getCustomersLookups = 'Customers/getCustomer-lookups';
 
   //products
-  static const getProducts = 'Items';
+  static const getProducts = 'Items/getitems';
   static const addProduct = 'Items';
   static const editProduct = 'Items';
   static const getItemTypes = 'Items/getItem-lookups';
