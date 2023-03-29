@@ -36,7 +36,7 @@ class _CompanyRegistrationClient implements CompanyRegistrationClient {
     )
             .compose(
               _dio.options,
-              'CompanyRegistration/$userId',
+              'CompanyRegistration/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -59,7 +59,7 @@ class _CompanyRegistrationClient implements CompanyRegistrationClient {
     )
             .compose(
               _dio.options,
-              'CompanyRegistration/getcompanyinfo-lookups/$userId',
+              'CompanyRegistration/getcompanyinfo-lookups/',
               queryParameters: queryParameters,
               data: _data,
             )

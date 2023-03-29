@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_products_request_model.dart';
+part of 'get_invoices_request_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProductFilterGenericFilterModel _$ProductFilterGenericFilterModelFromJson(
+InvoiceFilterGenericFilterModel _$InvoiceFilterGenericFilterModelFromJson(
         Map<String, dynamic> json) =>
-    ProductFilterGenericFilterModel(
+    InvoiceFilterGenericFilterModel(
       sortBy: json['sortBy'] as String?,
       sortDir: json['sortDir'] as String?,
       filter: json['filter'] == null
           ? null
-          : ItemFilter.fromJson(json['filter'] as Map<String, dynamic>),
+          : InvoiceFilter.fromJson(json['filter'] as Map<String, dynamic>),
       pageNo: json['pageNo'] as int,
       pageSize: json['pageSize'] as int,
     );
 
-Map<String, dynamic> _$ProductFilterGenericFilterModelToJson(
-        ProductFilterGenericFilterModel instance) =>
+Map<String, dynamic> _$InvoiceFilterGenericFilterModelToJson(
+        InvoiceFilterGenericFilterModel instance) =>
     <String, dynamic>{
       'filter': instance.filter,
       'pageNo': instance.pageNo,

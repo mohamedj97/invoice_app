@@ -50,7 +50,6 @@ import 'features/company_registration/presentation/cubit/company_register_cubit.
 import 'features/customers/domain/use_cases/get_customer_types_use_case.dart';
 import 'features/customers/domain/use_cases/get_customers_use_case.dart';
 import 'features/customers/presentation/cubit/get_customer_types/get_customer_types_cubit.dart';
-import 'features/invoices/domain/use_cases/filter_invoices_use_case.dart';
 import 'features/invoices/presentation/cubit/get_types/get_invoice_types_cubit.dart';
 import 'features/products/data/data_sources/products_remote_data_source.dart';
 import 'features/products/data/repositories/products_repository_impl.dart';
@@ -76,7 +75,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CompanyRegisterCubit(sl(),sl()));
   sl.registerLazySingleton(() => ValidateCodeCubit(sl(), sl()));
   sl.registerLazySingleton(() => RegisterCubit(sl(), sl()));
-  sl.registerLazySingleton(() => GetInvoicesCubit(sl(), sl(), sl()));
+  sl.registerLazySingleton(() => GetInvoicesCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetInvoiceTypesCubit(sl()));
   sl.registerLazySingleton(() => AddInvoiceCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetCustomersCubit(sl()));
@@ -103,7 +102,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ValidateCodeUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => ResendCodeUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => GetInvoicesUseCase(invoicesRepository: sl()));
-  sl.registerLazySingleton(() => FilterInvoicesUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => EditSingleInvoiceUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => GetSingleInvoiceUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => GetInvoiceTypesUseCase(invoicesRepository: sl()));

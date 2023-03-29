@@ -20,12 +20,12 @@ class _ProductsClient implements ProductsClient {
 
   @override
   Future<GetProductsResponse> getProducts(
-      invoiceFilterGenericFilterModel) async {
+      productFilterGenericFilterModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(invoiceFilterGenericFilterModel.toJson());
+    _data.addAll(productFilterGenericFilterModel.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<GetProductsResponse>(Options(
       method: 'POST',

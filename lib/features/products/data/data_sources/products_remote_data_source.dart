@@ -8,7 +8,7 @@ import '../models/responses/add_product_response_model.dart';
 import '../models/responses/get_item_types_response_model.dart';
 
 abstract class ProductsRemoteDataSource {
-  Future<GetProductsResponse> getProducts(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel);
+  Future<GetProductsResponse> getProducts(ProductFilterGenericFilterModel invoiceFilterGenericFilterModel);
   Future<GetItemTypesResponse> getItemTypes();
   Future<AddProductResponse> addProduct(ProductModel productModel);
   Future<StringResponse> editProduct(int id,ProductModel productModel);
@@ -20,7 +20,7 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
     required this.apiRepo,
   });
   @override
-  Future<GetProductsResponse> getProducts(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
+  Future<GetProductsResponse> getProducts(ProductFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
     final response = await apiRepo.productsClient.getProducts(invoiceFilterGenericFilterModel);
 
     return response;

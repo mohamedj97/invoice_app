@@ -1,38 +1,31 @@
-import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'invoice_filter.g.dart';
 
-class InvoiceFilter extends Equatable {
+@JsonSerializable()
+class InvoiceFilter{
   InvoiceFilter({
     this.freeText,
     this.invoiceNo,
-    this.invoiceDate,
     this.invoiceTypeId,
     this.invoiceTypeName,
     this.customerId,
     this.customerName,
     this.invoiceDirection,
-    this.status,
+    this.statusId,
+    this.invoiceDateFrom,
+    this.invoiceDateTo,
   });
 
   String? freeText;
   String? invoiceNo;
-  DateTime? invoiceDate;
   int? invoiceTypeId;
   String? invoiceTypeName;
   int? customerId;
   String? customerName;
   int? invoiceDirection;
-  String? status;
+  int? statusId;
+  DateTime? invoiceDateFrom;
+  DateTime? invoiceDateTo;
 
-  @override
-  List<Object?> get props => [
-    freeText,
-    invoiceNo,
-    invoiceDate,
-    invoiceTypeId,
-    invoiceTypeName,
-    customerId,
-    customerName,
-    invoiceDirection,
-    status,
-  ];
+  factory InvoiceFilter.fromJson(Map<String, dynamic> json) => _$InvoiceFilterFromJson(json);
 }

@@ -18,7 +18,7 @@ class ProductsRepositoryImpl extends ProductsRepository with ConnectivityMixin {
   ProductsRepositoryImpl(this.productsRemoteDataSource);
 
   @override
-  Future<Either<Failure, GetProductsResponse>> getProducts(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
+  Future<Either<Failure, GetProductsResponse>> getProducts(ProductFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
     try {
       final response = await productsRemoteDataSource.getProducts(invoiceFilterGenericFilterModel);
 

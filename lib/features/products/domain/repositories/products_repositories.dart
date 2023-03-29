@@ -8,7 +8,7 @@ import '../../data/models/responses/add_product_response_model.dart';
 import '../../data/models/responses/get_item_types_response_model.dart';
 
 abstract class ProductsRepository {
-  Future<Either<Failure, GetProductsResponse>> getProducts(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel);
+  Future<Either<Failure, GetProductsResponse>> getProducts(ProductFilterGenericFilterModel invoiceFilterGenericFilterModel);
   Future<Either<Failure, GetItemTypesResponse>> getItemTypes();
   Future<Either<Failure, AddProductResponse>> addProduct(ProductModel productModel);
   Future<Either<Failure, StringResponse>> editProduct(int id,ProductModel productModel);

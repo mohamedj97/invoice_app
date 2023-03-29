@@ -123,8 +123,6 @@ class _CustomersClient implements CustomersClient {
         requestOptions.responseType = ResponseType.plain;
       } else {
         requestOptions.responseType = ResponseType.json;
-        requestOptions.headers["Authorization"] =
-        "Bearer ${MemoryRepo().tokensData?.token ?? ""}";
       }
     }
     return requestOptions;

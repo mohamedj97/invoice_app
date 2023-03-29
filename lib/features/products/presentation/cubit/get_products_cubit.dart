@@ -19,7 +19,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       this.getProductsUseCase,
       ) : super(GetProductsInitial());
 
-  Future<void> getProducts(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
+  Future<void> getProducts(ProductFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
     emit(GetProductsLoading());
     final response = await getProductsUseCase.call(invoiceFilterGenericFilterModel);
 

@@ -13,7 +13,7 @@ import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
-import '../../../invoices/data/models/requests/invoice_filter_model.dart';
+import '../../../invoices/data/models/requests/get_invoices_request_model.dart';
 import '../../../invoices/domain/entities/invoice_head_model.dart';
 import '../../../invoices/domain/entities/single_invoice_response.dart';
 import '../../../invoices/presentation/widgets/invoice_list_item.dart';
@@ -28,7 +28,7 @@ class HomeInvoicesPage extends StatefulWidget {
 class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
   TextEditingController searchController = TextEditingController();
   List<InvoiceHeadModel> invoices = [];
-  final cubit = GetInvoicesCubit(sl(), sl(), sl());
+  final cubit = GetInvoicesCubit(sl(), sl());
   bool tapped = false;
   SingleInvoiceResponse? singleInvoiceResponse;
 
@@ -37,14 +37,14 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
     if (InvoicesLocalDataSource.status != null ||
         InvoicesLocalDataSource.invoiceDate != null ||
         InvoicesLocalDataSource.customerId != null) {
-      cubit.filterInvoices(InvoiceFilterModel(
-        status: InvoicesLocalDataSource.status,
-        customerName: InvoicesLocalDataSource.customerName,
-        customerId: InvoicesLocalDataSource.customerId,
-        invoiceDate: InvoicesLocalDataSource.invoiceDate,
-      ));
+      // cubit.filterInvoices(InvoiceFilterModel(
+      //   status: InvoicesLocalDataSource.status,
+      //   customerName: InvoicesLocalDataSource.customerName,
+      //   customerId: InvoicesLocalDataSource.customerId,
+      //   invoiceDate: InvoicesLocalDataSource.invoiceDate,
+      // ));
     } else {
-      cubit.getInvoices();
+      cubit.getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10,pageNo: 1));
     }
     super.initState();
   }
@@ -123,7 +123,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                     : invoices.isEmpty
                         ? RefreshIndicator(
                             onRefresh: () async {
-                              await BlocProvider.of<GetInvoicesCubit>(context).getInvoices();
+                              await BlocProvider.of<GetInvoicesCubit>(context).getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10,pageNo: 1));
                               setState(() {
                                 InvoicesLocalDataSource.status = null;
                                 InvoicesLocalDataSource.customerName = null;
@@ -146,7 +146,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                           )
                         : RefreshIndicator(
                             onRefresh: () async {
-                              await BlocProvider.of<GetInvoicesCubit>(context).getInvoices();
+                              await BlocProvider.of<GetInvoicesCubit>(context).getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10,pageNo: 1));
                               setState(() {
                                 InvoicesLocalDataSource.status = null;
                                 InvoicesLocalDataSource.customerName = null;

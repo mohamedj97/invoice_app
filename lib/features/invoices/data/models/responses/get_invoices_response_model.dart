@@ -11,7 +11,7 @@ class GetInvoicesResponseDataModel extends InvoiceResultResponse {
   GetInvoicesResponseDataModel({
     required super.result,
     required super.metaData,
-    super.total,
+    required super.listMetadata,
   });
 
   factory GetInvoicesResponseDataModel.fromJson(Map<String, dynamic> json) =>

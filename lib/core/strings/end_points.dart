@@ -15,7 +15,7 @@ class EndPoints {
   static const getCompanyLookups = 'CompanyRegistration/getcompanyinfo-lookups/';
 
   //invoices
-  static const getInvoices = 'Invoices';
+  static const getInvoices = 'Invoices/getinvoices';
   static const getInvoiceLookups = 'Invoices/getInvoice-lookups';
   static const filterInvoices = 'Invoices/getinvoicelist';
 

@@ -7,8 +7,8 @@ import '../../../domain/entities/product_filter_request.dart';
 part 'get_products_request_model.g.dart';
 
 @JsonSerializable()
-class InvoiceFilterGenericFilterModel extends ProductFilterRequest {
-  InvoiceFilterGenericFilterModel({
+class ProductFilterGenericFilterModel extends ProductFilterRequest {
+  ProductFilterGenericFilterModel({
     super.sortBy,
     super.sortDir,
     super.filter,
@@ -19,11 +19,11 @@ class InvoiceFilterGenericFilterModel extends ProductFilterRequest {
 
   @override
   String toString() {
-    return 'InvoiceFilterGenericFilterModel[sortBy=$sortBy,  sortDir=$sortDir,  filter=$filter,  pageNo=$pageNo,  ]';
+    return 'ProductFilterGenericFilterModel[sortBy=$sortBy,  sortDir=$sortDir,  filter=$filter,  pageNo=$pageNo,  ]';
   }
 
-  factory InvoiceFilterGenericFilterModel.fromJson(Map<String, dynamic> json) =>
-      _$InvoiceFilterGenericFilterModelFromJson(json);
+  factory ProductFilterGenericFilterModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductFilterGenericFilterModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$InvoiceFilterGenericFilterModelToJson(this);
+  Map<String, dynamic> toJson() => _$ProductFilterGenericFilterModelToJson(this);
 }

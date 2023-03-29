@@ -19,11 +19,13 @@ class _InvoicesClient implements InvoicesClient {
   String? baseUrl;
 
   @override
-  Future<GetInvoicesResponse> getInvoices() async {
+  Future<GetInvoicesResponse> getInvoices(
+      invoiceFilterGenericFilterModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
+    _data.addAll(invoiceFilterGenericFilterModel.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<GetInvoicesResponse>(Options(
       method: 'GET',
@@ -32,7 +34,7 @@ class _InvoicesClient implements InvoicesClient {
     )
             .compose(
               _dio.options,
-              'Invoices',
+              'Invoices/getinvoices',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -55,7 +57,7 @@ class _InvoicesClient implements InvoicesClient {
     )
             .compose(
               _dio.options,
-              'Invoices',
+              'Invoices/getinvoices',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -82,7 +84,7 @@ class _InvoicesClient implements InvoicesClient {
     )
             .compose(
               _dio.options,
-              'Invoices',
+              'Invoices/getinvoices',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -106,7 +108,7 @@ class _InvoicesClient implements InvoicesClient {
     )
             .compose(
               _dio.options,
-              'Invoices',
+              'Invoices/getinvoices',
               queryParameters: queryParameters,
               data: _data,
             )

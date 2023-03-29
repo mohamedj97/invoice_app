@@ -28,7 +28,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
 
   @override
   void initState() {
-    cubit.getProducts(InvoiceFilterGenericFilterModel(pageNo: 1,pageSize: 10));
+    cubit.getProducts(ProductFilterGenericFilterModel(pageNo: 1,pageSize: 10));
     super.initState();
   }
 
@@ -86,7 +86,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
                       ? RefreshIndicator(
                           onRefresh: () async {
                             await BlocProvider.of<GetProductsCubit>(context)
-                                .getProducts(InvoiceFilterGenericFilterModel(pageNo: 1,pageSize: 10));
+                                .getProducts(ProductFilterGenericFilterModel(pageNo: 1,pageSize: 10));
                             searchController.clear();
                           },
                           child: SingleChildScrollView(
@@ -104,7 +104,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
                       : RefreshIndicator(
                           onRefresh: () async {
                             await BlocProvider.of<GetProductsCubit>(context)
-                                .getProducts(InvoiceFilterGenericFilterModel(pageNo: 1,pageSize: 10));
+                                .getProducts(ProductFilterGenericFilterModel(pageNo: 1,pageSize: 10));
                             searchController.clear();
                           },
                           child: Container(

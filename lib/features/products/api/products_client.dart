@@ -16,7 +16,7 @@ abstract class ProductsClient {
   factory ProductsClient(Dio dio, {String baseUrl}) = _ProductsClient;
 
   @POST(EndPoints.getProducts)
-  Future<GetProductsResponse> getProducts(@Body() InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel);
+  Future<GetProductsResponse> getProducts(@Body() ProductFilterGenericFilterModel productFilterGenericFilterModel);
 
   @POST(EndPoints.addProduct)
   Future<AddProductResponse> addProduct(@Body() ProductModel productModel);

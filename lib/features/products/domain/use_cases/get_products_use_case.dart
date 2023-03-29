@@ -10,7 +10,7 @@ class GetProductsUseCase {
     required this.productsRepository,
   });
 
-  Future<Either<Failure, GetProductsResponse>> call(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
+  Future<Either<Failure, GetProductsResponse>> call(ProductFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
     return await productsRepository.getProducts(invoiceFilterGenericFilterModel);
   }
 }
