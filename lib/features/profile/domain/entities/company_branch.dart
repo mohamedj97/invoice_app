@@ -4,7 +4,7 @@ part 'company_branch.g.dart';
 @JsonSerializable()
 class CompanyBranch {
   late int id;
-  late int companyid;
+   int? companyid;
   late String code;
   late String name;
   String? address;
@@ -13,7 +13,7 @@ class CompanyBranch {
 
   CompanyBranch({
    required this.id,
-   required this.companyid,
+    this.companyid,
    required this.code,
    required this.name,
     this.address,

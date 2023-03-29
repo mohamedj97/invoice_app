@@ -53,12 +53,12 @@ class _LoginScreenState extends State<LoginScreen> {
             await DiskRepo().updateUserName(profileState.getProfileResponse?.result?.userName ?? "");
             if(firstLogin)
               {
-                // Navigator.of(context).pushAndRemoveUntil(
-                //   CustomPageRoute.createRoute(
-                //     page: const WalkThroughScreen(),
-                //   ),
-                //       (Route<dynamic> route) => false,
-                // );
+                Navigator.of(context).pushAndRemoveUntil(
+                  CustomPageRoute.createRoute(
+                    page: const HomeScreen(),
+                  ),
+                      (Route<dynamic> route) => false,
+                );
               }
             else{
               Navigator.of(context).pushAndRemoveUntil(
