@@ -11,7 +11,9 @@ InvoiceFilterGenericFilterModel _$InvoiceFilterGenericFilterModelFromJson(
     InvoiceFilterGenericFilterModel(
       sortBy: json['sortBy'] as String?,
       sortDir: json['sortDir'] as String?,
-      filter: ItemFilter.fromJson(json['filter'] as Map<String, dynamic>),
+      filter: json['filter'] == null
+          ? null
+          : ItemFilter.fromJson(json['filter'] as Map<String, dynamic>),
       pageNo: json['pageNo'] as int,
       pageSize: json['pageSize'] as int,
     );

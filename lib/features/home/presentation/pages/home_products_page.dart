@@ -47,11 +47,11 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
           );
         }
       }, builder: (context, state) {
-        products = state.getProductsResponse?.result?.result
+        products = state.getProductsResponse?.result?.items
                 .where((product) =>
                     product.name.toLowerCase().contains(searchController.text))
                 .toList() ??
-            state.getProductsResponse?.result?.result ??
+            state.getProductsResponse?.result?.items ??
             [];
         return Column(
           children: [
@@ -59,7 +59,7 @@ class _HomeProductsPageState extends State<HomeProductsPage> {
               onChanged: (value) {
                 if (value.isEmptyOrNull) {
                   setState(() {
-                    products = state.getProductsResponse?.result?.result ?? [];
+                    products = state.getProductsResponse?.result?.items ?? [];
                   });
                 } else {
                   //searchDebouncer(() {
