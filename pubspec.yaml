@@ -13,6 +13,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   flutter_form_builder: ^7.7.0
+  pull_to_refresh: ^2.0.0
   form_builder_validators: ^8.3.0
   pin_code_text_field: ^1.8.0
   introduction_screen: ^3.0.2

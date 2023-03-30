@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/assets/colors.dart';
@@ -7,6 +10,7 @@ import 'package:invoice_app/core/utils/string_validation_extension.dart';
 import 'package:invoice_app/features/invoices/data/data_sources/invoices_local_data_source.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/create_invoice_screen.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
 import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/navigation/custom_page_route.dart';
@@ -30,22 +34,24 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
   List<InvoiceHeadModel> invoices = [];
   final cubit = GetInvoicesCubit(sl(), sl());
   bool tapped = false;
+  int pageNo = 1;
   SingleInvoiceResponse? singleInvoiceResponse;
+  final refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initState() {
-    if (InvoicesLocalDataSource.status != null ||
-        InvoicesLocalDataSource.invoiceDate != null ||
-        InvoicesLocalDataSource.customerId != null) {
-      // cubit.filterInvoices(InvoiceFilterModel(
-      //   status: InvoicesLocalDataSource.status,
-      //   customerName: InvoicesLocalDataSource.customerName,
-      //   customerId: InvoicesLocalDataSource.customerId,
-      //   invoiceDate: InvoicesLocalDataSource.invoiceDate,
-      // ));
-    } else {
-      cubit.getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10,pageNo: 1));
-    }
+    // if (InvoicesLocalDataSource.status != null ||
+    //     InvoicesLocalDataSource.invoiceDate != null ||
+    //     InvoicesLocalDataSource.customerId != null) {
+    //   // cubit.filterInvoices(InvoiceFilterModel(
+    //   //   status: InvoicesLocalDataSource.status,
+    //   //   customerName: InvoicesLocalDataSource.customerName,
+    //   //   customerId: InvoicesLocalDataSource.customerId,
+    //   //   invoiceDate: InvoicesLocalDataSource.invoiceDate,
+    //   // ));
+    // } else {
+    //   cubit.getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10, pageNo: 1));
+    // }
     super.initState();
   }
 
@@ -59,15 +65,12 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
     return BlocProvider<GetInvoicesCubit>.value(
       value: cubit,
       child: BlocConsumer<GetInvoicesCubit, GetInvoicesState>(
-        listener: (context,
-            state) async {
-          if(state.getInvoicesRequestState == RequestState.success && tapped)
-          {
-            singleInvoiceResponse = state.getSingleInvoiceResponse?.result ;
+        listener: (context, state) async {
+          if (state.getInvoicesRequestState == RequestState.success && tapped) {
+            singleInvoiceResponse = state.getSingleInvoiceResponse?.result;
             setState(() {
-              if(singleInvoiceResponse !=null)
-              {
-                InvoicesLocalDataSource.addedItems = singleInvoiceResponse?.lines ??[];
+              if (singleInvoiceResponse != null) {
+                InvoicesLocalDataSource.addedItems = singleInvoiceResponse?.lines ?? [];
                 InvoicesLocalDataSource.customerName = null;
                 InvoicesLocalDataSource.customerId = singleInvoiceResponse!.customerId;
                 InvoicesLocalDataSource.invoiceDate = singleInvoiceResponse!.invoiceDate;
@@ -116,65 +119,129 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
               ),
               const SizedBox(height: 8.0),
               Expanded(
-                child: state is GetInvoicesLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : invoices.isEmpty
-                        ? RefreshIndicator(
-                            onRefresh: () async {
-                              await BlocProvider.of<GetInvoicesCubit>(context).getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10,pageNo: 1));
-                              setState(() {
-                                InvoicesLocalDataSource.status = null;
-                                InvoicesLocalDataSource.customerName = null;
-                                InvoicesLocalDataSource.customerId = null;
-                                InvoicesLocalDataSource.invoiceDate = null;
-                              });
-                              searchController.clear();
-                            },
-                            child: SingleChildScrollView(
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              child: SizedBox(
-                                height: MediaQuery.of(context).size.height / 1.5,
-                                child: EmptyScreen(
-                                  title: "no_invoices".tr(),
-                                  subtitle: "no_invoices_subtitle".tr(),
-                                  imageString: ImageAssets.noInvoices,
-                                ),
-                              ),
-                            ),
+                child: RefreshConfiguration(
+                  footerBuilder: () => const ClassicFooter(
+                    loadingIcon: SizedBox.shrink(),
+                    loadingText: '',
+                  ),
+                  child: SmartRefresher(
+                    header: WaterDropHeader(
+                      refresh: SizedBox(
+                          width: 25.0,
+                          height: 25.0,
+                          child: Platform.isAndroid
+                              ? const CircularProgressIndicator(
+                                  strokeWidth: 2.0,
+                                  color: AppColors.primary,
+                                )
+                              : const CupertinoActivityIndicator()),
+                      complete: const SizedBox.shrink(),
+                    ),
+                    controller: refreshController,
+                    onRefresh: () async {
+                      await BlocProvider.of<GetInvoicesCubit>(context)
+                          .getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10, pageNo: 1));
+                      setState(() {
+                        pageNo = 1;
+                      });
+                      refreshController.refreshCompleted();
+                    },
+                    onLoading: () async {
+                      await BlocProvider.of<GetInvoicesCubit>(context)
+                          .getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10, pageNo: pageNo));
+                      setState(() {
+                        pageNo++;
+                      });
+                      refreshController.loadComplete();
+                    },
+                    enablePullDown: true,
+                    enablePullUp: true,
+                    child: state is GetInvoicesLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
                           )
-                        : RefreshIndicator(
-                            onRefresh: () async {
-                              await BlocProvider.of<GetInvoicesCubit>(context).getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10,pageNo: 1));
-                              setState(() {
-                                InvoicesLocalDataSource.status = null;
-                                InvoicesLocalDataSource.customerName = null;
-                                InvoicesLocalDataSource.customerId = null;
-                                InvoicesLocalDataSource.invoiceDate = null;
-                              });
-                              searchController.clear();
-                            },
-                            child: Container(
-                              color: AppColors.scaffoldColor,
-                              child: ListView.builder(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                itemCount: invoices.length,
-                                itemBuilder: (context, index) {
-                                  return InvoiceListItem(
-                                      invoice: invoices[index],
-                                      onTap: () async {
-                                        setState(() {
-                                          tapped = true;
-                                        });
-                                        await BlocProvider.of<GetInvoicesCubit>(context)
-                                            .getSingleInvoice(id: invoices[index].id);
-                                      });
-                                },
-                              ),
+                        : Container(
+                            color: AppColors.scaffoldColor,
+                            child: ListView.builder(
+                              physics: const ScrollPhysics(),
+                              itemCount: invoices.length,
+                              itemBuilder: (context, index) {
+                                return InvoiceListItem(
+                                  invoice: invoices[index],
+                                  onTap: () async {
+                                    setState(() {
+                                      tapped = true;
+                                    });
+                                    await BlocProvider.of<GetInvoicesCubit>(context)
+                                        .getSingleInvoice(id: invoices[index].id);
+                                  },
+                                );
+                              },
                             ),
                           ),
-              )
+                  ),
+                ),
+              ),
+              // Expanded(
+              //   child: state is GetInvoicesLoading
+              //       ? const Center(
+              //           child: CircularProgressIndicator(),
+              //         )
+              //       : invoices.isEmpty
+              //           ? RefreshIndicator(
+              //               onRefresh: () async {
+              //                 await BlocProvider.of<GetInvoicesCubit>(context).getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10,pageNo: 1));
+              //                 setState(() {
+              //                   InvoicesLocalDataSource.status = null;
+              //                   InvoicesLocalDataSource.customerName = null;
+              //                   InvoicesLocalDataSource.customerId = null;
+              //                   InvoicesLocalDataSource.invoiceDate = null;
+              //                 });
+              //                 searchController.clear();
+              //               },
+              //               child: SingleChildScrollView(
+              //                 physics: const AlwaysScrollableScrollPhysics(),
+              //                 child: SizedBox(
+              //                   height: MediaQuery.of(context).size.height / 1.5,
+              //                   child: EmptyScreen(
+              //                     title: "no_invoices".tr(),
+              //                     subtitle: "no_invoices_subtitle".tr(),
+              //                     imageString: ImageAssets.noInvoices,
+              //                   ),
+              //                 ),
+              //               ),
+              //             )
+              //           : RefreshIndicator(
+              //               onRefresh: () async {
+              //                 await BlocProvider.of<GetInvoicesCubit>(context).getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10,pageNo: 1));
+              //                 setState(() {
+              //                   InvoicesLocalDataSource.status = null;
+              //                   InvoicesLocalDataSource.customerName = null;
+              //                   InvoicesLocalDataSource.customerId = null;
+              //                   InvoicesLocalDataSource.invoiceDate = null;
+              //                 });
+              //                 searchController.clear();
+              //               },
+              //               child: Container(
+              //                 color: AppColors.scaffoldColor,
+              //                 child: ListView.builder(
+              //                   physics: const AlwaysScrollableScrollPhysics(),
+              //                   itemCount: invoices.length,
+              //                   itemBuilder: (context, index) {
+              //                     return InvoiceListItem(
+              //                         invoice: invoices[index],
+              //                         onTap: () async {
+              //                           setState(() {
+              //                             tapped = true;
+              //                           });
+              //                           await BlocProvider.of<GetInvoicesCubit>(context)
+              //                               .getSingleInvoice(id: invoices[index].id);
+              //                         });
+              //                   },
+              //                 ),
+              //               ),
+              //             ),
+              // )
             ],
           );
         },
