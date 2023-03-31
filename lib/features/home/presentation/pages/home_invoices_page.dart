@@ -34,7 +34,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
   List<InvoiceHeadModel> invoices = [];
   final cubit = GetInvoicesCubit(sl(), sl());
   bool tapped = false;
-  int pageNo = 1;
+  int pageNo = 2;
   SingleInvoiceResponse? singleInvoiceResponse;
   final refreshController = RefreshController(initialRefresh: false);
 
@@ -50,7 +50,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
     //   //   invoiceDate: InvoicesLocalDataSource.invoiceDate,
     //   // ));
     // } else {
-    //   cubit.getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10, pageNo: 1));
+    cubit.getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10, pageNo: 1));
     // }
     super.initState();
   }
@@ -93,11 +93,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
           }
         },
         builder: (context, state) {
-          invoices = state.getInvoicesResponse?.result?.invoices
-                  .where((invoice) => invoice.id.toString().contains(searchController.text))
-                  .toList() ??
-              state.getInvoicesResponse?.result?.invoices ??
-              [];
+          invoices.addAll(state.getInvoicesResponse?.result?.invoices ?? []);
           return Column(
             children: [
               SearchBar(
@@ -120,9 +116,13 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
               const SizedBox(height: 8.0),
               Expanded(
                 child: RefreshConfiguration(
-                  footerBuilder: () => const ClassicFooter(
-                    loadingIcon: SizedBox.shrink(),
-                    loadingText: '',
+                  footerBuilder: () => ClassicFooter(
+                    loadingIcon: const CircularProgressIndicator(
+                      strokeWidth: 2.0,
+                      color: AppColors.primary,
+                    ),
+                    loadingText: "${'loading'.tr()}...",
+                    height: 100,
                   ),
                   child: SmartRefresher(
                     header: WaterDropHeader(
@@ -142,7 +142,8 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                       await BlocProvider.of<GetInvoicesCubit>(context)
                           .getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10, pageNo: 1));
                       setState(() {
-                        pageNo = 1;
+                        pageNo = 2;
+                        //invoices.clear();
                       });
                       refreshController.refreshCompleted();
                     },
@@ -154,31 +155,46 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                       });
                       refreshController.loadComplete();
                     },
-                    enablePullDown: true,
-                    enablePullUp: true,
-                    child: state is GetInvoicesLoading
+                    enablePullUp: state.getInvoicesResponse?.result?.listMetadata.totalPages == pageNo ? false : true,
+                    child: state is GetInvoicesLoading && pageNo == 2
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
-                        : Container(
-                            color: AppColors.scaffoldColor,
-                            child: ListView.builder(
-                              physics: const ScrollPhysics(),
-                              itemCount: invoices.length,
-                              itemBuilder: (context, index) {
-                                return InvoiceListItem(
-                                  invoice: invoices[index],
-                                  onTap: () async {
-                                    setState(() {
-                                      tapped = true;
-                                    });
-                                    await BlocProvider.of<GetInvoicesCubit>(context)
-                                        .getSingleInvoice(id: invoices[index].id);
-                                  },
-                                );
-                              },
-                            ),
-                          ),
+                        : invoices.isEmpty
+                            ? SingleChildScrollView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                child: SizedBox(
+                                  height: MediaQuery.of(context).size.height / 1.5,
+                                  child: EmptyScreen(
+                                    title: "no_invoices".tr(),
+                                    subtitle: "no_invoices_subtitle".tr(),
+                                    imageString: ImageAssets.noInvoices,
+                                  ),
+                                ),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(bottom: 100.0),
+                                child: Container(
+                                  color: AppColors.whiteColor,
+                                  child: ListView.builder(
+                                    physics: const ScrollPhysics(),
+                                    itemCount: invoices.length,
+                                    itemBuilder: (context, index) {
+                                      return InvoiceListItem(
+                                        key: UniqueKey(),
+                                        invoice: invoices[index],
+                                        onTap: () async {
+                                          setState(() {
+                                            tapped = true;
+                                          });
+                                          await BlocProvider.of<GetInvoicesCubit>(context)
+                                              .getSingleInvoice(id: invoices[index].id);
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
                   ),
                 ),
               ),
