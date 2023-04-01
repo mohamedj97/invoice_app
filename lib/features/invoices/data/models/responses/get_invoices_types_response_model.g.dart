@@ -11,18 +11,12 @@ GetInvoiceTypesResponseDataModel _$GetInvoiceTypesResponseDataModelFromJson(
     GetInvoiceTypesResponseDataModel(
       result:
           InvoiceLookUpResult.fromJson(json['result'] as Map<String, dynamic>),
-      metaData: (json['metaData'] as List<dynamic>)
-          .map((e) => Meta.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      total: json['total'] as int?,
     );
 
 Map<String, dynamic> _$GetInvoiceTypesResponseDataModelToJson(
         GetInvoiceTypesResponseDataModel instance) =>
     <String, dynamic>{
       'result': instance.result,
-      'total': instance.total,
-      'metaData': instance.metaData,
     };
 
 GetInvoiceTypesResponse _$GetInvoiceTypesResponseFromJson(

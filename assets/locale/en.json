@@ -92,6 +92,7 @@
   "invoice_type": "Invoice Type",
   "country": "Country",
   "city": "City",
+  "filter": "Filter",
   "additional_details": "Additional Details",
   "change_password": "Change Password",
   "current_password": "Current Password",

@@ -10,8 +10,6 @@ part 'get_invoices_types_response_model.g.dart';
 class GetInvoiceTypesResponseDataModel extends InvoiceTypesResultResponse {
   GetInvoiceTypesResponseDataModel({
     required super.result,
-    required super.metaData,
-    super.total,
   });
 
   factory GetInvoiceTypesResponseDataModel.fromJson(Map<String, dynamic> json) =>
