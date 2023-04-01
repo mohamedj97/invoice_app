@@ -18,6 +18,7 @@ class GetInvoiceTypesResponseDataModel extends InvoiceLookUpResult {
     required super.branches,
     required super.paymentTerms,
     required super.taxTypes,
+    required super.status,
     required super.taxSubTypes,
     required super.customers,
     required super.currencies,

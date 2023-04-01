@@ -21,6 +21,7 @@ class InvoiceLookUpResult {
   late List<BaseLookup> unitTypes = [];
   late List<ItemLookup> items = [];
   late List<Meta> metaData = [];
+  late List<BaseLookup> status = [];
 
   InvoiceLookUpResult({
     required this.invoiceType,
@@ -31,6 +32,7 @@ class InvoiceLookUpResult {
     required this.taxSubTypes,
     required this.customers,
     required this.currencies,
+    required this.status,
     required this.items,
     required this.countries,
     required this.unitTypes,

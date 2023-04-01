@@ -12,6 +12,9 @@ GetInvoiceTypesResponseDataModel _$GetInvoiceTypesResponseDataModelFromJson(
           invoiceType: (json['invoiceType'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
+          status: (json['status'] as List<dynamic>)
+              .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
+              .toList(),
       metaData: (json['metaData'] as List<dynamic>)
           .map((e) => Meta.fromJson(e as Map<String, dynamic>))
           .toList(),
