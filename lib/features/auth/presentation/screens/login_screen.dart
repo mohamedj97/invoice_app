@@ -92,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
               }
             }
             if (state.loginRequestState == RequestState.error) {
+              await DiskRepo().clearAll();
               await showDialog(
                 context: context,
                 builder: (context) {

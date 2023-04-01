@@ -69,7 +69,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                     topLeft: Radius.circular(40.0),
                   ),
                 ),
-                child: 1 == 1
+                child: cubitSales.invoiceTotals.isEmpty
                     ? Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
                         child: ListView(
