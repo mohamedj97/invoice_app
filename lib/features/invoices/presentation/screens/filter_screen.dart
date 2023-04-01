@@ -59,8 +59,8 @@ class _FilterScreenState extends State<FilterScreen> {
         },
         builder: (context, state) {
           customers =
-              state.getInvoiceTypesResponse?.result?.result.customers ?? [];
-          status = state.getInvoiceTypesResponse?.result?.result.status ?? [];
+              state.getInvoiceTypesResponse?.result?.customers ?? [];
+          status = state.getInvoiceTypesResponse?.result?.status ?? [];
           return CustomScaffold(
             leading: const CustomBackButton(),
             title: "Filter",

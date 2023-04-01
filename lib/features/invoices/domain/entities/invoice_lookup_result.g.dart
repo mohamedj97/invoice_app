@@ -17,6 +17,9 @@ InvoiceLookUpResult _$InvoiceLookUpResultFromJson(Map<String, dynamic> json) =>
       paymentTerms: (json['paymentTerms'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
+          metaData: (json['metaData'] as List<dynamic>)
+              .map((e) => Meta.fromJson(e as Map<String, dynamic>))
+              .toList(),
       taxTypes: (json['taxTypes'] as List<dynamic>)
           .map((e) => LookupCode.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -57,4 +60,5 @@ Map<String, dynamic> _$InvoiceLookUpResultToJson(
       'status': instance.status,
       'unitTypes': instance.unitTypes,
       'items': instance.items,
+      'metaData': instance.metaData,
     };

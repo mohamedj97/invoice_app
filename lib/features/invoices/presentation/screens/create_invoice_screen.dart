@@ -140,32 +140,32 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                           }
                         },
                         builder: (context, state) {
-                          customers = state.getInvoiceTypesResponse?.result?.result.customers ?? [];
-                          invoiceTypes = state.getInvoiceTypesResponse?.result?.result.invoiceTypes ?? [];
-                          branches = state.getInvoiceTypesResponse?.result?.result.branches ?? [];
-                          unitTypes = state.getInvoiceTypesResponse?.result?.result.unitTypes ?? [];
-                          currencies = state.getInvoiceTypesResponse?.result?.result.currencies ?? [];
-                          taxTypes = state.getInvoiceTypesResponse?.result?.result.taxTypes ?? [];
-                          taxSubTypes = state.getInvoiceTypesResponse?.result?.result.taxSubTypes ?? [];
-                          countries = state.getInvoiceTypesResponse?.result?.result.countries ?? [];
-                          paymentTerms = state.getInvoiceTypesResponse?.result?.result.paymentTerms ?? [];
-                          items = state.getInvoiceTypesResponse?.result?.result.items ?? [];
+                          customers = state.getInvoiceTypesResponse?.result?.customers ?? [];
+                          invoiceTypes = state.getInvoiceTypesResponse?.result?.invoiceTypes ?? [];
+                          branches = state.getInvoiceTypesResponse?.result?.branches ?? [];
+                          unitTypes = state.getInvoiceTypesResponse?.result?.unitTypes ?? [];
+                          currencies = state.getInvoiceTypesResponse?.result?.currencies ?? [];
+                          taxTypes = state.getInvoiceTypesResponse?.result?.taxTypes ?? [];
+                          taxSubTypes = state.getInvoiceTypesResponse?.result?.taxSubTypes ?? [];
+                          countries = state.getInvoiceTypesResponse?.result?.countries ?? [];
+                          paymentTerms = state.getInvoiceTypesResponse?.result?.paymentTerms ?? [];
+                          items = state.getInvoiceTypesResponse?.result?.items ?? [];
 
                           if (hasData) {
                             InvoicesLocalDataSource.taxTypes = taxTypes;
                             InvoicesLocalDataSource.taxSubTypes = taxSubTypes;
                             extraDiscountAmount = widget.invoice?.extraDiscountAmount;
-                            customerValue = state.getInvoiceTypesResponse?.result?.result.customers
+                            customerValue = state.getInvoiceTypesResponse?.result?.customers
                                 .firstWhere((element) => element.id == widget.invoice?.customerId);
                             InvoicesLocalDataSource.customerId = widget.invoice!.customerId;
                             InvoicesLocalDataSource.customerName = state
-                                .getInvoiceTypesResponse?.result?.result.customers
+                                .getInvoiceTypesResponse?.result?.customers
                                 .firstWhere((element) => element.id == widget.invoice?.customerId)
                                 .name;
                             InvoicesLocalDataSource.invoiceDate = widget.invoice!.invoiceDate;
                             InvoicesLocalDataSource.selectedItemsNames = [];
                             InvoicesLocalDataSource.invoiceType = state
-                                .getInvoiceTypesResponse?.result?.result.invoiceTypes
+                                .getInvoiceTypesResponse?.result?.invoiceTypes
                                 .firstWhere((element) => element.id == widget.invoice?.invoiceTypeId);
                             for (var item in items) {
                               for (int i = 0; i < InvoicesLocalDataSource.addedItems.length; i++) {
