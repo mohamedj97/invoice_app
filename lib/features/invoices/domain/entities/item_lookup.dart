@@ -11,7 +11,7 @@ class ItemLookup {
     this.name,
 
   });
-
+//TODO: check price
   String? code;
   String? brickCode;
   String? description;
