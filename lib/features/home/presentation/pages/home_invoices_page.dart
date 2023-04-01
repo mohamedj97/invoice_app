@@ -8,6 +8,7 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/image_assets.dart';
 import 'package:invoice_app/core/utils/string_validation_extension.dart';
 import 'package:invoice_app/features/invoices/data/data_sources/invoices_local_data_source.dart';
+import 'package:invoice_app/features/invoices/domain/entities/invoice_filter.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/create_invoice_screen.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -40,18 +41,23 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
 
   @override
   void initState() {
-    // if (InvoicesLocalDataSource.status != null ||
-    //     InvoicesLocalDataSource.invoiceDate != null ||
-    //     InvoicesLocalDataSource.customerId != null) {
-    //   // cubit.filterInvoices(InvoiceFilterModel(
-    //   //   status: InvoicesLocalDataSource.status,
-    //   //   customerName: InvoicesLocalDataSource.customerName,
-    //   //   customerId: InvoicesLocalDataSource.customerId,
-    //   //   invoiceDate: InvoicesLocalDataSource.invoiceDate,
-    //   // ));
-    // } else {
-    cubit.getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10, pageNo: 1));
-    // }
+    if (InvoicesLocalDataSource.status != null ||
+        InvoicesLocalDataSource.invoiceDate != null ||
+        InvoicesLocalDataSource.customerId != null) {
+      cubit.getInvoices(InvoiceFilterGenericFilterModel(
+        pageSize: 10,
+        pageNo: 1,
+        filter: InvoiceFilter(
+          freeText: searchController.text,
+          customerId: InvoicesLocalDataSource.customerId,
+          customerName: InvoicesLocalDataSource.customerName,
+          invoiceDateFrom: InvoicesLocalDataSource.invoiceDate,
+          statusId: InvoicesLocalDataSource.status,
+        ),
+      ));
+    } else {
+      cubit.getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10, pageNo: 1));
+    }
     super.initState();
   }
 

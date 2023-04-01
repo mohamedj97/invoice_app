@@ -298,7 +298,7 @@ class _FilterScreenState extends State<FilterScreen> {
                               invoiceDate = formState.value["invoice_date"];
                             });
                             InvoicesLocalDataSource.status =
-                                _value == null ? null : status[_value!].name;
+                                _value == null ? null : status[_value!].id;
                             InvoicesLocalDataSource.customerName =
                                 customerValue?.name;
                             InvoicesLocalDataSource.customerId =
