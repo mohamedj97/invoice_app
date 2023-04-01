@@ -42,7 +42,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
     if (widget.existItem != null) {
       item = ItemLookup(
         unittypeID: widget.existItem?.unitType ?? 0,
-        //price: widget.existItem?.priceEgp ?? 0.0,
+        price: widget.existItem?.priceEgp ?? 0.0,
         id: widget.existItem?.itemId ?? 0,
         name: widget.itemName ?? "",
         description: widget.existItem?.itemDescription ?? "",
@@ -144,7 +144,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                         onChanged: (itemValue) {
                           setState(() {
                             item = itemValue;
-                           // priceController.text = item!.price.toString();
+                            priceController.text = item!.price.toString();
                           });
                         },
                         validator: (value) {

@@ -7,15 +7,16 @@ class ItemLookup {
     this.brickCode,
     this.description,
     this.unittypeID,
+    this.price,
    required this.id,
     this.name,
 
   });
-//TODO: check price
   String? code;
   String? brickCode;
   String? description;
   int? unittypeID;
+  num? price;
   int id;
   String? name;
 
