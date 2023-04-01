@@ -1,9 +1,9 @@
-import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'invoice_filter.dart';
-
-
-class InvoiceFilterRequest extends Equatable {
+part 'invoice_filter_request.g.dart';
+@JsonSerializable()
+class InvoiceFilterRequest {
 
   InvoiceFilter? filter;
   int pageNo;
@@ -20,11 +20,12 @@ class InvoiceFilterRequest extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-    filter,
-    pageNo,
-    pageSize,
-    sortBy,
-    sortDir,
-  ];
+  String toString() {
+    return 'InvoiceFilterRequest[filter=$filter,  pageNo=$pageNo,  pageSize=$pageSize,  sortDir=$sortDir,  sortBy=$sortBy,  ]';
+  }
+
+  factory InvoiceFilterRequest.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceFilterRequestFromJson(json);
+
+  Map<String, dynamic> toJson() => _$InvoiceFilterRequestToJson(this);
 }

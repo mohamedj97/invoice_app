@@ -19,10 +19,10 @@ ItemLookup _$ItemLookupFromJson(Map<String, dynamic> json) => ItemLookup(
 Map<String, dynamic> _$ItemLookupToJson(ItemLookup instance) =>
     <String, dynamic>{
       'code': instance.code,
-      'price': instance.price,
       'brickCode': instance.brickCode,
       'description': instance.description,
       'unittypeID': instance.unittypeID,
+      'price': instance.price,
       'id': instance.id,
       'name': instance.name,
     };

@@ -9,12 +9,9 @@ part of 'get_invoices_types_response_model.dart';
 GetInvoiceTypesResponseDataModel _$GetInvoiceTypesResponseDataModelFromJson(
         Map<String, dynamic> json) =>
     GetInvoiceTypesResponseDataModel(
-          invoiceType: (json['invoiceType'] as List<dynamic>)
+      invoiceType: (json['invoiceType'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
-          status: (json['status'] as List<dynamic>)
-              .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
-              .toList(),
       metaData: (json['metaData'] as List<dynamic>)
           .map((e) => Meta.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -26,6 +23,9 @@ GetInvoiceTypesResponseDataModel _$GetInvoiceTypesResponseDataModelFromJson(
           .toList(),
       taxTypes: (json['taxTypes'] as List<dynamic>)
           .map((e) => LookupCode.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      status: (json['status'] as List<dynamic>)
+          .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
       taxSubTypes: (json['taxSubTypes'] as List<dynamic>)
           .map((e) => TaxSubtypeLookup.fromJson(e as Map<String, dynamic>))
@@ -61,6 +61,7 @@ Map<String, dynamic> _$GetInvoiceTypesResponseDataModelToJson(
       'unitTypes': instance.unitTypes,
       'items': instance.items,
       'metaData': instance.metaData,
+      'status': instance.status,
     };
 
 GetInvoiceTypesResponse _$GetInvoiceTypesResponseFromJson(

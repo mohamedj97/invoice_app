@@ -48,7 +48,6 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
         pageSize: 10,
         pageNo: 1,
         filter: InvoiceFilter(
-          freeText: searchController.text,
           customerId: InvoicesLocalDataSource.customerId,
           customerName: InvoicesLocalDataSource.customerName,
           invoiceDateFrom: InvoicesLocalDataSource.invoiceDate,
