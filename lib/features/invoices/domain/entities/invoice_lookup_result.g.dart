@@ -8,7 +8,7 @@ part of 'invoice_lookup_result.dart';
 
 InvoiceLookUpResult _$InvoiceLookUpResultFromJson(Map<String, dynamic> json) =>
     InvoiceLookUpResult(
-      invoiceTypes: (json['invoiceTypes'] as List<dynamic>)
+          invoiceType: (json['invoiceType'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
       branches: (json['branches'] as List<dynamic>)
@@ -38,9 +38,6 @@ InvoiceLookUpResult _$InvoiceLookUpResultFromJson(Map<String, dynamic> json) =>
       countries: (json['countries'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
-          status: (json['status'] as List<dynamic>)
-              .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
-              .toList(),
       unitTypes: (json['unitTypes'] as List<dynamic>)
           .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -49,7 +46,7 @@ InvoiceLookUpResult _$InvoiceLookUpResultFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$InvoiceLookUpResultToJson(
         InvoiceLookUpResult instance) =>
     <String, dynamic>{
-      'invoiceTypes': instance.invoiceTypes,
+      'invoiceType': instance.invoiceType,
       'branches': instance.branches,
       'paymentTerms': instance.paymentTerms,
       'taxSubTypes': instance.taxSubTypes,
@@ -57,7 +54,6 @@ Map<String, dynamic> _$InvoiceLookUpResultToJson(
       'currencies': instance.currencies,
       'countries': instance.countries,
       'customers': instance.customers,
-      'status': instance.status,
       'unitTypes': instance.unitTypes,
       'items': instance.items,
       'metaData': instance.metaData,

@@ -141,7 +141,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                         },
                         builder: (context, state) {
                           customers = state.getInvoiceTypesResponse?.result?.customers ?? [];
-                          invoiceTypes = state.getInvoiceTypesResponse?.result?.invoiceTypes ?? [];
+                          invoiceTypes = state.getInvoiceTypesResponse?.result?.invoiceType ?? [];
                           branches = state.getInvoiceTypesResponse?.result?.branches ?? [];
                           unitTypes = state.getInvoiceTypesResponse?.result?.unitTypes ?? [];
                           currencies = state.getInvoiceTypesResponse?.result?.currencies ?? [];
@@ -165,7 +165,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                             InvoicesLocalDataSource.invoiceDate = widget.invoice!.invoiceDate;
                             InvoicesLocalDataSource.selectedItemsNames = [];
                             InvoicesLocalDataSource.invoiceType = state
-                                .getInvoiceTypesResponse?.result?.invoiceTypes
+                                .getInvoiceTypesResponse?.result?.invoiceType
                                 .firstWhere((element) => element.id == widget.invoice?.invoiceTypeId);
                             for (var item in items) {
                               for (int i = 0; i < InvoicesLocalDataSource.addedItems.length; i++) {

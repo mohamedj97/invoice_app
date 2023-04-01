@@ -10,10 +10,9 @@ part 'invoice_lookup_result.g.dart';
 
 @JsonSerializable()
 class InvoiceLookUpResult {
-  late List<BaseLookup> invoiceTypes = [];
+  late List<BaseLookup> invoiceType = [];
   late List<BaseLookup> branches = [];
   late List<BaseLookup> paymentTerms = [];
-  late List<BaseLookup> status = [];
   late List<TaxSubtypeLookup> taxSubTypes = [];
   late List<LookupCode> taxTypes = [];
   late List<LookupCode> currencies = [];
@@ -24,7 +23,7 @@ class InvoiceLookUpResult {
   late List<Meta> metaData = [];
 
   InvoiceLookUpResult({
-    required this.invoiceTypes,
+    required this.invoiceType,
     required this.metaData,
     required this.branches,
     required this.paymentTerms,
@@ -35,7 +34,6 @@ class InvoiceLookUpResult {
     required this.items,
     required this.countries,
     required this.unitTypes,
-    required this.status,
   });
 
   factory InvoiceLookUpResult.fromJson(Map<String, dynamic> json) =>

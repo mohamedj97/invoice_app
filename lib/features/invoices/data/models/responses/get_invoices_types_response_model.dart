@@ -1,15 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
 import '../../../../../core/api/base_api_response.dart';
+import '../../../../products/domain/entities/base_lookup.dart';
 import '../../../../products/domain/entities/meta.dart';
 import '../../../domain/entities/get_invoices_types_result_response.dart';
 import '../../../domain/entities/invoice_lookup_result.dart';
+import '../../../domain/entities/item_lookup.dart';
+import '../../../domain/entities/lookup_code.dart';
+import '../../../domain/entities/tax_subtype_lookup.dart';
 
 part 'get_invoices_types_response_model.g.dart';
 
 @JsonSerializable()
 class GetInvoiceTypesResponseDataModel extends InvoiceLookUpResult {
   GetInvoiceTypesResponseDataModel({
-    required super.invoiceTypes,
+    required super.invoiceType,
     required super.metaData,
     required super.branches,
     required super.paymentTerms,
@@ -20,7 +24,6 @@ class GetInvoiceTypesResponseDataModel extends InvoiceLookUpResult {
     required super.items,
     required super.countries,
     required super.unitTypes,
-    required super.status,
   });
 
   factory GetInvoiceTypesResponseDataModel.fromJson(Map<String, dynamic> json) =>

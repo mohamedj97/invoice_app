@@ -21,8 +21,7 @@ class AddInvoiceItems extends StatefulWidget {
   final Line? existItem;
   final String? itemName;
 
-  const AddInvoiceItems({Key? key, this.existItem, this.itemName})
-      : super(key: key);
+  const AddInvoiceItems({Key? key, this.existItem, this.itemName}) : super(key: key);
 
   @override
   State<AddInvoiceItems> createState() => _AddInvoiceItemsState();
@@ -34,8 +33,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
   ItemLookup? item;
   num? price;
   num? discountRate;
-  LineTotal lineTotal =
-      LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
+  LineTotal lineTotal = LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
   TextEditingController priceController = TextEditingController(text: "00");
   int? specificAddedItemIndex;
 
@@ -44,29 +42,21 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
     if (widget.existItem != null) {
       item = ItemLookup(
         unittypeID: widget.existItem?.unitType ?? 0,
-        price: widget.existItem?.priceEgp ?? 0.0,
+        //price: widget.existItem?.priceEgp ?? 0.0,
         id: widget.existItem?.itemId ?? 0,
         name: widget.itemName ?? "",
         description: widget.existItem?.itemDescription ?? "",
-        code: InvoicesLocalDataSource.items
-            .firstWhere((item) => item.id == widget.existItem!.itemId)
-            .code,
-        brickCode: InvoicesLocalDataSource.items
-            .firstWhere((item) => item.id == widget.existItem!.itemId)
-            .brickCode,
+        code: InvoicesLocalDataSource.items.firstWhere((item) => item.id == widget.existItem!.itemId).code,
+        brickCode: InvoicesLocalDataSource.items.firstWhere((item) => item.id == widget.existItem!.itemId).brickCode,
       );
-      specificAddedItemIndex = InvoicesLocalDataSource.addedItems.indexOf(
-          InvoicesLocalDataSource.addedItems
-              .firstWhere((element) => element.itemId == item!.id));
-      InvoicesLocalDataSource.addedTaxes =
-          InvoicesLocalDataSource.addedItems[specificAddedItemIndex!].lineTax ??
-              [];
+      specificAddedItemIndex = InvoicesLocalDataSource.addedItems
+          .indexOf(InvoicesLocalDataSource.addedItems.firstWhere((element) => element.itemId == item!.id));
+      InvoicesLocalDataSource.addedTaxes = InvoicesLocalDataSource.addedItems[specificAddedItemIndex!].lineTax ?? [];
       quantity = widget.existItem?.quantity ?? 0.0;
       price = widget.existItem?.priceEgp ?? 0.0;
       discountRate = widget.existItem?.discountRate ?? 0.0;
-      priceController.text = widget.existItem?.priceEgp != null
-          ? widget.existItem!.priceEgp.toString()
-          : 0.0.toString();
+      priceController.text =
+          widget.existItem?.priceEgp != null ? widget.existItem!.priceEgp.toString() : 0.0.toString();
     }
     super.initState();
   }
@@ -90,22 +80,17 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 discountRate = num.parse(formState.value["quantity"]);
                 price = num.parse(priceController.text);
                 setState(() {
-                  for (int i = 0;
-                      i < InvoicesLocalDataSource.addedItems.length;
-                      i++) {
-                    if (InvoicesLocalDataSource.addedItems[i].itemId ==
-                        item!.id) {
-                      InvoicesLocalDataSource.addedItems
-                          .remove(InvoicesLocalDataSource.addedItems[i]);
-                      InvoicesLocalDataSource.selectedItemsNames.remove(
-                          InvoicesLocalDataSource.selectedItemsNames[i]);
+                  for (int i = 0; i < InvoicesLocalDataSource.addedItems.length; i++) {
+                    if (InvoicesLocalDataSource.addedItems[i].itemId == item!.id) {
+                      InvoicesLocalDataSource.addedItems.remove(InvoicesLocalDataSource.addedItems[i]);
+                      InvoicesLocalDataSource.selectedItemsNames.remove(InvoicesLocalDataSource.selectedItemsNames[i]);
                     }
                   }
                   InvoicesLocalDataSource.addedItems.add(
                     Line(
                       itemDescription: item!.description!,
                       itemId: item!.id,
-                      unitType: item!.unittypeID,
+                      unitType: item!.unittypeID ?? 0,
                       quantity: quantity ?? 0,
                       currencyId: 70,
                       priceEgp: price ?? 00,
@@ -116,8 +101,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                       exchangeRate: 0,
                     ),
                   );
-                  InvoicesLocalDataSource.selectedItemsNames
-                      .add(item?.name ?? "");
+                  InvoicesLocalDataSource.selectedItemsNames.add(item?.name ?? "");
                   InvoicesLocalDataSource.addedTaxes = [];
                 });
                 Navigator.pop(context);
@@ -155,13 +139,12 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                       const SizedBox(height: 16.0),
                       DropdownButtonFormField<ItemLookup>(
                         value: widget.existItem != null
-                            ? InvoicesLocalDataSource.items.firstWhere(
-                                (item) => item.id == widget.existItem!.itemId)
+                            ? InvoicesLocalDataSource.items.firstWhere((item) => item.id == widget.existItem!.itemId)
                             : null,
                         onChanged: (itemValue) {
                           setState(() {
                             item = itemValue;
-                            priceController.text = item!.price.toString();
+                           // priceController.text = item!.price.toString();
                           });
                         },
                         validator: (value) {
@@ -176,11 +159,9 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                           fillColor: AppColors.labelColor,
                           errorMaxLines: 10,
                           hintText: "item".tr(),
-                          hintStyle:
-                              const TextStyle(color: AppColors.searchBarColor),
+                          hintStyle: const TextStyle(color: AppColors.searchBarColor),
                         ),
-                        items: InvoicesLocalDataSource.items
-                            .map((ItemLookup item) {
+                        items: InvoicesLocalDataSource.items.map((ItemLookup item) {
                           return DropdownMenuItem<ItemLookup>(
                             value: item,
                             child: Text(
@@ -202,8 +183,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 showCurrency: false,
                 title: "quantity".tr(),
                 name: "quantity",
-                initialValue:
-                    widget.existItem != null ? quantity.toString() : "",
+                initialValue: widget.existItem != null ? quantity.toString() : "",
                 // initialValue: hasData
                 //     ? widget.invoice!.totalAmount.toString()
                 //     : null,
@@ -217,8 +197,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
               AddPriceItemInCreateInvoice(
                 title: "discount_rate".tr(),
                 name: "discount_rate",
-                initialValue:
-                    widget.existItem != null ? discountRate.toString() : "",
+                initialValue: widget.existItem != null ? discountRate.toString() : "",
                 isRequired: false,
               ),
               InvoiceAddItemWidget(
@@ -226,8 +205,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 iconPath: IconAssets.addCustomerIcon,
                 onTap: () {
                   Navigator.of(context)
-                      .push(CustomPageRoute.createRoute(
-                          page: const AddInvoiceTaxes()))
+                      .push(CustomPageRoute.createRoute(page: const AddInvoiceTaxes()))
                       .then((_) => setState(() {}));
                 },
               ),
@@ -236,16 +214,11 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                 physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  var taxRateValue=InvoicesLocalDataSource.addedTaxes[index].taxrate;
-                  var mainType = InvoicesLocalDataSource.taxTypes.firstWhere(
-                      (element) =>
-                          element.id ==
-                          InvoicesLocalDataSource.addedTaxes[index].taxTypeId);
+                  var taxRateValue = InvoicesLocalDataSource.addedTaxes[index].taxrate;
+                  var mainType = InvoicesLocalDataSource.taxTypes
+                      .firstWhere((element) => element.id == InvoicesLocalDataSource.addedTaxes[index].taxTypeId);
                   var mainTaxType = InvoicesLocalDataSource.taxSubTypes
-                      .firstWhere((element) =>
-                          element.id ==
-                          InvoicesLocalDataSource
-                              .addedTaxes[index].taxSubTypeId);
+                      .firstWhere((element) => element.id == InvoicesLocalDataSource.addedTaxes[index].taxSubTypeId);
                   return Dismissible(
                     background: Container(color: AppColors.errorColor),
                     key: UniqueKey(),
@@ -257,9 +230,8 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.whiteColor,
-                            border: Border.all(color: AppColors.labelColor)),
+                        decoration:
+                            BoxDecoration(color: AppColors.whiteColor, border: Border.all(color: AppColors.labelColor)),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -281,9 +253,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                                 ),
                               ),
                               const SizedBox(height: 8.0),
-                              LWCustomText(
-                                  title: "sub_tax_type".tr(),
-                                  color: AppColors.labelColor),
+                              LWCustomText(title: "sub_tax_type".tr(), color: AppColors.labelColor),
                               const SizedBox(height: 8.0),
                               LWCustomText(title: mainTaxType.name ?? ""),
                               const SizedBox(height: 8.0),
@@ -295,19 +265,11 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                                   color: AppColors.searchBarColor,
                                 ),
                               ),
-                              taxRateValue== null
-                                  ? const SizedBox()
-                                  : const SizedBox(height: 8.0),
+                              taxRateValue == null ? const SizedBox() : const SizedBox(height: 8.0),
                               taxRateValue == null
                                   ? const SizedBox()
-                                  : LWCustomText(
-                                      title: "tax_rate".tr(),
-                                      color: AppColors.labelColor),
-                              LWCustomText(
-                                  title: taxRateValue == null
-                                      ? ""
-                                      : taxRateValue
-                                          .toString()),
+                                  : LWCustomText(title: "tax_rate".tr(), color: AppColors.labelColor),
+                              LWCustomText(title: taxRateValue == null ? "" : taxRateValue.toString()),
                             ],
                           ),
                         ),
