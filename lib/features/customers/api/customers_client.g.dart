@@ -19,20 +19,22 @@ class _CustomersClient implements CustomersClient {
   String? baseUrl;
 
   @override
-  Future<GetCustomersResponse> getCustomers() async {
+  Future<GetCustomersResponse> getCustomers(
+      customerFilterGenericFilterModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
+    _data.addAll(customerFilterGenericFilterModel.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<GetCustomersResponse>(Options(
-      method: 'GET',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'Customers',
+              'Customers/getcustomers',
               queryParameters: queryParameters,
               data: _data,
             )

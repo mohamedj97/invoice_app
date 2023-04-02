@@ -16,7 +16,7 @@ part 'customers_client.g.dart';
 abstract class CustomersClient {
   factory CustomersClient(Dio dio, {String baseUrl}) = _CustomersClient;
 
-  @GET(EndPoints.getCustomers)
+  @POST(EndPoints.getCustomers)
   Future<GetCustomersResponse> getCustomers(@Body() CustomerFilterGenericFilterModel customerFilterGenericFilterModel);
 
   @GET(EndPoints.getCustomersLookups)

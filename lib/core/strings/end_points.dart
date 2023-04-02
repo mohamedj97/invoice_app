@@ -20,7 +20,7 @@ class EndPoints {
   static const filterInvoices = 'Invoices/getinvoicelist';
 
   //customers
-  static const getCustomers = 'Customers';
+  static const getCustomers = 'Customers/getcustomers';
   static const getCustomersLookups = 'Customers/getCustomer-lookups';
 
   //products

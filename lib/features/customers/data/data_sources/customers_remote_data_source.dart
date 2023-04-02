@@ -2,12 +2,13 @@ import 'package:invoice_app/core/api/base_api_response.dart';
 
 import '../../../../../core/api/api_repo.dart';
 import '../models/requests/customer_request_model.dart';
+import '../models/requests/get_customers_request_model.dart';
 import '../models/responses/add_customer_response_model.dart';
 import '../models/responses/get_customer_types_response_model.dart';
 import '../models/responses/get_customers_response_model.dart';
 
 abstract class CustomersRemoteDataSource {
-  Future<GetCustomersResponse> getCustomers();
+  Future<GetCustomersResponse> getCustomers(CustomerFilterGenericFilterModel customerFilterGenericFilterModel);
   Future<AddCustomerResponse> addCustomer(CustomerModelModel customerModel);
   Future<StringResponse> editCustomer(int id,CustomerModelModel customerModel);
   Future<GetCustomerTypesResponse> getCustomersLookUps();
@@ -19,8 +20,8 @@ class CustomersRemoteDataSourceImpl extends CustomersRemoteDataSource {
     required this.apiRepo,
   });
   @override
-  Future<GetCustomersResponse> getCustomers() async {
-    final response = await apiRepo.customersClient.getCustomers();
+  Future<GetCustomersResponse> getCustomers(CustomerFilterGenericFilterModel customerFilterGenericFilterModel) async {
+    final response = await apiRepo.customersClient.getCustomers(customerFilterGenericFilterModel);
 
     return response;
   }

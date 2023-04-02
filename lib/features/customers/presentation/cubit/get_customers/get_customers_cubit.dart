@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../../core/utils/enums.dart';
+import '../../../data/models/requests/get_customers_request_model.dart';
 import '../../../data/models/responses/get_customers_response_model.dart';
 import '../../../domain/use_cases/get_customers_use_case.dart';
 
@@ -15,9 +16,9 @@ class GetCustomersCubit extends Cubit<GetCustomersState> {
       this.getCustomersUseCase,
       ) : super(GetCustomersInitial());
 
-  Future<void> getCustomers() async {
+  Future<void> getCustomers(CustomerFilterGenericFilterModel customerFilterGenericFilterModel) async {
     emit(GetCustomersLoading());
-    final response = await getCustomersUseCase.call();
+    final response = await getCustomersUseCase.call(customerFilterGenericFilterModel);
 
     response.fold((failure) {
       emit(GetCustomersFailure(failure: failure.message));

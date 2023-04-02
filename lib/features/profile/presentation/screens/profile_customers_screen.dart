@@ -15,6 +15,7 @@ import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
+import '../../../customers/data/models/requests/get_customers_request_model.dart';
 import '../../../customers/presentation/screens/add_customer_screen.dart';
 
 class ProfileCustomersScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
 
   @override
   void initState() {
-    cubit.getCustomers();
+    cubit.getCustomers(CustomerFilterGenericFilterModel(pageSize: 10,pageNo: 1));
     super.initState();
   }
 
@@ -116,7 +117,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                               onRefresh: () async {
                                 await BlocProvider.of<GetCustomersCubit>(
                                         context)
-                                    .getCustomers();
+                                    .getCustomers(CustomerFilterGenericFilterModel(pageSize: 10,pageNo: 1));
                                 searchController.clear();
                               },
                               child: SingleChildScrollView(
@@ -137,7 +138,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                                 onRefresh: () async {
                                   await BlocProvider.of<GetCustomersCubit>(
                                           context)
-                                      .getCustomers();
+                                      .getCustomers(CustomerFilterGenericFilterModel(pageSize: 10,pageNo: 1));
                                   searchController.clear();
                                 },
                                 child: ListView.builder(

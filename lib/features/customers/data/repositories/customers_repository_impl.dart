@@ -10,6 +10,7 @@ import '../../../../core/error/exception.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/mixins/app_mixins.dart';
 import '../data_sources/customers_remote_data_source.dart';
+import '../models/requests/get_customers_request_model.dart';
 import '../models/responses/get_customers_response_model.dart';
 
 class CustomersRepositoryImpl extends CustomersRepository with ConnectivityMixin {
@@ -18,9 +19,9 @@ class CustomersRepositoryImpl extends CustomersRepository with ConnectivityMixin
   CustomersRepositoryImpl(this.customersRemoteDataSource);
 
   @override
-  Future<Either<Failure, GetCustomersResponse>> getCustomers() async {
+  Future<Either<Failure, GetCustomersResponse>> getCustomers(CustomerFilterGenericFilterModel customerFilterGenericFilterModel) async {
     try {
-      final response = await customersRemoteDataSource.getCustomers();
+      final response = await customersRemoteDataSource.getCustomers(customerFilterGenericFilterModel);
 
       return Right(response);
     } on ServerException catch (e) {
