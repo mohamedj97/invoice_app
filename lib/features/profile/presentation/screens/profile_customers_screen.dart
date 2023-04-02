@@ -56,12 +56,12 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
           }
         },
         builder: (context, state) {
-          customers = state.getCustomersResponse?.result?.result
+          customers = state.getCustomersResponse?.result?.customers
                   .where((customer) => customer.name!
                       .toLowerCase()
                       .contains(searchController.text))
                   .toList() ??
-              state.getCustomersResponse?.result?.result ??
+              state.getCustomersResponse?.result?.customers ??
               [];
           return CustomScaffold(
             title: "customers".tr(),
@@ -89,7 +89,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                     if (value.isEmptyOrNull) {
                       setState(() {
                         customers =
-                            state.getCustomersResponse?.result?.result ?? [];
+                            state.getCustomersResponse?.result?.customers ?? [];
                       });
                     } else {
                       //searchDebouncer(() {

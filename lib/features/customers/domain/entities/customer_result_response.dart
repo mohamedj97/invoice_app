@@ -1,14 +1,14 @@
-import 'package:equatable/equatable.dart';
 import 'package:invoice_app/features/customers/domain/entities/customer_entity.dart';
 import 'package:invoice_app/features/customers/domain/entities/meta_data_model.dart';
+import '../../../products/domain/entities/list_meta_data.dart';
 
-class CustomerResultResponse extends Equatable {
- late List<CustomerModel> result=[];
-  int? total;
-  late List<MetaDataModel> metaData=[];
+class CustomerResultResponse {
+  late List<CustomerModel> customers = [];
+  late ListMetaData listMetadata;
+  late List<MetaDataModel> metaData = [];
 
-  CustomerResultResponse({required this.result, this.total,required this.metaData});
+  CustomerResultResponse({required this.customers, required this.listMetadata, required this.metaData});
 
   @override
-  List<Object?> get props => [result, total, metaData];
+  List<Object?> get props => [customers, listMetadata, metaData];
 }

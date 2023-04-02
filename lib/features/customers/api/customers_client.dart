@@ -22,9 +22,9 @@ abstract class CustomersClient {
   @GET(EndPoints.getCustomersLookups)
   Future<GetCustomerTypesResponse> getCustomersLookUps();
 
-  @POST(EndPoints.getCustomers)
+  @POST(EndPoints.singleCustomer)
   Future<AddCustomerResponse> addCustomer(@Body() CustomerModelModel customerModel);
 
-  @PUT(EndPoints.getCustomers)
+  @PUT(EndPoints.singleCustomer)
   Future<StringResponse> editCustomer(int id,@Body() CustomerModelModel customerModel);
 }

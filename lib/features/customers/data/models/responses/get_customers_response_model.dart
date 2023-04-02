@@ -4,14 +4,16 @@ import 'package:invoice_app/features/customers/domain/entities/meta_data_model.d
 import '../../../../../core/api/base_api_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../../../products/domain/entities/list_meta_data.dart';
+
 part 'get_customers_response_model.g.dart';
 
 @JsonSerializable()
 class GetCustomersResponseDataModel extends CustomerResultResponse {
   GetCustomersResponseDataModel({
-    required super.result,
-    super.total,
+    required super.customers,
     required super.metaData,
+    required super.listMetadata,
   });
 
   factory GetCustomersResponseDataModel.fromJson(Map<String, dynamic> json) =>

@@ -9,20 +9,21 @@ part of 'get_customers_response_model.dart';
 GetCustomersResponseDataModel _$GetCustomersResponseDataModelFromJson(
         Map<String, dynamic> json) =>
     GetCustomersResponseDataModel(
-      result: (json['result'] as List<dynamic>)
+      customers: (json['customers'] as List<dynamic>)
           .map((e) => CustomerModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      total: json['total'] as int?,
       metaData: (json['metaData'] as List<dynamic>)
           .map((e) => MetaDataModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      listMetadata:
+          ListMetaData.fromJson(json['listMetadata'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$GetCustomersResponseDataModelToJson(
         GetCustomersResponseDataModel instance) =>
     <String, dynamic>{
-      'result': instance.result,
-      'total': instance.total,
+      'customers': instance.customers,
+      'listMetadata': instance.listMetadata,
       'metaData': instance.metaData,
     };
 
