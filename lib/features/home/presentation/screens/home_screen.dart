@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     PageController controller = PageController(initialPage: widget.index ?? 0);
     return CustomScaffold(
       showAppbar: pageIndex != 0,
+      backGroundColor: AppColors.whiteColor,
       title: pageIndex == 3 ? "menu".tr() : BottomAppBarItemsData.labelList[pageIndex],
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
@@ -92,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
       body: PageView(
         allowImplicitScrolling: false,
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
           setState(() {
             pageIndex = index;

@@ -20,12 +20,16 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AnimationController? hideAnimationController;
     Color bottomColor = AppColors.disabledBottomItemColor;
     return AnimatedBottomNavigationBar.builder(
       backgroundColor: AppColors.whiteColor,
       itemCount: 4,
+      hideAnimationController: hideAnimationController,
+      hideAnimationCurve: Curves.easeInBack,
       activeIndex: pageIndex,
       gapLocation: GapLocation.center,
+      splashRadius: 0,
       height: 60.0,
       tabBuilder: (int index, bool isActive) {
         bottomColor =

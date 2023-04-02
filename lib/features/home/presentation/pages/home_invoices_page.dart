@@ -144,6 +144,9 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                     ),
                     controller: refreshController,
                     onRefresh: () async {
+                      setState(() {
+                        invoices.clear();
+                      });
                       await BlocProvider.of<GetInvoicesCubit>(context)
                           .getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10, pageNo: 1));
                       setState(() {
@@ -177,29 +180,26 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                                   ),
                                 ),
                               )
-                            : Padding(
-                                padding: const EdgeInsets.only(bottom: 100.0),
-                                child: Container(
-                                  color: AppColors.whiteColor,
-                                  child: ListView.builder(
-                                    physics: const ScrollPhysics(),
-                                    itemCount: invoices.length,
-                                    itemBuilder: (context, index) {
-                                      return InvoiceListItem(
-                                        key: UniqueKey(),
-                                        invoice: invoices[index],
-                                        onTap: () async {
-                                          setState(() {
-                                            tapped = true;
-                                          });
-                                          await BlocProvider.of<GetInvoicesCubit>(context)
-                                              .getSingleInvoice(id: invoices[index].id);
-                                        },
-                                      );
+                            : Container(
+                              color: AppColors.whiteColor,
+                              child: ListView.builder(
+                                physics: const ScrollPhysics(),
+                                itemCount: invoices.length,
+                                itemBuilder: (context, index) {
+                                  return InvoiceListItem(
+                                    key: UniqueKey(),
+                                    invoice: invoices[index],
+                                    onTap: () async {
+                                      setState(() {
+                                        tapped = true;
+                                      });
+                                      await BlocProvider.of<GetInvoicesCubit>(context)
+                                          .getSingleInvoice(id: invoices[index].id);
                                     },
-                                  ),
-                                ),
+                                  );
+                                },
                               ),
+                            ),
                   ),
                 ),
               ),
