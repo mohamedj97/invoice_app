@@ -218,66 +218,6 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                   ),
                 ),
               ),
-              // Expanded(
-              //   child: state is GetInvoicesLoading
-              //       ? const Center(
-              //           child: CircularProgressIndicator(),
-              //         )
-              //       : invoices.isEmpty
-              //           ? RefreshIndicator(
-              //               onRefresh: () async {
-              //                 await BlocProvider.of<GetInvoicesCubit>(context).getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10,pageNo: 1));
-              //                 setState(() {
-              //                   InvoicesLocalDataSource.status = null;
-              //                   InvoicesLocalDataSource.customerName = null;
-              //                   InvoicesLocalDataSource.customerId = null;
-              //                   InvoicesLocalDataSource.invoiceDate = null;
-              //                 });
-              //                 searchController.clear();
-              //               },
-              //               child: SingleChildScrollView(
-              //                 physics: const AlwaysScrollableScrollPhysics(),
-              //                 child: SizedBox(
-              //                   height: MediaQuery.of(context).size.height / 1.5,
-              //                   child: EmptyScreen(
-              //                     title: "no_invoices".tr(),
-              //                     subtitle: "no_invoices_subtitle".tr(),
-              //                     imageString: ImageAssets.noInvoices,
-              //                   ),
-              //                 ),
-              //               ),
-              //             )
-              //           : RefreshIndicator(
-              //               onRefresh: () async {
-              //                 await BlocProvider.of<GetInvoicesCubit>(context).getInvoices(InvoiceFilterGenericFilterModel(pageSize: 10,pageNo: 1));
-              //                 setState(() {
-              //                   InvoicesLocalDataSource.status = null;
-              //                   InvoicesLocalDataSource.customerName = null;
-              //                   InvoicesLocalDataSource.customerId = null;
-              //                   InvoicesLocalDataSource.invoiceDate = null;
-              //                 });
-              //                 searchController.clear();
-              //               },
-              //               child: Container(
-              //                 color: AppColors.scaffoldColor,
-              //                 child: ListView.builder(
-              //                   physics: const AlwaysScrollableScrollPhysics(),
-              //                   itemCount: invoices.length,
-              //                   itemBuilder: (context, index) {
-              //                     return InvoiceListItem(
-              //                         invoice: invoices[index],
-              //                         onTap: () async {
-              //                           setState(() {
-              //                             tapped = true;
-              //                           });
-              //                           await BlocProvider.of<GetInvoicesCubit>(context)
-              //                               .getSingleInvoice(id: invoices[index].id);
-              //                         });
-              //                   },
-              //                 ),
-              //               ),
-              //             ),
-              // )
             ],
           );
         },
