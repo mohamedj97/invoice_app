@@ -1,15 +1,19 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-
-class Debouncer {
-  final Duration delay;
+class Debounce {
+  Duration delay;
   Timer? _timer;
 
-  Debouncer({this.delay = const Duration(milliseconds: 500)});
+  Debounce(
+      this.delay,
+      );
 
-  void call(VoidCallback action) {
+  call(void Function() callback) {
     _timer?.cancel();
-    _timer = Timer(delay, action);
+    _timer = Timer(delay, callback);
+  }
+
+  dispose() {
+    _timer?.cancel();
   }
 }

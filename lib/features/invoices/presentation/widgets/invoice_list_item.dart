@@ -26,7 +26,7 @@ class InvoiceListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LWCustomText(
-                    title: "${'Invoice_number'.tr()} ${invoice.id.toString()}",
+                    title: "${'Invoice_number'.tr()} ${invoice.invoiceNo.toString()}",
                     color: AppColors.labelColor,
                     fontFamily: FontAssets.avertaRegular,
                     fontSize: 14.0,
