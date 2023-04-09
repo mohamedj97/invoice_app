@@ -36,7 +36,7 @@ class InvoiceFilter{
     "customerName": customerName,
     "invoiceDirection": invoiceDirection,
     "statusId": statusId,
-    "invoiceDateFrom": invoiceDateFrom,
+    "invoiceDateFrom": invoiceDateFrom?.toIso8601String(),
     "invoiceDateTo": invoiceDateTo,
   };
   factory InvoiceFilter.fromJson(Map<String, dynamic> json) => _$InvoiceFilterFromJson(json);
