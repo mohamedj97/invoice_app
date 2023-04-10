@@ -1,8 +1,10 @@
-import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'item_filter.dart';
+part 'product_filter_request.g.dart';
 
-class ProductFilterRequest extends Equatable {
+@JsonSerializable()
+class ProductFilterRequest {
 
   ItemFilter? filter;
   int pageNo;
@@ -17,13 +19,13 @@ class ProductFilterRequest extends Equatable {
      this.sortBy,
      this.sortDir,
   });
-
   @override
-  List<Object?> get props => [
-    filter,
-    pageNo,
-    pageSize,
-    sortBy,
-    sortDir,
-  ];
+  String toString() {
+    return 'ProductFilterRequest[filter=$filter,  pageNo=$pageNo,  pageSize=$pageSize,  sortDir=$sortDir,  sortBy=$sortBy,  ]';
+  }
+
+  factory ProductFilterRequest.fromJson(Map<String, dynamic> json) =>
+      _$ProductFilterRequestFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProductFilterRequestToJson(this);
 }
