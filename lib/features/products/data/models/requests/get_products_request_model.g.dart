@@ -21,7 +21,7 @@ ProductFilterGenericFilterModel _$ProductFilterGenericFilterModelFromJson(
 Map<String, dynamic> _$ProductFilterGenericFilterModelToJson(
         ProductFilterGenericFilterModel instance) =>
     <String, dynamic>{
-      'filter': instance.filter,
+      'filter': instance.filter?.toJson(),
       'pageNo': instance.pageNo,
       'pageSize': instance.pageSize,
       'sortBy': instance.sortBy,
