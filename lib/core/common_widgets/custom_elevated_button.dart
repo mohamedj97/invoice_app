@@ -5,15 +5,16 @@ import 'package:invoice_app/core/assets/colors.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final String title;
+  final Color? color;
   final void Function()? onPressed;
-  const CustomElevatedButton({Key? key, required this.title, this.onPressed}) : super(key: key);
+  const CustomElevatedButton({Key? key, required this.title, this.onPressed, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor:
-        MaterialStateProperty.all(AppColors.primary),
+        MaterialStateProperty.all(color??AppColors.primary),
         padding: MaterialStateProperty.all(
           const EdgeInsets.all(16),
         ),

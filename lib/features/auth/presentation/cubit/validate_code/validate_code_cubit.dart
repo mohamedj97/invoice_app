@@ -64,7 +64,7 @@ class ValidateCodeCubit extends Cubit<ValidateCodeState> {
 
       return emit(
         state.copyWith(
-          validateCodeRequestState: RequestState.error,
+          resendCodeRequestState: RequestState.error,
           failure: failure.message,
         ),
       );
@@ -73,7 +73,7 @@ class ValidateCodeCubit extends Cubit<ValidateCodeState> {
         emit(ValidateCodeSuccess(registerResponse: response));
         return emit(
           state.copyWith(
-            validateCodeRequestState: RequestState.success,
+            resendCodeRequestState: RequestState.success,
             registerResponse: response,
           ),
         );
@@ -81,7 +81,7 @@ class ValidateCodeCubit extends Cubit<ValidateCodeState> {
         emit(ValidateCodeFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
-            validateCodeRequestState: RequestState.error,
+            resendCodeRequestState: RequestState.error,
             registerResponse: response,
           ),
         );

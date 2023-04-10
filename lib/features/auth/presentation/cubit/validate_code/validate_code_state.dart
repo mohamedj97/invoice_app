@@ -4,12 +4,14 @@ class ValidateCodeState extends Equatable {
   final ValidateCodeResponse? validateCodeResponse;
   final RegisterResponse? registerResponse;
   final String? failure;
-  final RequestState validateCodeRequestState;
+  final RequestState? validateCodeRequestState;
+  final RequestState? resendCodeRequestState;
 
   const ValidateCodeState({
     this.registerResponse,
     this.validateCodeResponse,
     this.validateCodeRequestState = RequestState.loading,
+    this.resendCodeRequestState = RequestState.loading,
     this.failure = "",
   });
   ValidateCodeState copyWith({
@@ -17,18 +19,21 @@ class ValidateCodeState extends Equatable {
     RegisterResponse? registerResponse,
     String? failure,
     RequestState? validateCodeRequestState,
+    RequestState? resendCodeRequestState,
   }) {
     return ValidateCodeState(
       failure: failure ?? this.failure,
       validateCodeRequestState: validateCodeRequestState ?? this.validateCodeRequestState,
+      resendCodeRequestState: resendCodeRequestState ?? this.resendCodeRequestState,
       validateCodeResponse: validateCodeResponse ?? this.validateCodeResponse,
       registerResponse: registerResponse ?? this.registerResponse,
     );
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
     validateCodeRequestState,
+    resendCodeRequestState,
     failure!,
     validateCodeResponse ??
         ValidateCodeResponse(statuscode: 0, result: null),

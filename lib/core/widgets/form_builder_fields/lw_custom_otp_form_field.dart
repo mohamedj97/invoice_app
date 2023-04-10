@@ -14,7 +14,7 @@ class LWCustomOTPFormField extends StatelessWidget {
   final String? labelText;
   final String? hintText;
   final bool isRequired;
-
+  final Function(String)? onDone;
   final EdgeInsets padding;
   final TextEditingController? controller;
   final String? initialValue;
@@ -33,7 +33,7 @@ class LWCustomOTPFormField extends StatelessWidget {
     this.validators = const [],
     this.isRequired = false,
     this.onChanged,
-    this.controller,
+    this.controller, this.onDone,
   }) : super(key: key);
 
   @override
@@ -77,6 +77,7 @@ class LWCustomOTPFormField extends StatelessWidget {
                 maxLength: length,
                 defaultBorderColor: AppColors.secondary,
                 onTextChanged: onChanged,
+                onDone: onDone,
                 errorBorderColor: AppColors.errorColor,
                 hasTextBorderColor: AppColors.primary,
                 highlightColor: AppColors.dataFieldColor,
