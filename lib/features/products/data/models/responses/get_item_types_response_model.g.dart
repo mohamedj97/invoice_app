@@ -9,19 +9,23 @@ part of 'get_item_types_response_model.dart';
 GetItemTypesResponseDataModel _$GetItemTypesResponseDataModelFromJson(
         Map<String, dynamic> json) =>
     GetItemTypesResponseDataModel(
-      result: ItemLookUpResult.fromJson(json['result'] as Map<String, dynamic>),
-      meta: (json['meta'] as List<dynamic>)
+      itemTypes: (json['itemTypes'] as List<dynamic>)
+          .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      metaData: (json['metaData'] as List<dynamic>)
           .map((e) => Meta.fromJson(e as Map<String, dynamic>))
           .toList(),
-      total: json['total'] as int?,
+      unitTypes: (json['unitTypes'] as List<dynamic>)
+          .map((e) => BaseLookup.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$GetItemTypesResponseDataModelToJson(
         GetItemTypesResponseDataModel instance) =>
     <String, dynamic>{
-      'result': instance.result,
-      'total': instance.total,
-      'meta': instance.meta,
+      'itemTypes': instance.itemTypes,
+      'unitTypes': instance.unitTypes,
+      'metaData': instance.metaData,
     };
 
 GetItemTypesResponse _$GetItemTypesResponseFromJson(

@@ -9,16 +9,21 @@ part of 'add_product_response_model.dart';
 AddProductResponseDataModel _$AddProductResponseDataModelFromJson(
         Map<String, dynamic> json) =>
     AddProductResponseDataModel(
-      companyId: json['companyId'] as int,
       id: json['id'] as int,
-      name: json['name'] as String,
-      code: json['code'] as String,
+      companyId: json['companyId'] as int?,
+      code: json['code'] as String?,
       brickcode: json['brickcode'] as String?,
+      name: json['name'] as String,
       type: json['type'] as String?,
       description: json['description'] as String?,
-      unittype: json['unittype'] as int?,
-      active: json['active'] as bool,
-    )..price = json['price'] as num?;
+      unittypeid: json['unittypeid'] as int?,
+      unittypecode: json['unittypecode'] as String?,
+      unittypename: json['unittypename'] as String?,
+      unittypenamear: json['unittypenamear'] as String?,
+      price: json['price'] as num?,
+      image: json['image'] as String?,
+      active: json['active'] as bool?,
+    );
 
 Map<String, dynamic> _$AddProductResponseDataModelToJson(
         AddProductResponseDataModel instance) =>
@@ -30,7 +35,11 @@ Map<String, dynamic> _$AddProductResponseDataModelToJson(
       'name': instance.name,
       'type': instance.type,
       'description': instance.description,
-      'unittype': instance.unittype,
+      'unittypeid': instance.unittypeid,
+      'unittypecode': instance.unittypecode,
+      'unittypename': instance.unittypename,
+      'unittypenamear': instance.unittypenamear,
+      'image': instance.image,
       'active': instance.active,
       'price': instance.price,
     };

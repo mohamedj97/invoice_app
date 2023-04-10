@@ -7,15 +7,20 @@ part 'add_product_response_model.g.dart';
 @JsonSerializable()
 class AddProductResponseDataModel extends Product {
   AddProductResponseDataModel({
-    required super.companyId,
     required super.id,
+    super.companyId,
+    super.code,
+    super.brickcode,
     required super.name,
-    required super.code,
-    required super.brickcode,
-    required super.type,
-    required super.description,
-    required super.unittype,
-    required super.active,
+    super.type,
+    super.description,
+    super.unittypeid,
+    super.unittypecode,
+    super.unittypename,
+    super.unittypenamear,
+    super.price,
+    super.image,
+    super.active,
   });
 
   factory AddProductResponseDataModel.fromJson(Map<String, dynamic> json) =>
