@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:invoice_app/core/widgets/custom_back_button.dart';
 import 'package:invoice_app/features/company_registration/presentation/screens/pricing_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -38,7 +39,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
   final TextEditingController? cityController = TextEditingController();
   final TextEditingController? buildingNoController = TextEditingController();
   final TextEditingController? addressController = TextEditingController();
-  final cubit = CompanyRegisterCubit(sl(), sl(),sl());
+  final cubit = CompanyRegisterCubit(sl(), sl(), sl());
   int _value = 1;
   int companyID = -1;
   final formKey = GlobalKey<FormBuilderState>();
@@ -59,20 +60,29 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
       value: cubit,
       child: BlocConsumer<CompanyRegisterCubit, CompanyRegisterState>(
         listener: (context, state) async {
-          if (state.companyRegisterRequestState == RequestState.success){
+          if (state.companyRegisterRequestState == RequestState.success) {
             setState(() {
               companyID = state.intResponse?.result ?? -1;
             });
-            await  BlocProvider.of<CompanyRegisterCubit>(context).uploadLogo(file as List<int>,id: companyID);
-          }
-
-          if (state.uploadLogoRequestState == RequestState.success) {
-              Navigator.of(context).push(
+            if (file != null) {
+              await BlocProvider.of<CompanyRegisterCubit>(context).uploadLogo(file!, id: companyID);
+            } else {
+              Navigator.of(context).pushAndRemoveUntil(
                 CustomPageRoute.createRoute(
                   page: const PricingScreen(),
                 ),
-                //(Route<dynamic> route) => false,
+                (Route<dynamic> route) => false,
               );
+            }
+          }
+
+          if (state.uploadLogoRequestState == RequestState.success) {
+            Navigator.of(context).pushAndRemoveUntil(
+              CustomPageRoute.createRoute(
+                page: const PricingScreen(),
+              ),
+                  (Route<dynamic> route) => false,
+            );
           }
 
           if (state.companyRegisterRequestState == RequestState.error) {
@@ -87,6 +97,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
           governates = state.getCompanyLookupsResponse?.result?.governates ?? [];
           businessActivity = state.getCompanyLookupsResponse?.result?.businessActivity ?? [];
           return CustomScaffold(
+            leading: const CustomBackButton(),
             backGroundColor: Colors.white,
             title: "complete_company_data".tr(),
             body: state is CompanyRegisterLoading

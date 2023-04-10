@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import '../../../../core/error/failure.dart';
@@ -11,5 +10,5 @@ abstract class CompanyRegistrationRepository {
       {required CompanyRegisterRequestModel companyRegisterRequest, required int userId});
 
   Future<Either<Failure, GetCompanyLookupsResponse>> getCompanyLookups({required int userId});
-  Future<Either<Failure, BoolResponse>> uploadLogo(List<int> logo,{required int id});
+  Future<Either<Failure, BoolResponse>> uploadLogo(File logo,{required int id});
 }

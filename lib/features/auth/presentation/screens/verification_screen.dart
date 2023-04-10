@@ -81,9 +81,9 @@ class _VerificationScreenState extends State<VerificationScreen> with TickerProv
           child: BlocConsumer<ValidateCodeCubit, ValidateCodeState>(
             listener: (context, state) async {
               if (state.validateCodeRequestState == RequestState.success) {
-                Navigator.of(context).pushAndRemoveUntil(
+                Navigator.of(context).push(
                   CustomPageRoute.createRoute(page: const ProfileDataScreen()),
-                  (Route<dynamic> route) => false,
+                  //(Route<dynamic> route) => false,
                 );
               }
               if (state.validateCodeRequestState == RequestState.error) {
