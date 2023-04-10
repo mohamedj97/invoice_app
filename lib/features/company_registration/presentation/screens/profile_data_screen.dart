@@ -11,13 +11,11 @@ import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import 'package:invoice_app/features/company_registration/data/models/requests/company_register_request_model.dart';
-import 'package:invoice_app/features/company_registration/presentation/screens/pricing_screen.dart';
 import 'package:invoice_app/features/products/domain/entities/base_lookup.dart';
 import '../../../../core/api/repository/disk_repo.dart';
 import '../../../../core/assets/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dotted_border/dotted_border.dart';
-import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
@@ -38,8 +36,9 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
   final TextEditingController? cityController = TextEditingController();
   final TextEditingController? buildingNoController = TextEditingController();
   final TextEditingController? addressController = TextEditingController();
-  final cubit = CompanyRegisterCubit(sl(), sl());
+  final cubit = CompanyRegisterCubit(sl(), sl(),sl());
   int _value = 1;
+  int companyID = -1;
   final formKey = GlobalKey<FormBuilderState>();
   List<GovernateLookup> governates = [];
   List<BaseLookup> businessActivity = [];
@@ -59,12 +58,15 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
       child: BlocConsumer<CompanyRegisterCubit, CompanyRegisterState>(
         listener: (context, state) async {
           if (state.companyRegisterRequestState == RequestState.success) {
-            Navigator.of(context).push(
-              CustomPageRoute.createRoute(
-                page: const PricingScreen(),
-              ),
-              //(Route<dynamic> route) => false,
-            );
+            // Navigator.of(context).push(
+            //   CustomPageRoute.createRoute(
+            //     page: const PricingScreen(),
+            //   ),
+            //   //(Route<dynamic> route) => false,
+            // );
+            setState(() {
+              companyID = state.intResponse?.result ?? -1;
+            });
           }
 
           if (state.companyRegisterRequestState == RequestState.error) {
@@ -429,8 +431,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                                     FocusManager.instance.primaryFocus?.unfocus();
 
                                     var whatsappUrl =
-                                        "whatsapp://send?phone=201007117763" +
-                                            "&text=${Uri.encodeComponent("Hello")}";
+                                        "whatsapp://send?phone=201007117763" + "&text=${Uri.encodeComponent("Hello")}";
                                     try {
                                       launch(whatsappUrl);
                                     } catch (e) {

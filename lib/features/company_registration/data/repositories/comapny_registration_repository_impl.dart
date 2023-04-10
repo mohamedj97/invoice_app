@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dartz/dartz.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:invoice_app/core/error/failure.dart';
@@ -30,6 +32,17 @@ class CompanyRegistrationRepositoryImpl extends CompanyRegistrationRepository wi
   Future<Either<Failure, GetCompanyLookupsResponse>> getCompanyLookups({required int userId})async {
     try {
       final response = await remoteDataSource.getCompanyLookups(userId: userId);
+
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, BoolResponse>> uploadLogo(Uint8List logo, {required int id}) async{
+    try {
+      final response = await remoteDataSource.uploadLogo(logo,id: id);
 
       return Right(response);
     } on ServerException catch (e) {

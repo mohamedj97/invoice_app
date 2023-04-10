@@ -46,6 +46,7 @@ import 'features/company_registration/data/repositories/comapny_registration_rep
 import 'features/company_registration/domain/repositories/company_registration_repository.dart';
 import 'features/company_registration/domain/use_cases/get_company_lookups_usecase.dart';
 import 'features/company_registration/domain/use_cases/register_company_usecase.dart';
+import 'features/company_registration/domain/use_cases/upload_logo_usecase.dart';
 import 'features/company_registration/presentation/cubit/company_register_cubit.dart';
 import 'features/customers/domain/use_cases/get_customer_types_use_case.dart';
 import 'features/customers/domain/use_cases/get_customers_use_case.dart';
@@ -72,7 +73,7 @@ Future<void> init() async {
 // Bloc
 
   sl.registerLazySingleton(() => LoginCubit(sl(), sl()));
-  sl.registerLazySingleton(() => CompanyRegisterCubit(sl(),sl()));
+  sl.registerLazySingleton(() => CompanyRegisterCubit(sl(),sl(),sl()));
   sl.registerLazySingleton(() => ValidateCodeCubit(sl(), sl()));
   sl.registerLazySingleton(() => RegisterCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetInvoicesCubit(sl(), sl()));
@@ -120,6 +121,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetSubmittedInvoiceUseCase(submittedInvoicesRepository: sl()));
   sl.registerLazySingleton(() => RegisterCompanyUseCase(companyRegistrationRepository: sl()));
   sl.registerLazySingleton(() => GetCompanyLookupsUseCase(companyRegistrationRepository: sl()));
+  sl.registerLazySingleton(() => UploadLogoUseCase(companyRegistrationRepository: sl()));
 
 // Repository
 

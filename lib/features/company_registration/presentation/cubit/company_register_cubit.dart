@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:invoice_app/features/company_registration/domain/use_cases/register_company_usecase.dart';
+import 'package:invoice_app/features/company_registration/domain/use_cases/upload_logo_usecase.dart';
 
 import '../../../../../core/utils/enums.dart';
 import '../../data/models/requests/company_register_request_model.dart';
@@ -16,9 +18,11 @@ part 'company_register_state.dart';
 class CompanyRegisterCubit extends Cubit<CompanyRegisterState> {
   final RegisterCompanyUseCase registerCompanyUseCase;
   final GetCompanyLookupsUseCase getCompanyLookupsUseCase;
+  final UploadLogoUseCase uploadLogoUseCase;
 
   CompanyRegisterCubit(
     this.registerCompanyUseCase,
+    this.uploadLogoUseCase,
     this.getCompanyLookupsUseCase,
   ) : super(CompanyRegisterInitial());
 
@@ -85,6 +89,40 @@ class CompanyRegisterCubit extends Cubit<CompanyRegisterState> {
           state.copyWith(
             companyLookupsRequestState: RequestState.error,
             getCompanyLookupsResponse: response,
+          ),
+        );
+      }
+    });
+  }
+
+  Future<void> uploadLogo(Uint8List logo, {required int id}) async {
+    emit(CompanyRegisterLoading());
+    final response = await uploadLogoUseCase.call(logo, id: id);
+
+    response.fold((failure) {
+      emit(CompanyRegisterFailure(failure: failure.message));
+
+      return emit(
+        state.copyWith(
+          companyLookupsRequestState: RequestState.error,
+          failure: failure.message,
+        ),
+      );
+    }, (response) {
+      if (response.statuscode == 200 && response.result != null) {
+        emit(CompanyRegisterSuccess(boolResponse: response));
+        return emit(
+          state.copyWith(
+            companyLookupsRequestState: RequestState.success,
+            boolResponse: response,
+          ),
+        );
+      } else {
+        emit(CompanyRegisterFailure(failure: response.message?.first ?? ""));
+        return emit(
+          state.copyWith(
+            companyLookupsRequestState: RequestState.error,
+            boolResponse: response,
           ),
         );
       }

@@ -80,7 +80,7 @@ class _AuthClient implements AuthClient {
     )
             .compose(
               _dio.options,
-              'Authenticate/Resend/$userId',
+              'Authenticate/Resend/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -106,7 +106,7 @@ class _AuthClient implements AuthClient {
     )
             .compose(
               _dio.options,
-              'Authenticate/validatesecuritycode/$userId/$securityCode',
+              'Authenticate/validatesecuritycode/',
               queryParameters: queryParameters,
               data: _data,
             )

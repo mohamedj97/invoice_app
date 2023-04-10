@@ -13,6 +13,7 @@ class EndPoints {
   //company-registration
   static const registerCompany = 'CompanyRegistration/';
   static const getCompanyLookups = 'CompanyRegistration/getcompanyinfo-lookups/';
+  static const uploadLogo = 'CompanyRegistration/postcompany-logo/';
 
   //invoices
   static const getInvoices = 'Invoices/getinvoices';

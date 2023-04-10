@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:retrofit/retrofit.dart';
@@ -16,5 +18,8 @@ abstract class CompanyRegistrationClient {
 
   @GET(EndPoints.getCompanyLookups)
   Future<GetCompanyLookupsResponse> getCompanyLookups({required int userId});
+
+  @POST(EndPoints.uploadLogo)
+  Future<BoolResponse> uploadLogo(@Body() Uint8List logo,{required int id});
 
 }
