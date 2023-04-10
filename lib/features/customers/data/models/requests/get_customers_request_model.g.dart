@@ -21,7 +21,7 @@ CustomerFilterGenericFilterModel _$CustomerFilterGenericFilterModelFromJson(
 Map<String, dynamic> _$CustomerFilterGenericFilterModelToJson(
         CustomerFilterGenericFilterModel instance) =>
     <String, dynamic>{
-      'filter': instance.filter,
+      'filter': instance.filter?.toJson(),
       'pageNo': instance.pageNo,
       'pageSize': instance.pageSize,
       'sortBy': instance.sortBy,

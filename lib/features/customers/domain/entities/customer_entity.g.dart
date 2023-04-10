@@ -12,7 +12,7 @@ CustomerModel _$CustomerModelFromJson(Map<String, dynamic> json) =>
       companyid: json['companyid'] as int,
       code: json['code'] as String?,
       name: json['name'] as String?,
-      identityid: json['identityid'] as num,
+      identityid: json['identityid'] as num?,
       countryid: json['countryid'] as int?,
       countryname: json['countryname'] as String?,
       countrynamear: json['countrynamear'] as String?,

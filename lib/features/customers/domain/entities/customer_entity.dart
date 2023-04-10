@@ -8,7 +8,7 @@ class CustomerModel{
   late int companyid;
   String? code;
   String? name;
-  num identityid;
+  num? identityid;
   int? countryid;
   String? countryname;
   String? countrynamear;
@@ -59,7 +59,7 @@ class CustomerModel{
         required this.companyid,
         this.code,
         this.name,
-        required this.identityid,
+        this.identityid,
         this.countryid,
         this.countryname,
         this.countrynamear,
