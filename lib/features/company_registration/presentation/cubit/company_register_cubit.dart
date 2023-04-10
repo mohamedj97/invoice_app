@@ -95,7 +95,7 @@ class CompanyRegisterCubit extends Cubit<CompanyRegisterState> {
     });
   }
 
-  Future<void> uploadLogo(Uint8List logo, {required int id}) async {
+  Future<void> uploadLogo(List<int> logo, {required int id}) async {
     emit(CompanyRegisterLoading());
     final response = await uploadLogoUseCase.call(logo, id: id);
 
@@ -104,7 +104,7 @@ class CompanyRegisterCubit extends Cubit<CompanyRegisterState> {
 
       return emit(
         state.copyWith(
-          companyLookupsRequestState: RequestState.error,
+          uploadLogoRequestState: RequestState.error,
           failure: failure.message,
         ),
       );
@@ -113,7 +113,7 @@ class CompanyRegisterCubit extends Cubit<CompanyRegisterState> {
         emit(CompanyRegisterSuccess(boolResponse: response));
         return emit(
           state.copyWith(
-            companyLookupsRequestState: RequestState.success,
+            uploadLogoRequestState: RequestState.success,
             boolResponse: response,
           ),
         );
@@ -121,7 +121,7 @@ class CompanyRegisterCubit extends Cubit<CompanyRegisterState> {
         emit(CompanyRegisterFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
-            companyLookupsRequestState: RequestState.error,
+            uploadLogoRequestState: RequestState.error,
             boolResponse: response,
           ),
         );

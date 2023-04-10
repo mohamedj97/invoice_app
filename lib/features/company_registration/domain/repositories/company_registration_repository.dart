@@ -11,5 +11,5 @@ abstract class CompanyRegistrationRepository {
       {required CompanyRegisterRequestModel companyRegisterRequest, required int userId});
 
   Future<Either<Failure, GetCompanyLookupsResponse>> getCompanyLookups({required int userId});
-  Future<Either<Failure, BoolResponse>> uploadLogo(Uint8List logo,{required int id});
+  Future<Either<Failure, BoolResponse>> uploadLogo(List<int> logo,{required int id});
 }

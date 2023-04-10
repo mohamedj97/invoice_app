@@ -7,11 +7,13 @@ class CompanyRegisterState extends Equatable {
   final String? failure;
   final RequestState? companyRegisterRequestState;
   final RequestState? companyLookupsRequestState;
+  final RequestState? uploadLogoRequestState;
 
   const CompanyRegisterState({
     this.intResponse,
     this.boolResponse,
     this.companyLookupsRequestState,
+    this.uploadLogoRequestState,
     this.getCompanyLookupsResponse,
     this.companyRegisterRequestState = RequestState.loading,
     this.failure = "",
@@ -22,12 +24,14 @@ class CompanyRegisterState extends Equatable {
     GetCompanyLookupsResponse? getCompanyLookupsResponse,
     String? failure,
     RequestState? companyRegisterRequestState,
+    RequestState? uploadLogoRequestState,
     RequestState? companyLookupsRequestState,
   }) {
     return CompanyRegisterState(
       failure: failure ?? this.failure,
       companyRegisterRequestState: companyRegisterRequestState ?? this.companyRegisterRequestState,
       companyLookupsRequestState: companyLookupsRequestState ?? this.companyLookupsRequestState,
+      uploadLogoRequestState: uploadLogoRequestState ?? this.uploadLogoRequestState,
       intResponse: intResponse ?? this.intResponse,
       boolResponse: boolResponse ?? this.boolResponse,
       getCompanyLookupsResponse: getCompanyLookupsResponse ?? this.getCompanyLookupsResponse,
@@ -38,6 +42,7 @@ class CompanyRegisterState extends Equatable {
   List<Object?> get props => [
     companyRegisterRequestState,
     companyLookupsRequestState,
+    uploadLogoRequestState,
     failure!,
     intResponse ??
         IntResponse(statuscode: 0, result: null),

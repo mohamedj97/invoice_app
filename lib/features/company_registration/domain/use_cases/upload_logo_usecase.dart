@@ -12,7 +12,7 @@ class UploadLogoUseCase {
     required this.companyRegistrationRepository,
   });
 
-  Future<Either<Failure, BoolResponse>> call(Uint8List logo, {required int id}) async {
+  Future<Either<Failure, BoolResponse>> call(List<int> logo, {required int id}) async {
     return await companyRegistrationRepository.uploadLogo(logo, id: id);
   }
 }

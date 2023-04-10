@@ -20,6 +20,6 @@ abstract class CompanyRegistrationClient {
   Future<GetCompanyLookupsResponse> getCompanyLookups({required int userId});
 
   @POST(EndPoints.uploadLogo)
-  Future<BoolResponse> uploadLogo(@Body() Uint8List logo,{required int id});
+  Future<BoolResponse> uploadLogo(@Body() List<int> logo,{required int id});
 
 }

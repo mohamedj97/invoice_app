@@ -11,7 +11,7 @@ abstract class CompanyRegistrationRemoteDataSource {
 
   Future<GetCompanyLookupsResponse> getCompanyLookups({required int userId});
 
-  Future<BoolResponse> uploadLogo(Uint8List logo, {required int id});
+  Future<BoolResponse> uploadLogo(List<int> logo, {required int id});
 }
 
 class CompanyRegistrationRemoteDataSourceImpl extends CompanyRegistrationRemoteDataSource {
@@ -37,7 +37,7 @@ class CompanyRegistrationRemoteDataSourceImpl extends CompanyRegistrationRemoteD
   }
 
   @override
-  Future<BoolResponse> uploadLogo(Uint8List logo, {required int id}) async {
+  Future<BoolResponse> uploadLogo(List<int> logo, {required int id}) async {
     final response = await apiRepo.companyRegistrationClient.uploadLogo(logo, id: id);
 
     return response;

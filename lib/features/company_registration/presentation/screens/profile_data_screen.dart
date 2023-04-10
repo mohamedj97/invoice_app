@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:invoice_app/features/company_registration/presentation/screens/pricing_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import '../../../../core/api/repository/disk_repo.dart';
 import '../../../../core/assets/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dotted_border/dotted_border.dart';
+import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
@@ -57,16 +59,20 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
       value: cubit,
       child: BlocConsumer<CompanyRegisterCubit, CompanyRegisterState>(
         listener: (context, state) async {
-          if (state.companyRegisterRequestState == RequestState.success) {
-            // Navigator.of(context).push(
-            //   CustomPageRoute.createRoute(
-            //     page: const PricingScreen(),
-            //   ),
-            //   //(Route<dynamic> route) => false,
-            // );
+          if (state.companyRegisterRequestState == RequestState.success){
             setState(() {
               companyID = state.intResponse?.result ?? -1;
             });
+            await  BlocProvider.of<CompanyRegisterCubit>(context).uploadLogo(file as List<int>,id: companyID);
+          }
+
+          if (state.uploadLogoRequestState == RequestState.success) {
+              Navigator.of(context).push(
+                CustomPageRoute.createRoute(
+                  page: const PricingScreen(),
+                ),
+                //(Route<dynamic> route) => false,
+              );
           }
 
           if (state.companyRegisterRequestState == RequestState.error) {

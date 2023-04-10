@@ -40,7 +40,7 @@ class CompanyRegistrationRepositoryImpl extends CompanyRegistrationRepository wi
   }
 
   @override
-  Future<Either<Failure, BoolResponse>> uploadLogo(Uint8List logo, {required int id}) async{
+  Future<Either<Failure, BoolResponse>> uploadLogo(List<int> logo, {required int id}) async{
     try {
       final response = await remoteDataSource.uploadLogo(logo,id: id);
 
