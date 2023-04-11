@@ -4,31 +4,36 @@ class AddEditCustomerState extends Equatable {
   final AddCustomerResponse? addCustomerResponse;
   final BoolResponse? boolResponse;
   final String? failure;
-  final RequestState addEditCustomerRequestState;
+  final RequestState? addCustomerRequestState;
+  final RequestState? editCustomerRequestState;
 
   const AddEditCustomerState({
     this.addCustomerResponse,
+    this.editCustomerRequestState,
     this.boolResponse,
-    this.addEditCustomerRequestState = RequestState.loading,
+    this.addCustomerRequestState = RequestState.loading,
     this.failure = "",
   });
   AddEditCustomerState copyWith({
     AddCustomerResponse? addCustomerResponse,
     BoolResponse? boolResponse,
     String? failure,
-    RequestState? addEditCustomerRequestState,
+    RequestState? addCustomerRequestState,
+    RequestState? editCustomerRequestState,
   }) {
     return AddEditCustomerState(
       failure: failure ?? this.failure,
-      addEditCustomerRequestState: addEditCustomerRequestState ?? this.addEditCustomerRequestState,
+      addCustomerRequestState: addCustomerRequestState ?? this.addCustomerRequestState,
+      editCustomerRequestState: editCustomerRequestState ?? this.editCustomerRequestState,
       addCustomerResponse: addCustomerResponse ?? this.addCustomerResponse,
       boolResponse: boolResponse ?? this.boolResponse,
     );
   }
 
   @override
-  List<Object> get props => [
-    addEditCustomerRequestState,
+  List<Object?> get props => [
+    addCustomerRequestState,
+    editCustomerRequestState,
     failure!,
     addCustomerResponse ??
         AddCustomerResponse(statuscode: 0, result: null),

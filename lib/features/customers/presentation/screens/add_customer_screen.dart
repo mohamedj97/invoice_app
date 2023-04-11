@@ -51,7 +51,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
     return BlocProvider<AddEditCustomerCubit>.value(
       value: cubit,
       child: BlocConsumer<AddEditCustomerCubit, AddEditCustomerState>(listener: (context, AddEditCustomerState) async {
-        if (AddEditCustomerState.addEditCustomerRequestState == RequestState.success) {
+        if (AddEditCustomerState.addCustomerRequestState == RequestState.success) {
           Navigator.of(context).pushAndRemoveUntil(
             CustomPageRoute.createRoute(
               page: const HomeScreen(),
@@ -59,11 +59,27 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
             (Route<dynamic> route) => false,
           );
         }
-        if (AddEditCustomerState.addEditCustomerRequestState == RequestState.error) {
+        if (AddEditCustomerState.editCustomerRequestState == RequestState.success) {
+          Navigator.of(context).pushAndRemoveUntil(
+            CustomPageRoute.createRoute(
+              page: const HomeScreen(),
+            ),
+                (Route<dynamic> route) => false,
+          );
+        }
+        if (AddEditCustomerState.addCustomerRequestState == RequestState.error) {
           await getErrorDialogue(
             context: context,
             isUnAuthorized: AddEditCustomerState.addCustomerResponse!.statuscode == 401,
             message: AddEditCustomerState.addCustomerResponse?.message?.first ?? "something_went_wrong".tr(),
+          );
+        }
+
+        if (AddEditCustomerState.editCustomerRequestState == RequestState.error) {
+          await getErrorDialogue(
+            context: context,
+            isUnAuthorized: AddEditCustomerState.boolResponse!.statuscode == 401,
+            message: AddEditCustomerState.boolResponse?.message?.first ?? "something_went_wrong".tr(),
           );
         }
       }, builder: (context, AddEditCustomerState) {
@@ -439,14 +455,6 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                                  child: Divider(
-                                    thickness: 0.5,
-                                    height: 0.0,
-                                    color: AppColors.searchBarColor,
                                   ),
                                 ),
                                 state is GetCustomerTypesLoading

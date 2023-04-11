@@ -30,7 +30,7 @@ class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
 
       return emit(
         state.copyWith(
-          addEditCustomerRequestState: RequestState.error,
+          addCustomerRequestState: RequestState.error,
           failure: failure.message,
         ),
       );
@@ -39,7 +39,7 @@ class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
         emit(AddEditCustomerSuccess(addCustomerResponse: response));
         return emit(
           state.copyWith(
-            addEditCustomerRequestState: RequestState.success,
+            addCustomerRequestState: RequestState.success,
             addCustomerResponse: response,
           ),
         );
@@ -47,7 +47,7 @@ class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
         emit(AddEditCustomerFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
-            addEditCustomerRequestState: RequestState.error,
+            addCustomerRequestState: RequestState.error,
             addCustomerResponse: response,
           ),
         );
@@ -64,7 +64,7 @@ class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
 
       return emit(
         state.copyWith(
-          addEditCustomerRequestState: RequestState.error,
+          editCustomerRequestState: RequestState.error,
           failure: failure.message,
         ),
       );
@@ -73,7 +73,7 @@ class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
         emit(AddEditCustomerSuccess(boolResponse: response));
         return emit(
           state.copyWith(
-            addEditCustomerRequestState: RequestState.success,
+            editCustomerRequestState: RequestState.success,
             boolResponse: response,
           ),
         );
@@ -81,7 +81,7 @@ class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
         emit(AddEditCustomerFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
-            addEditCustomerRequestState: RequestState.error,
+            editCustomerRequestState: RequestState.error,
             boolResponse: response,
           ),
         );
