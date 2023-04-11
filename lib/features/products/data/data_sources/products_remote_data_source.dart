@@ -11,7 +11,7 @@ abstract class ProductsRemoteDataSource {
   Future<GetProductsResponse> getProducts(ProductFilterGenericFilterModel invoiceFilterGenericFilterModel);
   Future<GetItemTypesResponse> getItemTypes();
   Future<AddProductResponse> addProduct(ProductModel productModel);
-  Future<StringResponse> editProduct(int id,ProductModel productModel);
+  Future<BoolResponse> editProduct(int id,ProductModel productModel);
 }
 
 class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
@@ -41,7 +41,7 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
   }
 
   @override
-  Future<StringResponse> editProduct(int id,ProductModel productModel) async{
+  Future<BoolResponse> editProduct(int id,ProductModel productModel) async{
     final response = await apiRepo.productsClient.editProduct(id,productModel);
 
     return response;

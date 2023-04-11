@@ -40,7 +40,7 @@ class ProductsRepositoryImpl extends ProductsRepository with ConnectivityMixin {
   }
 
   @override
-  Future<Either<Failure, StringResponse>> editProduct(int id,ProductModel productModel) async{
+  Future<Either<Failure, BoolResponse>> editProduct(int id,ProductModel productModel) async{
     try {
       final response = await productsRemoteDataSource.editProduct(id,productModel);
 

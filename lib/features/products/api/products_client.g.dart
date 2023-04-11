@@ -91,7 +91,7 @@ class _ProductsClient implements ProductsClient {
   }
 
   @override
-  Future<StringResponse> editProduct(
+  Future<BoolResponse> editProduct(
     id,
     productModel,
   ) async {
@@ -101,7 +101,7 @@ class _ProductsClient implements ProductsClient {
     final _data = <String, dynamic>{};
     _data.addAll(productModel.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<StringResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<BoolResponse>(Options(
       method: 'PUT',
       headers: _headers,
       extra: _extra,
@@ -113,7 +113,7 @@ class _ProductsClient implements ProductsClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = StringResponse.fromJson(_result.data!);
+    final value = BoolResponse.fromJson(_result.data!);
     return value;
   }
 

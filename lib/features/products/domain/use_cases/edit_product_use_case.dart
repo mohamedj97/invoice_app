@@ -10,7 +10,7 @@ class EditProductUseCase {
     required this.productsRepository,
   });
 
-  Future<Either<Failure, StringResponse>> call(int id,ProductModel productModel) async {
+  Future<Either<Failure, BoolResponse>> call(int id,ProductModel productModel) async {
     return await productsRepository.editProduct(id,productModel);
   }
 }

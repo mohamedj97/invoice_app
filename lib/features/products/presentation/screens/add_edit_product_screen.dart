@@ -57,31 +57,26 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
               (Route<dynamic> route) => false,
             );
           }
+          if (state.editProductRequestState == RequestState.success) {
+            Navigator.of(context).pushAndRemoveUntil(
+              CustomPageRoute.createRoute(
+                page: const HomeScreen(),
+              ),
+                  (Route<dynamic> route) => false,
+            );
+          }
           if (state.addProductRequestState == RequestState.error) {
-            await showDialog(
+            getErrorDialogue(
               context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Icon(
-                    Icons.warning,
-                    color: AppColors.primary,
-                    size: 80.0,
-                  ),
-                  content: Text(state.addProductResponse?.message?.first ?? "something_went_wrong".tr()),
-                  actions: [
-                    TextButton(
-                      child: LWCustomText(
-                        title: 'cancel'.tr(),
-                        fontFamily: FontAssets.avertaSemiBold,
-                        color: AppColors.primary,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
-              },
+              isUnAuthorized: state.addProductResponse!.statuscode == 401,
+              message: "something_went_wrong".tr(),
+            );
+          }
+          if (state.editProductRequestState == RequestState.error) {
+            getErrorDialogue(
+              context: context,
+              isUnAuthorized: state.addProductResponse!.statuscode == 401,
+              message: "something_went_wrong".tr(),
             );
           }
         },
@@ -122,20 +117,6 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                             unittype: unitType.id,
                           ),
                         );
-                        if (state.addProductResponse!.statuscode == 200) {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            CustomPageRoute.createRoute(
-                              page: const HomeScreen(),
-                            ),
-                            (Route<dynamic> route) => false,
-                          );
-                        } else {
-                          getErrorDialogue(
-                            context: context,
-                            isUnAuthorized: state.addProductResponse!.statuscode == 401,
-                            message: "something_went_wrong".tr(),
-                          );
-                        }
                       } else {
                         BlocProvider.of<AddEditProductCubit>(context).editProduct(
                           widget.productItem!.id,
@@ -152,23 +133,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                             unittype: unitType.id,
                           ),
                         );
-                        if (state.stringResponse!.statuscode == 200) {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            CustomPageRoute.createRoute(
-                              page: const HomeScreen(),
-                            ),
-                            (Route<dynamic> route) => false,
-                          );
-                        } else {
-                          getErrorDialogue(
-                            context: context,
-                            isUnAuthorized: state.stringResponse!.statuscode == 401,
-                            message: state.stringResponse!.message?.first ?? "something_went_wrong".tr(),
-                          );
-                        }
                       }
-                      // Navigator.of(context).push(
-                      //     CustomPageRoute.createRoute(page: const HomeScreen()));
                     },
                     child: LWCustomText(
                       title: !hasData ? "save".tr() : "done".tr(),

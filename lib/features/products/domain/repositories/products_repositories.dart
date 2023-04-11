@@ -11,5 +11,5 @@ abstract class ProductsRepository {
   Future<Either<Failure, GetProductsResponse>> getProducts(ProductFilterGenericFilterModel invoiceFilterGenericFilterModel);
   Future<Either<Failure, GetItemTypesResponse>> getItemTypes();
   Future<Either<Failure, AddProductResponse>> addProduct(ProductModel productModel);
-  Future<Either<Failure, StringResponse>> editProduct(int id,ProductModel productModel);
+  Future<Either<Failure, BoolResponse>> editProduct(int id,ProductModel productModel);
 }

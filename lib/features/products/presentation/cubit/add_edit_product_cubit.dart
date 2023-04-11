@@ -64,25 +64,25 @@ class AddEditProductCubit extends Cubit<AddEditProductState> {
 
       return emit(
         state.copyWith(
-          addProductRequestState: RequestState.error,
+          editProductRequestState: RequestState.error,
           failure: failure.message,
         ),
       );
     }, (response) {
       if (response.statuscode == 200 && response.result != null) {
-        emit(AddEditProductSuccess(stringResponse: response));
+        emit(AddEditProductSuccess(boolResponse: response));
         return emit(
           state.copyWith(
-            addProductRequestState: RequestState.success,
-            stringResponse: response,
+            editProductRequestState: RequestState.success,
+            boolResponse: response,
           ),
         );
       } else {
         emit(AddEditProductFailure(failure: response.message?.first ?? ""));
         return emit(
           state.copyWith(
-            addProductRequestState: RequestState.error,
-            stringResponse: response,
+            editProductRequestState: RequestState.error,
+            boolResponse: response,
           ),
         );
       }
