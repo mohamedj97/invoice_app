@@ -18,6 +18,8 @@ import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../injection_container.dart';
+import '../../../company_registration/domain/entities/governate_lookup.dart';
+import '../../../invoices/domain/entities/lookup_code.dart';
 import '../../../products/domain/entities/base_lookup.dart';
 
 class AddEditCustomerScreen extends StatefulWidget {
@@ -34,8 +36,8 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
   final cubit = AddEditCustomerCubit(sl(), sl());
   final getCustomerTypesCubit = GetCustomerTypesCubit(sl());
   List<BaseLookup> customerTypes = [];
-  List<BaseLookup> countries = [];
-  List<BaseLookup> governments = [];
+  List<LookupCode> countries = [];
+  List<GovernateLookup> governments = [];
 
   @override
   void initState() {
@@ -204,35 +206,34 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
               },
               builder: (context, state) {
                 BaseLookup? initialValueCustomerType;
-                BaseLookup? initialValueCountry;
-                BaseLookup? initialValueGovernment;
+                LookupCode? initialValueCountry;
+                GovernateLookup? initialValueGovernment;
 
                 if (!hasData) {
                   initialValueCustomerType = state
-                      .getCustomerTypesResponse?.result?.result.customerTypes
+                      .getCustomerTypesResponse?.result?.customerType
                       .firstWhere((element) =>
                           element.id == (widget.customerItem!.typeid));
 
                   initialValueCountry = state
-                      .getCustomerTypesResponse?.result?.result.countries
+                      .getCustomerTypesResponse?.result?.countries
                       .firstWhere((element) =>
                           element.id == (widget.customerItem!.countryid));
 
                   initialValueGovernment = state
-                      .getCustomerTypesResponse?.result?.result.governates
+                      .getCustomerTypesResponse?.result?.governates
                       .firstWhere((element) =>
                           element.id == (widget.customerItem!.governateid));
                 }
                 countries =
-                    state.getCustomerTypesResponse?.result?.result.countries ??
+                    state.getCustomerTypesResponse?.result?.countries ??
                         [];
 
                 governments =
-                    state.getCustomerTypesResponse?.result?.result.governates ??
+                    state.getCustomerTypesResponse?.result?.governates ??
                         [];
 
-                customerTypes = state.getCustomerTypesResponse?.result?.result
-                        .customerTypes ??
+                customerTypes = state.getCustomerTypesResponse?.result?.customerType ??
                     [];
 
                 return SingleChildScrollView(
@@ -484,7 +485,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
                                           fontFamily: FontAssets.avertaRegular,
                                         ),
                                         const SizedBox(height: 16.0),
-                                        LWCustomDropdownFormField<BaseLookup>(
+                                        LWCustomDropdownFormField<LookupCode>(
                                           iconColor: AppColors.labelColor,
                                           name: "country",
                                           showLabel: false,
@@ -534,7 +535,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
                                           fontFamily: FontAssets.avertaRegular,
                                         ),
                                         const SizedBox(height: 16.0),
-                                        LWCustomDropdownFormField<BaseLookup>(
+                                        LWCustomDropdownFormField<GovernateLookup>(
                                           iconColor: AppColors.labelColor,
                                           name: "governorate",
                                           showLabel: false,
