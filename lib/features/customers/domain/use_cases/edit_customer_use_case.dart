@@ -10,7 +10,7 @@ class EditCustomerUseCase {
     required this.customersRepository,
   });
 
-  Future<Either<Failure, StringResponse>> call(int id,CustomerModelModel customerModel) async {
+  Future<Either<Failure, BoolResponse>> call(int id,CustomerModelModel customerModel) async {
     return await customersRepository.editCustomer(id,customerModel);
   }
 }

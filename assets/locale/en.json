@@ -1,6 +1,8 @@
 {
   "no_internet_connection": "No internet connection",
   "hi": "Hi",
+  "tax_type": "Tax Type",
+  "tax_rate": "Tax Rate",
   "get_started_step_by_step_now": "Get started step by step now",
   "security_code_is_invalid": "Security code is invalid",
   "your_mail": "Your Email",

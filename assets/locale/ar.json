@@ -1,6 +1,8 @@
 {
   "no_internet_connection": "الاتصال بالانترنتغير متوفر",
   "hi": "اهلا",
+  "tax_rate": "معدل الضريبة",
+  "tax_type": "نوع الضريبة",
   "security_code_is_invalid": "الرقم السري غير صحيح",
   "your_mail": "بريدك الالكتروني",
   "proceed": "استمر",

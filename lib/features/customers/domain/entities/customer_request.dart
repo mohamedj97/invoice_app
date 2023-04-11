@@ -1,21 +1,24 @@
 import 'package:equatable/equatable.dart';
 
-import 'customer_contact_person.dart';
-import 'customer_ship_address.dart';
-
 class CustomerRequest extends Equatable {
-  int? companyid;
-  int? id;
+  String? mobile;
+  String? tel;
+  String? fax;
+  String? email;
+  String? website;
+  int? currencyid;
+  int? itemid;
+  int? taxtypeid;
+  int? taxtypetubid;
+  num? taxrate;
+  late int id;
+  late int companyid;
+  late int type;
   String? code;
-  String? name;
-  num? identityid;
-  int? countryid;
-  String? countryname;
-  String? countrynamear;
-  String? countrycode;
-  int? governateid;
-  String? governatename;
-  String? governatenamear;
+  late String name;
+  int? identityid;
+  int? country;
+  int? governate;
   String? city;
   String? street;
   String? builldingnumber;
@@ -26,98 +29,61 @@ class CustomerRequest extends Equatable {
   String? additionalinformation;
   String? address;
   String? address2;
-  int? typeid;
-  String? typecode;
-  String? typename;
-  bool? active;
-  String? mobile;
-  String? tel;
-  String? fax;
-  String? email;
-  String? website;
-  int? currencyid;
-  String? currencycode;
-  String? currencyname;
-  String? currencynamear;
-  int? itemid;
-  String? itemcode;
-  String? itemname;
-  int? taxtypeid;
-  String? taxtypecode;
-  String? taxtypename;
-  String? taxtypenamear;
-  int? taxtypesubid;
-  String? taxtypesubcode;
-  String? taxtypesubname;
-  String? taxtypesubnamear;
-  num? taxrate;
-  List<CustomerContactPerson>? contactpersons;
-  List<CustomerShipAddress>? shipaddresses;
+  late bool active;
 
-  CustomerRequest(
-      {this.companyid,
-      this.code,
-      this.id,
-      this.name,
-      this.identityid,
-      this.countryid,
-      this.countryname,
-      this.countrynamear,
-      this.countrycode,
-      this.governateid,
-      this.governatename,
-      this.governatenamear,
-      this.city,
-      this.street,
-      this.builldingnumber,
-      this.postalcode,
-      this.floor,
-      this.room,
-      this.landmark,
-      this.additionalinformation,
-      this.address,
-      this.address2,
-      this.typeid,
-      this.typecode,
-      this.typename,
-      this.active,
-      this.tel,
-      this.fax,
-      this.email,
-      this.website,
-      this.currencyid,
-      this.currencycode,
-      this.currencyname,
-      this.currencynamear,
-      this.itemid,
-      this.itemcode,
-      this.itemname,
-      this.taxtypeid,
-      this.taxtypecode,
-      this.taxtypename,
-      this.taxtypesubnamear,
-      this.taxtypesubid,
-      this.taxtypesubcode,
-      this.taxtypesubname,
-      this.taxrate,
-      this.contactpersons,
-      this.shipaddresses});
+  CustomerRequest({
+    this.mobile,
+    this.tel,
+    this.fax,
+    this.email,
+    this.website,
+    this.currencyid,
+    this.itemid,
+    this.taxtypeid,
+    this.taxtypetubid,
+    this.taxrate,
+    required this.id,
+    required this.companyid,
+    required this.type,
+    this.code,
+    required this.name,
+    this.identityid,
+    this.country,
+    this.governate,
+    this.city,
+    this.street,
+    this.builldingnumber,
+    this.postalcode,
+    this.floor,
+    this.room,
+    this.landmark,
+    this.additionalinformation,
+    this.address,
+    this.address2,
+    required this.active,
+  });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         {
-          companyid,
+          mobile,
+          tel,
+          fax,
+          email,
+          website,
+          currencyid,
+          itemid,
+          taxtypeid,
+          taxtypetubid,
+          taxrate,
           id,
+          companyid,
+          type,
           code,
           name,
           identityid,
-          countryid,
-          countryname,
-          countrynamear,
-          countrycode,
-          governateid,
-          governatename,
-          governatenamear,
+          country,
+          governate,
           city,
           street,
           builldingnumber,
@@ -128,31 +94,7 @@ class CustomerRequest extends Equatable {
           additionalinformation,
           address,
           address2,
-          typeid,
-          typecode,
-          typename,
           active,
-          tel,
-          fax,
-          email,
-          website,
-          currencyid,
-          currencycode,
-          currencyname,
-          currencynamear,
-          itemid,
-          itemcode,
-          itemname,
-          taxtypeid,
-          taxtypecode,
-          taxtypename,
-          taxtypesubnamear,
-          taxtypesubid,
-          taxtypesubcode,
-          taxtypesubname,
-          taxrate,
-          contactpersons,
-          shipaddresses
         }
       ];
 }

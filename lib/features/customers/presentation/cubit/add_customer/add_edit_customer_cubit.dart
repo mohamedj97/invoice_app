@@ -70,11 +70,11 @@ class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
       );
     }, (response) {
       if (response.statuscode == 200 && response.result != null) {
-        emit(AddEditCustomerSuccess(stringResponse: response));
+        emit(AddEditCustomerSuccess(boolResponse: response));
         return emit(
           state.copyWith(
             addEditCustomerRequestState: RequestState.success,
-            stringResponse: response,
+            boolResponse: response,
           ),
         );
       } else {
@@ -82,7 +82,7 @@ class AddEditCustomerCubit extends Cubit<AddEditCustomerState> {
         return emit(
           state.copyWith(
             addEditCustomerRequestState: RequestState.error,
-            stringResponse: response,
+            boolResponse: response,
           ),
         );
       }

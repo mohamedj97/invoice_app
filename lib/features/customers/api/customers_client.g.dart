@@ -91,7 +91,7 @@ class _CustomersClient implements CustomersClient {
   }
 
   @override
-  Future<StringResponse> editCustomer(
+  Future<BoolResponse> editCustomer(
     id,
     customerModel,
   ) async {
@@ -101,7 +101,7 @@ class _CustomersClient implements CustomersClient {
     final _data = <String, dynamic>{};
     _data.addAll(customerModel.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<StringResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<BoolResponse>(Options(
       method: 'PUT',
       headers: _headers,
       extra: _extra,
@@ -113,7 +113,7 @@ class _CustomersClient implements CustomersClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = StringResponse.fromJson(_result.data!);
+    final value = BoolResponse.fromJson(_result.data!);
     return value;
   }
 

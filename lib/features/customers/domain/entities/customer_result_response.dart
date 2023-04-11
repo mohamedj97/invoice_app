@@ -3,7 +3,7 @@ import 'package:invoice_app/features/customers/domain/entities/meta_data_model.d
 import '../../../products/domain/entities/list_meta_data.dart';
 
 class CustomerResultResponse {
-  late List<CustomerModel> customers = [];
+  late List<GetCustomerModel> customers = [];
   late ListMetaData listMetadata;
   late List<MetaDataModel> metaData = [];
 

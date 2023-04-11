@@ -10,7 +10,7 @@ import '../models/responses/get_customers_response_model.dart';
 abstract class CustomersRemoteDataSource {
   Future<GetCustomersResponse> getCustomers(CustomerFilterGenericFilterModel customerFilterGenericFilterModel);
   Future<AddCustomerResponse> addCustomer(CustomerModelModel customerModel);
-  Future<StringResponse> editCustomer(int id,CustomerModelModel customerModel);
+  Future<BoolResponse> editCustomer(int id,CustomerModelModel customerModel);
   Future<GetCustomerTypesResponse> getCustomersLookUps();
 }
 
@@ -41,7 +41,7 @@ class CustomersRemoteDataSourceImpl extends CustomersRemoteDataSource {
   }
 
   @override
-  Future<StringResponse> editCustomer(int id, CustomerModelModel customerModel)async {
+  Future<BoolResponse> editCustomer(int id, CustomerModelModel customerModel)async {
     final response = await apiRepo.customersClient.editCustomer(id, customerModel);
 
     return response;

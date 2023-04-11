@@ -10,7 +10,7 @@ GetCustomersResponseDataModel _$GetCustomersResponseDataModelFromJson(
         Map<String, dynamic> json) =>
     GetCustomersResponseDataModel(
       customers: (json['customers'] as List<dynamic>)
-          .map((e) => CustomerModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => GetCustomerModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       metaData: (json['metaData'] as List<dynamic>)
           .map((e) => MetaDataModel.fromJson(e as Map<String, dynamic>))

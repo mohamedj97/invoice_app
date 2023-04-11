@@ -26,5 +26,5 @@ abstract class CustomersClient {
   Future<AddCustomerResponse> addCustomer(@Body() CustomerModelModel customerModel);
 
   @PUT(EndPoints.singleCustomer)
-  Future<StringResponse> editCustomer(int id,@Body() CustomerModelModel customerModel);
+  Future<BoolResponse> editCustomer(int id,@Body() CustomerModelModel customerModel);
 }

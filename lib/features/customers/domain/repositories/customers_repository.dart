@@ -10,6 +10,6 @@ import '../../data/models/responses/get_customers_response_model.dart';
 abstract class CustomersRepository {
   Future<Either<Failure, GetCustomersResponse>> getCustomers(CustomerFilterGenericFilterModel customerFilterGenericFilterModel);
   Future<Either<Failure, AddCustomerResponse>> addCustomer(CustomerModelModel customerModel);
-  Future<Either<Failure, StringResponse>> editCustomer(int id,CustomerModelModel customerModel);
+  Future<Either<Failure, BoolResponse>> editCustomer(int id,CustomerModelModel customerModel);
   Future<Either<Failure, GetCustomerTypesResponse>> getCustomersLookUps();
 }

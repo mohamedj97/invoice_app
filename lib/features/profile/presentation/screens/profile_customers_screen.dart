@@ -30,7 +30,7 @@ class ProfileCustomersScreen extends StatefulWidget {
 
 class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
   TextEditingController searchController = TextEditingController();
-  List<CustomerModel> customers = [];
+  List<GetCustomerModel> customers = [];
   final cubit = GetCustomersCubit(sl());
   int pageNo = 2;
   bool isSearch = true;
@@ -165,7 +165,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                                     itemCount: customers.length,
                                     physics: const AlwaysScrollableScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      CustomerModel? item = customers[index];
+                                      GetCustomerModel? item = customers[index];
                                       if (index != customers.length - 1) {
                                         return InkWell(
                                           onTap: () {

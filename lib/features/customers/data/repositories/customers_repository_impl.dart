@@ -52,7 +52,7 @@ class CustomersRepositoryImpl extends CustomersRepository with ConnectivityMixin
   }
 
   @override
-  Future<Either<Failure, StringResponse>> editCustomer(int id, CustomerModelModel customerModel) async{
+  Future<Either<Failure, BoolResponse>> editCustomer(int id, CustomerModelModel customerModel) async{
     try {
       final response = await customersRemoteDataSource.editCustomer(id, customerModel);
 
