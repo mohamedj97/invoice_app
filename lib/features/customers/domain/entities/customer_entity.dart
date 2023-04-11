@@ -72,5 +72,5 @@ class GetCustomerModel {
     this.shipaddresses,
   });
 
-  factory GetCustomerModel.fromJson(Map<String, dynamic> json) => _$CustomerModelFromJson(json);
+  factory GetCustomerModel.fromJson(Map<String, dynamic> json) => _$GetCustomerModelFromJson(json);
 }

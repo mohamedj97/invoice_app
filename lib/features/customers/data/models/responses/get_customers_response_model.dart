@@ -1,10 +1,9 @@
-import 'package:invoice_app/features/customers/domain/entities/customer_entity.dart';
 import 'package:invoice_app/features/customers/domain/entities/customer_result_response.dart';
 import 'package:invoice_app/features/customers/domain/entities/meta_data_model.dart';
 import '../../../../../core/api/base_api_response.dart';
 import 'package:json_annotation/json_annotation.dart';
-
 import '../../../../products/domain/entities/list_meta_data.dart';
+import '../../../domain/entities/customers_model.dart';
 
 part 'get_customers_response_model.g.dart';
 

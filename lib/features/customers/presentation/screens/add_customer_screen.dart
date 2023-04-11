@@ -8,7 +8,6 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import 'package:invoice_app/features/customers/data/models/requests/customer_request_model.dart';
-import 'package:invoice_app/features/customers/domain/entities/customer_entity.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/add_customer/add_edit_customer_cubit.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/get_customer_types/get_customer_types_cubit.dart';
 import 'package:invoice_app/features/home/presentation/screens/home_screen.dart';
@@ -21,9 +20,10 @@ import '../../../../injection_container.dart';
 import '../../../company_registration/domain/entities/governate_lookup.dart';
 import '../../../invoices/domain/entities/lookup_code.dart';
 import '../../../products/domain/entities/base_lookup.dart';
+import '../../domain/entities/customers_model.dart';
 
 class AddEditCustomerScreen extends StatefulWidget {
-  final GetCustomerModel? customerItem;
+  final CustomersModel? customerItem;
 
   const AddEditCustomerScreen({Key? key, this.customerItem}) : super(key: key);
 
@@ -38,7 +38,6 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
   List<BaseLookup> customerTypes = [];
   List<LookupCode> countries = [];
   List<GovernateLookup> governments = [];
-  List<LookupCode> taxTypes = [];
 
   @override
   void initState() {
@@ -95,14 +94,12 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
 
                       final int identityId = int.parse(formState.value["identity_id"]);
 
-                      final num taxRate = num.parse(formState.value["tax_rate"]);
 
                       final BaseLookup customerType = formState.value["customer_type"] as BaseLookup;
 
                       final LookupCode country =
                       formState.value["country"] as LookupCode;
 
-                      final LookupCode taxTypes = formState.value["tax_type"] as LookupCode;
 
                       final GovernateLookup governorate = formState.value["governorate"] as GovernateLookup;
 
@@ -171,20 +168,19 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
 
                 if (!hasData) {
                   initialValueCustomerType = state.getCustomerTypesResponse?.result?.customerType
-                      .firstWhere((element) => element.id == (widget.customerItem!.type));
+                      .firstWhere((element) => element.id == (widget.customerItem!.typeid));
 
                   initialValueCountry = state.getCustomerTypesResponse?.result?.countries
-                      .firstWhere((element) => element.id == (widget.customerItem?.country??65));
+                      .firstWhere((element) => element.id == (widget.customerItem?.countryid??65));
 
                   initialValueGovernment = state.getCustomerTypesResponse?.result?.governates
-                      .firstWhere((element) => element.id == (widget.customerItem!.governate));
+                      .firstWhere((element) => element.id == (widget.customerItem!.governateid));
                 }
                 countries = state.getCustomerTypesResponse?.result?.countries ?? [];
 
                 governments = state.getCustomerTypesResponse?.result?.governates ?? [];
 
                 customerTypes = state.getCustomerTypesResponse?.result?.customerType ?? [];
-                taxTypes = state.getCustomerTypesResponse?.result?.taxTypes ?? [];
 
                 return AddEditCustomerState is AddEditCustomerLoading
                     ? const Center(

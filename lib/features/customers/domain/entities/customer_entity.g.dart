@@ -6,7 +6,7 @@ part of 'customer_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetCustomerModel _$CustomerModelFromJson(Map<String, dynamic> json) =>
+GetCustomerModel _$GetCustomerModelFromJson(Map<String, dynamic> json) =>
     GetCustomerModel(
       mobile: json['mobile'] as String?,
       tel: json['tel'] as String?,
@@ -22,7 +22,7 @@ GetCustomerModel _$CustomerModelFromJson(Map<String, dynamic> json) =>
       companyid: json['companyid'] as int,
       type: json['type'] as int,
       code: json['code'] as String?,
-      name: json['name'],
+      name: json['name'] as String,
       identityid: json['identityid'] as int?,
       country: json['country'] as int?,
       governate: json['governate'] as int?,
@@ -46,7 +46,7 @@ GetCustomerModel _$CustomerModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$CustomerModelToJson(GetCustomerModel instance) =>
+Map<String, dynamic> _$GetCustomerModelToJson(GetCustomerModel instance) =>
     <String, dynamic>{
       'mobile': instance.mobile,
       'tel': instance.tel,

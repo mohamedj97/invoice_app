@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
-import 'package:invoice_app/features/customers/domain/entities/customer_entity.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/get_customers/get_customers_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../../core/assets/font_assets.dart';
@@ -19,6 +18,7 @@ import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
 import '../../../customers/data/models/requests/get_customers_request_model.dart';
 import '../../../customers/domain/entities/customer_filter.dart';
+import '../../../customers/domain/entities/customers_model.dart';
 import '../../../customers/presentation/screens/add_customer_screen.dart';
 
 class ProfileCustomersScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class ProfileCustomersScreen extends StatefulWidget {
 
 class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
   TextEditingController searchController = TextEditingController();
-  List<GetCustomerModel> customers = [];
+  List<CustomersModel> customers = [];
   final cubit = GetCustomersCubit(sl());
   int pageNo = 2;
   bool isSearch = true;
@@ -165,7 +165,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                                     itemCount: customers.length,
                                     physics: const AlwaysScrollableScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      GetCustomerModel? item = customers[index];
+                                      CustomersModel? item = customers[index];
                                       if (index != customers.length - 1) {
                                         return InkWell(
                                           onTap: () {
