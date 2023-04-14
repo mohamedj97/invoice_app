@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 import '../../../../../core/api/base_api_response.dart';
 import '../../../../products/domain/entities/base_lookup.dart';
 import '../../../../products/domain/entities/meta.dart';
-import '../../../domain/entities/get_invoices_types_result_response.dart';
 import '../../../domain/entities/invoice_lookup_result.dart';
 import '../../../domain/entities/item_lookup.dart';
 import '../../../domain/entities/lookup_code.dart';
