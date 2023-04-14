@@ -69,11 +69,11 @@ GetSingleInvoiceResponseDataModel _$GetSingleInvoiceResponseDataModelFromJson(
           ? null
           : InvoicePayment.fromJson(
               json['invoicePayment'] as Map<String, dynamic>),
-      lines: (json['lines'] as List<dynamic>)
-          .map((e) => Line.fromJson(e as Map<String, dynamic>))
+      lines: (json['lines'] as List<dynamic>?)
+          ?.map((e) => Line.fromJson(e as Map<String, dynamic>))
           .toList(),
-      taxs: (json['taxs'] as List<dynamic>)
-          .map((e) => LineTax.fromJson(e as Map<String, dynamic>))
+      taxs: (json['taxs'] as List<dynamic>?)
+          ?.map((e) => LineTax.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

@@ -49,8 +49,8 @@ class SingleInvoiceResponse {
     this.details,
     this.invoiceDelivery,
     this.invoicePayment,
-    required this.lines,
-    required this.taxs,
+    this.lines,
+     this.taxs,
   });
 
   int? id;
@@ -97,8 +97,8 @@ class SingleInvoiceResponse {
   String? details;
   InvoiceDelivery? invoiceDelivery;
   InvoicePayment? invoicePayment;
-  late List<Line> lines = [];
-  late List<LineTax> taxs = [];
+  List<Line>? lines;
+  List<LineTax>? taxs;
 
   @override
   List<Object?> get props => [

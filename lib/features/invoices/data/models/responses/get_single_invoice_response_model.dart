@@ -55,8 +55,8 @@ class GetSingleInvoiceResponseDataModel extends SingleInvoiceResponse {
     super.details,
     super.invoiceDelivery,
     super.invoicePayment,
-    required super.lines,
-    required super.taxs,
+     super.lines,
+     super.taxs,
   });
 
   factory GetSingleInvoiceResponseDataModel.fromJson(Map<String, dynamic> json) =>
