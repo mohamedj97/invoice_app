@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:invoice_app/core/error/failure.dart';
 import 'package:invoice_app/features/company_registration/data/data_sources/remote_data_source/company_registration_remote_data_source.dart';
@@ -39,7 +39,7 @@ class CompanyRegistrationRepositoryImpl extends CompanyRegistrationRepository wi
   }
 
   @override
-  Future<Either<Failure, BoolResponse>> uploadLogo(File logo, {required int id}) async{
+  Future<Either<Failure, BoolResponse>> uploadLogo(FormData logo, {required int id}) async{
     try {
       final response = await remoteDataSource.uploadLogo(logo,id: id);
 

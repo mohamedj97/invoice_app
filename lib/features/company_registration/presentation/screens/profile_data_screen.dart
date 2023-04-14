@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dio/dio.dart'; 
 import 'package:invoice_app/core/widgets/custom_back_button.dart';
 import 'package:invoice_app/features/company_registration/presentation/screens/pricing_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -65,7 +66,20 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
               companyID = state.intResponse?.result ?? -1;
             });
             if (file != null) {
-              await BlocProvider.of<CompanyRegisterCubit>(context).uploadLogo(file!, id: companyID);
+              String fileName = file!.path.split('/').last;
+              FormData formData = FormData.fromMap({
+                "logoFile":
+                await MultipartFile.fromFile(file!.path, filename:fileName),
+              });
+             var response = await Dio().post("https://zinvoivedevapi.azurewebsites.net/api/CompanyRegistration/postcompany-logo/$companyID",data: formData,);
+             print("ssssss $response");
+             //response["statuscode"]
+              Navigator.of(context).pushAndRemoveUntil(
+                CustomPageRoute.createRoute(
+                  page: const PricingScreen(),
+                ),
+                    (Route<dynamic> route) => false,
+              );
             } else {
               Navigator.of(context).pushAndRemoveUntil(
                 CustomPageRoute.createRoute(
@@ -74,15 +88,6 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                 (Route<dynamic> route) => false,
               );
             }
-          }
-
-          if (state.uploadLogoRequestState == RequestState.success) {
-            Navigator.of(context).pushAndRemoveUntil(
-              CustomPageRoute.createRoute(
-                page: const PricingScreen(),
-              ),
-                  (Route<dynamic> route) => false,
-            );
           }
 
           if (state.companyRegisterRequestState == RequestState.error) {

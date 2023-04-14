@@ -18,13 +18,13 @@ abstract class InvoicesClient {
   @POST(EndPoints.getInvoices)
   Future<GetInvoicesResponse> getInvoices(@Body() InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel);
 
-  @GET(EndPoints.getInvoices)
+  @GET(EndPoints.singleInvoice)
   Future<GetSingleInvoiceResponse> getSingleInvoices(int id);
 
-  @PUT(EndPoints.getInvoices)
+  @PUT(EndPoints.singleInvoice)
   Future<StringResponse> editSingleInvoices(int id,@Body() InvoiceRequestModel invoiceRequestModel);
 
-  @POST(EndPoints.getInvoices)
+  @POST(EndPoints.singleInvoice)
   Future<StringResponse> addInvoice(@Body() InvoiceRequestModel invoiceRequestModel);
 
 

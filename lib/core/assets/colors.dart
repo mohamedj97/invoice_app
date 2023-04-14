@@ -19,5 +19,6 @@ class AppColors {
   static const Color dialogueTitleColor = Color(0xff5D6870);
   static const Color tabTitleColor = Color(0xffB4C5DB);
   static const Color checkColor = Color(0xffDBE3F4);
+  static const Color babyBlueColor = Color(0xffCDE6FF);
 
 }

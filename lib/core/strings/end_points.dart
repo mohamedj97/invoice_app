@@ -17,6 +17,7 @@ class EndPoints {
 
   //invoices
   static const getInvoices = 'Invoices/getinvoices';
+  static const singleInvoice = 'Invoices';
   static const getInvoiceLookups = 'Invoices/getInvoice-lookups';
   static const filterInvoices = 'Invoices/getinvoicelist';
 

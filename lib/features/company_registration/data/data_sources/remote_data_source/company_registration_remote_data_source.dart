@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:dio/dio.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import '../../../../../core/api/api_repo.dart';
 import '../../models/requests/company_register_request_model.dart';
@@ -11,7 +10,7 @@ abstract class CompanyRegistrationRemoteDataSource {
 
   Future<GetCompanyLookupsResponse> getCompanyLookups({required int userId});
 
-  Future<BoolResponse> uploadLogo(File logo, {required int id});
+  Future<BoolResponse> uploadLogo(FormData logo, {required int id});
 }
 
 class CompanyRegistrationRemoteDataSourceImpl extends CompanyRegistrationRemoteDataSource {
@@ -37,7 +36,7 @@ class CompanyRegistrationRemoteDataSourceImpl extends CompanyRegistrationRemoteD
   }
 
   @override
-  Future<BoolResponse> uploadLogo(File logo, {required int id}) async {
+  Future<BoolResponse> uploadLogo(FormData logo, {required int id}) async {
     final response = await apiRepo.companyRegistrationClient.uploadLogo(logo, id: id);
 
     return response;

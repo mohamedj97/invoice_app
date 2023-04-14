@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -95,7 +95,7 @@ class CompanyRegisterCubit extends Cubit<CompanyRegisterState> {
     });
   }
 
-  Future<void> uploadLogo(File logo, {required int id}) async {
+  Future<void> uploadLogo(FormData logo, {required int id}) async {
     emit(CompanyRegisterLoading());
     final response = await uploadLogoUseCase.call(logo, id: id);
 

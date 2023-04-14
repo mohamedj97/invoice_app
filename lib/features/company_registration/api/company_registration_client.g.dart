@@ -76,7 +76,7 @@ class _CompanyRegistrationClient implements CompanyRegistrationClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = Stream.fromIterable(logo.readAsBytesSync().map((i) => [i]));
+    final _data = logo;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<BoolResponse>(Options(
       method: 'POST',
