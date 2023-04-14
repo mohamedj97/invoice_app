@@ -6,8 +6,10 @@ import '../../../../core/common_widgets/lw_custom_text.dart';
 
 class PricingItem extends StatelessWidget {
   final String title;
+  final Color? iconColor;
+  final Color? textColor;
 
-  const PricingItem({Key? key, required this.title}) : super(key: key);
+  const PricingItem({Key? key, required this.title, this.iconColor, this.textColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +17,18 @@ class PricingItem extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             Icons.check_circle,
-            color: AppColors.primary,
+            color: iconColor ?? AppColors.primary,
           ),
-          LWCustomText(
-            title: title,
-            color: AppColors.blackColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: FontAssets.avertaSemiBold,
+          const SizedBox(width: 8.0),
+          Expanded(
+            child: LWCustomText(
+              title: title,
+              color: textColor??AppColors.blackColor,
+              fontWeight: FontWeight.bold,
+              fontFamily: FontAssets.avertaSemiBold,
+            ),
           )
         ],
       ),

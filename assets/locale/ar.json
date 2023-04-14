@@ -1,6 +1,10 @@
 {
   "no_internet_connection": "الاتصال بالانترنتغير متوفر",
   "hi": "اهلا",
+  "startup": "المبتدئين",
+  "annual": "السنوي",
+  "best_settings_for_startup": "افضل الاعدادات للمبتدئين",
+  "free_trial": "ابدأ التجربة المجانية لمدة 30 يومًا",
   "tax_rate": "معدل الضريبة",
   "tax_type": "نوع الضريبة",
   "security_code_is_invalid": "الرقم السري غير صحيح",

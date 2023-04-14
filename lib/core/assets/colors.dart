@@ -20,5 +20,7 @@ class AppColors {
   static const Color tabTitleColor = Color(0xffB4C5DB);
   static const Color checkColor = Color(0xffDBE3F4);
   static const Color babyBlueColor = Color(0xffCDE6FF);
+  static const Color pricingColor = Color(0xffCDD4D9);
+  static const Color pricingTextColor = Color(0xffD8D8D8);
 
 }
