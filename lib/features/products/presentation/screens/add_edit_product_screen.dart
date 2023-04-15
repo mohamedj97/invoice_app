@@ -1,7 +1,13 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/core/assets/colors.dart';
@@ -30,11 +36,16 @@ class AddEditProductScreen extends StatefulWidget {
 }
 
 class _AddEditProductScreenState extends State<AddEditProductScreen> {
-  final cubit = AddEditProductCubit(sl(),sl());
+  final cubit = AddEditProductCubit(sl(), sl());
   final getItemTypesCubit = GetItemTypesCubit(sl());
   final formKey = GlobalKey<FormBuilderState>();
   List<BaseLookup> unitTypes = [];
   List<BaseLookup> itemTypes = [];
+  final ImagePicker picker = ImagePicker();
+  XFile? xFileImage;
+  File? image;
+  bool isFile = false;
+  File? file;
 
   @override
   void initState() {
@@ -62,21 +73,21 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
               CustomPageRoute.createRoute(
                 page: const HomeScreen(),
               ),
-                  (Route<dynamic> route) => false,
+              (Route<dynamic> route) => false,
             );
           }
           if (state.addProductRequestState == RequestState.error) {
             getErrorDialogue(
               context: context,
               isUnAuthorized: state.addProductResponse!.statuscode == 401,
-              message: "something_went_wrong".tr(),
+              message: state.addProductResponse?.message?.first ?? "something_went_wrong".tr(),
             );
           }
           if (state.editProductRequestState == RequestState.error) {
             getErrorDialogue(
               context: context,
               isUnAuthorized: state.addProductResponse!.statuscode == 401,
-              message: "something_went_wrong".tr(),
+              message: state.addProductResponse?.message?.first ?? "something_went_wrong".tr(),
             );
           }
         },
@@ -89,7 +100,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: InkWell(
-                    onTap: () {
+                    onTap: () async {
                       var formState = formKey.currentState;
                       if (formState == null) return;
                       if (!formState.saveAndValidate()) {
@@ -102,6 +113,15 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                       final num price = num.parse(formState.value["price"]);
                       final BaseLookup itemType = formState.value["item_type"] as BaseLookup;
                       final BaseLookup unitType = formState.value["unit_type"] as BaseLookup;
+                      FormData? formData;
+                      if (file != null) {
+                        String fileName = file!.path.split('/').last;
+                        formData = FormData.fromMap({
+                          "logoFile": await MultipartFile.fromFile(file!.path, filename: fileName),
+                        });
+                      }
+                      var s= MultipartFile.fromFileSync(file!.path,
+                      filename: file!.path.split(Platform.pathSeparator).last);
                       if (hasData) {
                         BlocProvider.of<AddEditProductCubit>(context).addProduct(
                           ProductModel(
@@ -115,6 +135,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                             price: price,
                             type: itemType.name ?? "",
                             unittype: unitType.id,
+                            image:s.toString(),
                           ),
                         );
                       } else {
@@ -153,7 +174,100 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                       child: FormBuilder(
                         key: formKey,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            LWCustomText(
+                              title: "product_image".tr(),
+                              fontWeight: FontWeight.bold,
+                            ),
+                            Container(
+                              decoration: const BoxDecoration(
+                                color: AppColors.whiteColor,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0, right: 32.0, bottom: 8.0, top: 16.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    DottedBorder(
+                                      color: Colors.grey[400]!,
+                                      child: widget.productItem?.image != null && widget.productItem!.image!.isNotEmpty
+                                          ? Image.network(widget.productItem!.image ?? "")
+                                          : isFile
+                                              ? Image.file(
+                                                  file!,
+                                                  fit: BoxFit.cover,
+                                                  height: 100.0,
+                                                  width: 150.0,
+                                                )
+                                              : Container(
+                                                  color: Colors.grey[100],
+                                                  width: 150.0,
+                                                  height: 100.0,
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      const Icon(FontAwesomeIcons.arrowUpFromBracket,
+                                                          color: AppColors.disabledBottomItemColor),
+                                                      LWCustomText(
+                                                          title: "upload".tr(),
+                                                          color: AppColors.disabledBottomItemColor)
+                                                    ],
+                                                  ),
+                                                ),
+                                    ),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            xFileImage = await picker.pickImage(source: ImageSource.gallery);
+                                            image = File(xFileImage!.path);
+                                            setState(() {
+                                              file = image;
+                                              isFile = true;
+                                            });
+                                          },
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                FontAwesomeIcons.arrowUpFromBracket,
+                                                color: AppColors.primary,
+                                              ),
+                                              isFile
+                                                  ? LWCustomText(title: "replace_photo".tr(), color: AppColors.primary)
+                                                  : LWCustomText(title: "upload_photo".tr(), color: AppColors.primary),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 32.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                isFile = false;
+                                                file = null;
+                                                image = null;
+                                                xFileImage = null;
+                                              });
+                                            },
+                                            child: Row(
+                                              children: [
+                                                const Icon(FontAwesomeIcons.trash,
+                                                    color: AppColors.disabledBottomItemColor),
+                                                LWCustomText(title: "remove_photo".tr()),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 16.0),
                             Container(
                               color: AppColors.whiteColor,
                               child: Padding(
@@ -317,10 +431,10 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                   BaseLookup? initialValueItem;
                                   BaseLookup? initialValueUnit;
                                   if (!hasData) {
-                                    initialValueItem = state.getItemTypesResponse?.result?.itemTypes
-                                        .firstWhere((element) => element.name!.contains(widget.productItem?.type??""));
+                                    initialValueItem = state.getItemTypesResponse?.result?.itemTypes.firstWhere(
+                                        (element) => element.name!.contains(widget.productItem?.type ?? ""));
                                     initialValueUnit = state.getItemTypesResponse?.result?.unitTypes
-                                        .firstWhere((element) => element.id == (widget.productItem?.unittypeid??""));
+                                        .firstWhere((element) => element.id == (widget.productItem?.unittypeid ?? ""));
                                   }
                                   itemTypes = state.getItemTypesResponse?.result?.itemTypes ?? [];
                                   unitTypes = state.getItemTypesResponse?.result?.unitTypes ?? [];

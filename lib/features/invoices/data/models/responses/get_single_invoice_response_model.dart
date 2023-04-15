@@ -3,6 +3,7 @@ import '../../../../../core/api/base_api_response.dart';
 import '../../../domain/entities/invoice_delivery.dart';
 import '../../../domain/entities/invoice_line.dart';
 import '../../../domain/entities/invoice_payment.dart';
+import '../../../domain/entities/invoice_tax.dart';
 import '../../../domain/entities/line_tax.dart';
 import '../../../domain/entities/single_invoice_response.dart';
 

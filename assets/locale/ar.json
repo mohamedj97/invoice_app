@@ -1,6 +1,10 @@
 {
   "no_internet_connection": "الاتصال بالانترنتغير متوفر",
   "hi": "اهلا",
+  "product_image": "صورة المنتج",
+  "replace_photo": "بدل الصورة",
+  "remove_photo": "امسح الصورة",
+  "upload_photo": "الصق الصورة",
   "startup": "المبتدئين",
   "annual": "السنوي",
   "best_settings_for_startup": "افضل الاعدادات للمبتدئين",

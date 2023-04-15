@@ -73,7 +73,7 @@ GetSingleInvoiceResponseDataModel _$GetSingleInvoiceResponseDataModelFromJson(
           ?.map((e) => Line.fromJson(e as Map<String, dynamic>))
           .toList(),
       taxs: (json['taxs'] as List<dynamic>?)
-          ?.map((e) => LineTax.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => InvoiceTax.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

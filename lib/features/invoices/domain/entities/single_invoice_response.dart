@@ -1,7 +1,7 @@
 import 'invoice_delivery.dart';
 import 'invoice_line.dart';
 import 'invoice_payment.dart';
-import 'line_tax.dart';
+import 'invoice_tax.dart';
 
 class SingleInvoiceResponse {
   SingleInvoiceResponse({
@@ -98,7 +98,7 @@ class SingleInvoiceResponse {
   InvoiceDelivery? invoiceDelivery;
   InvoicePayment? invoicePayment;
   List<Line>? lines;
-  List<LineTax>? taxs;
+  List<InvoiceTax>? taxs;
 
   @override
   List<Object?> get props => [
