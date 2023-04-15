@@ -9,14 +9,15 @@ part of 'product_request_model.dart';
 ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
       id: json['id'] as int?,
       companyId: json['companyId'] as int?,
-      code: json['code'] as String,
-      brickcode: json['brickcode'] as String,
+      code: json['code'] as String?,
+      brickcode: json['brickcode'] as String?,
       name: json['name'] as String,
-      type: json['type'] as String,
-      description: json['description'] as String,
-      unittype: json['unittype'] as int,
+      type: json['type'] as String?,
+      description: json['description'] as String?,
+      unittype: json['unittype'] as int?,
       active: json['active'] as bool,
-      price: json['price'] as num,
+      price: json['price'] as num?,
+      image: json['image'] as String?,
     );
 
 Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
@@ -31,4 +32,5 @@ Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
       'unittype': instance.unittype,
       'active': instance.active,
       'price': instance.price,
+      'image': instance.image,
     };

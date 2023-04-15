@@ -3,26 +3,28 @@ import 'package:equatable/equatable.dart';
 class ProductRequest extends Equatable {
   int? id;
   int? companyId;
-  String code;
-  String brickcode;
+  String? code;
+  String? brickcode;
   String name;
-  String type;
-  String description;
-  int unittype;
+  String? type;
+  String? description;
+  int? unittype;
   bool active;
-  num price;
+  num? price;
+  String? image;
 
   ProductRequest({
     this.id,
     this.companyId,
-    required this.code,
-    required this.brickcode,
+    this.code,
+    this.brickcode,
     required this.name,
-    required this.type,
-    required this.description,
-    required this.unittype,
+    this.type,
+    this.description,
+    this.unittype,
     required this.active,
-    required this.price,
+    this.price,
+    this.image,
   });
 
   @override
@@ -37,5 +39,6 @@ class ProductRequest extends Equatable {
         unittype,
         active,
         price,
+        image,
       ];
 }

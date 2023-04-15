@@ -9,20 +9,21 @@ class ProductModel extends ProductRequest {
   ProductModel({
     super.id,
     super.companyId,
-    required super.code,
-    required super.brickcode,
+    super.code,
+    super.brickcode,
     required super.name,
-    required super.type,
-    required super.description,
-    required super.unittype,
+    super.type,
+    super.description,
+    super.unittype,
     required super.active,
-    required super.price,
+    super.price,
+    super.image,
   }
   );
 
   @override
   String toString() {
-    return 'ProductModel[id=$id,  companyId=$companyId,  code=$code,  brickcode=$brickcode,  name=$name,  type=$type,  description=$description,   unittype=$unittype,   active=$active,   price==$price=, ]';
+    return 'ProductModel[id=$id,  companyId=$companyId,  code=$code,  brickcode=$brickcode,  name=$name,  type=$type,  description=$description,   unittype=$unittype,   active=$active,   price==$price,   image==$image,  ]';
   }
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
