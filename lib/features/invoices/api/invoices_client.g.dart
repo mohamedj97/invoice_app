@@ -67,7 +67,7 @@ class _InvoicesClient implements InvoicesClient {
   }
 
   @override
-  Future<StringResponse> editSingleInvoices(
+  Future<BoolResponse> editSingleInvoices(
     id,
     invoiceRequestModel,
   ) async {
@@ -77,7 +77,7 @@ class _InvoicesClient implements InvoicesClient {
     final _data = <String, dynamic>{};
     _data.addAll(invoiceRequestModel.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<StringResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<BoolResponse>(Options(
       method: 'PUT',
       headers: _headers,
       extra: _extra,
@@ -89,19 +89,19 @@ class _InvoicesClient implements InvoicesClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = StringResponse.fromJson(_result.data!);
+    final value = BoolResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<StringResponse> addInvoice(invoiceRequestModel) async {
+  Future<GetSingleInvoiceResponse> addInvoice(invoiceRequestModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(invoiceRequestModel.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<StringResponse>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetSingleInvoiceResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -113,7 +113,7 @@ class _InvoicesClient implements InvoicesClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = StringResponse.fromJson(_result.data!);
+    final value = GetSingleInvoiceResponse.fromJson(_result.data!);
     return value;
   }
 

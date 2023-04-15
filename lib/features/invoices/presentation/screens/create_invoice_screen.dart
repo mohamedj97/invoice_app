@@ -118,8 +118,8 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
               if (addInvoiceState.addInvoiceRequestState == RequestState.error) {
                 getErrorDialogue(
                   context: context,
-                  isUnAuthorized: addInvoiceState.stringResponse!.statuscode == 401,
-                  message: addInvoiceState.stringResponse?.message?.first ?? "something_went_wrong".tr(),
+                  isUnAuthorized: addInvoiceState.getSingleInvoiceResponse!.statuscode == 401,
+                  message: addInvoiceState.getSingleInvoiceResponse?.message?.first ?? "something_went_wrong".tr(),
                 );
               }
             },

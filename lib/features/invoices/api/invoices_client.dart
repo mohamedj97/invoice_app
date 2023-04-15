@@ -22,11 +22,10 @@ abstract class InvoicesClient {
   Future<GetSingleInvoiceResponse> getSingleInvoices(int id);
 
   @PUT(EndPoints.singleInvoice)
-  Future<StringResponse> editSingleInvoices(int id,@Body() InvoiceRequestModel invoiceRequestModel);
+  Future<BoolResponse> editSingleInvoices(int id,@Body() InvoiceRequestModel invoiceRequestModel);
 
   @POST(EndPoints.singleInvoice)
-  Future<StringResponse> addInvoice(@Body() InvoiceRequestModel invoiceRequestModel);
-
+  Future<GetSingleInvoiceResponse> addInvoice(@Body() InvoiceRequestModel invoiceRequestModel);
 
   @GET(EndPoints.getInvoiceLookups)
   Future<GetInvoiceTypesResponse> getInvoiceLookups();

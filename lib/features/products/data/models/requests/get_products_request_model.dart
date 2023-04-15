@@ -17,11 +17,6 @@ class ProductFilterGenericFilterModel extends ProductFilterRequest {
   }
       );
 
-  @override
-  String toString() {
-    return 'ProductFilterGenericFilterModel[sortBy=$sortBy,  sortDir=$sortDir,  filter=$filter,  pageNo=$pageNo,  ]';
-  }
-
   factory ProductFilterGenericFilterModel.fromJson(Map<String, dynamic> json) =>
       _$ProductFilterGenericFilterModelFromJson(json);
 

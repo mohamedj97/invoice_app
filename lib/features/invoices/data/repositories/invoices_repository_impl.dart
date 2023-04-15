@@ -40,7 +40,7 @@ class InvoicesRepositoryImpl extends InvoicesRepository with ConnectivityMixin {
   }
 
   @override
-  Future<Either<Failure, StringResponse>> addInvoice(InvoiceRequestModel invoiceRequestModel)async {
+  Future<Either<Failure, GetSingleInvoiceResponse>> addInvoice(InvoiceRequestModel invoiceRequestModel)async {
     try {
       final response = await invoicesRemoteDataSource.addInvoice(invoiceRequestModel);
 
@@ -52,7 +52,7 @@ class InvoicesRepositoryImpl extends InvoicesRepository with ConnectivityMixin {
 
 
   @override
-  Future<Either<Failure, StringResponse>> editSingleInvoices(int id, InvoiceRequestModel invoiceRequestModel) async{
+  Future<Either<Failure, BoolResponse>> editSingleInvoices(int id, InvoiceRequestModel invoiceRequestModel) async{
     try {
       final response = await invoicesRemoteDataSource.editSingleInvoices(id,invoiceRequestModel);
 

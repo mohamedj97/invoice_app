@@ -10,7 +10,7 @@ class EditSingleInvoiceUseCase {
     required this.invoicesRepository,
   });
 
-  Future<Either<Failure, StringResponse>> call(int id, InvoiceRequestModel invoiceRequestModel) async {
+  Future<Either<Failure, BoolResponse>> call(int id, InvoiceRequestModel invoiceRequestModel) async {
     return await invoicesRepository.editSingleInvoices(id,invoiceRequestModel);
   }
 }

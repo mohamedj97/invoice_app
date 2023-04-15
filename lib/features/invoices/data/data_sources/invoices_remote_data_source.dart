@@ -10,9 +10,9 @@ import '../models/responses/get_single_invoice_response_model.dart';
 abstract class InvoicesRemoteDataSource {
   Future<GetInvoicesResponse> getInvoices(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel);
   Future<GetSingleInvoiceResponse> getSingleInvoices(int id);
-  Future<StringResponse> editSingleInvoices(int id ,InvoiceRequestModel invoiceRequestModel);
+  Future<BoolResponse> editSingleInvoices(int id ,InvoiceRequestModel invoiceRequestModel);
   Future<GetInvoiceTypesResponse> getInvoiceLookups();
-  Future<StringResponse> addInvoice(InvoiceRequestModel invoiceRequestModel);
+  Future<GetSingleInvoiceResponse> addInvoice(InvoiceRequestModel invoiceRequestModel);
 }
 
 class InvoicesRemoteDataSourceImpl extends InvoicesRemoteDataSource {
@@ -35,14 +35,14 @@ class InvoicesRemoteDataSourceImpl extends InvoicesRemoteDataSource {
   }
 
   @override
-  Future<StringResponse> addInvoice(InvoiceRequestModel invoiceRequestModel) async{
+  Future<GetSingleInvoiceResponse> addInvoice(InvoiceRequestModel invoiceRequestModel) async{
     final response = await apiRepo.invoicesClient.addInvoice(invoiceRequestModel);
 
     return response;
   }
 
   @override
-  Future<StringResponse> editSingleInvoices(int id, InvoiceRequestModel invoiceRequestModel) async{
+  Future<BoolResponse> editSingleInvoices(int id, InvoiceRequestModel invoiceRequestModel) async{
     final response = await apiRepo.invoicesClient.editSingleInvoices(id,invoiceRequestModel);
 
     return response;

@@ -6,6 +6,7 @@ import 'package:invoice_app/features/invoices/domain/use_cases/edit_single_invoi
 import '../../../../../core/api/base_api_response.dart';
 import '../../../../../core/utils/enums.dart';
 import '../../../data/models/requests/invoice_request_model.dart';
+import '../../../data/models/responses/get_single_invoice_response_model.dart';
 
 part 'add_invoice_state.dart';
 
@@ -35,11 +36,11 @@ class AddInvoiceCubit extends Cubit<AddInvoiceState> {
       );
     }, (response) {
       if (response.statuscode == 200 && response.result != null) {
-        emit(AddInvoiceSuccess(stringResponse: response));
+        emit(AddInvoiceSuccess(getSingleInvoiceResponse: response));
         return emit(
           state.copyWith(
             addInvoiceRequestState: RequestState.success,
-            stringResponse: response,
+            getSingleInvoiceResponse: response,
           ),
         );
       } else {
@@ -47,7 +48,7 @@ class AddInvoiceCubit extends Cubit<AddInvoiceState> {
         return emit(
           state.copyWith(
             addInvoiceRequestState: RequestState.error,
-            stringResponse: response,
+            getSingleInvoiceResponse: response,
           ),
         );
       }
@@ -69,11 +70,11 @@ class AddInvoiceCubit extends Cubit<AddInvoiceState> {
       );
     }, (response) {
       if (response.statuscode == 200 && response.result != null) {
-        emit(AddInvoiceSuccess(stringResponse: response));
+        emit(AddInvoiceSuccess(boolResponse: response));
         return emit(
           state.copyWith(
             addInvoiceRequestState: RequestState.success,
-            stringResponse: response,
+            boolResponse: response,
           ),
         );
       } else {
@@ -81,7 +82,7 @@ class AddInvoiceCubit extends Cubit<AddInvoiceState> {
         return emit(
           state.copyWith(
             addInvoiceRequestState: RequestState.error,
-            stringResponse: response,
+            boolResponse: response,
           ),
         );
       }

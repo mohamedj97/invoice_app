@@ -1,18 +1,21 @@
 part of 'add_invoice_cubit.dart';
 
 class AddInvoiceState extends Equatable {
-  final StringResponse? stringResponse;
+  final GetSingleInvoiceResponse? getSingleInvoiceResponse;
+  final BoolResponse? boolResponse;
   final String? failure;
   final RequestState addInvoiceRequestState;
 
   const AddInvoiceState({
-    this.stringResponse,
+    this.getSingleInvoiceResponse,
+    this.boolResponse,
     this.addInvoiceRequestState = RequestState.loading,
     this.failure = "",
   });
 
   AddInvoiceState copyWith({
-    StringResponse? stringResponse,
+    GetSingleInvoiceResponse? getSingleInvoiceResponse,
+    BoolResponse? boolResponse,
     String? failure,
     RequestState? addInvoiceRequestState,
   }) {
@@ -20,7 +23,8 @@ class AddInvoiceState extends Equatable {
       failure: failure ?? this.failure,
       addInvoiceRequestState:
       addInvoiceRequestState ?? this.addInvoiceRequestState,
-      stringResponse: stringResponse ?? this.stringResponse,
+      getSingleInvoiceResponse: getSingleInvoiceResponse ?? this.getSingleInvoiceResponse,
+      boolResponse: boolResponse ?? this.boolResponse,
     );
   }
 
@@ -28,17 +32,20 @@ class AddInvoiceState extends Equatable {
   List<Object> get props => [
     addInvoiceRequestState,
     failure!,
-    stringResponse ?? StringResponse(statuscode: 0, result: null)
+    getSingleInvoiceResponse ?? GetSingleInvoiceResponse(statuscode: 0, result: null),
+    boolResponse ?? BoolResponse(statuscode: 0, result: null),
   ];
 }
 
 class AddInvoiceInitial extends AddInvoiceState {}
 
 class AddInvoiceSuccess extends AddInvoiceState {
-  final StringResponse stringResponse;
+  final GetSingleInvoiceResponse? getSingleInvoiceResponse;
+  final BoolResponse? boolResponse;
 
   const AddInvoiceSuccess({
-    required this.stringResponse,
+    this.getSingleInvoiceResponse,
+    this.boolResponse,
   });
 }
 

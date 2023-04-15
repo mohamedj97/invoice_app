@@ -10,7 +10,7 @@ import '../../data/models/responses/get_single_invoice_response_model.dart';
 abstract class InvoicesRepository {
   Future<Either<Failure, GetInvoicesResponse>> getInvoices(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel);
   Future<Either<Failure, GetSingleInvoiceResponse>> getSingleInvoices(int id);
-  Future<Either<Failure, StringResponse>> editSingleInvoices(int id ,InvoiceRequestModel invoiceRequestModel);
+  Future<Either<Failure, BoolResponse>> editSingleInvoices(int id ,InvoiceRequestModel invoiceRequestModel);
   Future<Either<Failure, GetInvoiceTypesResponse>> getInvoiceLookups();
-  Future<Either<Failure, StringResponse>> addInvoice(InvoiceRequestModel invoiceRequestModel);
+  Future<Either<Failure, GetSingleInvoiceResponse>> addInvoice(InvoiceRequestModel invoiceRequestModel);
 }
