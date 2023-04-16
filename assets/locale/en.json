@@ -3,6 +3,7 @@
   "hi": "Hi",
   "product_image": "Product Image",
   "replace_photo": "Replace Image",
+  "could_not_upload_image": "Could not upload the image",
   "remove_photo": "Remove Image",
   "upload_photo": "Upload Image",
   "tax_type": "Tax Type",

@@ -17,6 +17,7 @@ import 'package:invoice_app/features/products/domain/entities/base_lookup.dart';
 import 'package:invoice_app/features/products/domain/entities/product.dart';
 import 'package:invoice_app/features/products/presentation/cubit/add_edit_product_cubit.dart';
 import 'package:invoice_app/features/products/presentation/cubit/get_item_types_cubit.dart';
+import '../../../../core/api/repository/memory_repo.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
@@ -45,8 +46,9 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   XFile? xFileImage;
   File? image;
   bool isFile = false;
+  bool isLoading = false;
   File? file;
-  int itemID=-1;
+  int itemID = -1;
 
   @override
   void initState() {
@@ -63,6 +65,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
         listener: (context, state) async {
           if (state.addProductRequestState == RequestState.success) {
             setState(() {
+              isLoading=true;
               itemID = state.addProductResponse?.result?.id ?? -1;
             });
             FormData? formData;
@@ -71,7 +74,23 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
               formData = FormData.fromMap({
                 "logoFile": await MultipartFile.fromFile(file!.path, filename: fileName),
               });
-              var response = await Dio().post("https://zinvoivedevapi.azurewebsites.net/api/Items/setitemimage/$itemID",data: formData,);
+              Response response =
+                  await Dio().post("https://zinvoivedevapi.azurewebsites.net/api/Items/setitemimage/$itemID",
+                      data: formData,
+                      options: Options(headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer ${MemoryRepo().tokensData?.token ?? ""}",
+                      }));
+              if (response.statusCode != 200) {
+                setState(() {
+                  isLoading=false;
+                });
+                await getErrorDialogue(
+                  context: context,
+                  isUnAuthorized: response.statusCode == 401,
+                  message: "could_not_upload_image".tr(),
+                );
+              }
             }
             Navigator.of(context).pushAndRemoveUntil(
               CustomPageRoute.createRoute(
@@ -82,7 +101,8 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
           }
           if (state.editProductRequestState == RequestState.success) {
             setState(() {
-              itemID = widget.productItem?.id ??-1;
+              isLoading=true;
+              itemID = widget.productItem?.id ?? -1;
             });
             FormData? formData;
             if (file != null) {
@@ -90,7 +110,23 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
               formData = FormData.fromMap({
                 "logoFile": await MultipartFile.fromFile(file!.path, filename: fileName),
               });
-              var response = await Dio().post("https://zinvoivedevapi.azurewebsites.net/api/Items/setitemimage/$itemID",data: formData,);
+              Response response =
+              await Dio().post("https://zinvoivedevapi.azurewebsites.net/api/Items/setitemimage/$itemID",
+                  data: formData,
+                  options: Options(headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer ${MemoryRepo().tokensData?.token ?? ""}",
+                  }));
+              if (response.statusCode != 200) {
+                setState(() {
+                  isLoading=false;
+                });
+                await getErrorDialogue(
+                  context: context,
+                  isUnAuthorized: response.statusCode == 401,
+                  message: "could_not_upload_image".tr(),
+                );
+              }
             }
             Navigator.of(context).pushAndRemoveUntil(
               CustomPageRoute.createRoute(
@@ -179,7 +215,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                 ),
               ),
             ],
-            body: state is AddEditProductLoading
+            body: state is AddEditProductLoading || isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : SingleChildScrollView(
                     child: Padding(
