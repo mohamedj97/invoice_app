@@ -46,6 +46,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   File? image;
   bool isFile = false;
   File? file;
+  int itemID=-1;
 
   @override
   void initState() {
@@ -61,6 +62,17 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
       child: BlocConsumer<AddEditProductCubit, AddEditProductState>(
         listener: (context, state) async {
           if (state.addProductRequestState == RequestState.success) {
+            setState(() {
+              itemID = state.addProductResponse?.result?.id ?? -1;
+            });
+            FormData? formData;
+            if (file != null) {
+              String fileName = file!.path.split('/').last;
+              formData = FormData.fromMap({
+                "logoFile": await MultipartFile.fromFile(file!.path, filename: fileName),
+              });
+              var response = await Dio().post("https://zinvoivedevapi.azurewebsites.net/api/Items/setitemimage/$itemID",data: formData,);
+            }
             Navigator.of(context).pushAndRemoveUntil(
               CustomPageRoute.createRoute(
                 page: const HomeScreen(),
@@ -69,6 +81,17 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
             );
           }
           if (state.editProductRequestState == RequestState.success) {
+            setState(() {
+              itemID = widget.productItem?.id ??-1;
+            });
+            FormData? formData;
+            if (file != null) {
+              String fileName = file!.path.split('/').last;
+              formData = FormData.fromMap({
+                "logoFile": await MultipartFile.fromFile(file!.path, filename: fileName),
+              });
+              var response = await Dio().post("https://zinvoivedevapi.azurewebsites.net/api/Items/setitemimage/$itemID",data: formData,);
+            }
             Navigator.of(context).pushAndRemoveUntil(
               CustomPageRoute.createRoute(
                 page: const HomeScreen(),
@@ -113,15 +136,6 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                       final num price = num.parse(formState.value["price"]);
                       final BaseLookup itemType = formState.value["item_type"] as BaseLookup;
                       final BaseLookup unitType = formState.value["unit_type"] as BaseLookup;
-                      FormData? formData;
-                      if (file != null) {
-                        String fileName = file!.path.split('/').last;
-                        formData = FormData.fromMap({
-                          "logoFile": await MultipartFile.fromFile(file!.path, filename: fileName),
-                        });
-                      }
-                      var s= MultipartFile.fromFileSync(file!.path,
-                      filename: file!.path.split(Platform.pathSeparator).last);
                       if (hasData) {
                         BlocProvider.of<AddEditProductCubit>(context).addProduct(
                           ProductModel(
@@ -135,7 +149,6 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                             price: price,
                             type: itemType.name ?? "",
                             unittype: unitType.id,
-                            image:s.toString(),
                           ),
                         );
                       } else {
