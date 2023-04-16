@@ -487,7 +487,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                       BlocProvider.of<AddInvoiceCubit>(context).addInvoice(
                                         InvoiceRequestModel(
                                           id: 0,
-                                          invoiceType: InvoicesLocalDataSource.invoiceType!.id.toString(),
+                                          invoiceType: InvoicesLocalDataSource.invoiceType!.id,
                                           invoiceDate: formState.value["invoice_date"],
                                           invoiceTypeId: InvoicesLocalDataSource.invoiceType!.id,
                                           customerId: customerValue!.id,
