@@ -22,7 +22,7 @@ class StatisticsItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(color: backgroundColor),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -41,7 +41,7 @@ class StatisticsItem extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: AppColors.tabTitleColor),
-                        color: Colors.transparent,
+                        color: Colors.white,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -50,7 +50,7 @@ class StatisticsItem extends StatelessWidget {
                           children: [
                             LWCustomText(
                               title: "total_amount".tr(),
-                              fontSize: 14.0,
+                              fontSize: 16.0,
                               color: AppColors.blackColor,
                               fontFamily: FontAssets.avertaSemiBold,
                             ),
@@ -59,14 +59,14 @@ class StatisticsItem extends StatelessWidget {
                               children: [
                                 LWCustomText(
                                   title: invoicesTotals?.totalSales.toString() ?? "0.0",
-                                  fontSize: 25.0,
+                                  fontSize: 14.0,
                                   color: AppColors.primary,
                                   fontFamily: FontAssets.avertaSemiBold,
                                 ),
                                 const SizedBox(width: 4.0),
                                 LWCustomText(
                                   title: "currency_egp".tr(),
-                                  fontSize: 16.0,
+                                  fontSize: 14.0,
                                   color: AppColors.blackColor,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: FontAssets.avertaSemiBold,
@@ -78,11 +78,11 @@ class StatisticsItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16.0),
+                  const SizedBox(width: 8.0),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.transparent,
+                        color: Colors.white,
                         border: Border.all(color: AppColors.tabTitleColor),
                       ),
                       child: Padding(
@@ -92,7 +92,7 @@ class StatisticsItem extends StatelessWidget {
                           children: [
                             LWCustomText(
                               title: "tax_amount".tr(),
-                              fontSize: 14.0,
+                              fontSize: 16.0,
                               color: AppColors.blackColor,
                               fontFamily: FontAssets.avertaSemiBold,
                             ),
@@ -101,14 +101,14 @@ class StatisticsItem extends StatelessWidget {
                               children: [
                                 LWCustomText(
                                   title: invoicesTotals?.totalTax.toString() ?? "0.0",
-                                  fontSize: 25.0,
+                                  fontSize: 14.0,
                                   color: AppColors.primary,
                                   fontFamily: FontAssets.avertaSemiBold,
                                 ),
                                 const SizedBox(width: 4.0),
                                 LWCustomText(
                                   title: "currency_egp".tr(),
-                                  fontSize: 16.0,
+                                  fontSize: 14.0,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.blackColor,
                                   fontFamily: FontAssets.avertaSemiBold,
