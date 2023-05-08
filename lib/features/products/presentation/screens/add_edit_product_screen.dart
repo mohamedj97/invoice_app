@@ -242,7 +242,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                     DottedBorder(
                                       color: Colors.grey[400]!,
                                       child: widget.productItem?.image != null && widget.productItem!.image!.isNotEmpty
-                                          ? Image.network(widget.productItem!.image ?? "")
+                                          ? Image.network(widget.productItem!.image ?? "",height: 100.0,width: 150.0,)
                                           : isFile
                                               ? Image.file(
                                                   file!,
