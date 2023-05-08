@@ -72,7 +72,7 @@ class _SignupScreenState extends State<SignupScreen> {
               AnimatedPositioned(
                 curve: Curves.linear,
                 duration: const Duration(seconds: 2),
-                top: active ? MediaQuery.of(context).size.height / 2 : MediaQuery.of(context).size.height / 9,
+                top: active ? MediaQuery.of(context).size.height / 2 : MediaQuery.of(context).size.height / 5,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 64.0),
                   child: Image.asset(ImageAssets.splashImage),

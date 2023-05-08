@@ -12,7 +12,7 @@ import 'package:invoice_app/core/navigation/custom_page_route.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_password_form_field.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
-import 'package:invoice_app/features/company_registration/presentation/screens/pricing_screen.dart';
+import 'package:invoice_app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:invoice_app/features/home/presentation/screens/home_screen.dart';
 import 'package:invoice_app/features/splash/presentation/widgets/splash_scaffold.dart';
 import '../../../../core/api/repository/disk_repo.dart';
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   AnimatedPositioned(
                     curve: Curves.linear,
                     duration: const Duration(seconds: 2),
-                    top: active ? MediaQuery.of(context).size.height / 2 : MediaQuery.of(context).size.height / 5,
+                    top: active ? MediaQuery.of(context).size.height / 2 : MediaQuery.of(context).size.height / 7,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 64.0),
                       child: Image.asset(ImageAssets.splashImage),
@@ -244,7 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           child: InkWell(
                                             onTap: (){
                                               Navigator.of(context).pushReplacement(
-                                                  CustomPageRoute.createRoute(page: const PricingScreen()));
+                                                  CustomPageRoute.createRoute(page: const SignupScreen()));
                                             },
                                             child: Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
