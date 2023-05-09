@@ -13,6 +13,7 @@ import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_password_form_field.dart';
 import 'package:invoice_app/core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import 'package:invoice_app/features/auth/presentation/screens/signup_screen.dart';
+import 'package:invoice_app/features/auth/presentation/screens/walkthrough_screen.dart';
 import 'package:invoice_app/features/home/presentation/screens/home_screen.dart';
 import 'package:invoice_app/features/splash/presentation/widgets/splash_scaffold.dart';
 import '../../../../core/api/repository/disk_repo.dart';
@@ -36,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool active = true;
   final formKey = GlobalKey<FormBuilderState>();
   final profileCubit = GetProfileCubit(sl());
-  bool firstLogin =true;
+  bool firstLogin = true;
   String? email;
   String? password;
   final TextEditingController? userNameController = TextEditingController();
@@ -51,21 +52,21 @@ class _LoginScreenState extends State<LoginScreen> {
           if (profileState.getProfileRequestState == RequestState.success) {
             await DiskRepo().deleteUserName();
             await DiskRepo().updateUserName(profileState.getProfileResponse?.result?.userName ?? "");
-            if(firstLogin)
-              {
-                Navigator.of(context).pushAndRemoveUntil(
-                  CustomPageRoute.createRoute(
-                    page: const HomeScreen(),
-                  ),
-                      (Route<dynamic> route) => false,
-                );
-              }
-            else{
+            firstLogin = DiskRepo().loadFirstLogin() ?? true;
+            if (firstLogin) {
+              Navigator.of(context).pushAndRemoveUntil(
+                CustomPageRoute.createRoute(
+                  page: const WalkThroughScreen(),
+                ),
+                (Route<dynamic> route) => false,
+              );
+             await DiskRepo().updateFirstLogin(false);
+            } else {
               Navigator.of(context).pushAndRemoveUntil(
                 CustomPageRoute.createRoute(
                   page: const HomeScreen(),
                 ),
-                    (Route<dynamic> route) => false,
+                (Route<dynamic> route) => false,
               );
             }
           }
@@ -81,9 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
           return BlocConsumer<LoginCubit, LoginState>(listener: (context, state) async {
             if (state.loginRequestState == RequestState.success) {
               BlocProvider.of<GetProfileCubit>(context).getProfile();
-               firstLogin = DiskRepo().loadFirstLogin() ?? true;
+              firstLogin = DiskRepo().loadFirstLogin() ?? true;
               if (firstLogin) {
-                await DiskRepo().updateFirstLogin(false);
                 await DiskRepo().deleteTokensData();
                 await DiskRepo().updateTokensData(TokensData.fromLoginResponse(state.loginResponse!));
               } else {
@@ -242,15 +242,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Material(
                                           color: Colors.transparent,
                                           child: InkWell(
-                                            onTap: (){
+                                            onTap: () {
                                               Navigator.of(context).pushReplacement(
                                                   CustomPageRoute.createRoute(page: const SignupScreen()));
                                             },
                                             child: Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                LWCustomText(title: "do_not_have_an_account".tr(),color: AppColors.dialogueTitleColor,fontSize: 15,),
-                                                LWCustomText(title: " ${'sign_up'.tr()}",color: AppColors.primary,fontSize: 13,),
+                                                LWCustomText(
+                                                  title: "do_not_have_an_account".tr(),
+                                                  color: AppColors.dialogueTitleColor,
+                                                  fontSize: 15,
+                                                ),
+                                                LWCustomText(
+                                                  title: " ${'sign_up'.tr()}",
+                                                  color: AppColors.primary,
+                                                  fontSize: 13,
+                                                ),
                                               ],
                                             ),
                                           ),
