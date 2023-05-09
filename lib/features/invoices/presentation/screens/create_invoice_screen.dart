@@ -325,7 +325,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                       },
                                                     )
                                                   : InvoiceAddItemWidget(
-                                                      title: "Add customer",
+                                                      title: "add_customer".tr(),
                                                       iconPath: IconAssets.addCustomerIcon,
                                                       onTap: () {
                                                         _dialogBuilder(context);

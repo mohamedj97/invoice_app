@@ -23,61 +23,66 @@ class ProductTileItem extends StatelessWidget {
       },
       child: Container(
         color: AppColors.whiteColor,
-        child: Row(
+        child: Column(
           children: [
-            const SizedBox(width: 8.0),
-            if (product.image == null)
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: Image.asset(
-                    ImageAssets.splashImage,
-                    color: AppColors.primary,
+            Row(
+              children: [
+                const SizedBox(width: 8.0),
+                if (product.image == null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: Image.asset(
+                      ImageAssets.splashImage,
+                      color: AppColors.primary,
+                      height: 100,
+                      width: 100,
+                    ),
+                  )
+                else
+                  Image.network(
+                    product.image!,
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
                   ),
-                ),
-              )
-            else
-              Expanded(
-                flex: 1,
-                child: Image.network(product.image!),
-              ),
-            Expanded(
-              flex: 4,
-              child: Column(
-                children: [
-                  ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
+                Expanded(
+                  flex: 4,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: LWCustomText(
+                                title: product.name,
+                                color: AppColors.labelColor,
+                                fontFamily: FontAssets.avertaRegular,
+                              ),
+                            ),
+                            LWCustomText(
+                              title: "${product.price ?? "NA"} ${'currency_egp'.tr()}",
+                              color: AppColors.labelColor,
+                              fontFamily: FontAssets.avertaRegular,
+                            )
+                          ],
+                        ),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: LWCustomText(
-                            title: product.name,
-                            color: AppColors.labelColor,
+                            title: product.description ?? "NA",
+                            color: AppColors.searchBarColor,
                             fontFamily: FontAssets.avertaRegular,
                           ),
                         ),
-                        LWCustomText(
-                          title: "${product.price ?? "NA"} ${'currency_egp'.tr()}",
-                          color: AppColors.labelColor,
-                          fontFamily: FontAssets.avertaRegular,
-                        )
-                      ],
-                    ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: LWCustomText(
-                        title: product.description ?? "NA",
-                        color: AppColors.searchBarColor,
-                        fontFamily: FontAssets.avertaRegular,
                       ),
-                    ),
+                    ],
                   ),
-                  if (showDivider) const Divider(thickness: 2)
-                ],
-              ),
+                ),
+              ],
             ),
+            if (showDivider) const Divider(thickness: 2),
           ],
         ),
       ),

@@ -8,14 +8,15 @@ class InvoiceAddItemWidget extends StatelessWidget {
   final String title;
   final String iconPath;
   final void Function()? onTap;
+
   const InvoiceAddItemWidget({Key? key, required this.title, required this.iconPath, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       color: AppColors.whiteColor,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: onTap,
           child: Row(
@@ -26,10 +27,19 @@ class InvoiceAddItemWidget extends StatelessWidget {
                 children: [
                   Image.asset(iconPath),
                   const SizedBox(width: 8.0),
-                  LWCustomText(title: title,color: AppColors.primary,fontFamily: FontAssets.avertaSemiBold,fontSize: 14.0,)
+                  LWCustomText(
+                    title: title,
+                    color: AppColors.primary,
+                    fontFamily: FontAssets.avertaSemiBold,
+                    fontSize: 14.0,
+                  )
                 ],
               ),
-              const Icon(Icons.keyboard_arrow_right_outlined,color: AppColors.iconsColor,size: 35.0,),
+              const Icon(
+                Icons.keyboard_arrow_right_outlined,
+                color: AppColors.iconsColor,
+                size: 35.0,
+              ),
             ],
           ),
         ),

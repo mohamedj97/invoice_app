@@ -284,6 +284,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                                 FontAwesomeIcons.arrowUpFromBracket,
                                                 color: AppColors.primary,
                                               ),
+                                              const SizedBox(width: 10),
                                               isFile
                                                   ? LWCustomText(title: "replace_photo".tr(), color: AppColors.primary)
                                                   : LWCustomText(title: "upload_photo".tr(), color: AppColors.primary),
@@ -305,6 +306,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                                               children: [
                                                 const Icon(FontAwesomeIcons.trash,
                                                     color: AppColors.disabledBottomItemColor),
+                                                const SizedBox(width: 12),
                                                 LWCustomText(title: "remove_photo".tr()),
                                               ],
                                             ),
