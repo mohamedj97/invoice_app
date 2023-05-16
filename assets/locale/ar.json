@@ -88,6 +88,7 @@
   "required_field": "هذا الحقل مطلوب",
   "verification_code_title": "رمز التحقق",
   "search_for_products": "البحث عن طريق اسم المنتج",
+  "search_for_users": "البحث عن طريق اسم المستخدم",
   "search_for_invoices": "البحث عن طريق رقم الفاتورة",
   "search_for_customers": "البحث باسم العميل",
   "search_for_branches": "البحث باسم الفرع",

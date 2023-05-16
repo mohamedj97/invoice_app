@@ -84,6 +84,7 @@
   "verification_code_title": "Verification Code",
   "search_for_products": "Search by product name",
   "search_for_invoices": "Search by invoice number",
+  "search_for_users": "Search by user name",
   "search_for_customers": "Search by customer name",
   "search_for_branches": "Search by branch name",
   "no_data_found": "No Data found",
