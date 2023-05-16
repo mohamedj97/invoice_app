@@ -40,6 +40,9 @@ class EndPoints {
   //branches
   static const companyBranches = 'Companybranches';
 
+  //roles
+  static const companyRoles = 'CompanyRoles';
+
   //Statistics
   static const receivedInvoices ="Statistics/getreceivedinvoices-dashboard";
   static const submittedInvoices ="Statistics/getsubmittedinvoices-dashboard";
