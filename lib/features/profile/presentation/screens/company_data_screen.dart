@@ -7,7 +7,7 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../widgets/profile_item_widget.dart';
-import '../../../branches/branches_screen.dart';
+import '../../../branches/presentation/screens/branches_screen.dart';
 
 class CompanyDataScreen extends StatefulWidget {
   const CompanyDataScreen({Key? key}) : super(key: key);

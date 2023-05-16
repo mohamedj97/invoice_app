@@ -8,6 +8,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../config.dart';
 import '../../features/auth/api/auth_client.dart';
+import '../../features/branches/api/branches_client.dart';
 import '../../features/company_registration/api/company_registration_client.dart';
 import '../../features/statistics/api/statistics_client.dart';
 import 'interceptors/auth_interceptor.dart';
@@ -15,6 +16,7 @@ import 'interceptors/error_interceptor.dart';
 
 class APIRepository {
   late AuthClient authClient;
+  late BranchesClient branchesClient;
   late InvoicesClient invoicesClient;
   late CustomersClient customersClient;
   late ProductsClient productsClient;
@@ -90,6 +92,7 @@ class APIRepository {
     authDio.interceptors.add(ErrorInterceptor());
     authClient = AuthClient(authDio, baseUrl: apiBaseUrl);
     invoicesClient = InvoicesClient(authDio, baseUrl: apiBaseUrl);
+    branchesClient = BranchesClient(authDio, baseUrl: apiBaseUrl);
     customersClient = CustomersClient(authDio, baseUrl: apiBaseUrl);
     productsClient = ProductsClient(authDio, baseUrl: apiBaseUrl);
     profileClient = ProfileClient(authDio, baseUrl: apiBaseUrl);

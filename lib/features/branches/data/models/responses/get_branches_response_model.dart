@@ -17,7 +17,7 @@ class GetBranchesResponseModel extends CompanyBranch {
   });
 
   factory GetBranchesResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$GetBranchesResponseDataModelFromJson(json);
+      _$GetBranchesResponseModelFromJson(json);
 }
 
 @JsonSerializable()
