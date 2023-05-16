@@ -2,6 +2,11 @@ import 'package:get_it/get_it.dart';
 import 'package:invoice_app/features/auth/domain/use_cases/register_usecase.dart';
 import 'package:invoice_app/features/auth/domain/use_cases/validate_code_usecase.dart';
 import 'package:invoice_app/features/auth/presentation/cubit/register/register_cubit.dart';
+import 'package:invoice_app/features/branches/data/data_sources/branches_remote_data_source.dart';
+import 'package:invoice_app/features/branches/data/repositories/branches_repository_impl.dart';
+import 'package:invoice_app/features/branches/domain/repositories/branches_repository.dart';
+import 'package:invoice_app/features/branches/domain/use_cases/get_branches_use_case.dart';
+import 'package:invoice_app/features/branches/presentation/cubit/branches_cubit.dart';
 import 'package:invoice_app/features/customers/data/data_sources/customers_remote_data_source.dart';
 import 'package:invoice_app/features/customers/data/repositories/customers_repository_impl.dart';
 import 'package:invoice_app/features/customers/domain/repositories/customers_repository.dart';
@@ -73,6 +78,7 @@ Future<void> init() async {
 // Bloc
 
   sl.registerLazySingleton(() => LoginCubit(sl(), sl()));
+  sl.registerLazySingleton(() => BranchesCubit(sl()));
   sl.registerLazySingleton(() => CompanyRegisterCubit(sl(),sl(),sl()));
   sl.registerLazySingleton(() => ValidateCodeCubit(sl(), sl()));
   sl.registerLazySingleton(() => RegisterCubit(sl(), sl()));
@@ -99,6 +105,7 @@ Future<void> init() async {
 // Usecases
 //
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
+  sl.registerLazySingleton(() => GetBranchesUseCase(branchesRepository: sl()));
   sl.registerLazySingleton(() => RegisterUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => ValidateCodeUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => ResendCodeUseCase(authRepository: sl()));
@@ -131,6 +138,7 @@ Future<void> init() async {
   sl.registerLazySingleton<CustomersRepository>(() => CustomersRepositoryImpl(sl()));
   sl.registerLazySingleton<ProductsRepository>(() => ProductsRepositoryImpl(sl()));
   sl.registerLazySingleton<ProfileRepository>(() => ProfileRepositoryImpl(sl()));
+  sl.registerLazySingleton<BranchesRepository>(() => BranchesRepositoryImpl(sl()));
   sl.registerLazySingleton<SubmittedInvoicesRepository>(() => SubmittedInvoicesRepositoryImpl(sl()));
 
 // Datasources
@@ -148,6 +156,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ProductsRemoteDataSource>(() => ProductsRemoteDataSourceImpl(apiRepo: sl()));
 
   sl.registerLazySingleton<ProfileRemoteDataSource>(() => ProfileRemoteDataSourceImpl(apiRepo: sl()));
+  sl.registerLazySingleton<BranchesRemoteDataSource>(() => BranchesRemoteDataSourceImpl(apiRepo: sl()));
 
   sl.registerLazySingleton<SubmittedInvoicesRemoteDataSource>(
       () => SubmittedInvoicesRemoteDataSourceImpl(apiRepo: sl()));
