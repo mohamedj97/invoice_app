@@ -9,7 +9,6 @@ class GetBranchesResult {
 
   GetBranchesResult({
     required this.branches,
-
   });
 
   factory GetBranchesResult.fromJson(Map<String, dynamic> json) =>

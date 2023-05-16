@@ -9,25 +9,15 @@ part of 'get_branches_response_model.dart';
 GetBranchesResponseModel _$GetBranchesResponseModelFromJson(
         Map<String, dynamic> json) =>
     GetBranchesResponseModel(
-      id: json['id'] as int,
-      companyId: json['companyId'] as int,
-      code: json['code'] as String,
-      name: json['name'] as String,
-      address: json['address'] as String?,
-      address2: json['address2'] as String?,
-      active: json['active'] as bool,
+      branches: (json['branches'] as List<dynamic>)
+          .map((e) => CompanyBranch.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$GetBranchesResponseModelToJson(
         GetBranchesResponseModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'companyId': instance.companyId,
-      'code': instance.code,
-      'name': instance.name,
-      'address': instance.address,
-      'address2': instance.address2,
-      'active': instance.active,
+      'branches': instance.branches,
     };
 
 GetBranchesResponse _$GetBranchesResponseFromJson(Map<String, dynamic> json) =>
