@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/widgets/custom_back_button.dart';
+import 'package:invoice_app/features/branches/presentation/cubit/branches_cubit.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/get_customers/get_customers_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../../core/assets/font_assets.dart';
@@ -32,7 +33,7 @@ class BranchesScreen extends StatefulWidget {
 class _BranchesScreenState extends State<BranchesScreen> {
   TextEditingController searchController = TextEditingController();
   List<CustomersModel> customers = [];
-  final cubit = GetCustomersCubit(sl());
+  final cubit = BranchesCubit(sl());
   int pageNo = 2;
   bool isSearch = true;
   final Debounce _debounce = Debounce(const Duration(milliseconds: 500));
@@ -40,7 +41,7 @@ class _BranchesScreenState extends State<BranchesScreen> {
 
   @override
   void initState() {
-    cubit.getCustomers(CustomerFilterGenericFilterModel(pageSize: 10, pageNo: 1));
+    cubit.getCompanyBranches();
     super.initState();
   }
 
