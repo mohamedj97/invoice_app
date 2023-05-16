@@ -7,29 +7,29 @@ import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/widgets/custom_back_button.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/get_customers/get_customers_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import '../../../../core/assets/font_assets.dart';
-import '../../../../core/assets/image_assets.dart';
-import '../../../../core/common_widgets/empty_screen.dart';
-import '../../../../core/common_widgets/lw_custom_text.dart';
-import '../../../../core/common_widgets/search_bar.dart';
-import '../../../../core/navigation/custom_page_route.dart';
-import '../../../../core/popups/error_dialogue.dart';
-import '../../../../core/utils/debouncer.dart';
-import '../../../../core/utils/enums.dart';
-import '../../../../injection_container.dart';
-import '../../../customers/data/models/requests/get_customers_request_model.dart';
-import '../../../customers/domain/entities/customer_filter.dart';
-import '../../../customers/domain/entities/customers_model.dart';
-import '../../../customers/presentation/screens/add_customer_screen.dart';
+import '../../core/assets/font_assets.dart';
+import '../../core/assets/image_assets.dart';
+import '../../core/common_widgets/empty_screen.dart';
+import '../../core/common_widgets/lw_custom_text.dart';
+import '../../core/common_widgets/search_bar.dart';
+import '../../core/navigation/custom_page_route.dart';
+import '../../core/popups/error_dialogue.dart';
+import '../../core/utils/debouncer.dart';
+import '../../core/utils/enums.dart';
+import '../../injection_container.dart';
+import '../customers/data/models/requests/get_customers_request_model.dart';
+import '../customers/domain/entities/customer_filter.dart';
+import '../customers/domain/entities/customers_model.dart';
+import '../customers/presentation/screens/add_customer_screen.dart';
 
-class ProfileCustomersScreen extends StatefulWidget {
-  const ProfileCustomersScreen({Key? key}) : super(key: key);
+class BranchesScreen extends StatefulWidget {
+  const BranchesScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileCustomersScreen> createState() => _ProfileCustomersScreenState();
+  State<BranchesScreen> createState() => _BranchesScreenState();
 }
 
-class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
+class _BranchesScreenState extends State<BranchesScreen> {
   TextEditingController searchController = TextEditingController();
   List<CustomersModel> customers = [];
   final cubit = GetCustomersCubit(sl());
@@ -61,7 +61,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
         builder: (context, state) {
           customers.addAll(state.getCustomersResponse?.result?.customers ?? []);
           return CustomScaffold(
-            title: "customers".tr(),
+            title: "branches".tr(),
             leading: const CustomBackButton(),
             actions: [
               InkWell(
@@ -102,7 +102,7 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                     });
                   },
                   searchController: searchController,
-                  searchHintText: "search_for_customers".tr(),
+                  searchHintText: "search_for_branches".tr(),
                 ),
                 const SizedBox(height: 8.0),
                 Expanded(
@@ -149,82 +149,82 @@ class _ProfileCustomersScreenState extends State<ProfileCustomersScreen> {
                           refreshController.loadComplete();
                         },
                         enablePullUp:
-                            state.getCustomersResponse?.result?.listMetadata.totalPages == pageNo - 1 ? false : true,
+                        state.getCustomersResponse?.result?.listMetadata.totalPages == pageNo - 1 ? false : true,
                         child: state is GetCustomersLoading && pageNo - 1 == 1 && isSearch
                             ? const Center(
-                                child: CircularProgressIndicator(),
-                              )
+                          child: CircularProgressIndicator(),
+                        )
                             : customers.isEmpty
-                                ? SizedBox(
-                                    height: MediaQuery.of(context).size.height / 1.5,
-                                    child: EmptyScreen(
-                                      title: "no_customers".tr(),
-                                      subtitle: "no_customers_subtitle".tr(),
-                                      imageString: ImageAssets.noCustomers,
-                                    ),
-                                  )
-                                : ListView.builder(
-                                    itemCount: customers.length,
-                                    physics: const AlwaysScrollableScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      CustomersModel? item = customers[index];
-                                      if (index != customers.length - 1) {
-                                        return InkWell(
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                              CustomPageRoute.createRoute(
-                                                page: AddEditCustomerScreen(customerItem: item),
-                                              ),
-                                            );
-                                          },
-                                          child: Container(
-                                            width: double.infinity,
-                                            color: AppColors.whiteColor,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(top: 24.0, left: 8.0),
-                                              child: Center(
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    LWCustomText(
-                                                      title: item.name ?? "NA",
-                                                      color: AppColors.labelColor,
-                                                      fontSize: 18.0,
-                                                      fontFamily: FontAssets.avertaRegular,
-                                                    ),
-                                                    const SizedBox(height: 24.0),
-                                                    const Divider(
-                                                      thickness: 0.5,
-                                                      height: 0.0,
-                                                      color: AppColors.searchBarColor,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      } else {
-                                        return Container(
-                                          width: double.infinity,
-                                          color: AppColors.whiteColor,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(top: 24.0, left: 8.0, bottom: 24.0),
-                                            child: LWCustomText(
-                                              title: item.name!,
-                                              color: AppColors.labelColor,
-                                              fontSize: 18.0,
-                                              fontFamily: FontAssets.avertaRegular,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                            ),
+                            ? SizedBox(
+                          height: MediaQuery.of(context).size.height / 1.5,
+                          child: EmptyScreen(
+                            title: "no_customers".tr(),
+                            subtitle: "no_customers_subtitle".tr(),
+                            imageString: ImageAssets.noCustomers,
                           ),
+                        )
+                            : ListView.builder(
+                          itemCount: customers.length,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            CustomersModel? item = customers[index];
+                            if (index != customers.length - 1) {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    CustomPageRoute.createRoute(
+                                      page: AddEditCustomerScreen(customerItem: item),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  color: AppColors.whiteColor,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 24.0, left: 8.0),
+                                    child: Center(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          LWCustomText(
+                                            title: item.name ?? "NA",
+                                            color: AppColors.labelColor,
+                                            fontSize: 18.0,
+                                            fontFamily: FontAssets.avertaRegular,
+                                          ),
+                                          const SizedBox(height: 24.0),
+                                          const Divider(
+                                            thickness: 0.5,
+                                            height: 0.0,
+                                            color: AppColors.searchBarColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Container(
+                                width: double.infinity,
+                                color: AppColors.whiteColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 24.0, left: 8.0, bottom: 24.0),
+                                  child: LWCustomText(
+                                    title: item.name!,
+                                    color: AppColors.labelColor,
+                                    fontSize: 18.0,
+                                    fontFamily: FontAssets.avertaRegular,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                         ),
+                      ),
+                    ),
+                  ),
                 )
               ],
             ),

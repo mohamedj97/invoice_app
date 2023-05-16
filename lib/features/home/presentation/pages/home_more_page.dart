@@ -10,13 +10,13 @@ import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:invoice_app/features/profile/domain/entities/user_info_data.dart';
 import 'package:invoice_app/features/profile/presentation/cubit/get_profile_cubit.dart';
-import 'package:invoice_app/features/profile/presentation/screens/business_data_screen.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
 import '../../../profile/presentation/screens/change_language_screen.dart';
 import '../../../profile/presentation/screens/change_password_screen.dart';
+import '../../../profile/presentation/screens/company_data_screen.dart';
 import '../../../profile/presentation/screens/profile_customers_screen.dart';
 import '../../../profile/presentation/screens/profile_data_screen.dart';
 import '../../../profile/presentation/widgets/profile_item_widget.dart';
@@ -104,14 +104,32 @@ class _HomeMorePageState extends State<HomeMorePage> {
                                 content: LWCustomText(
                                     title: state.getProfileResponse?.message?.first ?? "no_internet_connection".tr()),
                               ))
-                            : Navigator.of(context).push(CustomPageRoute.createRoute(
-                                page: ProfileDataScreen(
-                                user: state.getProfileResponse!.result as UserInfoData,
-                              )));
+                            : Navigator.of(context).push(
+                                CustomPageRoute.createRoute(
+                                  page: ProfileDataScreen(
+                                    user: state.getProfileResponse!.result as UserInfoData,
+                                  ),
+                                ),
+                              );
                       },
                     ),
+                    // ProfileItemWidget(
+                    //   title: "company_data".tr(),
+                    //   imagePath: IconAssets.businessIcon,
+                    //   onTap: () {
+                    //     state.getProfileResponse!.statuscode == 0
+                    //         ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //             content: LWCustomText(
+                    //                 title: state.getProfileResponse?.message?.first ?? "no_internet_connection".tr()),
+                    //           ))
+                    //         : Navigator.of(context).push(CustomPageRoute.createRoute(
+                    //             page: OverviewScreen(
+                    //             companyInfo: state.getProfileResponse?.result?.companies[0].companyInfo,
+                    //           )));
+                    //   },
+                    // ),
                     ProfileItemWidget(
-                      title: "business_data".tr(),
+                      title: "company_data".tr(),
                       imagePath: IconAssets.businessIcon,
                       onTap: () {
                         state.getProfileResponse!.statuscode == 0
@@ -119,10 +137,11 @@ class _HomeMorePageState extends State<HomeMorePage> {
                                 content: LWCustomText(
                                     title: state.getProfileResponse?.message?.first ?? "no_internet_connection".tr()),
                               ))
-                            : Navigator.of(context).push(CustomPageRoute.createRoute(
-                                page: BusinessDataScreen(
-                                companyInfo: state.getProfileResponse?.result?.companies[0].companyInfo,
-                              )));
+                            : Navigator.of(context).push(
+                                CustomPageRoute.createRoute(
+                                  page: const CompanyDataScreen(),
+                                ),
+                              );
                       },
                     ),
                     ProfileItemWidget(
@@ -134,8 +153,11 @@ class _HomeMorePageState extends State<HomeMorePage> {
                                 content: LWCustomText(
                                     title: state.getProfileResponse?.message?.first ?? "no_internet_connection".tr()),
                               ))
-                            : Navigator.of(context)
-                                .push(CustomPageRoute.createRoute(page: const ProfileCustomersScreen()));
+                            : Navigator.of(context).push(
+                                CustomPageRoute.createRoute(
+                                  page: const ProfileCustomersScreen(),
+                                ),
+                              );
                       },
                     ),
                     ProfileItemWidget(

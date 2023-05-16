@@ -11,15 +11,15 @@ import '../../../../core/navigation/custom_page_route.dart';
 import '../../../home/presentation/screens/home_screen.dart';
 import '../widgets/profile_data_form_item.dart';
 
-class BusinessDataScreen extends StatefulWidget {
+class OverviewScreen extends StatefulWidget {
   final CompanyInfo? companyInfo;
-  const BusinessDataScreen({Key? key, required this.companyInfo}) : super(key: key);
+  const OverviewScreen({Key? key, required this.companyInfo}) : super(key: key);
 
   @override
-  State<BusinessDataScreen> createState() => _BusinessDataScreenState();
+  State<OverviewScreen> createState() => _OverviewScreenState();
 }
 
-class _BusinessDataScreenState extends State<BusinessDataScreen> {
+class _OverviewScreenState extends State<OverviewScreen> {
   final TextEditingController businessNameController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
@@ -55,7 +55,7 @@ class _BusinessDataScreenState extends State<BusinessDataScreen> {
           ),
         ),
       ],
-      title: "business_data".tr(),
+      title: "overview".tr(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24.0),
         child: FormBuilder(
