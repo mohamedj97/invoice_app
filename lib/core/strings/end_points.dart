@@ -43,6 +43,9 @@ class EndPoints {
   //roles
   static const companyRoles = 'CompanyRoles';
 
+  //users
+  static const companyUsers = 'Companyusers';
+
   //Statistics
   static const receivedInvoices ="Statistics/getreceivedinvoices-dashboard";
   static const submittedInvoices ="Statistics/getsubmittedinvoices-dashboard";

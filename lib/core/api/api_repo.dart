@@ -5,6 +5,7 @@ import 'package:invoice_app/features/invoices/api/invoices_client.dart';
 import 'package:invoice_app/features/products/api/products_client.dart';
 import 'package:invoice_app/features/profile/api/profile_client.dart';
 import 'package:invoice_app/features/roles/api/roles_client.dart';
+import 'package:invoice_app/features/users/api/users_client.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../config.dart';
@@ -23,6 +24,7 @@ class APIRepository {
   late CustomersClient customersClient;
   late ProductsClient productsClient;
   late ProfileClient profileClient;
+  late UsersClient usersClient;
   late StatisticsClient statisticsClient;
   late CompanyRegistrationClient companyRegistrationClient;
 
@@ -100,6 +102,7 @@ class APIRepository {
     profileClient = ProfileClient(authDio, baseUrl: apiBaseUrl);
     statisticsClient = StatisticsClient(authDio, baseUrl: apiBaseUrl);
     rolesClient = RolesClient(authDio, baseUrl: apiBaseUrl);
+    usersClient = UsersClient(authDio, baseUrl: apiBaseUrl);
     companyRegistrationClient = CompanyRegistrationClient(authDio, baseUrl: apiBaseUrl);
   }
   Future ensureInitialized() async => true;
