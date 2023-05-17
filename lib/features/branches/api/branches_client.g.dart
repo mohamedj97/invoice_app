@@ -32,7 +32,7 @@ class _BranchesClient implements BranchesClient {
     )
             .compose(
               _dio.options,
-              'Companybranches',
+              'Companies/getcompanybranches',
               queryParameters: queryParameters,
               data: _data,
             )

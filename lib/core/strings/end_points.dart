@@ -38,13 +38,13 @@ class EndPoints {
 
 
   //branches
-  static const companyBranches = 'Companybranches';
+  static const companyBranches = 'Companies/getcompanybranches';
 
   //roles
-  static const companyRoles = 'CompanyRoles';
+  static const companyRoles = 'Companies/getcompanyroles';
 
   //users
-  static const companyUsers = 'Companyusers';
+  static const companyUsers = 'Companies/getcompanyusers';
 
   //Statistics
   static const receivedInvoices ="Statistics/getreceivedinvoices-dashboard";
