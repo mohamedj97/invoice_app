@@ -41,6 +41,57 @@ class _BranchesClient implements BranchesClient {
     return value;
   }
 
+  @override
+  Future<BoolResponse> editBranch(
+    id,
+    companyBranch,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(companyBranch.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<BoolResponse>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'Companies/putcompanybranch/$id',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BoolResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AddBranchResponse> addBranch(companyBranch) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(companyBranch.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<AddBranchResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'Companies/postcompanybranch',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AddBranchResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

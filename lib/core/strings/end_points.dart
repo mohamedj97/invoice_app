@@ -39,6 +39,8 @@ class EndPoints {
 
   //branches
   static const companyBranches = 'Companies/getcompanybranches';
+  static const editBranch = 'Companies/putcompanybranch/';
+  static const addBranch = 'Companies/postcompanybranch';
 
   //roles
   static const companyRoles = 'Companies/getcompanyroles';
