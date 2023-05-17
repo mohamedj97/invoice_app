@@ -5,41 +5,33 @@ CompanyRole companyRoleFromJson(String str) => CompanyRole.fromJson(json.decode(
 String companyRoleToJson(CompanyRole data) => json.encode(data.toJson());
 
 class CompanyRole {
+  late int companyid;
   late int id;
-  late int companyId;
-  String? roleName;
-  String? roleDescription;
-  bool? canEdit;
-  bool? canView;
-  bool? active;
+  String? name;
+  String? description;
+  late int noOfUsers;
 
   CompanyRole({
+    required this.companyid,
     required this.id,
-    required this.companyId,
-     this.roleName,
-     this.roleDescription,
-     this.canEdit,
-     this.canView,
-     this.active,
+    this.name,
+    this.description,
+    required this.noOfUsers,
   });
 
   factory CompanyRole.fromJson(Map<String, dynamic> json) => CompanyRole(
+    companyid: json["companyid"],
     id: json["id"],
-    companyId: json["companyId"],
-    roleName: json["roleName"],
-    roleDescription: json["roleDescription"],
-    canEdit: json["canEdit"],
-    canView: json["canView"],
-    active: json["active"],
+    name: json["name"],
+    description: json["description"],
+    noOfUsers: json["noOfUsers"],
   );
 
   Map<String, dynamic> toJson() => {
+    "companyid": companyid,
     "id": id,
-    "companyId": companyId,
-    "roleName": roleName,
-    "roleDescription": roleDescription,
-    "canEdit": canEdit,
-    "canView": canView,
-    "active": active,
+    "name": name,
+    "description": description,
+    "noOfUsers": noOfUsers,
   };
 }

@@ -7,8 +7,8 @@ String companyBranchToJson(CompanyBranch data) => json.encode(data.toJson());
 class CompanyBranch {
   late int id;
   late int companyId;
-  late String code;
-  late String name;
+  String? code;
+  String? name;
   String? address;
   String? address2;
   late bool active;
@@ -16,8 +16,8 @@ class CompanyBranch {
   CompanyBranch({
     required this.id,
     required this.companyId,
-    required this.code,
-    required this.name,
+    this.code,
+    this.name,
     this.address,
     this.address2,
     required this.active,
