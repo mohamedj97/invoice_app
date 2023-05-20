@@ -5,7 +5,10 @@ import 'package:invoice_app/features/auth/presentation/cubit/register/register_c
 import 'package:invoice_app/features/branches/data/data_sources/branches_remote_data_source.dart';
 import 'package:invoice_app/features/branches/data/repositories/branches_repository_impl.dart';
 import 'package:invoice_app/features/branches/domain/repositories/branches_repository.dart';
+import 'package:invoice_app/features/branches/domain/use_cases/add_branch_use_case.dart';
+import 'package:invoice_app/features/branches/domain/use_cases/edit_branch_use_case.dart';
 import 'package:invoice_app/features/branches/domain/use_cases/get_branches_use_case.dart';
+import 'package:invoice_app/features/branches/presentation/cubit/add_edit_branch_cubit.dart';
 import 'package:invoice_app/features/branches/presentation/cubit/branches_cubit.dart';
 import 'package:invoice_app/features/customers/data/data_sources/customers_remote_data_source.dart';
 import 'package:invoice_app/features/customers/data/repositories/customers_repository_impl.dart';
@@ -84,6 +87,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => LoginCubit(sl(), sl()));
   sl.registerLazySingleton(() => BranchesCubit(sl()));
+  sl.registerLazySingleton(() => AddEditBranchCubit(sl(),sl()));
   sl.registerLazySingleton(() => RolesCubit(sl()));
   sl.registerLazySingleton(() => CompanyRegisterCubit(sl(),sl(),sl()));
   sl.registerLazySingleton(() => ValidateCodeCubit(sl(), sl()));
@@ -112,6 +116,8 @@ Future<void> init() async {
 //
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => GetBranchesUseCase(branchesRepository: sl()));
+  sl.registerLazySingleton(() => AddBranchUseCase(branchesRepository: sl()));
+  sl.registerLazySingleton(() => EditBranchUseCase(branchesRepository: sl()));
   sl.registerLazySingleton(() => GetRolesUseCase(rolesRepository: sl()));
   sl.registerLazySingleton(() => RegisterUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => ValidateCodeUseCase(authRepository: sl()));
