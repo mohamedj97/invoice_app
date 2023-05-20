@@ -50,6 +50,10 @@ class EndPoints {
 
   //users
   static const companyUsers = 'Companies/getcompanyusers';
+  static const getSingleUser = 'Companies/getcompanyuser/';
+  static const getCompanyUserLookup = 'Companies/getcompanyuserlookup/';
+  static const editUser = 'Companies/putcompanyuser/';
+  static const addUser = 'Companies/postcompanyuser';
 
   //Statistics
   static const receivedInvoices ="Statistics/getreceivedinvoices-dashboard";
