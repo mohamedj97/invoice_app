@@ -46,6 +46,15 @@ import 'package:invoice_app/features/roles/domain/use_cases/get_roles_use_case.d
 import 'package:invoice_app/features/roles/domain/use_cases/get_single_role_use_case.dart';
 import 'package:invoice_app/features/roles/presentation/cubit/add_edit_role_cubit.dart';
 import 'package:invoice_app/features/roles/presentation/cubit/roles_cubit.dart';
+import 'package:invoice_app/features/users/data/data_sources/users_remote_data_source.dart';
+import 'package:invoice_app/features/users/data/repositories/users_repository_impl.dart';
+import 'package:invoice_app/features/users/domain/repositories/users_repositories.dart';
+import 'package:invoice_app/features/users/domain/use_cases/add_user_use_case.dart';
+import 'package:invoice_app/features/users/domain/use_cases/edit_user_use_case.dart';
+import 'package:invoice_app/features/users/domain/use_cases/get_single_user_use_case.dart';
+import 'package:invoice_app/features/users/domain/use_cases/get_users_use_case.dart';
+import 'package:invoice_app/features/users/presentation/cubit/add_edit_user_cubit.dart';
+import 'package:invoice_app/features/users/presentation/cubit/users_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/api/api_repo.dart';
@@ -81,6 +90,7 @@ import 'features/statistics/domain/repositories/submited_invoices_repository.dar
 import 'features/statistics/domain/use_cases/get_recieved_invoices_use_case.dart';
 import 'features/statistics/domain/use_cases/get_submitted_invoices_use_case.dart';
 import 'features/statistics/presentation/cubit/get_submitted_invoices_cubit.dart';
+import 'features/users/domain/use_cases/get_user_lookup_use_case.dart';
 
 final sl = GetIt.instance;
 
@@ -91,6 +101,8 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => LoginCubit(sl(), sl()));
   sl.registerLazySingleton(() => BranchesCubit(sl()));
+  sl.registerLazySingleton(() => UsersCubit(sl(),sl()));
+  sl.registerLazySingleton(() => AddEditUserCubit(sl(),sl()));
   sl.registerLazySingleton(() => AddEditBranchCubit(sl(),sl()));
   sl.registerLazySingleton(() => RolesCubit(sl(),sl()));
   sl.registerLazySingleton(() => AddEditRoleCubit(sl(),sl()));
@@ -120,6 +132,11 @@ Future<void> init() async {
 // Usecases
 //
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
+  sl.registerLazySingleton(() => AddUserUseCase(usersRepository: sl()));
+  sl.registerLazySingleton(() => EditUserUseCase(usersRepository: sl()));
+  sl.registerLazySingleton(() => GetSingleUserUseCase(usersRepository: sl()));
+  sl.registerLazySingleton(() => GeUserLookupUseCase(usersRepository: sl()));
+  sl.registerLazySingleton(() => GetUsersUseCase(usersRepository: sl()));
   sl.registerLazySingleton(() => GetBranchesUseCase(branchesRepository: sl()));
   sl.registerLazySingleton(() => AddBranchUseCase(branchesRepository: sl()));
   sl.registerLazySingleton(() => EditBranchUseCase(branchesRepository: sl()));
@@ -160,6 +177,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ProductsRepository>(() => ProductsRepositoryImpl(sl()));
   sl.registerLazySingleton<ProfileRepository>(() => ProfileRepositoryImpl(sl()));
   sl.registerLazySingleton<BranchesRepository>(() => BranchesRepositoryImpl(sl()));
+  sl.registerLazySingleton<UsersRepository>(() => UsersRepositoryImpl(sl()));
   sl.registerLazySingleton<RolesRepository>(() => RolesRepositoryImpl(sl()));
   sl.registerLazySingleton<SubmittedInvoicesRepository>(() => SubmittedInvoicesRepositoryImpl(sl()));
 
@@ -179,6 +197,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton<ProfileRemoteDataSource>(() => ProfileRemoteDataSourceImpl(apiRepo: sl()));
   sl.registerLazySingleton<BranchesRemoteDataSource>(() => BranchesRemoteDataSourceImpl(apiRepo: sl()));
+  sl.registerLazySingleton<UsersRemoteDataSource>(() => UsersRemoteDataSourceImpl(apiRepo: sl()));
   sl.registerLazySingleton<RolesRemoteDataSource>(() => RolesRemoteDataSourceImpl(apiRepo: sl()));
 
   sl.registerLazySingleton<SubmittedInvoicesRemoteDataSource>(

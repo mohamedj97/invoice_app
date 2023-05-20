@@ -33,7 +33,7 @@ class RolesScreen extends StatefulWidget {
 class _RolesScreenState extends State<RolesScreen> {
   TextEditingController searchController = TextEditingController();
   List<CustomersModel> customers = [];
-  final cubit = UsersCubit(sl());
+  final cubit = UsersCubit(sl(),sl());
   int pageNo = 2;
   bool isSearch = true;
   final Debounce _debounce = Debounce(const Duration(milliseconds: 500));
