@@ -8,7 +8,7 @@ class GetFeaturesResult {
   late List<Feature> result = [];
 
   GetFeaturesResult({
-    required this.features,
+    required this.result,
   });
 
   factory GetFeaturesResult.fromJson(Map<String, dynamic> json) =>
