@@ -42,6 +42,7 @@ import 'package:invoice_app/features/roles/data/data_sources/roles_remote_data_s
 import 'package:invoice_app/features/roles/data/repositories/roles_repository_impl.dart';
 import 'package:invoice_app/features/roles/domain/repositories/roles_repository.dart';
 import 'package:invoice_app/features/roles/domain/use_cases/edit_role_use_case.dart';
+import 'package:invoice_app/features/roles/domain/use_cases/get_features_use_case.dart';
 import 'package:invoice_app/features/roles/domain/use_cases/get_roles_use_case.dart';
 import 'package:invoice_app/features/roles/domain/use_cases/get_single_role_use_case.dart';
 import 'package:invoice_app/features/roles/presentation/cubit/add_edit_role_cubit.dart';
@@ -104,7 +105,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UsersCubit(sl(),sl()));
   sl.registerLazySingleton(() => AddEditUserCubit(sl(),sl()));
   sl.registerLazySingleton(() => AddEditBranchCubit(sl(),sl()));
-  sl.registerLazySingleton(() => RolesCubit(sl(),sl()));
+  sl.registerLazySingleton(() => RolesCubit(sl(),sl(),sl()));
   sl.registerLazySingleton(() => AddEditRoleCubit(sl(),sl()));
   sl.registerLazySingleton(() => CompanyRegisterCubit(sl(),sl(),sl()));
   sl.registerLazySingleton(() => ValidateCodeCubit(sl(), sl()));
@@ -142,6 +143,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => EditBranchUseCase(branchesRepository: sl()));
   sl.registerLazySingleton(() => EditRoleUseCase(rolesRepository: sl()));
   sl.registerLazySingleton(() => AddRoleUseCase(rolesRepository: sl()));
+  sl.registerLazySingleton(() => GetFeaturesUseCase(rolesRepository: sl()));
   sl.registerLazySingleton(() => GetSingleRoleRoleUseCase(rolesRepository: sl()));
   sl.registerLazySingleton(() => GetRolesUseCase(rolesRepository: sl()));
   sl.registerLazySingleton(() => RegisterUseCase(authRepository: sl()));

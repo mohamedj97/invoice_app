@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:invoice_app/features/roles/data/data_sources/roles_remote_data_source.dart';
+import 'package:invoice_app/features/roles/data/models/responses/get_features_response_model.dart';
 import 'package:invoice_app/features/roles/data/models/responses/get_roles_response_model.dart';
 import 'package:invoice_app/features/roles/data/models/responses/get_single_role_response_model.dart';
 import 'package:invoice_app/features/roles/domain/entities/role.dart';
@@ -51,6 +52,17 @@ class RolesRepositoryImpl extends RolesRepository with ConnectivityMixin {
   Future<Either<Failure, GetSingleRoleResponse>> getSingleRole({required int id}) async {
     try {
       final response = await rolesRemoteDataSource.getSingleRole(id: id);
+
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetFeaturesResponse>> getFeatures() async{
+    try {
+      final response = await rolesRemoteDataSource.getFeatures();
 
       return Right(response);
     } on ServerException catch (e) {

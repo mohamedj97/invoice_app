@@ -30,7 +30,7 @@ class AddEditRoleScreen extends StatefulWidget {
 
 class _AddEditRoleScreenState extends State<AddEditRoleScreen> {
   final formKey = GlobalKey<FormBuilderState>();
-  final cubit = RolesCubit(sl(), sl());
+  final cubit = RolesCubit(sl(), sl(),sl());
   final addEditCubit = AddEditRoleCubit(sl(), sl());
   bool active = false;
 

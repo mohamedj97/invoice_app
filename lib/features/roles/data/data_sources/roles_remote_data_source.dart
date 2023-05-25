@@ -1,3 +1,4 @@
+import 'package:invoice_app/features/roles/data/models/responses/get_features_response_model.dart';
 import 'package:invoice_app/features/roles/data/models/responses/get_roles_response_model.dart';
 import '../../../../../core/api/api_repo.dart';
 import '../../../../core/api/base_api_response.dart';
@@ -12,6 +13,8 @@ abstract class RolesRemoteDataSource {
   Future<BoolResponse> editRole({required int id, required Role role});
 
   Future<GetSingleRoleResponse> addRole({required Role role});
+
+  Future<GetFeaturesResponse> getFeatures();
 }
 
 class RolesRemoteDataSourceImpl extends RolesRemoteDataSource {
@@ -42,6 +45,12 @@ class RolesRemoteDataSourceImpl extends RolesRemoteDataSource {
   @override
   Future<GetSingleRoleResponse> getSingleRole({required int id}) async {
     final response = await apiRepo.rolesClient.getSingleRole(id);
+    return response;
+  }
+
+  @override
+  Future<GetFeaturesResponse> getFeatures() async{
+    final response = await apiRepo.rolesClient.getFeatures();
     return response;
   }
 }
