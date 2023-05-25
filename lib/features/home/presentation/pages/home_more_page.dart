@@ -47,6 +47,9 @@ class _HomeMorePageState extends State<HomeMorePage> {
     return BlocProvider<GetProfileCubit>.value(
       value: cubit,
       child: BlocConsumer<GetProfileCubit, GetProfileState>(listener: (context, state) async {
+        if (state.getProfileRequestState == RequestState.success) {
+          await DiskRepo().updateCompanyId(state.getProfileResponse?.result?.companies.first.companyInfo.id ?? 1);
+        }
         if (state.getProfileRequestState == RequestState.error) {
           getErrorDialogue(
             context: context,

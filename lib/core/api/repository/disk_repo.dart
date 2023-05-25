@@ -8,6 +8,7 @@ const String _firstLoginKey = "first_login";
 const String _userNameKey = "user_name";
 const String _userIdKey = "user_id ";
 const String _emailKey = "email ";
+const String _companyIdKey = "company_id ";
 const String _securityCodeValidateTimeKey = "security_code_validate_time";
 
 class DiskRepo {
@@ -78,6 +79,26 @@ class DiskRepo {
 
   Future deleteUserName() async {
     await sharedPreferences.remove(_userNameKey);
+  }
+
+
+  int? loadCompanyId() {
+    if (!sharedPreferences.containsKey(_companyIdKey)) {
+      return null;
+    }
+    final value = sharedPreferences.getInt(_companyIdKey);
+    if (value == null) {
+      return null;
+    }
+    return value;
+  }
+
+  Future updateCompanyId(int companyId) async {
+    await sharedPreferences.setInt(_companyIdKey, companyId);
+  }
+
+  Future deleteCompanyId() async {
+    await sharedPreferences.remove(_companyIdKey);
   }
 
 

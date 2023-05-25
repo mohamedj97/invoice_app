@@ -47,6 +47,7 @@ class EndPoints {
   static const getSingleRole = 'Companies/getcompanyrole/';
   static const addRole = 'Companies/postcompanyrole';
   static const editRole = 'Companies/putcompanyrole/';
+  static const getFeatures = 'Companies/getfeatures';
 
   //users
   static const companyUsers = 'Companies/getcompanyusers';

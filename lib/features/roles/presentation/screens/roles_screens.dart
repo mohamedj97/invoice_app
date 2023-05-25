@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
+import 'package:invoice_app/core/utils/string_validation_extension.dart';
 import 'package:invoice_app/core/widgets/custom_back_button.dart';
-import 'package:invoice_app/features/customers/presentation/cubit/get_customers/get_customers_cubit.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:invoice_app/features/branches/presentation/cubit/branches_cubit.dart';
+import 'package:invoice_app/features/branches/presentation/screens/add_edit_branch_screen.dart';
+import 'package:invoice_app/features/roles/presentation/cubit/roles_cubit.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/assets/image_assets.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
@@ -14,14 +15,9 @@ import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
-import '../../../../core/utils/debouncer.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
-import '../../../customers/data/models/requests/get_customers_request_model.dart';
-import '../../../customers/domain/entities/customer_filter.dart';
-import '../../../customers/domain/entities/customers_model.dart';
-import '../../../customers/presentation/screens/add_customer_screen.dart';
-import '../cubit/roles_cubit.dart';
+import '../../domain/entities/company_role.dart';
 
 class RolesScreen extends StatefulWidget {
   const RolesScreen({Key? key}) : super(key: key);
@@ -32,16 +28,12 @@ class RolesScreen extends StatefulWidget {
 
 class _RolesScreenState extends State<RolesScreen> {
   TextEditingController searchController = TextEditingController();
-  List<CustomersModel> customers = [];
-  final cubit = RolesCubit(sl(),sl());
-  int pageNo = 2;
-  bool isSearch = true;
-  final Debounce _debounce = Debounce(const Duration(milliseconds: 500));
-  final refreshController = RefreshController(initialRefresh: false);
+  List<CompanyRole> roles = [];
+  final cubit = BranchesCubit(sl());
 
   @override
   void initState() {
-    cubit.getCompanyRoles();
+    cubit.getCompanyBranches();
     super.initState();
   }
 
@@ -49,25 +41,29 @@ class _RolesScreenState extends State<RolesScreen> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: cubit,
-      child: BlocConsumer<GetCustomersCubit, GetCustomersState>(
+      child: BlocConsumer<RolesCubit, RolesState>(
         listener: (context, state) async {
-          if (state.getCustomersRequestState == RequestState.error) {
+          if (state.getRolesRequestState == RequestState.error) {
             getErrorDialogue(
               context: context,
-              isUnAuthorized: state.getCustomersResponse!.statuscode == 401,
-              message: state.getCustomersResponse?.message?.first ?? "something_went_wrong".tr(),
+              isUnAuthorized: state.getRolesResponse!.statuscode == 401,
+              message: state.getRolesResponse?.message?.first ?? "something_went_wrong".tr(),
             );
           }
         },
         builder: (context, state) {
-          customers.addAll(state.getCustomersResponse?.result?.customers ?? []);
+          roles = state.getRolesResponse?.result?.roles
+                  .where((branch) => branch.name!.toLowerCase().contains(searchController.text))
+                  .toList() ??
+              state.getRolesResponse?.result?.roles ??
+              [];
           return CustomScaffold(
             title: "roles".tr(),
             leading: const CustomBackButton(),
             actions: [
               InkWell(
                 onTap: () {
-                  Navigator.of(context).push(CustomPageRoute.createRoute(page: const AddEditCustomerScreen()));
+                  Navigator.of(context).push(CustomPageRoute.createRoute(page: const AddEditBranchScreen()));
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(right: 8.0),
@@ -82,150 +78,116 @@ class _RolesScreenState extends State<RolesScreen> {
             body: Column(
               children: [
                 SearchBar(
-                  onChanged: (value) async {
-                    _debounce(() async {
+                  enabled: state is! BranchesLoading,
+                  onChanged: (value) {
+                    if (value.isEmptyOrNull) {
                       setState(() {
-                        customers.clear();
-                        isSearch = true;
+                        roles = state.getRolesResponse?.result?.roles ?? [];
                       });
-                      await BlocProvider.of<GetCustomersCubit>(context).getCustomers(
-                        CustomerFilterGenericFilterModel(
-                          pageSize: 10,
-                          pageNo: 1,
-                          filter: CustomerFilter(
-                            customerName: searchController.text,
-                          ),
-                        ),
-                      );
+                    } else {
+                      //searchDebouncer(() {
                       setState(() {
-                        pageNo = 2;
+                        roles =
+                            roles.where((user) => user.name!.toLowerCase().contains(searchController.text)).toList();
                       });
-                    });
+                      // });
+                    }
                   },
                   searchController: searchController,
-                  searchHintText: "search_for_roles".tr(),
+                  searchHintText: "search_for_branches".tr(),
                 ),
                 const SizedBox(height: 8.0),
                 Expanded(
-                  child: RefreshConfiguration(
-                    footerBuilder: () => ClassicFooter(
-                      loadingIcon: const CircularProgressIndicator(
-                        strokeWidth: 2.0,
-                        color: AppColors.primary,
-                      ),
-                      loadingText: "${'loading'.tr()}...",
-                      height: 100,
-                    ),
-                    child: Scrollbar(
-                      child: SmartRefresher(
-                        controller: refreshController,
-                        onRefresh: () async {
-                          searchController.clear();
-                          setState(() {
-                            customers.clear();
-                          });
-                          await BlocProvider.of<GetCustomersCubit>(context)
-                              .getCustomers(CustomerFilterGenericFilterModel(pageSize: 10, pageNo: 1));
-                          setState(() {
-                            pageNo = 2;
-                          });
-                          refreshController.refreshCompleted();
-                        },
-                        onLoading: () async {
-                          setState(() {
-                            isSearch = false;
-                          });
-                          await BlocProvider.of<GetCustomersCubit>(context).getCustomers(
-                            CustomerFilterGenericFilterModel(
-                              pageSize: 10,
-                              pageNo: pageNo,
-                              filter: CustomerFilter(
-                                customerName: searchController.text,
-                              ),
-                            ),
-                          );
-                          setState(() {
-                            pageNo++;
-                          });
-                          refreshController.loadComplete();
-                        },
-                        enablePullUp:
-                        state.getCustomersResponse?.result?.listMetadata.totalPages == pageNo - 1 ? false : true,
-                        child: state is GetCustomersLoading && pageNo - 1 == 1 && isSearch
-                            ? const Center(
+                  child: state is BranchesLoading
+                      ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                            : customers.isEmpty
-                            ? SizedBox(
-                          height: MediaQuery.of(context).size.height / 1.5,
-                          child: EmptyScreen(
-                            title: "no_customers".tr(),
-                            subtitle: "no_customers_subtitle".tr(),
-                            imageString: ImageAssets.noCustomers,
-                          ),
-                        )
-                            : ListView.builder(
-                          itemCount: customers.length,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            CustomersModel? item = customers[index];
-                            if (index != customers.length - 1) {
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    CustomPageRoute.createRoute(
-                                      page: AddEditCustomerScreen(customerItem: item),
-                                    ),
-                                  );
+                      : roles.isEmpty
+                          ? RefreshIndicator(
+                              onRefresh: () async {
+                                await BlocProvider.of<BranchesCubit>(context).getCompanyBranches();
+                                searchController.clear();
+                              },
+                              child: SingleChildScrollView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                child: SizedBox(
+                                  height: MediaQuery.of(context).size.height / 1.5,
+                                  child: EmptyScreen(
+                                    title: "no_customers".tr(),
+                                    subtitle: "no_customers_subtitle".tr(),
+                                    imageString: ImageAssets.noCustomers,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(
+                              color: AppColors.scaffoldColor,
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  await BlocProvider.of<BranchesCubit>(context).getCompanyBranches();
+                                  searchController.clear();
                                 },
-                                child: Container(
-                                  width: double.infinity,
-                                  color: AppColors.whiteColor,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 24.0, left: 8.0),
-                                    child: Center(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          LWCustomText(
-                                            title: item.name ?? "NA",
+                                child: ListView.builder(
+                                  itemCount: roles.length,
+                                  physics: const AlwaysScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    CompanyRole? item = roles[index];
+                                    if (index != roles.length - 1) {
+                                      return InkWell(
+                                        onTap: () {
+                                          // Navigator.of(context).push(
+                                          //   CustomPageRoute.createRoute(
+                                          //     page: AddEditCustomerScreen(customerItem: item),
+                                          //   ),
+                                          // );
+                                        },
+                                        child: Container(
+                                          width: double.infinity,
+                                          color: AppColors.whiteColor,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(top: 24.0, left: 8.0),
+                                            child: Center(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  LWCustomText(
+                                                    title: item.name ?? "NA",
+                                                    color: AppColors.labelColor,
+                                                    fontSize: 18.0,
+                                                    fontFamily: FontAssets.avertaRegular,
+                                                  ),
+                                                  const SizedBox(height: 24.0),
+                                                  const Divider(
+                                                    thickness: 0.5,
+                                                    height: 0.0,
+                                                    color: AppColors.searchBarColor,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return Container(
+                                        width: double.infinity,
+                                        color: AppColors.whiteColor,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 24.0, left: 8.0, bottom: 24.0),
+                                          child: LWCustomText(
+                                            title: item.name!,
                                             color: AppColors.labelColor,
                                             fontSize: 18.0,
                                             fontFamily: FontAssets.avertaRegular,
                                           ),
-                                          const SizedBox(height: 24.0),
-                                          const Divider(
-                                            thickness: 0.5,
-                                            height: 0.0,
-                                            color: AppColors.searchBarColor,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                        ),
+                                      );
+                                    }
+                                  },
                                 ),
-                              );
-                            } else {
-                              return Container(
-                                width: double.infinity,
-                                color: AppColors.whiteColor,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 24.0, left: 8.0, bottom: 24.0),
-                                  child: LWCustomText(
-                                    title: item.name!,
-                                    color: AppColors.labelColor,
-                                    fontSize: 18.0,
-                                    fontFamily: FontAssets.avertaRegular,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
+                              ),
+                            ),
                 )
               ],
             ),

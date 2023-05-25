@@ -4,6 +4,7 @@ import 'package:invoice_app/features/roles/data/models/responses/get_roles_respo
 import 'package:retrofit/retrofit.dart';
 import '../../../core/api/repository/memory_repo.dart';
 import '../../../core/strings/end_points.dart';
+import '../data/models/responses/get_features_response_model.dart';
 import '../data/models/responses/get_single_role_response_model.dart';
 import '../domain/entities/role.dart';
 
@@ -24,4 +25,7 @@ abstract class RolesClient {
 
   @POST(EndPoints.addRole)
   Future<GetSingleRoleResponse> addRole(@Body() Role role);
+
+  @GET(EndPoints.getFeatures)
+  Future<GetFeaturesResponse> getFeatures();
 }
