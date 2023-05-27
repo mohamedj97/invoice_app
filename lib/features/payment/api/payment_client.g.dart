@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'branches_client.dart';
+part of 'payment_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'branches_client.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _BranchesClient implements BranchesClient {
-  _BranchesClient(
+class _PaymentClient implements PaymentClient {
+  _PaymentClient(
     this._dio, {
     this.baseUrl,
   });
@@ -19,76 +19,108 @@ class _BranchesClient implements BranchesClient {
   String? baseUrl;
 
   @override
-  Future<GetBranchesResponse> getCompanyBranches() async {
+  Future<SubscriptionPlanModelListGenericResponseResult>
+      getSubscriptionPlans() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GetBranchesResponse>(Options(
+        _setStreamType<SubscriptionPlanModelListGenericResponseResult>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'Companies/getcompanybranchlist',
+              'PaymentGateway/getsubscriptionplans',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GetBranchesResponse.fromJson(_result.data!);
+    final value =
+        SubscriptionPlanModelListGenericResponseResult.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<BoolResponse> editBranch(
-    id,
-    companyBranch,
-  ) async {
+  Future<IntResponse> startSubscription(subscriptionPlanId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'SubscriptionPlanId': subscriptionPlanId
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(companyBranch.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<BoolResponse>(Options(
-      method: 'PUT',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              'Companies/putcompanybranch/$id',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BoolResponse.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<AddBranchResponse> addBranch(companyBranch) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(companyBranch.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<AddBranchResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<IntResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'Companies/postcompanybranch',
+              'PaymentGateway/startsubscription',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AddBranchResponse.fromJson(_result.data!);
+    final value = IntResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<PgPaymentMethodListGenericResponseResult> getPaymentMethods() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PgPaymentMethodListGenericResponseResult>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'PaymentGateway/getpaymentmethods',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value =
+        PgPaymentMethodListGenericResponseResult.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<PgPaymentMethodListGenericResponseResult> executePayment(
+    paymentMethodId,
+    invoiceId,
+    redirectUrl,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'paymentMethodId': paymentMethodId,
+      r'invoiceId': invoiceId,
+      r'redirectUrl': redirectUrl,
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PgPaymentMethodListGenericResponseResult>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'PaymentGateway/executepayment',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value =
+        PgPaymentMethodListGenericResponseResult.fromJson(_result.data!);
     return value;
   }
 
@@ -100,8 +132,6 @@ class _BranchesClient implements BranchesClient {
         requestOptions.responseType = ResponseType.plain;
       } else {
         requestOptions.responseType = ResponseType.json;
-        requestOptions.headers["Authorization"] =
-        "Bearer ${MemoryRepo().tokensData?.token ?? ""}";
       }
     }
     return requestOptions;

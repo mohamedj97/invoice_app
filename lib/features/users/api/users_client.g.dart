@@ -32,7 +32,7 @@ class _UsersClient implements UsersClient {
     )
             .compose(
               _dio.options,
-              'Companies/getcompanyusers',
+              'Companies/getcompanyuserlist',
               queryParameters: queryParameters,
               data: _data,
             )

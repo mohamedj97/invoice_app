@@ -38,19 +38,19 @@ class EndPoints {
 
 
   //branches
-  static const companyBranches = 'Companies/getcompanybranches';
+  static const companyBranches = 'Companies/getcompanybranchlist';
   static const editBranch = 'Companies/putcompanybranch/';
   static const addBranch = 'Companies/postcompanybranch';
 
   //roles
-  static const companyRoles = 'Companies/getcompanyroles';
+  static const companyRoles = 'Companies/getcompanyroleList';
   static const getSingleRole = 'Companies/getcompanyrole/';
   static const addRole = 'Companies/postcompanyrole';
   static const editRole = 'Companies/putcompanyrole/';
   static const getFeatures = 'Companies/getfeatures';
 
   //users
-  static const companyUsers = 'Companies/getcompanyusers';
+  static const companyUsers = 'Companies/getcompanyuserlist';
   static const getSingleUser = 'Companies/getcompanyuser/';
   static const getCompanyUserLookup = 'Companies/getcompanyuserlookup/';
   static const editUser = 'Companies/putcompanyuser/';
@@ -59,5 +59,11 @@ class EndPoints {
   //Statistics
   static const receivedInvoices ="Statistics/getreceivedinvoices-dashboard";
   static const submittedInvoices ="Statistics/getsubmittedinvoices-dashboard";
+
+  //payment
+  static const getSubscriptionPlans ="PaymentGateway/getsubscriptionplans";
+  static const getPaymentMethods ="PaymentGateway/getpaymentmethods";
+  static const startSubscription ="PaymentGateway/startsubscription";
+  static const executePayment ="PaymentGateway/executepayment";
 
 }

@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart'; 
 import 'package:invoice_app/core/widgets/custom_back_button.dart';
-import 'package:invoice_app/features/company_registration/presentation/screens/pricing_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +23,7 @@ import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
 import '../../../../injection_container.dart';
+import '../../../payment/presentation/screens/pricing_screen.dart';
 import '../../domain/entities/governate_lookup.dart';
 import '../cubit/company_register_cubit.dart';
 

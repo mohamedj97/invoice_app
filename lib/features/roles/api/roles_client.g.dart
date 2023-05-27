@@ -32,7 +32,7 @@ class _RolesClient implements RolesClient {
     )
             .compose(
               _dio.options,
-              'Companies/getcompanyroles',
+              'Companies/getcompanyroleList',
               queryParameters: queryParameters,
               data: _data,
             )

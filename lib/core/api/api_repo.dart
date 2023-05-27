@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoice_app/features/customers/api/customers_client.dart';
 import 'package:invoice_app/features/invoices/api/invoices_client.dart';
+import 'package:invoice_app/features/payment/api/payment_client.dart';
 import 'package:invoice_app/features/products/api/products_client.dart';
 import 'package:invoice_app/features/profile/api/profile_client.dart';
 import 'package:invoice_app/features/roles/api/roles_client.dart';
@@ -20,6 +21,7 @@ class APIRepository {
   late AuthClient authClient;
   late BranchesClient branchesClient;
   late RolesClient rolesClient;
+  late PaymentClient paymentClient;
   late InvoicesClient invoicesClient;
   late CustomersClient customersClient;
   late ProductsClient productsClient;
@@ -102,6 +104,7 @@ class APIRepository {
     profileClient = ProfileClient(authDio, baseUrl: apiBaseUrl);
     statisticsClient = StatisticsClient(authDio, baseUrl: apiBaseUrl);
     rolesClient = RolesClient(authDio, baseUrl: apiBaseUrl);
+    paymentClient = PaymentClient(authDio, baseUrl: apiBaseUrl);
     usersClient = UsersClient(authDio, baseUrl: apiBaseUrl);
     companyRegistrationClient = CompanyRegistrationClient(authDio, baseUrl: apiBaseUrl);
   }
