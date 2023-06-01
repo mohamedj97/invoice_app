@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invoice_app/features/auth/presentation/cubit/register/register_cubit.dart';
-import 'package:invoice_app/features/payment/presentation/screens/pricing_screen.dart';
 import 'core/utils/theme/theme.dart';
 import 'features/auth/presentation/cubit/form_submit/formsubmit_cubit.dart';
 import 'features/auth/presentation/cubit/login/login_cubit.dart';
+import 'features/splash/presentation/screens/splash_screen.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
           localizationsDelegates: context.localizationDelegates,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.themeData,
-          home: const PricingScreen(),
+          home: const SplashScreen(),
         ),
       ),
     );
