@@ -49,9 +49,9 @@ class PaymentRepositoryImpl extends PaymentRepository with ConnectivityMixin {
   }
 
   @override
-  Future<Either<Failure, IntResponse>> startSubscription({required int subscriptionPlanId}) async{
+  Future<Either<Failure, IntResponse>> startSubscription({required int subscriptionPlanId,required int userId}) async{
     try {
-      final response = await paymentRemoteDataSource.startSubscription(subscriptionPlanId: subscriptionPlanId);
+      final response = await paymentRemoteDataSource.startSubscription(subscriptionPlanId: subscriptionPlanId,userId:userId);
 
       return Right(response);
     } on ServerException catch (e) {

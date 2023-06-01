@@ -16,14 +16,13 @@ abstract class PaymentClient {
   Future<SubscriptionPlanModelListGenericResponseResult> getSubscriptionPlans();
 
   @POST(EndPoints.startSubscription)
-  Future<IntResponse> startSubscription(@Query("SubscriptionPlanId") int subscriptionPlanId);
+  Future<IntResponse> startSubscription(
+      @Query("SubscriptionPlanId") int subscriptionPlanId, @Query("userId") int userId);
 
   @GET(EndPoints.getPaymentMethods)
   Future<PgPaymentMethodListGenericResponseResult> getPaymentMethods();
 
   @POST(EndPoints.executePayment)
-  Future<PaymentGatewayResponseDataGenericResponseResult> executePayment(
-      @Query("paymentMethodId") int paymentMethodId,
-      @Query("invoiceId") int invoiceId,
-      @Query("redirectUrl") String redirectUrl);
+  Future<PaymentGatewayResponseDataGenericResponseResult> executePayment(@Query("paymentMethodId") int paymentMethodId,
+      @Query("invoiceId") int invoiceId, @Query("redirectUrl") String redirectUrl);
 }

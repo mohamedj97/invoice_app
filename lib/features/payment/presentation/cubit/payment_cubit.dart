@@ -60,9 +60,9 @@ class PaymentCubit extends Cubit<PaymentState> {
     });
   }
 
-  Future<void> startSubscription({required int subscriptionPlanId}) async {
+  Future<void> startSubscription({required int subscriptionPlanId,required int userId}) async {
     emit(PaymentLoading());
-    final response = await startSubscriptionPlansUseCase.call(subscriptionPlanId: subscriptionPlanId);
+    final response = await startSubscriptionPlansUseCase.call(subscriptionPlanId: subscriptionPlanId,userId: userId);
 
     response.fold((failure) {
       emit(PaymentFailure(failure: failure.message));

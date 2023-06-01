@@ -7,7 +7,7 @@ import '../../domain/entities/subscription_plans_model.dart';
 abstract class PaymentRemoteDataSource {
   Future<SubscriptionPlanModelListGenericResponseResult> getSubscriptionPlans();
 
-  Future<IntResponse> startSubscription({required int subscriptionPlanId});
+  Future<IntResponse> startSubscription({required int subscriptionPlanId,required int userId});
 
   Future<PgPaymentMethodListGenericResponseResult> getPaymentMethods();
 
@@ -44,8 +44,8 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
   }
 
   @override
-  Future<IntResponse> startSubscription({required int subscriptionPlanId}) async{
-    final response = await apiRepo.paymentClient.startSubscription(subscriptionPlanId);
+  Future<IntResponse> startSubscription({required int subscriptionPlanId,required int userId}) async{
+    final response = await apiRepo.paymentClient.startSubscription(subscriptionPlanId,userId);
     return response;
   }
 

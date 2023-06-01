@@ -9,7 +9,7 @@ abstract class PaymentRepository {
 
   Future<Either<Failure, SubscriptionPlanModelListGenericResponseResult>> getSubscriptionPlans();
 
-  Future<Either<Failure, IntResponse>> startSubscription({required int subscriptionPlanId});
+  Future<Either<Failure, IntResponse>> startSubscription({required int subscriptionPlanId,required int userId});
 
   Future<Either<Failure, PgPaymentMethodListGenericResponseResult>> getPaymentMethods();
 

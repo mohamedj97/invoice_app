@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invoice_app/core/api/repository/disk_repo.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/common_widgets/custom_elevated_button.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
@@ -252,7 +253,7 @@ class _PricingScreenState extends State<PricingScreen> {
                                                         paymentMethodId = item.id;
                                                       });
                                                       await BlocProvider.of<PaymentCubit>(context)
-                                                          .startSubscription(subscriptionPlanId: item.id);
+                                                          .startSubscription(subscriptionPlanId: item.id,userId: DiskRepo().loadUserId()??0);
                                                     },
                                                   ),
                                                 ),

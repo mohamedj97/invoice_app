@@ -10,9 +10,7 @@ class StartSubscriptionPlansUseCase {
     required this.paymentRepository,
   });
 
-  Future<Either<Failure, IntResponse>> call({
-    required int subscriptionPlanId,
-  }) async {
-    return await paymentRepository.startSubscription(subscriptionPlanId: subscriptionPlanId);
+  Future<Either<Failure, IntResponse>> call({required int subscriptionPlanId,required int userId}) async {
+    return await paymentRepository.startSubscription(subscriptionPlanId: subscriptionPlanId,userId:userId);
   }
 }
