@@ -46,7 +46,7 @@ class SubscriptionPlanModel {
   String? subscriptionTypeName;
   String? name;
   int planPeriod;
-  int price;
+  num price;
   String? comment;
   int freePeriod;
   bool? active;

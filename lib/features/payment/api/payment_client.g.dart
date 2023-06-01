@@ -93,7 +93,7 @@ class _PaymentClient implements PaymentClient {
   }
 
   @override
-  Future<PgPaymentMethodListGenericResponseResult> executePayment(
+  Future<PaymentGatewayResponseDataGenericResponseResult> executePayment(
     paymentMethodId,
     invoiceId,
     redirectUrl,
@@ -107,20 +107,20 @@ class _PaymentClient implements PaymentClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<PgPaymentMethodListGenericResponseResult>(Options(
+        _setStreamType<PaymentGatewayResponseDataGenericResponseResult>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'PaymentGateway/executepayment',
+              'PaymentGateway/executepayment_mobile',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value =
-        PgPaymentMethodListGenericResponseResult.fromJson(_result.data!);
+    PaymentGatewayResponseDataGenericResponseResult.fromJson(_result.data!);
     return value;
   }
 
@@ -132,6 +132,8 @@ class _PaymentClient implements PaymentClient {
         requestOptions.responseType = ResponseType.plain;
       } else {
         requestOptions.responseType = ResponseType.json;
+        requestOptions.headers["Authorization"] =
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjM4ZDNmMmY2LTQyYjgtNGIwZi04YjYyLTEzODUwMjRjYzQxNiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbjEiLCJqdGkiOiIyZDJkZmFmNi1iYzkwLTRiOTAtOTg3ZS0zZjM4MWYwNzRkNWQiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTY4NTMwNTA0NywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwIn0.JlFmmdIgj3UNkO3iEp54ODuaEG7l_oFmDw8Afu22XI4";
       }
     }
     return requestOptions;

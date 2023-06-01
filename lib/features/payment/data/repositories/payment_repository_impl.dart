@@ -6,6 +6,7 @@ import 'package:invoice_app/features/payment/domain/entities/subscription_plans_
 import 'package:invoice_app/features/payment/domain/repositories/payment_repository.dart';
 import '../../../../core/error/exception.dart';
 import '../../../../core/mixins/app_mixins.dart';
+import '../../domain/entities/excute_payment_result.dart';
 import '../data_sources/payment_remote_date_source.dart';
 
 class PaymentRepositoryImpl extends PaymentRepository with ConnectivityMixin {
@@ -14,7 +15,7 @@ class PaymentRepositoryImpl extends PaymentRepository with ConnectivityMixin {
   PaymentRepositoryImpl(this.paymentRemoteDataSource);
 
   @override
-  Future<Either<Failure, PgPaymentMethodListGenericResponseResult>> executePayment({required int paymentMethodId, required int invoiceId, required String redirectUrl}) async{
+  Future<Either<Failure, PaymentGatewayResponseDataGenericResponseResult>> executePayment({required int paymentMethodId, required int invoiceId, required String redirectUrl}) async{
     try {
       final response = await paymentRemoteDataSource.executePayment(paymentMethodId: paymentMethodId, invoiceId: invoiceId, redirectUrl: redirectUrl);
 

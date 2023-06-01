@@ -64,6 +64,6 @@ class EndPoints {
   static const getSubscriptionPlans ="PaymentGateway/getsubscriptionplans";
   static const getPaymentMethods ="PaymentGateway/getpaymentmethods";
   static const startSubscription ="PaymentGateway/startsubscription";
-  static const executePayment ="PaymentGateway/executepayment";
+  static const executePayment ="PaymentGateway/executepayment_mobile";
 
 }

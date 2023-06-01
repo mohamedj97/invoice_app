@@ -1,5 +1,6 @@
 import '../../../../../core/api/api_repo.dart';
 import '../../../../core/api/base_api_response.dart';
+import '../../domain/entities/excute_payment_result.dart';
 import '../../domain/entities/payment_methods_results.dart';
 import '../../domain/entities/subscription_plans_model.dart';
 
@@ -10,7 +11,7 @@ abstract class PaymentRemoteDataSource {
 
   Future<PgPaymentMethodListGenericResponseResult> getPaymentMethods();
 
-  Future<PgPaymentMethodListGenericResponseResult> executePayment({
+  Future<PaymentGatewayResponseDataGenericResponseResult> executePayment({
     required int paymentMethodId,
     required int invoiceId,
     required String redirectUrl,
@@ -25,7 +26,7 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
   });
 
   @override
-  Future<PgPaymentMethodListGenericResponseResult> executePayment({required int paymentMethodId, required int invoiceId, required String redirectUrl}) async{
+  Future<PaymentGatewayResponseDataGenericResponseResult> executePayment({required int paymentMethodId, required int invoiceId, required String redirectUrl}) async{
     final response = await apiRepo.paymentClient.executePayment(paymentMethodId,invoiceId,redirectUrl);
     return response;
   }

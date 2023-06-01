@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:retrofit/retrofit.dart';
-
 import '../../../core/strings/end_points.dart';
+import '../domain/entities/excute_payment_result.dart';
 import '../domain/entities/payment_methods_results.dart';
 import '../domain/entities/subscription_plans_model.dart';
 
@@ -22,7 +22,7 @@ abstract class PaymentClient {
   Future<PgPaymentMethodListGenericResponseResult> getPaymentMethods();
 
   @POST(EndPoints.executePayment)
-  Future<PgPaymentMethodListGenericResponseResult> executePayment(
+  Future<PaymentGatewayResponseDataGenericResponseResult> executePayment(
       @Query("paymentMethodId") int paymentMethodId,
       @Query("invoiceId") int invoiceId,
       @Query("redirectUrl") String redirectUrl);

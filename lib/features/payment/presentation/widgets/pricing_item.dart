@@ -13,24 +13,27 @@ class PricingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: [
-          Icon(
-            Icons.check_circle,
-            color: iconColor ?? AppColors.primary,
-          ),
-          const SizedBox(width: 8.0),
-          Expanded(
-            child: LWCustomText(
-              title: title,
-              color: textColor??AppColors.blackColor,
-              fontWeight: FontWeight.bold,
-              fontFamily: FontAssets.avertaSemiBold,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Icon(
+              Icons.check_circle,
+              color: iconColor ?? AppColors.primary,
             ),
-          )
-        ],
+            const SizedBox(width: 8.0),
+            Expanded(
+              child: LWCustomText(
+                title: title,
+                color: textColor??AppColors.blackColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: FontAssets.avertaSemiBold,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

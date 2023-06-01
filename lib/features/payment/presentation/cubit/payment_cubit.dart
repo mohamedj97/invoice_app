@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import '../../../../core/utils/enums.dart';
+import '../../domain/entities/excute_payment_result.dart';
 import '../../domain/entities/payment_methods_results.dart';
 import '../../domain/entities/subscription_plans_model.dart';
 import '../../domain/use_cases/execuste_paymnet_use_case.dart';
@@ -121,6 +122,41 @@ class PaymentCubit extends Cubit<PaymentState> {
           state.copyWith(
             getPaymentMethodsRequestState: RequestState.error,
             getPaymentMethodsResponse: response,
+          ),
+        );
+      }
+    });
+  }
+
+
+  Future<void>  executePayment({required int paymentMethodId, required int invoiceId, required String redirectUrl}) async {
+    emit(PaymentLoading());
+    final response = await executePaymentUseCase.call(invoiceId: invoiceId,paymentMethodId: paymentMethodId,redirectUrl: redirectUrl);
+
+    response.fold((failure) {
+      emit(PaymentFailure(failure: failure.message));
+
+      return emit(
+        state.copyWith(
+          executePaymentRequestState: RequestState.error,
+          failure: failure.message,
+        ),
+      );
+    }, (response) {
+      if (response.statuscode == 200 && response.result != null) {
+        emit(PaymentSuccess(executePaymentResponse: response));
+        return emit(
+          state.copyWith(
+            executePaymentRequestState: RequestState.success,
+            executePaymentResponse: response,
+          ),
+        );
+      } else {
+        emit(PaymentFailure(failure: response.message?.first ?? ""));
+        return emit(
+          state.copyWith(
+            executePaymentRequestState: RequestState.error,
+            executePaymentResponse: response,
           ),
         );
       }

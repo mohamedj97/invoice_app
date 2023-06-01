@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:invoice_app/features/payment/domain/repositories/payment_repository.dart';
 import '../../../../core/error/failure.dart';
-import '../entities/payment_methods_results.dart';
+import '../entities/excute_payment_result.dart';
 
 class ExecutePaymentUseCase {
   final PaymentRepository paymentRepository;
@@ -10,7 +10,7 @@ class ExecutePaymentUseCase {
     required this.paymentRepository,
   });
 
-  Future<Either<Failure, PgPaymentMethodListGenericResponseResult>> call({
+  Future<Either<Failure, PaymentGatewayResponseDataGenericResponseResult>> call({
     required int paymentMethodId,
     required int invoiceId,
     required String redirectUrl,
