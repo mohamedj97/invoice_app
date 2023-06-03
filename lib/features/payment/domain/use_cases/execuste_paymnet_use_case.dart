@@ -13,9 +13,9 @@ class ExecutePaymentUseCase {
   Future<Either<Failure, PaymentGatewayResponseDataGenericResponseResult>> call({
     required int paymentMethodId,
     required int invoiceId,
-    required String redirectUrl,
+    required int userId,
   }) async {
     return await paymentRepository.executePayment(
-        paymentMethodId: paymentMethodId, invoiceId: invoiceId, redirectUrl: redirectUrl);
+        paymentMethodId: paymentMethodId, invoiceId: invoiceId, userId: userId);
   }
 }

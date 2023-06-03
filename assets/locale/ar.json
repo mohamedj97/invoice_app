@@ -8,6 +8,8 @@
   "could_not_upload_image": "حدث خطأ اثناء الصاق الصورة",
   "startup": "المبتدئين",
   "annual": "السنوي",
+  "payment_successful": "عملية دفع ناجحة",
+  "payment_failed": "عملية دفع خاطئة",
   "best_settings_for_startup": "افضل الاعدادات للمبتدئين",
   "free_trial": "ابدأ التجربة المجانية لمدة 30 يومًا",
   "tax_rate": "معدل الضريبة",

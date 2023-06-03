@@ -24,5 +24,5 @@ abstract class PaymentClient {
 
   @POST(EndPoints.executePayment)
   Future<PaymentGatewayResponseDataGenericResponseResult> executePayment(@Query("paymentMethodId") int paymentMethodId,
-      @Query("invoiceId") int invoiceId, @Query("redirectUrl") String redirectUrl);
+      @Query("invoiceId") int invoiceId, @Query("userId") int userId);
 }

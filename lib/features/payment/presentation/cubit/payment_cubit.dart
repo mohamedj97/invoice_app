@@ -129,9 +129,9 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
 
-  Future<void>  executePayment({required int paymentMethodId, required int invoiceId, required String redirectUrl}) async {
+  Future<void>  executePayment({required int paymentMethodId, required int invoiceId, required int userId}) async {
     emit(PaymentLoading());
-    final response = await executePaymentUseCase.call(invoiceId: invoiceId,paymentMethodId: paymentMethodId,redirectUrl: redirectUrl);
+    final response = await executePaymentUseCase.call(invoiceId: invoiceId,paymentMethodId: paymentMethodId,userId: userId);
 
     response.fold((failure) {
       emit(PaymentFailure(failure: failure.message));

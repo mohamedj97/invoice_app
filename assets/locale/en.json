@@ -8,6 +8,8 @@
   "upload_photo": "Upload Image",
   "tax_type": "Tax Type",
   "startup": "Startup",
+  "payment_successful": "Payment Successful",
+  "payment_failed": "Payment Failed",
   "business": "Business",
   "free_trial": "Start Free Trail 30 Day",
   "best_settings_for_startup": "Best Settings for Startups",

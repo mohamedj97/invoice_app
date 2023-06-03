@@ -484,7 +484,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                                 flex: 3,
                                 child: CustomElevatedButton(
                                   title: "proceed".tr(),
-                                  onPressed: () {
+                                  onPressed: () async{
                                     var formState = formKey.currentState;
                                     if (formState == null) return;
                                     if (!formState.saveAndValidate()) {
@@ -504,8 +504,8 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
 
                                     final GovernateLookup governorate =
                                         formState.value["governorate"] as GovernateLookup;
-
-                                    BlocProvider.of<CompanyRegisterCubit>(context).registerCompany(
+                                    await DiskRepo().ensureInitialized();
+                                   await BlocProvider.of<CompanyRegisterCubit>(context).registerCompany(
                                       userId: DiskRepo().loadUserId() ?? 0,
                                       companyRegisterRequest: CompanyRegisterRequestModel(
                                         id: 0,

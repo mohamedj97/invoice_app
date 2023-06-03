@@ -252,6 +252,7 @@ class _PricingScreenState extends State<PricingScreen> {
                                                       setState(() {
                                                         paymentMethodId = item.id;
                                                       });
+                                                      await DiskRepo().ensureInitialized();
                                                       await BlocProvider.of<PaymentCubit>(context)
                                                           .startSubscription(subscriptionPlanId: item.id,userId: DiskRepo().loadUserId()??0);
                                                     },

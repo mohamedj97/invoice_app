@@ -15,9 +15,9 @@ class PaymentRepositoryImpl extends PaymentRepository with ConnectivityMixin {
   PaymentRepositoryImpl(this.paymentRemoteDataSource);
 
   @override
-  Future<Either<Failure, PaymentGatewayResponseDataGenericResponseResult>> executePayment({required int paymentMethodId, required int invoiceId, required String redirectUrl}) async{
+  Future<Either<Failure, PaymentGatewayResponseDataGenericResponseResult>> executePayment({required int paymentMethodId, required int invoiceId, required int userId}) async{
     try {
-      final response = await paymentRemoteDataSource.executePayment(paymentMethodId: paymentMethodId, invoiceId: invoiceId, redirectUrl: redirectUrl);
+      final response = await paymentRemoteDataSource.executePayment(paymentMethodId: paymentMethodId, invoiceId: invoiceId, userId: userId);
 
       return Right(response);
     } on ServerException catch (e) {

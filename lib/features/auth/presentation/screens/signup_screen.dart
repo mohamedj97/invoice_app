@@ -47,6 +47,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) async {
         if (state.registerRequestState == RequestState.success) {
+          await DiskRepo().ensureInitialized();
           await DiskRepo().deleteTokensData();
           await DiskRepo().updateUserId(state.registerResponse!.result!.userId);
           await DiskRepo().updateValidateTime(state.registerResponse!.result!.securityCodeValideTime);

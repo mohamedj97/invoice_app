@@ -14,7 +14,7 @@ abstract class PaymentRemoteDataSource {
   Future<PaymentGatewayResponseDataGenericResponseResult> executePayment({
     required int paymentMethodId,
     required int invoiceId,
-    required String redirectUrl,
+    required int userId,
   });
 }
 
@@ -26,8 +26,8 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
   });
 
   @override
-  Future<PaymentGatewayResponseDataGenericResponseResult> executePayment({required int paymentMethodId, required int invoiceId, required String redirectUrl}) async{
-    final response = await apiRepo.paymentClient.executePayment(paymentMethodId,invoiceId,redirectUrl);
+  Future<PaymentGatewayResponseDataGenericResponseResult> executePayment({required int paymentMethodId, required int invoiceId, required int userId}) async{
+    final response = await apiRepo.paymentClient.executePayment(paymentMethodId,invoiceId,userId);
     return response;
   }
 

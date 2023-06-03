@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invoice_app/core/api/repository/disk_repo.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:invoice_app/features/payment/presentation/screens/webview_screen.dart';
@@ -43,7 +44,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         listener: (context, state) async {
           if (state.executePaymentRequestState == RequestState.success) {
             Navigator.of(context).push(CustomPageRoute.createRoute(
-                page: WebViewScreen(url: state.executePaymentResponse!.result!.paymentData.redirectTo!)));
+                page: WebViewScreen(url: state.executePaymentResponse!.result!.paymentData!.redirectTo!)));
           }
           if (state.executePaymentRequestState == RequestState.error) {
             getErrorDialogue(
@@ -74,10 +75,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
                         child: InkWell(
                           onTap: () async {
+                            await DiskRepo().ensureInitialized();
                             await BlocProvider.of<PaymentCubit>(context).executePayment(
-                              paymentMethodId: 2,
-                              invoiceId: 18,
-                              redirectUrl: "https://zinvoivedevapi.azurewebsites.net/api/PaymentGateway",
+                              paymentMethodId: item.paymentId,
+                              invoiceId: widget.invoiceId,
+                              userId: DiskRepo().loadUserId()??0,
                             );
                           },
                           child: Card(

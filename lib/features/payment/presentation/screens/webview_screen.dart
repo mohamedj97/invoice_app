@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
+import 'package:invoice_app/features/payment/presentation/screens/payment_status_screen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../../../core/navigation/custom_page_route.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String url;
@@ -26,14 +29,28 @@ class _WebViewScreenState extends State<WebViewScreen> {
             // Update loading bar.
           },
           onPageStarted: (String url) {
-            int x=0;
+            if(url.contains("success"))
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                  CustomPageRoute.createRoute(
+                    page: const PaymentStatusScreen(isSuccess: true),
+                  ),
+                      (Route<dynamic> route) => false,
+                );
+              }
+            else {
+              Navigator.of(context).pushAndRemoveUntil(
+                CustomPageRoute.createRoute(
+                  page: const PaymentStatusScreen(isSuccess: false),
+                ),
+                    (Route<dynamic> route) => false,
+              );
+            }
           },
           onPageFinished: (String url) {
-            int x=0;
           },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            int x=0;
             return NavigationDecision.navigate;
           },
         ),

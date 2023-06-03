@@ -100,13 +100,13 @@ class _PaymentClient implements PaymentClient {
   Future<PaymentGatewayResponseDataGenericResponseResult> executePayment(
     paymentMethodId,
     invoiceId,
-    redirectUrl,
+      userId,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'paymentMethodId': paymentMethodId,
       r'invoiceId': invoiceId,
-      r'redirectUrl': redirectUrl,
+      r'userId': userId,
     };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

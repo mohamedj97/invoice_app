@@ -44,14 +44,14 @@ class PaymentGatewayResponseDataGenericResponseResult {
 }
 
 class PaymentGatewayResponseData {
-  String invoiceId;
-  String invoiceKey;
-  PaymentData paymentData;
+  String? invoiceId;
+  String? invoiceKey;
+  PaymentData? paymentData;
 
   PaymentGatewayResponseData({
-    required this.invoiceId,
-    required this.invoiceKey,
-    required this.paymentData,
+     this.invoiceId,
+     this.invoiceKey,
+     this.paymentData,
   });
 
   factory PaymentGatewayResponseData.fromJson(Map<String, dynamic> json) => PaymentGatewayResponseData(
@@ -63,7 +63,7 @@ class PaymentGatewayResponseData {
   Map<String, dynamic> toJson() => {
         "invoice_id": invoiceId,
         "invoice_key": invoiceKey,
-        "payment_data": paymentData.toJson(),
+        "payment_data": paymentData?.toJson(),
       };
 }
 

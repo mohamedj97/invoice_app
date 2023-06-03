@@ -16,6 +16,6 @@ abstract class PaymentRepository {
   Future<Either<Failure, PaymentGatewayResponseDataGenericResponseResult>> executePayment({
     required int paymentMethodId,
     required int invoiceId,
-    required String redirectUrl,
+    required int userId,
   });
 }
