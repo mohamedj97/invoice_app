@@ -42,13 +42,13 @@ class _RolesClient implements RolesClient {
   }
 
   @override
-  Future<GetSingleRoleResponse> getSingleRole(id) async {
+  Future<GetSingleRoleResult> getSingleRole(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GetSingleRoleResponse>(Options(
+        _setStreamType<GetSingleRoleResult>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -60,7 +60,7 @@ class _RolesClient implements RolesClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GetSingleRoleResponse.fromJson(_result.data!);
+    final value = GetSingleRoleResult.fromJson(_result.data!);
     return value;
   }
 
@@ -92,14 +92,14 @@ class _RolesClient implements RolesClient {
   }
 
   @override
-  Future<GetSingleRoleResponse> addRole(role) async {
+  Future<GetSingleRoleResult> addRole(role) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(role.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GetSingleRoleResponse>(Options(
+        _setStreamType<GetSingleRoleResult>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -111,18 +111,18 @@ class _RolesClient implements RolesClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GetSingleRoleResponse.fromJson(_result.data!);
+    final value = GetSingleRoleResult.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<GetFeaturesResponse> getFeatures() async {
+  Future<GetFeaturesResult> getFeatures() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GetFeaturesResponse>(Options(
+        _setStreamType<GetFeaturesResult>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -134,7 +134,7 @@ class _RolesClient implements RolesClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GetFeaturesResponse.fromJson(_result.data!);
+    final value = GetFeaturesResult.fromJson(_result.data!);
     return value;
   }
 

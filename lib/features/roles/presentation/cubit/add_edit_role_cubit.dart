@@ -5,7 +5,7 @@ import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:invoice_app/features/roles/domain/use_cases/add_role_use_case.dart';
 import 'package:invoice_app/features/roles/domain/use_cases/edit_role_use_case.dart';
 import '../../../../core/utils/enums.dart';
-import '../../data/models/responses/get_single_role_response_model.dart';
+import '../../domain/entities/get_single_role_result.dart';
 import '../../domain/entities/role.dart';
 
 part 'add_edit_role_state.dart';

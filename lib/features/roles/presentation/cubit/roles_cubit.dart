@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:invoice_app/features/roles/data/models/responses/get_single_role_response_model.dart';
 import 'package:invoice_app/features/roles/domain/use_cases/get_features_use_case.dart';
 import '../../../../core/utils/enums.dart';
-import '../../data/models/responses/get_features_response_model.dart';
 import '../../data/models/responses/get_roles_response_model.dart';
+import '../../domain/entities/get_fetaures_result.dart';
+import '../../domain/entities/get_single_role_result.dart';
 import '../../domain/use_cases/get_roles_use_case.dart';
 import '../../domain/use_cases/get_single_role_use_case.dart';
 

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:invoice_app/core/api/repository/disk_repo.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/core/assets/colors.dart';
@@ -17,6 +18,8 @@ import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_multi_select_form_field.dart';
 import '../../../../injection_container.dart';
+import '../../domain/entities/get_fetaures_result.dart';
+import '../../domain/entities/get_single_role_result.dart';
 import '../../domain/entities/role.dart';
 
 class AddEditRoleScreen extends StatefulWidget {
@@ -32,13 +35,14 @@ class _AddEditRoleScreenState extends State<AddEditRoleScreen> {
   final formKey = GlobalKey<FormBuilderState>();
   final cubit = RolesCubit(sl(), sl(), sl());
   final addEditCubit = AddEditRoleCubit(sl(), sl());
-  bool active = false;
-  bool canEdit = false;
-  bool canView = false;
+  bool active = true;
+  bool canEdit = true;
+  bool canView = true;
 
   @override
   void initState() {
     cubit.getFeatures();
+    cubit.getCompanyRoles();
     super.initState();
     if (widget.roleId != null) cubit.getSingleRole(id: widget.roleId!);
   }
@@ -97,6 +101,18 @@ class _AddEditRoleScreenState extends State<AddEditRoleScreen> {
                 }
               },
               builder: (context, addEditState) {
+                List<FeatureSingle> selectedFeatures = [];
+                if (state.getSingleRoleResponse?.result?.features != null &&
+                    state.getSingleRoleResponse!.result!.features.isNotEmpty &&
+                    state.getSingleRoleResponse?.result?.companyRoleFeatures != null &&
+                    state.getSingleRoleResponse!.result!.companyRoleFeatures.isNotEmpty)
+                  for (var feature in state.getSingleRoleResponse!.result!.features) {
+                    for (var companyFeature in state.getSingleRoleResponse!.result!.companyRoleFeatures) {
+                      if (companyFeature.id == feature.id) {
+                        selectedFeatures.add(feature);
+                      }
+                    }
+                  }
                 return CustomScaffold(
                   title: hasData ? "edit_role".tr() : "add_role".tr(),
                   leading: const CustomBackButton(),
@@ -115,16 +131,34 @@ class _AddEditRoleScreenState extends State<AddEditRoleScreen> {
 
                               final String description = formState.value["description"] as String;
 
-                              final List<CompanyRoleFeature> companyRoleFeature =
-                                  formState.value["features"] as List<CompanyRoleFeature>;
+                              List<FeatureSingle> featuresSingle = [];
+                              List<FeatureModel> featuresModel = [];
+                              List<CompanyRoleFeature> companyRoleFeature = [];
+                              if (widget.roleId != null) {
+                                featuresSingle = formState.value["features"] as List<FeatureSingle>;
+                                for (var feature in state.getSingleRoleResponse!.result!.companyRoleFeatures) {
+                                  for (var ff in featuresSingle)
+                                    if (feature.id == ff.id) {
+                                      companyRoleFeature.add(CompanyRoleFeature(id: feature.id, companyRoleId: feature.companyRoleId, featureId: feature.featureId));
+                                    }
+                                }
+                              } else {
+                                featuresModel = formState.value["features"] as List<FeatureModel>;
+                                for (var feature in state.getFeaturesResponse!.result!) {
+                                  for (var ff in featuresModel)
+                                    if (feature.id == ff.id) {
+                                      companyRoleFeature.add(CompanyRoleFeature(id: feature.id, companyRoleId: state.getRolesResponse!.result!.roles.first.companyid, featureId: feature.id));
+                                    }
+                                }
+                              }
 
                               if (hasData) {
                                 BlocProvider.of<AddEditRoleCubit>(context).editRole(
-                                    id: 1,
+                                    id: widget.roleId ?? 0,
                                     role: Role(
-                                      id: 0,
+                                      id: widget.roleId ?? 0,
                                       active: active,
-                                      companyId: 0,
+                                      companyId: DiskRepo().loadCompanyId() ?? 0,
                                       roleName: name,
                                       canEdit: canEdit,
                                       canView: canView,
@@ -137,7 +171,7 @@ class _AddEditRoleScreenState extends State<AddEditRoleScreen> {
                                     role: Role(
                                   id: 0,
                                   active: active,
-                                  companyId: 0,
+                                  companyId: DiskRepo().loadCompanyId() ?? 0,
                                   roleName: name,
                                   canEdit: canEdit,
                                   canView: canView,
@@ -349,22 +383,49 @@ class _AddEditRoleScreenState extends State<AddEditRoleScreen> {
                                     ),
                                   ),
                                   const SizedBox(height: 16.0),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: LWCustomText(
-                                        title: "address_information".tr(), color: AppColors.disabledBottomItemColor),
-                                  ),
-                                  const SizedBox(height: 16.0),
                                   Container(
-                                    color: AppColors.whiteColor,
-                                    child: LWCustomMultiSelectFormField<Feature>(
-                                      name: "features",
-                                      labelBuilder: (feature) {
-                                        return feature.name;
-                                      },
-                                      validator: [],
-                                      hintWidget: Container(),
-                                      items: state.getFeaturesResponse?.result?.result ?? [],
+                                    color: Colors.white,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(height: 16.0),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 8.0),
+                                          child: LWCustomText(
+                                            title: "features".tr(),
+                                            color: AppColors.labelColor,
+                                            fontFamily: FontAssets.avertaRegular,
+                                          ),
+                                        ),
+                                        widget.roleId != null
+                                            ? Container(
+                                                color: AppColors.whiteColor,
+                                                child: LWCustomMultiSelectFormField<FeatureSingle>(
+                                                  name: "features",
+                                                  labelBuilder: (feature) {
+                                                    return feature.name;
+                                                  },
+                                                  fillColor: Colors.white,
+                                                  validator: [],
+                                                  hintWidget: Container(),
+                                                  initialValue: selectedFeatures,
+                                                  items: state.getSingleRoleResponse?.result?.features ?? [],
+                                                ),
+                                              )
+                                            : Container(
+                                                color: AppColors.whiteColor,
+                                                child: LWCustomMultiSelectFormField<FeatureModel>(
+                                                  name: "features",
+                                                  labelBuilder: (feature) {
+                                                    return feature.name;
+                                                  },
+                                                  validator: [],
+                                                  fillColor: Colors.white,
+                                                  hintWidget: Container(),
+                                                  items: state.getFeaturesResponse?.result ?? [],
+                                                ),
+                                              ),
+                                      ],
                                     ),
                                   ),
                                   Container(

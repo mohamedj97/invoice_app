@@ -2,8 +2,8 @@ part of 'roles_cubit.dart';
 
 class RolesState extends Equatable {
   final GetRolesResponse? getRolesResponse;
-  final GetSingleRoleResponse? getSingleRoleResponse;
-  final GetFeaturesResponse? getFeaturesResponse;
+  final GetSingleRoleResult? getSingleRoleResponse;
+  final GetFeaturesResult? getFeaturesResponse;
   final String? failure;
   final RequestState? getRolesRequestState;
   final RequestState? getSingleRoleRequestState;
@@ -20,8 +20,8 @@ class RolesState extends Equatable {
   });
   RolesState copyWith({
     GetRolesResponse? getRolesResponse,
-    GetSingleRoleResponse? getSingleRoleResponse,
-    GetFeaturesResponse? getFeaturesResponse,
+    GetSingleRoleResult? getSingleRoleResponse,
+    GetFeaturesResult? getFeaturesResponse,
     String? failure,
     RequestState? getRolesRequestState,
     RequestState? getSingleRoleRequestState,
@@ -47,9 +47,9 @@ class RolesState extends Equatable {
     getRolesResponse ??
         GetRolesResponse(statuscode: 0, result: null),
     getSingleRoleResponse ??
-        GetSingleRoleResponse(statuscode: 0, result: null),
+        GetSingleRoleResult(statuscode: 0, result: null,exception: null,status: null,message: null),
     getFeaturesResponse ??
-        GetFeaturesResponse(statuscode: 0, result: null),
+        GetFeaturesResult(statuscode: 0, result: null,exception: null,status: null,message: null),
   ];
 }
 
@@ -57,8 +57,8 @@ class RolesInitial extends RolesState {}
 
 class RolesSuccess extends RolesState {
   final GetRolesResponse? getRolesResponse;
-  final GetSingleRoleResponse? getSingleRoleResponse;
-  final GetFeaturesResponse? getFeaturesResponse;
+  final GetSingleRoleResult? getSingleRoleResponse;
+  final GetFeaturesResult? getFeaturesResponse;
   const RolesSuccess({
     this.getRolesResponse,
     this.getFeaturesResponse,

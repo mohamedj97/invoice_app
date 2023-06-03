@@ -6,8 +6,8 @@ import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/utils/string_validation_extension.dart';
 import 'package:invoice_app/core/widgets/custom_back_button.dart';
 import 'package:invoice_app/features/branches/presentation/cubit/branches_cubit.dart';
-import 'package:invoice_app/features/branches/presentation/screens/add_edit_branch_screen.dart';
 import 'package:invoice_app/features/roles/presentation/cubit/roles_cubit.dart';
+import 'package:invoice_app/features/roles/presentation/screens/add_edit_role_screen.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/assets/image_assets.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
@@ -29,11 +29,11 @@ class RolesScreen extends StatefulWidget {
 class _RolesScreenState extends State<RolesScreen> {
   TextEditingController searchController = TextEditingController();
   List<CompanyRole> roles = [];
-  final cubit = BranchesCubit(sl());
+  final cubit = RolesCubit(sl(),sl(),sl());
 
   @override
   void initState() {
-    cubit.getCompanyBranches();
+    cubit.getCompanyRoles();
     super.initState();
   }
 
@@ -63,7 +63,7 @@ class _RolesScreenState extends State<RolesScreen> {
             actions: [
               InkWell(
                 onTap: () {
-                  Navigator.of(context).push(CustomPageRoute.createRoute(page: const AddEditBranchScreen()));
+                  Navigator.of(context).push(CustomPageRoute.createRoute(page: const AddEditRoleScreen()));
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(right: 8.0),
@@ -98,7 +98,7 @@ class _RolesScreenState extends State<RolesScreen> {
                 ),
                 const SizedBox(height: 8.0),
                 Expanded(
-                  child: state is BranchesLoading
+                  child: state is RolesLoading
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
@@ -132,14 +132,14 @@ class _RolesScreenState extends State<RolesScreen> {
                                   physics: const AlwaysScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     CompanyRole? item = roles[index];
-                                    if (index != roles.length - 1) {
+
                                       return InkWell(
                                         onTap: () {
-                                          // Navigator.of(context).push(
-                                          //   CustomPageRoute.createRoute(
-                                          //     page: AddEditCustomerScreen(customerItem: item),
-                                          //   ),
-                                          // );
+                                          Navigator.of(context).push(
+                                            CustomPageRoute.createRoute(
+                                              page: AddEditRoleScreen(roleId: item.id),
+                                            ),
+                                          );
                                         },
                                         child: Container(
                                           width: double.infinity,
@@ -169,21 +169,6 @@ class _RolesScreenState extends State<RolesScreen> {
                                           ),
                                         ),
                                       );
-                                    } else {
-                                      return Container(
-                                        width: double.infinity,
-                                        color: AppColors.whiteColor,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(top: 24.0, left: 8.0, bottom: 24.0),
-                                          child: LWCustomText(
-                                            title: item.name!,
-                                            color: AppColors.labelColor,
-                                            fontSize: 18.0,
-                                            fontFamily: FontAssets.avertaRegular,
-                                          ),
-                                        ),
-                                      );
-                                    }
                                   },
                                 ),
                               ),

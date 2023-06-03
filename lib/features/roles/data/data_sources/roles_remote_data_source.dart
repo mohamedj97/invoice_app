@@ -1,20 +1,20 @@
-import 'package:invoice_app/features/roles/data/models/responses/get_features_response_model.dart';
 import 'package:invoice_app/features/roles/data/models/responses/get_roles_response_model.dart';
 import '../../../../../core/api/api_repo.dart';
 import '../../../../core/api/base_api_response.dart';
+import '../../domain/entities/get_fetaures_result.dart';
+import '../../domain/entities/get_single_role_result.dart';
 import '../../domain/entities/role.dart';
-import '../models/responses/get_single_role_response_model.dart';
 
 abstract class RolesRemoteDataSource {
   Future<GetRolesResponse> getCompanyRoles();
 
-  Future<GetSingleRoleResponse> getSingleRole({required int id});
+  Future<GetSingleRoleResult> getSingleRole({required int id});
 
   Future<BoolResponse> editRole({required int id, required Role role});
 
-  Future<GetSingleRoleResponse> addRole({required Role role});
+  Future<GetSingleRoleResult> addRole({required Role role});
 
-  Future<GetFeaturesResponse> getFeatures();
+  Future<GetFeaturesResult> getFeatures();
 }
 
 class RolesRemoteDataSourceImpl extends RolesRemoteDataSource {
@@ -31,7 +31,7 @@ class RolesRemoteDataSourceImpl extends RolesRemoteDataSource {
   }
 
   @override
-  Future<GetSingleRoleResponse> addRole({required Role role}) async {
+  Future<GetSingleRoleResult> addRole({required Role role}) async {
     final response = await apiRepo.rolesClient.addRole(role);
     return response;
   }
@@ -43,13 +43,13 @@ class RolesRemoteDataSourceImpl extends RolesRemoteDataSource {
   }
 
   @override
-  Future<GetSingleRoleResponse> getSingleRole({required int id}) async {
+  Future<GetSingleRoleResult> getSingleRole({required int id}) async {
     final response = await apiRepo.rolesClient.getSingleRole(id);
     return response;
   }
 
   @override
-  Future<GetFeaturesResponse> getFeatures() async{
+  Future<GetFeaturesResult> getFeatures() async{
     final response = await apiRepo.rolesClient.getFeatures();
     return response;
   }

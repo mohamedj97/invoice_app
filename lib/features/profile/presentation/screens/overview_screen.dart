@@ -54,9 +54,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
           List<GovernateLookup> governtaes=state.getCompanyLookupsResponse?.result?.governates??[];
           List<BaseLookup> businessActivities=state.getCompanyLookupsResponse?.result?.businessActivity??[];
           List<BaseLookup> countries=state.getCompanyLookupsResponse?.result?.countries??[];
-          String governate=governtaes.isEmpty?"":governtaes.firstWhere((element) => element.countryId==companyInfo?.country && element.id ==companyInfo?.governate).name??"";
-          String businessActivity=businessActivities.isEmpty?"":businessActivities.firstWhere((element) => element.id==companyInfo?.activityid).name??"";
-          String country=governtaes.isEmpty?"":countries.firstWhere((element) => element.id==companyInfo?.country).name??"";
+          // String governate=governtaes.isEmpty?"":governtaes.firstWhere((element) => element.countryId==companyInfo?.country && element.id ==companyInfo?.governate).name??"";
+          // String businessActivity=businessActivities.isEmpty?"":businessActivities.firstWhere((element) => element.id==companyInfo?.activityid).name??"";
+          // String country=governtaes.isEmpty?"":countries.firstWhere((element) => element.id==companyInfo?.country).name??"";
           return CustomScaffold(
             leading: const CustomBackButton(),
             backGroundColor: Colors.white,
@@ -310,6 +310,40 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                   ),
                                   showRequiredSymbol: false,
                                 ),
+                                //const SizedBox(height: 16.0),
+                                // LWCustomTextFormField(
+                                //   name: "tax_no",
+                                //   labelText: "country".tr(),
+                                //   hintText: "123456789",
+                                //   isRequired: false,
+                                //   keyboardType: TextInputType.number,
+                                //   initialValue: governate,
+                                //   contentPadding: EdgeInsets.zero,
+                                //   borderDecoration: const UnderlineInputBorder(
+                                //     borderSide: BorderSide(color: AppColors.searchBarColor, width: 1.0),
+                                //   ),
+                                //   focusedBorderDecoration: const UnderlineInputBorder(
+                                //     borderSide: BorderSide(color: AppColors.dataFieldColor, width: 1.0),
+                                //   ),
+                                //   showRequiredSymbol: false,
+                                // ),
+                                // const SizedBox(height: 16.0),
+                                // LWCustomTextFormField(
+                                //   name: "tax_no",
+                                //   labelText: "business_activity".tr(),
+                                //   hintText: "123456789",
+                                //   isRequired: false,
+                                //   keyboardType: TextInputType.number,
+                                //   initialValue: businessActivity,
+                                //   contentPadding: EdgeInsets.zero,
+                                //   borderDecoration: const UnderlineInputBorder(
+                                //     borderSide: BorderSide(color: AppColors.searchBarColor, width: 1.0),
+                                //   ),
+                                //   focusedBorderDecoration: const UnderlineInputBorder(
+                                //     borderSide: BorderSide(color: AppColors.dataFieldColor, width: 1.0),
+                                //   ),
+                                //   showRequiredSymbol: false,
+                                // ),
                                 const SizedBox(height: 16.0),
                                 LWCustomTextFormField(
                                   name: "tax_no",
@@ -317,41 +351,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                   hintText: "123456789",
                                   isRequired: false,
                                   keyboardType: TextInputType.number,
-                                  initialValue: governate,
-                                  contentPadding: EdgeInsets.zero,
-                                  borderDecoration: const UnderlineInputBorder(
-                                    borderSide: BorderSide(color: AppColors.searchBarColor, width: 1.0),
-                                  ),
-                                  focusedBorderDecoration: const UnderlineInputBorder(
-                                    borderSide: BorderSide(color: AppColors.dataFieldColor, width: 1.0),
-                                  ),
-                                  showRequiredSymbol: false,
-                                ),
-                                const SizedBox(height: 16.0),
-                                LWCustomTextFormField(
-                                  name: "tax_no",
-                                  labelText: "business_activity".tr(),
-                                  hintText: "123456789",
-                                  isRequired: false,
-                                  keyboardType: TextInputType.number,
-                                  initialValue: businessActivity,
-                                  contentPadding: EdgeInsets.zero,
-                                  borderDecoration: const UnderlineInputBorder(
-                                    borderSide: BorderSide(color: AppColors.searchBarColor, width: 1.0),
-                                  ),
-                                  focusedBorderDecoration: const UnderlineInputBorder(
-                                    borderSide: BorderSide(color: AppColors.dataFieldColor, width: 1.0),
-                                  ),
-                                  showRequiredSymbol: false,
-                                ),
-                                const SizedBox(height: 16.0),
-                                LWCustomTextFormField(
-                                  name: "tax_no",
-                                  labelText: "country".tr(),
-                                  hintText: "123456789",
-                                  isRequired: false,
-                                  keyboardType: TextInputType.number,
-                                  initialValue: country,
+                                  initialValue: "egypt".tr(),
                                   contentPadding: EdgeInsets.zero,
                                   borderDecoration: const UnderlineInputBorder(
                                     borderSide: BorderSide(color: AppColors.searchBarColor, width: 1.0),

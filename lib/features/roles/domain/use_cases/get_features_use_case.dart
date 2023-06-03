@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:invoice_app/features/roles/data/models/responses/get_features_response_model.dart';
 import 'package:invoice_app/features/roles/domain/repositories/roles_repository.dart';
 import '../../../../core/error/failure.dart';
+import '../entities/get_fetaures_result.dart';
 
 class GetFeaturesUseCase {
   final RolesRepository rolesRepository;
@@ -9,7 +9,7 @@ class GetFeaturesUseCase {
     required this.rolesRepository,
   });
 
-  Future<Either<Failure, GetFeaturesResponse>> call() async {
+  Future<Either<Failure, GetFeaturesResult>> call() async {
     return await rolesRepository.getFeatures();
   }
 }

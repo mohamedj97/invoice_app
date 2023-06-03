@@ -2,7 +2,7 @@ part of 'add_edit_role_cubit.dart';
 
 class AddEditRoleState extends Equatable {
   final BoolResponse? boolResponse;
-  final GetSingleRoleResponse? getSingleRoleResponse;
+  final GetSingleRoleResult? getSingleRoleResponse;
   final String? failure;
   final RequestState? addRoleRequestState;
   final RequestState? editRoleRequestState;
@@ -16,7 +16,7 @@ class AddEditRoleState extends Equatable {
   });
   AddEditRoleState copyWith({
     BoolResponse? boolResponse,
-    GetSingleRoleResponse? getSingleRoleResponse,
+    GetSingleRoleResult? getSingleRoleResponse,
     String? failure,
     RequestState? addRoleRequestState,
     RequestState? editRoleRequestState,
@@ -38,7 +38,7 @@ class AddEditRoleState extends Equatable {
     boolResponse ??
         BoolResponse(statuscode: 0, result: null),
     getSingleRoleResponse ??
-        GetSingleRoleResponse(statuscode: 0, result: null),
+        GetSingleRoleResult(statuscode: 0, result: null,message: null,status: null,exception: null),
   ];
 }
 
@@ -46,7 +46,7 @@ class AddEditRoleInitial extends AddEditRoleState {}
 
 class AddEditRoleSuccess extends AddEditRoleState {
   final BoolResponse? boolResponse;
-  final GetSingleRoleResponse? getSingleRoleResponse;
+  final GetSingleRoleResult? getSingleRoleResponse;
   const AddEditRoleSuccess({
     this.boolResponse,
     this.getSingleRoleResponse,
