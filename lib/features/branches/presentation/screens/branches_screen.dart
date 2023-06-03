@@ -88,12 +88,10 @@ class _BranchesScreenState extends State<BranchesScreen> {
                         branches = state.getBranchesResponse?.result?.branches ?? [];
                       });
                     } else {
-                      //searchDebouncer(() {
                       setState(() {
                         branches =
                             branches.where((user) => user.name!.toLowerCase().contains(searchController.text)).toList();
                       });
-                      // });
                     }
                   },
                   searchController: searchController,
@@ -135,14 +133,13 @@ class _BranchesScreenState extends State<BranchesScreen> {
                                   physics: const AlwaysScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     CompanyBranch? item = branches[index];
-                                    if (index != branches.length - 1) {
                                       return InkWell(
                                         onTap: () {
-                                          // Navigator.of(context).push(
-                                          //   CustomPageRoute.createRoute(
-                                          //     page: AddEditCustomerScreen(customerItem: item),
-                                          //   ),
-                                          // );
+                                          Navigator.of(context).push(
+                                            CustomPageRoute.createRoute(
+                                              page: AddEditBranchScreen(branchItem: item),
+                                            ),
+                                          );
                                         },
                                         child: Container(
                                           width: double.infinity,
@@ -172,21 +169,6 @@ class _BranchesScreenState extends State<BranchesScreen> {
                                           ),
                                         ),
                                       );
-                                    } else {
-                                      return Container(
-                                        width: double.infinity,
-                                        color: AppColors.whiteColor,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(top: 24.0, left: 8.0, bottom: 24.0),
-                                          child: LWCustomText(
-                                            title: item.name!,
-                                            color: AppColors.labelColor,
-                                            fontSize: 18.0,
-                                            fontFamily: FontAssets.avertaRegular,
-                                          ),
-                                        ),
-                                      );
-                                    }
                                   },
                                 ),
                               ),

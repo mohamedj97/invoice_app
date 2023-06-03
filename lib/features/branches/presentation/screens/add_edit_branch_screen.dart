@@ -92,7 +92,7 @@ class _AddEditBranchScreenState extends State<AddEditBranchScreen> {
                         BlocProvider.of<AddEditBranchCubit>(context).editBranch(
                             id: widget.branchItem?.id ?? 1,
                             companyBranch: CompanyBranch(
-                              id: 0,
+                              id: widget.branchItem?.id ?? 1,
                               active: active,
                               companyId: widget.branchItem?.companyId ?? DiskRepo().loadCompanyId() ?? 1,
                               name: name,
