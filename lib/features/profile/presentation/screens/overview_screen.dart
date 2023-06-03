@@ -11,6 +11,8 @@ import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import '../../../../injection_container.dart';
+import '../../../company_registration/domain/entities/governate_lookup.dart';
+import '../../../products/domain/entities/base_lookup.dart';
 import '../cubit/get_profile_cubit.dart';
 
 class OverviewScreen extends StatefulWidget {
@@ -49,9 +51,12 @@ class _OverviewScreenState extends State<OverviewScreen> {
         },
         builder: (context, state) {
           CompanyInfo? companyInfo = state.getProfileResponse?.result?.companies.first.companyInfo;
-          String governate=state.getCompanyLookupsResponse?.result?.governates.firstWhere((element) => element.id==companyInfo?.governate).name??"";
-          String businessActivity=state.getCompanyLookupsResponse?.result?.businessActivity.firstWhere((element) => element.id==companyInfo?.activityid).name??"";
-          String country=state.getCompanyLookupsResponse?.result?.countries.firstWhere((element) => element.id==companyInfo?.country).name??"";
+          List<GovernateLookup> governtaes=state.getCompanyLookupsResponse?.result?.governates??[];
+          List<BaseLookup> businessActivities=state.getCompanyLookupsResponse?.result?.businessActivity??[];
+          List<BaseLookup> countries=state.getCompanyLookupsResponse?.result?.countries??[];
+          String governate=governtaes.isEmpty?"":governtaes.firstWhere((element) => element.countryId==companyInfo?.country && element.id ==companyInfo?.governate).name??"";
+          String businessActivity=businessActivities.isEmpty?"":businessActivities.firstWhere((element) => element.id==companyInfo?.activityid).name??"";
+          String country=governtaes.isEmpty?"":countries.firstWhere((element) => element.id==companyInfo?.country).name??"";
           return CustomScaffold(
             leading: const CustomBackButton(),
             backGroundColor: Colors.white,
