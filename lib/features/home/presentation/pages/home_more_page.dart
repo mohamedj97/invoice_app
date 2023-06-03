@@ -29,7 +29,7 @@ class HomeMorePage extends StatefulWidget {
 }
 
 class _HomeMorePageState extends State<HomeMorePage> {
-  final cubit = GetProfileCubit(sl());
+  final cubit = GetProfileCubit(sl(),sl());
 
   @override
   void initState() {

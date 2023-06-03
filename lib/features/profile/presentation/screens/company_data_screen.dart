@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:invoice_app/features/branches/presentation/screens/branches_screen.dart';
+import 'package:invoice_app/features/profile/presentation/screens/overview_screen.dart';
 import '../../../../core/assets/colors.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/widgets/custom_back_button.dart';
-import '../../../branches/presentation/screens/add_edit_branch_screen.dart';
 import '../../../roles/presentation/screens/add_edit_role_screen.dart';
 import '../widgets/profile_item_widget.dart';
 
@@ -30,7 +31,13 @@ class _CompanyDataScreenState extends State<CompanyDataScreen> {
           ProfileItemWidget(
             title: "overview".tr(),
             showDivider: true,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(
+                CustomPageRoute.createRoute(
+                  page: const OverviewScreen(),
+                ),
+              );
+            },
           ),
           ProfileItemWidget(
             title: "branches".tr(),
@@ -38,7 +45,7 @@ class _CompanyDataScreenState extends State<CompanyDataScreen> {
             onTap: () {
               Navigator.of(context).push(
                 CustomPageRoute.createRoute(
-                  page: const AddEditBranchScreen(),
+                  page: const BranchesScreen(),
                 ),
               );
             },

@@ -36,7 +36,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool active = true;
   final formKey = GlobalKey<FormBuilderState>();
-  final profileCubit = GetProfileCubit(sl());
+  final profileCubit = GetProfileCubit(sl(),sl());
   bool firstLogin = true;
   String? email;
   String? password;
@@ -51,7 +51,9 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, profileState) async {
           if (profileState.getProfileRequestState == RequestState.success) {
             await DiskRepo().deleteUserName();
+            await DiskRepo().deleteUserId();
             await DiskRepo().updateUserName(profileState.getProfileResponse?.result?.userName ?? "");
+            await DiskRepo().updateUserId(profileState.getProfileResponse?.result?.userId ?? 0);
             firstLogin = DiskRepo().loadFirstLogin() ?? true;
             if (firstLogin) {
               Navigator.of(context).pushAndRemoveUntil(

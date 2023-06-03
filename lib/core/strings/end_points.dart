@@ -35,6 +35,7 @@ class EndPoints {
   //profile
   static const getProfile = 'Users/getuserdata';
   static const changePassword = 'Users/change-password';
+  static const getCompanyLookupsDataForProfile = 'Companies/getcompanyinfo-lookups';
 
 
   //branches

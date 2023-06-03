@@ -1,5 +1,6 @@
 
 import 'package:dartz/dartz.dart';
+import 'package:invoice_app/features/company_registration/data/models/responses/get_company_lookups_response_model.dart';
 
 import '../../../../core/api/base_api_response.dart';
 import '../../../../core/error/exception.dart';
@@ -37,6 +38,17 @@ class ProfileRepositoryImpl extends ProfileRepository with ConnectivityMixin {
         changePasswordRequest.NewPassword,
         changePasswordRequest.ConfirmNewPassword,
       ));
+
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetCompanyLookupsResponse>> getCompanyLookupsDataForProfile() async{
+    try {
+      final response = await profileRemoteDataSource.getCompanyLookupsDataForProfile();
 
       return Right(response);
     } on ServerException catch (e) {

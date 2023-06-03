@@ -92,6 +92,7 @@ import 'features/products/domain/repositories/products_repositories.dart';
 import 'features/products/domain/use_cases/get_products_use_case.dart';
 import 'features/profile/data/data_sources/profile_remote_data_source.dart';
 import 'features/profile/data/repositories/profile_repository_impl.dart';
+import 'features/profile/domain/use_cases/get_company_lookups_for_profile.dart';
 import 'features/roles/domain/use_cases/add_role_use_case.dart';
 import 'features/statistics/data/data_sources/submitted_invoices_remote_data_sources.dart';
 import 'features/statistics/data/repositories/submitted_invoices_repository_impl.dart';
@@ -126,7 +127,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AddEditCustomerCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetCustomerTypesCubit(sl()));
   sl.registerLazySingleton(() => GetProductsCubit(sl()));
-  sl.registerLazySingleton(() => GetProfileCubit(sl()));
+  sl.registerLazySingleton(() => GetProfileCubit(sl(),sl()));
   sl.registerLazySingleton(() => ChangePasswordCubit(sl()));
   sl.registerLazySingleton(() => AddEditProductCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetItemTypesCubit(sl()));
@@ -172,6 +173,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => EditCustomerUseCase(customersRepository: sl()));
   sl.registerLazySingleton(() => GetItemTypesUseCase(productsRepository: sl()));
   sl.registerLazySingleton(() => GetProfileUseCase(profileRepository: sl()));
+  sl.registerLazySingleton(() => GetCompanyLookupsForProfileUseCase(profileRepository: sl()));
   sl.registerLazySingleton(() => ChangePasswordUseCase(profileRepository: sl()));
   sl.registerLazySingleton(() => GetReceivedInvoiceUseCase(submittedInvoicesRepository: sl()));
   sl.registerLazySingleton(() => GetSubmittedInvoiceUseCase(submittedInvoicesRepository: sl()));
