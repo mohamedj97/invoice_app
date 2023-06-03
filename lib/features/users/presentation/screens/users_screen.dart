@@ -6,6 +6,7 @@ import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/utils/string_validation_extension.dart';
 import 'package:invoice_app/core/widgets/custom_back_button.dart';
 import 'package:invoice_app/features/users/presentation/cubit/users_cubit.dart';
+import 'package:invoice_app/features/users/presentation/screens/add_edit_user_screen.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/assets/image_assets.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
@@ -15,7 +16,6 @@ import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
-import '../../../customers/presentation/screens/add_customer_screen.dart';
 import '../../domain/entities/company_user.dart';
 
 class UsersScreen extends StatefulWidget {
@@ -66,7 +66,7 @@ class _UsersScreenState extends State<UsersScreen> {
             actions: [
               InkWell(
                 onTap: () {
-                  Navigator.of(context).push(CustomPageRoute.createRoute(page: const AddEditCustomerScreen()));
+                  Navigator.of(context).push(CustomPageRoute.createRoute(page: const AddEditUserScreen()));
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(right: 8.0),
@@ -136,14 +136,13 @@ class _UsersScreenState extends State<UsersScreen> {
                                   physics: const AlwaysScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     CompanyUser? item = users[index];
-                                    if (index != users.length - 1) {
                                       return InkWell(
                                         onTap: () {
-                                          // Navigator.of(context).push(
-                                          //   CustomPageRoute.createRoute(
-                                          //     page: AddEditCustomerScreen(customerItem: item),
-                                          //   ),
-                                          // );
+                                          Navigator.of(context).push(
+                                            CustomPageRoute.createRoute(
+                                              page: AddEditUserScreen(companyUser: item),
+                                            ),
+                                          );
                                         },
                                         child: Container(
                                           width: double.infinity,
@@ -173,21 +172,6 @@ class _UsersScreenState extends State<UsersScreen> {
                                           ),
                                         ),
                                       );
-                                    } else {
-                                      return Container(
-                                        width: double.infinity,
-                                        color: AppColors.whiteColor,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(top: 24.0, left: 8.0, bottom: 24.0),
-                                          child: LWCustomText(
-                                            title: item.username!,
-                                            color: AppColors.labelColor,
-                                            fontSize: 18.0,
-                                            fontFamily: FontAssets.avertaRegular,
-                                          ),
-                                        ),
-                                      );
-                                    }
                                   },
                                 ),
                               ),

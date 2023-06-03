@@ -38,7 +38,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
   final cubit = AddEditUserCubit(sl(), sl());
   final roleCubit = RolesCubit(sl(), sl(), sl());
   final branchCubit = BranchesCubit(sl());
-  bool active = false;
+  bool active = true;
   List<CompanyRole> roles = [];
   List<CompanyBranch> branches = [];
 
@@ -65,7 +65,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
           }
         },
         builder: (context, branchState) {
-          branches=branchState.getBranchesResponse?.result?.branches??[];
+          branches = branchState.getBranchesResponse?.result?.branches ?? [];
           return BlocProvider<RolesCubit>.value(
             value: roleCubit,
             child: BlocConsumer<RolesCubit, RolesState>(
@@ -79,7 +79,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                 }
               },
               builder: (context, rolesState) {
-                roles=rolesState.getRolesResponse?.result?.roles??[];
+                roles = rolesState.getRolesResponse?.result?.roles ?? [];
                 return BlocProvider<AddEditUserCubit>.value(
                   value: cubit,
                   child: BlocConsumer<AddEditUserCubit, AddEditUserState>(
@@ -110,6 +110,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                       }
                     },
                     builder: (context, addEditState) {
+                      if (hasData) active = widget.companyUser?.active ?? true;
                       return CustomScaffold(
                         title: hasData ? "edit_role".tr() : "add_role".tr(),
                         leading: const CustomBackButton(),
@@ -118,7 +119,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                             child: Padding(
                               padding: const EdgeInsets.only(right: 8.0),
                               child: InkWell(
-                                  onTap: () {
+                                  onTap: () async {
                                     var formState = formKey.currentState;
                                     if (formState == null) return;
                                     if (!formState.saveAndValidate()) {
@@ -132,7 +133,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                                     final CompanyBranch branch = formState.value["branch"] as CompanyBranch;
 
                                     if (hasData) {
-                                      BlocProvider.of<AddEditUserCubit>(context).editUser(
+                                      await BlocProvider.of<AddEditUserCubit>(context).editUser(
                                           id: widget.companyUser?.userid ?? 1,
                                           userRequest: UserRequest(
                                             id: widget.companyUser?.userid ?? 1,
@@ -146,9 +147,9 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                                             fullname: fullName,
                                           ));
                                     } else {
-                                      BlocProvider.of<AddEditUserCubit>(context).addUser(
+                                      await BlocProvider.of<AddEditUserCubit>(context).addUser(
                                           userRequest: UserRequest(
-                                        id: widget.companyUser?.userid ?? 1,
+                                        id: 0,
                                         active: active,
                                         companyId: DiskRepo().loadCompanyId() ?? 1,
                                         roleId: role.id,
@@ -221,7 +222,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                                                   labelText: "",
                                                   hintText: "user_name".tr(),
                                                   isRequired: true,
-                                                  //initialValue: hasData ? widget.branchItem!.name : null,
+                                                  initialValue: hasData ? widget.companyUser?.username ?? "" : null,
                                                   isCard: false,
                                                   borderDecoration: InputBorder.none,
                                                 ),
@@ -256,7 +257,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                                                   labelText: "",
                                                   hintText: "full_name".tr(),
                                                   isRequired: true,
-                                                  //initialValue: hasData ? widget.branchItem!.name : null,
+                                                  initialValue: hasData ? widget.companyUser?.fullname ?? "" : null,
                                                   isCard: false,
                                                   borderDecoration: InputBorder.none,
                                                 ),
@@ -292,7 +293,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                                                   labelText: "",
                                                   hintText: "email".tr(),
                                                   isRequired: true,
-                                                  //initialValue: hasData ? widget.branchItem!.name : null,
+                                                  initialValue: hasData ? widget.companyUser?.email ?? "" : null,
                                                   isCard: false,
                                                   borderDecoration: InputBorder.none,
                                                 ),
@@ -327,7 +328,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                                                   labelText: "",
                                                   hintText: "password".tr(),
                                                   isRequired: true,
-                                                  //initialValue: hasData ? widget.branchItem!.name : null,
+                                                  initialValue: hasData ? widget.companyUser?.password ?? "" : null,
                                                   isCard: false,
                                                   borderDecoration: InputBorder.none,
                                                 ),
@@ -346,51 +347,112 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                                           child: LWCustomText(
                                               title: "information".tr(), color: AppColors.disabledBottomItemColor),
                                         ),
-                                        LWCustomDropdownFormField<CompanyRole>(
-                                          name: "role",
-                                          iconColor: AppColors.labelColor,
-                                          showLabel: true,
-                                          labelText: "role".tr(),
-                                          hintText: "role".tr(),
-                                          isRequired: true,
-                                          isCard: false,
-                                          showRequiredSymbol: false,
-                                          border: const UnderlineInputBorder(
-                                            borderSide: BorderSide(color: AppColors.searchBarColor, width: 1.0),
-                                          ),
-                                          items: roles,
-                                          itemBuilder: (context, data) {
-                                            return Column(
-                                              children: [
-                                                Text(data.name ?? ""),
-                                                const Divider(color: AppColors.primary),
-                                              ],
-                                            );
-                                          },
-                                        ),
                                         const SizedBox(height: 16.0),
-                                        LWCustomDropdownFormField<CompanyBranch>(
-                                          name: "branch",
-                                          iconColor: AppColors.labelColor,
-                                          showLabel: true,
-                                          labelText: "branch".tr(),
-                                          hintText: "branch".tr(),
-                                          isRequired: true,
-                                          isCard: false,
-                                          showRequiredSymbol: false,
-                                          border: const UnderlineInputBorder(
-                                            borderSide: BorderSide(color: AppColors.searchBarColor, width: 1.0),
-                                          ),
-                                          items: branches,
-                                          itemBuilder: (context, data) {
-                                            return Column(
-                                              children: [
-                                                Text(data.name ?? ""),
-                                                const Divider(color: AppColors.primary),
-                                              ],
-                                            );
-                                          },
-                                        ),
+                                        branchState is BranchesLoading
+                                            ? const Center(
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: CircularProgressIndicator(),
+                                                ),
+                                              )
+                                            : Container(
+                                                color: Colors.white,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(left: 8.0),
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      const SizedBox(height: 16.0),
+                                                      LWCustomText(
+                                                        title: "role".tr(),
+                                                        color: AppColors.labelColor,
+                                                        fontFamily: FontAssets.avertaRegular,
+                                                      ),
+                                                      const SizedBox(height: 8.0),
+                                                      LWCustomDropdownFormField<CompanyRole>(
+                                                        name: "role",
+                                                        iconColor: AppColors.labelColor,
+                                                        showLabel: true,
+                                                        labelText: "".tr(),
+                                                        hintText: "role".tr(),
+                                                        isRequired: true,
+                                                        initialValue: widget.companyUser?.roleId != null
+                                                            ? roles.firstWhere(
+                                                                (element) => element.id == widget.companyUser?.roleId)
+                                                            : null,
+                                                        isCard: false,
+                                                        showRequiredSymbol: false,
+                                                        border: const UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(color: AppColors.searchBarColor, width: 1.0),
+                                                        ),
+                                                        items: roles,
+                                                        itemBuilder: (context, data) {
+                                                          return Column(
+                                                            children: [
+                                                              Text(data.name ?? ""),
+                                                              const Divider(color: AppColors.primary),
+                                                            ],
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                        const SizedBox(height: 16.0),
+                                        rolesState is RolesLoading
+                                            ? const Center(
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: CircularProgressIndicator(),
+                                                ),
+                                              )
+                                            : Container(
+                                                color: Colors.white,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(left: 8.0),
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      const SizedBox(height: 16.0),
+                                                      LWCustomText(
+                                                        title: "branch".tr(),
+                                                        color: AppColors.labelColor,
+                                                        fontFamily: FontAssets.avertaRegular,
+                                                      ),
+                                                      const SizedBox(height: 8.0),
+                                                      LWCustomDropdownFormField<CompanyBranch>(
+                                                        name: "branch",
+                                                        iconColor: AppColors.labelColor,
+                                                        showLabel: true,
+                                                        labelText: "".tr(),
+                                                        hintText: "branch".tr(),
+                                                        initialValue: widget.companyUser?.branchid != null
+                                                            ? branches.firstWhere(
+                                                                (element) => element.id == widget.companyUser?.branchid)
+                                                            : null,
+                                                        isRequired: true,
+                                                        isCard: false,
+                                                        showRequiredSymbol: false,
+                                                        border: const UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(color: AppColors.searchBarColor, width: 1.0),
+                                                        ),
+                                                        items: branches,
+                                                        itemBuilder: (context, data) {
+                                                          return Column(
+                                                            children: [
+                                                              Text(data.name ?? ""),
+                                                              const Divider(color: AppColors.primary),
+                                                            ],
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
                                         const SizedBox(height: 16.0),
                                         Container(
                                           color: AppColors.whiteColor,

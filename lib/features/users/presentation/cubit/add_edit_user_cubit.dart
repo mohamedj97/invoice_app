@@ -6,7 +6,7 @@ import 'package:invoice_app/features/users/domain/use_cases/add_user_use_case.da
 import 'package:invoice_app/features/users/domain/use_cases/edit_user_use_case.dart';
 import '../../../../core/api/base_api_response.dart';
 import '../../../../core/utils/enums.dart';
-import '../../data/models/responses/get_single_user_response_model.dart';
+import '../../domain/entities/add_user_results.dart';
 
 part 'add_edit_user_state.dart';
 

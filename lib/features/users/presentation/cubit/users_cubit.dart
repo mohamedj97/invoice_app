@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:invoice_app/features/users/data/models/responses/get_single_user_response_model.dart';
 import 'package:invoice_app/features/users/domain/use_cases/get_single_user_use_case.dart';
 import '../../../../core/utils/enums.dart';
 import '../../data/models/responses/get_users_response_model.dart';
+import '../../domain/entities/add_user_results.dart';
 import '../../domain/use_cases/get_users_use_case.dart';
 
 part 'users_state.dart';

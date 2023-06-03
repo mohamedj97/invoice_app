@@ -2,7 +2,7 @@ part of 'users_cubit.dart';
 
 class UsersState extends Equatable {
   final GetUsersResponse? getUsersResponse;
-  final GetSingleUserResponse? getSingleUserResponse;
+  final AddUserResult? getSingleUserResponse;
   final String? failure;
   final RequestState? getUsersRequestState;
   final RequestState? getSingleUserRequestState;
@@ -16,7 +16,7 @@ class UsersState extends Equatable {
   });
   UsersState copyWith({
     GetUsersResponse? getUsersResponse,
-    GetSingleUserResponse? getSingleUserResponse,
+    AddUserResult? getSingleUserResponse,
     String? failure,
     RequestState? getUsersRequestState,
     RequestState? getSingleUserRequestState,
@@ -36,7 +36,7 @@ class UsersState extends Equatable {
     getSingleUserRequestState,
     failure!,
     getSingleUserResponse ??
-        GetSingleUserResponse(statuscode: 0, result: null),
+        AddUserResult(statuscode: 0, result: null,message: null,status: 0,exception: null),
   ];
 }
 
@@ -44,7 +44,7 @@ class UsersInitial extends UsersState {}
 
 class UsersSuccess extends UsersState {
   final GetUsersResponse? getUsersResponse;
-  final GetSingleUserResponse? getSingleUserResponse;
+  final AddUserResult? getSingleUserResponse;
   const UsersSuccess({
     this.getUsersResponse,
     this.getSingleUserResponse,

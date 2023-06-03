@@ -2,7 +2,7 @@ part of 'add_edit_user_cubit.dart';
 
 class AddEditUserState extends Equatable {
   final BoolResponse? boolResponse;
-  final GetSingleUserResponse? getSingleUserResponse;
+  final AddUserResult? getSingleUserResponse;
   final String? failure;
   final RequestState? editUserRequestState;
   final RequestState? addUserRequestState;
@@ -16,7 +16,7 @@ class AddEditUserState extends Equatable {
   });
   AddEditUserState copyWith({
     BoolResponse? boolResponse,
-    GetSingleUserResponse? getSingleUserResponse,
+    AddUserResult? getSingleUserResponse,
     String? failure,
     RequestState? addUserRequestState,
     RequestState? editUserRequestState,
@@ -36,7 +36,7 @@ class AddEditUserState extends Equatable {
     editUserRequestState,
     failure!,
     getSingleUserResponse ??
-        GetSingleUserResponse(statuscode: 0, result: null),
+        AddUserResult(statuscode: 0, result: null,message: null,status: 0,exception: null),
     boolResponse ??
         BoolResponse(statuscode: 0, result: null),
   ];
@@ -46,7 +46,7 @@ class AddEditUserInitial extends AddEditUserState {}
 
 class AddEditUserSuccess extends AddEditUserState {
   final BoolResponse? boolResponse;
-  final GetSingleUserResponse? getSingleUserResponse;
+  final AddUserResult? getSingleUserResponse;
   const AddEditUserSuccess({
     this.boolResponse,
     this.getSingleUserResponse,

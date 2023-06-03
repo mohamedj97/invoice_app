@@ -68,6 +68,7 @@ class _AddEditBranchScreenState extends State<AddEditBranchScreen> {
           );
         }
       }, builder: (context, state) {
+        if (hasData) active = widget.branchItem?.active ?? true;
         return CustomScaffold(
           title: hasData ? "edit_branch".tr() : "add_branch".tr(),
           leading: const CustomBackButton(),

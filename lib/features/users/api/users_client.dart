@@ -5,8 +5,8 @@ import 'package:invoice_app/features/users/domain/entities/user_request.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../core/api/repository/memory_repo.dart';
 import '../../../core/strings/end_points.dart';
-import '../data/models/responses/get_single_user_response_model.dart';
 import '../data/models/responses/get_user_lookup_response_model.dart';
+import '../domain/entities/add_user_results.dart';
 
 part 'users_client.g.dart';
 
@@ -18,7 +18,7 @@ abstract class UsersClient {
   Future<GetUsersResponse> getCompanyUsers();
 
   @GET(EndPoints.getSingleUser)
-  Future<GetSingleUserResponse> getSingleUser(int id);
+  Future<AddUserResult> getSingleUser(int id);
 
   @GET(EndPoints.getCompanyUserLookup)
   Future<GetUserLookupResponse> getCompanyUserLookup(int id);
@@ -27,5 +27,5 @@ abstract class UsersClient {
   Future<BoolResponse> editUser(int id, @Body() UserRequest userRequest);
 
   @POST(EndPoints.addUser)
-  Future<GetSingleUserResponse> addUser(@Body() UserRequest userRequest);
+  Future<AddUserResult> addUser(@Body() UserRequest userRequest);
 }
