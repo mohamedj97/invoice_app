@@ -42,6 +42,29 @@ class _ProfileClient implements ProfileClient {
   }
 
   @override
+  Future<GetCompanyLookupsResponse> getCompanyLookupsDataForProfile() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetCompanyLookupsResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'Companies/getcompanyinfo-lookups',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GetCompanyLookupsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<StringResponse> changePassword(changePasswordModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
