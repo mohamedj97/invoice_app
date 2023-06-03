@@ -112,7 +112,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
                     builder: (context, addEditState) {
                       if (hasData) active = widget.companyUser?.active ?? true;
                       return CustomScaffold(
-                        title: hasData ? "edit_role".tr() : "add_role".tr(),
+                        title: hasData ? "edit_user".tr() : "add_user".tr(),
                         leading: const CustomBackButton(),
                         actions: [
                           Center(
