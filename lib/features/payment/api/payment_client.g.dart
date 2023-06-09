@@ -44,6 +44,29 @@ class _PaymentClient implements PaymentClient {
   }
 
   @override
+  Future<CompanySubscriptionResult> getCompanySubscription() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CompanySubscriptionResult>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'PaymentGateway/getcompanysubscription',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CompanySubscriptionResult.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<IntResponse> startSubscription(
     subscriptionPlanId,
     userId,
@@ -100,7 +123,7 @@ class _PaymentClient implements PaymentClient {
   Future<PaymentGatewayResponseDataGenericResponseResult> executePayment(
     paymentMethodId,
     invoiceId,
-      userId,
+    userId,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -136,6 +159,8 @@ class _PaymentClient implements PaymentClient {
         requestOptions.responseType = ResponseType.plain;
       } else {
         requestOptions.responseType = ResponseType.json;
+        requestOptions.headers["Authorization"] =
+        "Bearer ${MemoryRepo().tokensData?.token ?? ""}";
       }
     }
     return requestOptions;

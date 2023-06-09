@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:retrofit/retrofit.dart';
+import '../../../core/api/repository/memory_repo.dart';
 import '../../../core/strings/end_points.dart';
 import '../domain/entities/excute_payment_result.dart';
+import '../domain/entities/get_company_subscribtions_resutlt.dart';
 import '../domain/entities/payment_methods_results.dart';
 import '../domain/entities/subscription_plans_model.dart';
 
@@ -14,6 +16,9 @@ abstract class PaymentClient {
 
   @GET(EndPoints.getSubscriptionPlans)
   Future<SubscriptionPlanModelListGenericResponseResult> getSubscriptionPlans();
+
+  @GET(EndPoints.getcompanysubscription)
+  Future<CompanySubscriptionResult> getCompanySubscription();
 
   @POST(EndPoints.startSubscription)
   Future<IntResponse> startSubscription(
