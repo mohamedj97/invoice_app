@@ -10,6 +10,7 @@ import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
 import 'package:invoice_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:invoice_app/features/profile/domain/entities/user_info_data.dart';
 import 'package:invoice_app/features/profile/presentation/cubit/get_profile_cubit.dart';
+import 'package:invoice_app/features/profile/presentation/screens/subscription_screen.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
@@ -183,6 +184,13 @@ class _HomeMorePageState extends State<HomeMorePage> {
                       imagePath: IconAssets.languageIcon,
                       onTap: () {
                         Navigator.of(context).push(CustomPageRoute.createRoute(page: const ChangeLanguageScreen()));
+                      },
+                    ),
+                    ProfileItemWidget(
+                      title: "subscription".tr(),
+                      imagePath: IconAssets.subscribeIcon,
+                      onTap: () {
+                        Navigator.of(context).push(CustomPageRoute.createRoute(page: const SubscriptionScreen()));
                       },
                     ),
                     // ProfileItemWidget(

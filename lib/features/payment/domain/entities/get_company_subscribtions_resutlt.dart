@@ -10,7 +10,7 @@ CompanySubscriptionResult companySubscriptionResultFromJson(String str) =>
 String companySubscriptionResultToJson(CompanySubscriptionResult data) => json.encode(data.toJson());
 
 class CompanySubscriptionResult {
-  Result? result;
+  CompanySubscriptionData? result;
   int? status;
   int? statuscode;
   List<String>? message;
@@ -25,7 +25,7 @@ class CompanySubscriptionResult {
   });
 
   factory CompanySubscriptionResult.fromJson(Map<String, dynamic> json) => CompanySubscriptionResult(
-        result: Result.fromJson(json["result"]),
+        result: CompanySubscriptionData.fromJson(json["result"]),
         status: json["status"],
         statuscode: json["statuscode"],
         message: List<String>.from(json["message"].map((x) => x)),
@@ -41,7 +41,7 @@ class CompanySubscriptionResult {
       };
 }
 
-class Result {
+class CompanySubscriptionData {
   late int companyId;
   late int subscriptionPlanId;
   String? subscriptionTypeName;
@@ -51,7 +51,7 @@ class Result {
   late List<PlanFeature> planFeatures = [];
   late List<SubscriptionPayment> subscriptionPayment = [];
 
-  Result({
+  CompanySubscriptionData({
     required this.companyId,
     required this.subscriptionPlanId,
     this.subscriptionTypeName,
@@ -62,7 +62,7 @@ class Result {
     required this.subscriptionPayment,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory CompanySubscriptionData.fromJson(Map<String, dynamic> json) => CompanySubscriptionData(
         companyId: json["companyId"],
         subscriptionPlanId: json["subscriptionPlanId"],
         subscriptionTypeName: json["subscriptionTypeName"],

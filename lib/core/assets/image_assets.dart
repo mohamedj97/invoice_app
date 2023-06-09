@@ -13,5 +13,6 @@ class ImageAssets {
   static const person="assets/images/person.png";
   static const pricingOne="assets/images/prcingone.PNG";
   static const pricingTwo="assets/images/pricingtwo.PNG";
+  static const subscribe="assets/images/subscribe.png";
 
 }

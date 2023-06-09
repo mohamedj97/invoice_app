@@ -38,7 +38,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       (Route<dynamic> route) => false,
                 );
               }
-            else {
+            else if(url.contains("fail")) {
               Navigator.of(context).pushAndRemoveUntil(
                 CustomPageRoute.createRoute(
                   page: const PaymentStatusScreen(isSuccess: false),

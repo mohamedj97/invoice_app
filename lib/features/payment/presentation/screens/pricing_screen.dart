@@ -6,6 +6,7 @@ import 'package:invoice_app/core/assets/font_assets.dart';
 import 'package:invoice_app/core/common_widgets/custom_elevated_button.dart';
 import 'package:invoice_app/core/common_widgets/custom_scaffold.dart';
 import 'package:invoice_app/core/common_widgets/lw_custom_text.dart';
+import 'package:invoice_app/core/widgets/custom_back_button.dart';
 import 'package:invoice_app/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:invoice_app/features/payment/presentation/screens/payments_screen.dart';
 
@@ -19,14 +20,16 @@ import '../../domain/entities/subscription_plans_model.dart';
 import '../widgets/pricing_item.dart';
 
 class PricingScreen extends StatefulWidget {
-  const PricingScreen({Key? key}) : super(key: key);
+  final bool? fromProfile;
+
+  const PricingScreen({Key? key, this.fromProfile = false}) : super(key: key);
 
   @override
   State<PricingScreen> createState() => _PricingScreenState();
 }
 
 class _PricingScreenState extends State<PricingScreen> {
-  final cubit = PaymentCubit(sl(), sl(), sl(), sl(),sl());
+  final cubit = PaymentCubit(sl(), sl(), sl(), sl(), sl());
   int selectedIndex = 0;
   int paymentMethodId = -1;
   List<bool> isSelected = [true, false];
@@ -48,7 +51,7 @@ class _PricingScreenState extends State<PricingScreen> {
           if (state.startSubscriptionRequestState == RequestState.success) {
             Navigator.of(context).push(CustomPageRoute.createRoute(
                 page: PaymentScreen(
-                    invoiceId: state.startSubscriptionResponse?.result ?? 1, paymentMethodId: paymentMethodId)));
+                    invoiceId: state.startSubscriptionResponse?.result ?? 1)));
           }
           if (state.startSubscriptionRequestState == RequestState.error) {
             getErrorDialogue(
@@ -66,6 +69,9 @@ class _PricingScreenState extends State<PricingScreen> {
           return CustomScaffold(
             backGroundColor: AppColors.whiteColor,
             title: "pricing".tr(),
+            leading: widget.fromProfile != null && widget.fromProfile == true
+                ? const CustomBackButton()
+                : const SizedBox.shrink(),
             body: state is PaymentLoading
                 ? const Center(
                     child: Padding(
@@ -246,15 +252,18 @@ class _PricingScreenState extends State<PricingScreen> {
                                                   width: double.infinity,
                                                   child: CustomElevatedButton(
                                                     title: "get_started".tr(),
-                                                    color: selectedIndex==0?AppColors.whiteColor:AppColors.primary,
-                                                    textColor: selectedIndex==0?AppColors.primary:AppColors.whiteColor,
+                                                    color:
+                                                        selectedIndex == 0 ? AppColors.whiteColor : AppColors.primary,
+                                                    textColor:
+                                                        selectedIndex == 0 ? AppColors.primary : AppColors.whiteColor,
                                                     onPressed: () async {
                                                       setState(() {
                                                         paymentMethodId = item.id;
                                                       });
                                                       await DiskRepo().ensureInitialized();
-                                                      await BlocProvider.of<PaymentCubit>(context)
-                                                          .startSubscription(subscriptionPlanId: item.id,userId: DiskRepo().loadUserId()??0);
+                                                      await BlocProvider.of<PaymentCubit>(context).startSubscription(
+                                                          subscriptionPlanId: item.id,
+                                                          userId: DiskRepo().loadUserId() ?? 0);
                                                     },
                                                   ),
                                                 ),
@@ -277,7 +286,7 @@ class _PricingScreenState extends State<PricingScreen> {
                                 child: CustomElevatedButton(
                                   title: "free_trial".tr(),
                                   onPressed: () {
-                                    Navigator.of(context).pushAndRemoveUntil(
+                                    widget.fromProfile != null && widget.fromProfile == true? Navigator.pop(context): Navigator.of(context).pushAndRemoveUntil(
                                       CustomPageRoute.createRoute(
                                         page: const LoginScreen(),
                                       ),

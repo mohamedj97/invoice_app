@@ -33,7 +33,7 @@ class ProfileItemWidget extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      if(imagePath !=null)Image.asset(imagePath!),
+                      if(imagePath !=null)Image.asset(imagePath!,height: 30,width: 30,),
                       const SizedBox(width: 16.0),
                       LWCustomText(
                           title: title, color: color ?? AppColors.profileItemColor),

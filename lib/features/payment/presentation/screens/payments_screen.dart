@@ -17,9 +17,8 @@ import '../../domain/entities/payment_methods_results.dart';
 
 class PaymentScreen extends StatefulWidget {
   final int invoiceId;
-  final int paymentMethodId;
 
-  const PaymentScreen({Key? key, required this.invoiceId, required this.paymentMethodId}) : super(key: key);
+  const PaymentScreen({Key? key, required this.invoiceId}) : super(key: key);
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
