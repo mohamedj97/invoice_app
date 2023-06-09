@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:invoice_app/core/error/failure.dart';
+import 'package:invoice_app/features/payment/domain/entities/get_company_subscribtions_resutlt.dart';
 import 'package:invoice_app/features/payment/domain/entities/payment_methods_results.dart';
 import 'package:invoice_app/features/payment/domain/entities/subscription_plans_model.dart';
 import 'package:invoice_app/features/payment/domain/repositories/payment_repository.dart';
@@ -15,9 +16,11 @@ class PaymentRepositoryImpl extends PaymentRepository with ConnectivityMixin {
   PaymentRepositoryImpl(this.paymentRemoteDataSource);
 
   @override
-  Future<Either<Failure, PaymentGatewayResponseDataGenericResponseResult>> executePayment({required int paymentMethodId, required int invoiceId, required int userId}) async{
+  Future<Either<Failure, PaymentGatewayResponseDataGenericResponseResult>> executePayment(
+      {required int paymentMethodId, required int invoiceId, required int userId}) async {
     try {
-      final response = await paymentRemoteDataSource.executePayment(paymentMethodId: paymentMethodId, invoiceId: invoiceId, userId: userId);
+      final response = await paymentRemoteDataSource.executePayment(
+          paymentMethodId: paymentMethodId, invoiceId: invoiceId, userId: userId);
 
       return Right(response);
     } on ServerException catch (e) {
@@ -25,9 +28,8 @@ class PaymentRepositoryImpl extends PaymentRepository with ConnectivityMixin {
     }
   }
 
-
   @override
-  Future<Either<Failure, PgPaymentMethodListGenericResponseResult>> getPaymentMethods()async {
+  Future<Either<Failure, PgPaymentMethodListGenericResponseResult>> getPaymentMethods() async {
     try {
       final response = await paymentRemoteDataSource.getPaymentMethods();
 
@@ -38,7 +40,7 @@ class PaymentRepositoryImpl extends PaymentRepository with ConnectivityMixin {
   }
 
   @override
-  Future<Either<Failure, SubscriptionPlanModelListGenericResponseResult>> getSubscriptionPlans() async{
+  Future<Either<Failure, SubscriptionPlanModelListGenericResponseResult>> getSubscriptionPlans() async {
     try {
       final response = await paymentRemoteDataSource.getSubscriptionPlans();
 
@@ -49,9 +51,10 @@ class PaymentRepositoryImpl extends PaymentRepository with ConnectivityMixin {
   }
 
   @override
-  Future<Either<Failure, IntResponse>> startSubscription({required int subscriptionPlanId,required int userId}) async{
+  Future<Either<Failure, IntResponse>> startSubscription({required int subscriptionPlanId, required int userId}) async {
     try {
-      final response = await paymentRemoteDataSource.startSubscription(subscriptionPlanId: subscriptionPlanId,userId:userId);
+      final response =
+          await paymentRemoteDataSource.startSubscription(subscriptionPlanId: subscriptionPlanId, userId: userId);
 
       return Right(response);
     } on ServerException catch (e) {
@@ -59,5 +62,14 @@ class PaymentRepositoryImpl extends PaymentRepository with ConnectivityMixin {
     }
   }
 
+  @override
+  Future<Either<Failure, CompanySubscriptionResult>> getCompanySubscription() async {
+    try {
+      final response = await paymentRemoteDataSource.getCompanySubscription();
 
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
+    }
+  }
 }

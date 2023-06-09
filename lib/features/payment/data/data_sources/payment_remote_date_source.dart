@@ -1,11 +1,14 @@
 import '../../../../../core/api/api_repo.dart';
 import '../../../../core/api/base_api_response.dart';
 import '../../domain/entities/excute_payment_result.dart';
+import '../../domain/entities/get_company_subscribtions_resutlt.dart';
 import '../../domain/entities/payment_methods_results.dart';
 import '../../domain/entities/subscription_plans_model.dart';
 
 abstract class PaymentRemoteDataSource {
   Future<SubscriptionPlanModelListGenericResponseResult> getSubscriptionPlans();
+
+  Future<CompanySubscriptionResult> getCompanySubscription();
 
   Future<IntResponse> startSubscription({required int subscriptionPlanId,required int userId});
 
@@ -46,6 +49,12 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
   @override
   Future<IntResponse> startSubscription({required int subscriptionPlanId,required int userId}) async{
     final response = await apiRepo.paymentClient.startSubscription(subscriptionPlanId,userId);
+    return response;
+  }
+
+  @override
+  Future<CompanySubscriptionResult> getCompanySubscription() async{
+    final response = await apiRepo.paymentClient.getCompanySubscription();
     return response;
   }
 

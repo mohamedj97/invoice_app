@@ -26,7 +26,7 @@ class PricingScreen extends StatefulWidget {
 }
 
 class _PricingScreenState extends State<PricingScreen> {
-  final cubit = PaymentCubit(sl(), sl(), sl(), sl());
+  final cubit = PaymentCubit(sl(), sl(), sl(), sl(),sl());
   int selectedIndex = 0;
   int paymentMethodId = -1;
   List<bool> isSelected = [true, false];

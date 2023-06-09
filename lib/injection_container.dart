@@ -27,7 +27,6 @@ import 'package:invoice_app/features/invoices/domain/use_cases/get_invoices_use_
 import 'package:invoice_app/features/invoices/domain/use_cases/get_single_invoice_use_case.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/add_invoice/add_invoice_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/cubit/get_invoices/get_invoices_cubit.dart';
-import 'package:invoice_app/features/payment/api/payment_client.dart';
 import 'package:invoice_app/features/payment/data/data_sources/payment_remote_date_source.dart';
 import 'package:invoice_app/features/payment/data/repositories/payment_repository_impl.dart';
 import 'package:invoice_app/features/payment/domain/repositories/payment_repository.dart';
@@ -35,6 +34,7 @@ import 'package:invoice_app/features/payment/domain/use_cases/execuste_paymnet_u
 import 'package:invoice_app/features/payment/domain/use_cases/get_payment_method_use_case.dart';
 import 'package:invoice_app/features/payment/domain/use_cases/get_subscription_plans_use_case.dart';
 import 'package:invoice_app/features/payment/domain/use_cases/start_subscriptions_plans.dart';
+import 'package:invoice_app/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:invoice_app/features/products/domain/use_cases/add_product_usecase.dart';
 import 'package:invoice_app/features/products/domain/use_cases/edit_product_use_case.dart';
 import 'package:invoice_app/features/products/domain/use_cases/get_types_use_case.dart';
@@ -86,6 +86,7 @@ import 'features/customers/domain/use_cases/get_customer_types_use_case.dart';
 import 'features/customers/domain/use_cases/get_customers_use_case.dart';
 import 'features/customers/presentation/cubit/get_customer_types/get_customer_types_cubit.dart';
 import 'features/invoices/presentation/cubit/get_types/get_invoice_types_cubit.dart';
+import 'features/payment/domain/use_cases/get_company_subscribtion_use_case.dart';
 import 'features/products/data/data_sources/products_remote_data_source.dart';
 import 'features/products/data/repositories/products_repository_impl.dart';
 import 'features/products/domain/repositories/products_repositories.dart';
@@ -110,7 +111,7 @@ Future<void> init() async {
 // Bloc
 
   sl.registerLazySingleton(() => LoginCubit(sl(), sl()));
-  sl.registerLazySingleton(() => PaymentClient(sl()));
+  sl.registerLazySingleton(() => PaymentCubit(sl(), sl(),sl(), sl(),sl()));
   sl.registerLazySingleton(() => BranchesCubit(sl()));
   sl.registerLazySingleton(() => UsersCubit(sl(),sl()));
   sl.registerLazySingleton(() => AddEditUserCubit(sl(),sl()));
@@ -184,6 +185,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetPaymentMethodsUseCase(paymentRepository: sl()));
   sl.registerLazySingleton(() => GetSubscriptionPlansUseCase(paymentRepository: sl()));
   sl.registerLazySingleton(() => StartSubscriptionPlansUseCase(paymentRepository: sl()));
+  sl.registerLazySingleton(() => GetCompanySubscriptionUseCase(paymentRepository: sl()));
 
 // Repository
 
