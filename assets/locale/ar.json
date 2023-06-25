@@ -74,6 +74,7 @@
   "monthly": "شهري",
   "active": "مفعل",
   "yearly": "سنوي",
+  "language": "اللغة",
   "role_name": "اسم الدور",
   "total_amount": "اجمالي المبلغ",
   "tax_amount": "قيمة الضريبة",
@@ -159,7 +160,6 @@
   "choose_item": "اختيار منتج",
   "add_item": "اضافة منتج",
   "choose_type": "اختار النوع",
-  "language": "اللغة",
   "edit_customer": "تعديل عميل",
   "save": "حفظ",
   "done": "تم",
@@ -194,6 +194,6 @@
   "identity_id": "رقم البطاقة الشخصية",
   "address_information": "بيانات العنوان",
   "price": "السعر",
-  "lang": "الإنجليزية",
+  "lang": "العربية",
   "address": "العنوان"
 }

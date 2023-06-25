@@ -1,6 +1,7 @@
 class IconAssets {
   static const splashIcon="assets/icons/splash_icon.png";
   static const englishIcon="assets/icons/english_icon.png";
+  static const arabicIcon="assets/icons/arabic_icon.png";
   static const invoiceDisabledIcon="assets/icons/disabled_invoice_icon.svg";
   static const invoiceActiveIcon="assets/icons/enabled_invoice_icon.svg";
   static const productsActiveIcon="assets/icons/enabled_products_icon.svg";

@@ -301,7 +301,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       color: AppColors.blackColor,
                                                     ),
                                                     const SizedBox(width: 8.0),
-                                                    Image.asset(IconAssets.englishIcon, width: 22.0, height: 22.0),
+                                                    Image.asset(context.locale.toString()=="ar"?IconAssets.arabicIcon:IconAssets.englishIcon, width: 22.0, height: 22.0),
                                                   ],
                                                 ),
                                               ),

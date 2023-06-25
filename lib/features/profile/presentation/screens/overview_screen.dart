@@ -261,9 +261,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                   ),
                                 const SizedBox(height: 16.0),
                                 LWCustomTextFormField(
-                                  name: "tax_no",
+                                  name: "building_number",
                                   labelText: "building_number".tr(),
-                                  hintText: "123456789",
+                                  hintText: "17",
                                   isRequired: false,
                                   keyboardType: TextInputType.number,
                                   initialValue: companyInfo?.builldingnumber.toString() ?? "",
@@ -278,11 +278,10 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                 ),
                                 const SizedBox(height: 16.0),
                                 LWCustomTextFormField(
-                                  name: "tax_no",
+                                  name: "city",
                                   labelText: "city".tr(),
-                                  hintText: "123456789",
+                                  hintText: "city".tr(),
                                   isRequired: false,
-                                  keyboardType: TextInputType.number,
                                   initialValue: companyInfo?.city.toString() ?? "",
                                   contentPadding: EdgeInsets.zero,
                                   borderDecoration: const UnderlineInputBorder(
@@ -295,9 +294,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                 ),
                                 const SizedBox(height: 16.0),
                                 LWCustomTextFormField(
-                                  name: "tax_no",
+                                  name: "postal_code",
                                   labelText: "postal_code".tr(),
-                                  hintText: "123456789",
+                                  hintText: "123456",
                                   isRequired: false,
                                   keyboardType: TextInputType.number,
                                   initialValue: companyInfo?.postalcode.toString() ?? "",
@@ -346,11 +345,10 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                 // ),
                                 const SizedBox(height: 16.0),
                                 LWCustomTextFormField(
-                                  name: "tax_no",
+                                  name: "country",
                                   labelText: "country".tr(),
-                                  hintText: "123456789",
+                                  hintText: "egypt".tr(),
                                   isRequired: false,
-                                  keyboardType: TextInputType.number,
                                   initialValue: "egypt".tr(),
                                   contentPadding: EdgeInsets.zero,
                                   borderDecoration: const UnderlineInputBorder(
