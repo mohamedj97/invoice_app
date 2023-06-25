@@ -15,6 +15,7 @@ class LWCustomPasswordFormField extends StatefulWidget {
   final List<String? Function(String?, String?)> validators;
   final InputDecoration? decoration;
   final bool showRequiredSymbol;
+  final FocusNode? focusNode;
   final bool showLabel;
   final double? height;
   final void Function(String?)? onSaved;
@@ -33,7 +34,7 @@ class LWCustomPasswordFormField extends StatefulWidget {
     this.showLabel = true,
     this.validators = const [],
     this.decoration,
-    this.height, this.onSaved, this.onSubmitted, this.readOnly,
+    this.height, this.onSaved, this.onSubmitted, this.readOnly, this.focusNode,
   }) : super(key: key);
 
   @override
@@ -47,6 +48,7 @@ class _LWCustomPasswordFormFieldState extends State<LWCustomPasswordFormField> {
   @override
   Widget build(BuildContext context) {
     var child = FormBuilderTextField(
+      focusNode: widget.focusNode,
       initialValue: widget.initialValue,
       onSaved: widget.onSaved,
       onSubmitted: widget.onSubmitted,

@@ -42,6 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
   String? password;
   final TextEditingController? userNameController = TextEditingController();
   final TextEditingController? passwordController = TextEditingController();
+  FocusNode emailFocus = FocusNode();
+  FocusNode passFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -193,8 +195,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             borderSide: BorderSide(color: AppColors.dataFieldColor, width: 1.0),
                                           ),
                                           showRequiredSymbol: false,
+                                          focusNode: emailFocus,
                                           onSubmitted: (value) {
                                             email = value;
+                                            emailFocus.unfocus();
+                                            passFocus.requestFocus();
                                           },
                                           onSaved: (value) {
                                             email = value;
@@ -202,6 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                         LWCustomPasswordFormField(
                                           name: "password",
+                                          focusNode: passFocus,
                                           labelText: "password".tr(),
                                           hintText: "*******",
                                           isRequired: true,
@@ -209,6 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           showRequiredSymbol: false,
                                           onSubmitted: (value) {
                                             password = value;
+                                            passFocus.unfocus();
                                           },
                                           onSaved: (value) {
                                             password = value;
