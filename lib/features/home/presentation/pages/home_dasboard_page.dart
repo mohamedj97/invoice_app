@@ -43,7 +43,17 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
             const SizedBox(height: 24.0),
             Image.asset(ImageAssets.splashImage),
             const SizedBox(height: 24.0),
-            Row(
+           context.locale.toString()=="ar"?Row(
+             children: [
+               const SizedBox(width: 16.0),
+               Image.asset(IconAssets.handIcon, width: 30.0, height: 30.0),
+               LWCustomText(
+                   title: "${"hi".tr()}, ${"welcome_back".tr()} ${DiskRepo().loadUserName()} ",
+                   fontSize: 16.0,
+                   fontFamily: FontAssets.avertaRegular,
+                   color: AppColors.whiteColor),
+             ],
+           ): Row(
               children: [
                 const SizedBox(width: 16.0),
                 Image.asset(IconAssets.handIcon, width: 30.0, height: 30.0),

@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return CustomScaffold(
       showAppbar: pageIndex != 0,
       backGroundColor: AppColors.whiteColor,
-      title: pageIndex == 3 ? "menu".tr() : BottomAppBarItemsData.labelList[pageIndex],
+      title: pageIndex == 3 ? "menu".tr() : BottomAppBarItemsData.labelListEnglish[pageIndex],
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
         onPressed: () {

@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:invoice_app/core/assets/icon_assets.dart';
 
 class BottomAppBarItemsData {
@@ -14,10 +13,16 @@ class BottomAppBarItemsData {
     IconAssets.productsDisabledIcon,
     IconAssets.moreDisabledIcon,
   ];
- static final labelList = <String>[
-    "home".tr(),
-    "invoices".tr(),
-    "products".tr(),
-    "more".tr(),
+ static final labelListEnglish = <String>[
+    "Home",
+    "Invoices",
+    "Products",
+    "More",
+  ];
+  static final labelListArabic = <String>[
+    "الصفحة الرئيسية",
+    "الفواتير",
+    "المنتجات",
+    "اكثر",
   ];
 }

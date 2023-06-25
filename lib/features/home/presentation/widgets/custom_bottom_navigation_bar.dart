@@ -1,4 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../core/assets/font_assets.dart';
@@ -49,7 +50,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: LWCustomText(
-                  title: BottomAppBarItemsData.labelList[index],
+                  title: context.locale.toString()=="ar"?BottomAppBarItemsData.labelListArabic[index]:BottomAppBarItemsData.labelListEnglish[index],
                   color: bottomColor,
                   fontSize: 10.0,
                   fontFamily: isActive

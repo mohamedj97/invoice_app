@@ -83,7 +83,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
         return true;
       },
       child: CustomScaffold(
-        title: hasData ? "Edit Invoice" : "Create invoice",
+        title: hasData ? "edit_invoice".tr() : "create_invoice".tr(),
         leading: CustomBackButton(
           onTap: () {
             Navigator.of(context).pushAndRemoveUntil(
@@ -198,7 +198,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                             child: Padding(
                                               padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
                                               child: LWCustomText(
-                                                  title: "Invoice#${widget.invoice?.id ?? ""}",
+                                                  title: "${"Invoice_number".tr()}${widget.invoice?.id ?? ""}",
                                                   fontFamily: FontAssets.avertaSemiBold,
                                                   fontWeight: FontWeight.bold,
                                                   color: AppColors.blackColor),
@@ -226,8 +226,8 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: [
                                                             const SizedBox(height: 8.0),
-                                                            const LWCustomText(
-                                                              title: "Invoice Type",
+                                                             LWCustomText(
+                                                              title: "invoice_type".tr(),
                                                               color: AppColors.labelColor,
                                                               fontFamily: FontAssets.avertaRegular,
                                                             ),
@@ -280,8 +280,8 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                     crossAxisAlignment: CrossAxisAlignment.center,
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      const LWCustomText(
-                                                        title: "Invoice Date",
+                                                      LWCustomText(
+                                                        title: "invoice_date".tr(),
                                                         color: AppColors.labelColor,
                                                         fontFamily: FontAssets.avertaRegular,
                                                       ),
@@ -293,13 +293,13 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                                 name: "invoice_date",
                                                                 labelText: "",
                                                                 initialValue: widget.invoice!.invoiceDate,
-                                                                hintText: "Choose date",
+                                                                hintText: "choose_date".tr(),
                                                               )
-                                                            : const LWCustomDateFormField(
+                                                            :  LWCustomDateFormField(
                                                                 isRequired: true,
                                                                 name: "invoice_date",
                                                                 labelText: "",
-                                                                hintText: "Choose date",
+                                                                hintText: "choose_date".tr(),
                                                               ),
                                                       ),
                                                     ],
@@ -349,7 +349,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                               : Column(
                                                   children: [
                                                     InvoiceAddItemWidget(
-                                                      title: "Add item",
+                                                      title: "add_item".tr(),
                                                       iconPath: IconAssets.addItemIcon,
                                                       onTap: () {
                                                         setState(() {
@@ -419,7 +419,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                           //       : null,
                                           // ),
                                           AddPriceItemInCreateInvoice(
-                                            title: "Extra Discount",
+                                            title: "extra_discount".tr(),
                                             name: "extra_discount",
                                             controller: extraDiscountController,
                                           ),
@@ -497,9 +497,9 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                       );
                                     }
                                   },
-                                  primaryTitle: "Submit Invoice",
+                                  primaryTitle: "submit_invoice".tr(),
                                   secondaryOnPressed: () {},
-                                  secondaryTitle: "Preview",
+                                  secondaryTitle: "preview".tr(),
                                 ),
                               ],
                             ),
