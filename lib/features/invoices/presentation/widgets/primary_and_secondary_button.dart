@@ -7,10 +7,11 @@ import '../../../../core/common_widgets/lw_custom_text.dart';
 class PrimaryAndSecondaryButton extends StatelessWidget {
   final String primaryTitle;
   final String secondaryTitle;
+  final bool showSecondary;
   final void Function() primaryOnPressed;
   final void Function() secondaryOnPressed;
 
-  const PrimaryAndSecondaryButton({Key? key, required this.primaryTitle, required this.secondaryTitle, required this.primaryOnPressed, required this.secondaryOnPressed}) : super(key: key);
+  const PrimaryAndSecondaryButton({Key? key, required this.primaryTitle, required this.secondaryTitle, required this.primaryOnPressed, required this.secondaryOnPressed, this.showSecondary=true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class PrimaryAndSecondaryButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           const SizedBox(width: 8.0),
-          Expanded(
+         if(showSecondary) Expanded(
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor:

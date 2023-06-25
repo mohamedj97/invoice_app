@@ -464,6 +464,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                   ),
                                 ),
                                 PrimaryAndSecondaryButton(
+                                  showSecondary: false,
                                   primaryOnPressed: () {
                                     var formState = formKey.currentState;
                                     if (formState == null) return;
