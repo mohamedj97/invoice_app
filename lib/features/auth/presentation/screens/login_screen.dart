@@ -36,7 +36,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool active = true;
   final formKey = GlobalKey<FormBuilderState>();
-  final profileCubit = GetProfileCubit(sl(),sl());
+  final profileCubit = GetProfileCubit(sl(), sl());
   bool firstLogin = true;
   String? email;
   String? password;
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 (Route<dynamic> route) => false,
               );
-             await DiskRepo().updateFirstLogin(false);
+              await DiskRepo().updateFirstLogin(false);
             } else {
               Navigator.of(context).pushAndRemoveUntil(
                 CustomPageRoute.createRoute(
@@ -157,165 +157,184 @@ class _LoginScreenState extends State<LoginScreen> {
                             ? const Center(child: CircularProgressIndicator())
                             : state is LoginLoading
                                 ? const Center(child: CircularProgressIndicator())
-                                : FormBuilder(
-                                    key: formKey,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
+                                : SizedBox(
+                                    height: MediaQuery.of(context).size.height - 300,
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                      physics: const AlwaysScrollableScrollPhysics(),
+                                      child: FormBuilder(
+                                        key: formKey,
+                                        child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            LWCustomText(
-                                              title: "welcome_back".tr(),
-                                              color: AppColors.primary,
-                                              fontSize: 15.0,
-                                              fontFamily: FontAssets.avertaSemiBold,
-                                            ),
-                                            const SizedBox(height: 16.0),
-                                            LWCustomText(
-                                              title: 'sign_in'.tr(),
-                                              color: AppColors.blackColor,
-                                              fontSize: 22.0,
-                                              fontFamily: FontAssets.avertaSemiBold,
-                                            ),
-                                          ],
-                                        ),
-                                        LWCustomTextFormField(
-                                          name: "username",
-                                          labelText: "user_name".tr(),
-                                          hintText: "Ahmed",
-                                          isRequired: true,
-                                          controller: userNameController,
-                                          contentPadding: EdgeInsets.zero,
-                                          borderDecoration: const UnderlineInputBorder(
-                                            borderSide: BorderSide(color: AppColors.searchBarColor, width: 1.0),
-                                          ),
-                                          focusedBorderDecoration: const UnderlineInputBorder(
-                                            borderSide: BorderSide(color: AppColors.dataFieldColor, width: 1.0),
-                                          ),
-                                          showRequiredSymbol: false,
-                                          focusNode: emailFocus,
-                                          onSubmitted: (value) {
-                                            email = value;
-                                            emailFocus.unfocus();
-                                            passFocus.requestFocus();
-                                          },
-                                          onSaved: (value) {
-                                            email = value;
-                                          },
-                                        ),
-                                        LWCustomPasswordFormField(
-                                          name: "password",
-                                          focusNode: passFocus,
-                                          labelText: "password".tr(),
-                                          hintText: "*******",
-                                          isRequired: true,
-                                          controller: passwordController,
-                                          showRequiredSymbol: false,
-                                          onSubmitted: (value) {
-                                            password = value;
-                                            passFocus.unfocus();
-                                          },
-                                          onSaved: (value) {
-                                            password = value;
-                                          },
-                                        ),
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: TextButton(
-                                            onPressed: state is LoginLoading ? null : () {},
-                                            child: const LWCustomText(
-                                              title: "",
-                                              color: AppColors.secondary,
-                                              fontFamily: FontAssets.avertaSemiBold,
-                                              fontSize: 13.0,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context).size.width,
-                                          child: CustomElevatedButton(
-                                            title: "sign_in".tr(),
-                                            onPressed: () async {
-                                              await MemoryRepo().ensureInitialized();
-                                              await DiskRepo().ensureInitialized();
-                                              BlocProvider.of<LoginCubit>(context).validateLoginForm(formKey);
-                                              BlocProvider.of<FormSubmitCubit>(context).isSubmitField(isSubmit: true);
-                                              BlocProvider.of<LoginCubit>(context)
-                                                  .login(LoginRequest(email!, password!));
-                                              BlocProvider.of<FormSubmitCubit>(context).isSubmitField(isSubmit: false);
-                                            },
-                                          ),
-                                        ),
-                                        Material(
-                                          color: Colors.transparent,
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).pushReplacement(
-                                                  CustomPageRoute.createRoute(page: const SignupScreen()));
-                                            },
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 LWCustomText(
-                                                  title: "do_not_have_an_account".tr(),
-                                                  color: AppColors.dialogueTitleColor,
-                                                  fontSize: 15,
-                                                ),
-                                                LWCustomText(
-                                                  title: " ${'sign_up'.tr()}",
+                                                  title: "welcome_back".tr(),
                                                   color: AppColors.primary,
-                                                  fontSize: 13,
+                                                  fontSize: 15.0,
+                                                  fontFamily: FontAssets.avertaSemiBold,
+                                                ),
+                                                const SizedBox(height: 16.0),
+                                                LWCustomText(
+                                                  title: 'sign_in'.tr(),
+                                                  color: AppColors.blackColor,
+                                                  fontSize: 22.0,
+                                                  fontFamily: FontAssets.avertaSemiBold,
                                                 ),
                                               ],
                                             ),
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            LWCustomText(
-                                              title: "${'language'.tr()} :",
-                                              fontSize: 12.0,
-                                              fontFamily: FontAssets.avertaRegular,
-                                              color: AppColors.blackColor,
+                                            const SizedBox(height: 16.0),
+                                            LWCustomTextFormField(
+                                              name: "username",
+                                              labelText: "user_name".tr(),
+                                              hintText: "Ahmed",
+                                              isRequired: true,
+                                              controller: userNameController,
+                                              contentPadding: EdgeInsets.zero,
+                                              borderDecoration: const UnderlineInputBorder(
+                                                borderSide: BorderSide(color: AppColors.searchBarColor, width: 1.0),
+                                              ),
+                                              focusedBorderDecoration: const UnderlineInputBorder(
+                                                borderSide: BorderSide(color: AppColors.dataFieldColor, width: 1.0),
+                                              ),
+                                              showRequiredSymbol: false,
+                                              focusNode: emailFocus,
+                                              onSubmitted: (value) {
+                                                email = value;
+                                                emailFocus.unfocus();
+                                                passFocus.requestFocus();
+                                              },
+                                              onSaved: (value) {
+                                                email = value;
+                                              },
                                             ),
-                                            const SizedBox(width: 8.0),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: AppColors.dataFieldColor,
-                                                  width: 0.5,
-                                                ),
-                                                borderRadius: const BorderRadius.all(
-                                                  Radius.circular(20),
+                                            const SizedBox(height: 16.0),
+                                            LWCustomPasswordFormField(
+                                              name: "password",
+                                              focusNode: passFocus,
+                                              labelText: "password".tr(),
+                                              hintText: "*******",
+                                              isRequired: true,
+                                              controller: passwordController,
+                                              showRequiredSymbol: false,
+                                              onSubmitted: (value) {
+                                                password = value;
+                                                passFocus.unfocus();
+                                              },
+                                              onSaved: (value) {
+                                                password = value;
+                                              },
+                                            ),
+                                            const SizedBox(height: 16.0),
+                                            Align(
+                                              alignment: Alignment.centerRight,
+                                              child: TextButton(
+                                                onPressed: state is LoginLoading ? null : () {},
+                                                child: const LWCustomText(
+                                                  title: "",
+                                                  color: AppColors.secondary,
+                                                  fontFamily: FontAssets.avertaSemiBold,
+                                                  fontSize: 13.0,
                                                 ),
                                               ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                  left: 16.0,
-                                                  right: 4.0,
-                                                  top: 4.0,
-                                                  bottom: 4.0,
-                                                ),
+                                            ),
+                                            const SizedBox(height: 16.0),
+                                            SizedBox(
+                                              width: MediaQuery.of(context).size.width,
+                                              child: CustomElevatedButton(
+                                                title: "sign_in".tr(),
+                                                onPressed: () async {
+                                                  await MemoryRepo().ensureInitialized();
+                                                  await DiskRepo().ensureInitialized();
+                                                  BlocProvider.of<LoginCubit>(context).validateLoginForm(formKey);
+                                                  BlocProvider.of<FormSubmitCubit>(context).isSubmitField(isSubmit: true);
+                                                  BlocProvider.of<LoginCubit>(context)
+                                                      .login(LoginRequest(email!, password!));
+                                                  BlocProvider.of<FormSubmitCubit>(context)
+                                                      .isSubmitField(isSubmit: false);
+                                                },
+                                              ),
+                                            ),
+                                            const SizedBox(height: 32.0),
+                                            Material(
+                                              color: Colors.transparent,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Navigator.of(context).pushReplacement(
+                                                      CustomPageRoute.createRoute(page: const SignupScreen()));
+                                                },
                                                 child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     LWCustomText(
-                                                      title: "lang".tr(),
-                                                      fontSize: 12.0,
-                                                      fontFamily: FontAssets.avertaRegular,
-                                                      color: AppColors.blackColor,
+                                                      title: "do_not_have_an_account".tr(),
+                                                      color: AppColors.dialogueTitleColor,
+                                                      fontSize: 15,
                                                     ),
-                                                    const SizedBox(width: 8.0),
-                                                    Image.asset(context.locale.toString()=="ar"?IconAssets.arabicIcon:IconAssets.englishIcon, width: 22.0, height: 22.0),
+                                                    LWCustomText(
+                                                      title: " ${'sign_up'.tr()}",
+                                                      color: AppColors.primary,
+                                                      fontSize: 13,
+                                                    ),
                                                   ],
                                                 ),
                                               ),
                                             ),
+                                            const SizedBox(height: 32.0),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                LWCustomText(
+                                                  title: "${'language'.tr()} :",
+                                                  fontSize: 12.0,
+                                                  fontFamily: FontAssets.avertaRegular,
+                                                  color: AppColors.blackColor,
+                                                ),
+                                                const SizedBox(width: 8.0),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color: AppColors.dataFieldColor,
+                                                      width: 0.5,
+                                                    ),
+                                                    borderRadius: const BorderRadius.all(
+                                                      Radius.circular(20),
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(
+                                                      left: 16.0,
+                                                      right: 4.0,
+                                                      top: 4.0,
+                                                      bottom: 4.0,
+                                                    ),
+                                                    child: Row(
+                                                      children: [
+                                                        LWCustomText(
+                                                          title: "lang".tr(),
+                                                          fontSize: 12.0,
+                                                          fontFamily: FontAssets.avertaRegular,
+                                                          color: AppColors.blackColor,
+                                                        ),
+                                                        const SizedBox(width: 8.0),
+                                                        Image.asset(
+                                                            context.locale.toString() == "ar"
+                                                                ? IconAssets.arabicIcon
+                                                                : IconAssets.englishIcon,
+                                                            width: 22.0,
+                                                            height: 22.0),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
                                           ],
-                                        )
-                                      ],
+                                        ),
+                                      ),
                                     ),
                                   ),
                       ),
