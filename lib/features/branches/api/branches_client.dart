@@ -14,7 +14,7 @@ abstract class BranchesClient {
   factory BranchesClient(Dio dio, {String baseUrl}) = _BranchesClient;
 
   @GET(EndPoints.companyBranches)
-  Future<GetBranchesResponse> getCompanyBranches();
+  Future<GetBranchesResponse> getCompanyBranches(@Query("companyId") int companyId);
 
   @PUT(EndPoints.editBranch)
   Future<BoolResponse> editBranch(int id,@Body() CompanyBranch companyBranch);

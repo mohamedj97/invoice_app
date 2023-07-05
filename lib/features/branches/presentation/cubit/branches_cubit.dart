@@ -14,9 +14,9 @@ class BranchesCubit extends Cubit<BranchesState> {
       this.getBranchesUseCase,
       ) : super(BranchesInitial());
 
-  Future<void> getCompanyBranches() async {
+  Future<void> getCompanyBranches(int companyId) async {
     emit(BranchesLoading());
-    final response = await getBranchesUseCase.call();
+    final response = await getBranchesUseCase.call(companyId);
 
     response.fold((failure) {
       emit(BranchesFailure(failure: failure.message));

@@ -8,6 +8,7 @@ import 'package:invoice_app/core/widgets/custom_back_button.dart';
 import 'package:invoice_app/features/branches/presentation/cubit/branches_cubit.dart';
 import 'package:invoice_app/features/roles/presentation/cubit/roles_cubit.dart';
 import 'package:invoice_app/features/roles/presentation/screens/add_edit_role_screen.dart';
+import '../../../../core/api/repository/disk_repo.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/assets/image_assets.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
@@ -105,7 +106,7 @@ class _RolesScreenState extends State<RolesScreen> {
                       : roles.isEmpty
                           ? RefreshIndicator(
                               onRefresh: () async {
-                                await BlocProvider.of<BranchesCubit>(context).getCompanyBranches();
+                                await BlocProvider.of<BranchesCubit>(context).getCompanyBranches(DiskRepo().loadCompanyId()??1);
                                 searchController.clear();
                               },
                               child: SingleChildScrollView(
@@ -124,7 +125,7 @@ class _RolesScreenState extends State<RolesScreen> {
                               color: AppColors.scaffoldColor,
                               child: RefreshIndicator(
                                 onRefresh: () async {
-                                  await BlocProvider.of<BranchesCubit>(context).getCompanyBranches();
+                                  await BlocProvider.of<BranchesCubit>(context).getCompanyBranches(DiskRepo().loadCompanyId()??1);
                                   searchController.clear();
                                 },
                                 child: ListView.builder(

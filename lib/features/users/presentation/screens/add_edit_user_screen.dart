@@ -45,7 +45,7 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
   @override
   void initState() {
     roleCubit.getCompanyRoles();
-    branchCubit.getCompanyBranches();
+    branchCubit.getCompanyBranches(DiskRepo().loadCompanyId()??0);
     super.initState();
   }
 

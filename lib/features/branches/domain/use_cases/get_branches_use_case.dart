@@ -9,7 +9,7 @@ class GetBranchesUseCase {
     required this.branchesRepository,
   });
 
-  Future<Either<Failure, GetBranchesResponse>> call() async {
-    return await branchesRepository.getCompanyBranches();
+  Future<Either<Failure, GetBranchesResponse>> call(int companyId) async {
+    return await branchesRepository.getCompanyBranches(companyId);
   }
 }

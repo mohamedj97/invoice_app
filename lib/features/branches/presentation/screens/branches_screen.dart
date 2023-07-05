@@ -8,6 +8,7 @@ import 'package:invoice_app/core/widgets/custom_back_button.dart';
 import 'package:invoice_app/features/branches/domain/entities/company_branch.dart';
 import 'package:invoice_app/features/branches/presentation/cubit/branches_cubit.dart';
 import 'package:invoice_app/features/branches/presentation/screens/add_edit_branch_screen.dart';
+import '../../../../core/api/repository/disk_repo.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/assets/image_assets.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
@@ -32,7 +33,7 @@ class _BranchesScreenState extends State<BranchesScreen> {
 
   @override
   void initState() {
-    cubit.getCompanyBranches();
+    cubit.getCompanyBranches(DiskRepo().loadCompanyId()??1);
     super.initState();
   }
 
@@ -106,7 +107,7 @@ class _BranchesScreenState extends State<BranchesScreen> {
                       : branches.isEmpty
                           ? RefreshIndicator(
                               onRefresh: () async {
-                                await BlocProvider.of<BranchesCubit>(context).getCompanyBranches();
+                                await BlocProvider.of<BranchesCubit>(context).getCompanyBranches(DiskRepo().loadCompanyId()??1);
                                 searchController.clear();
                               },
                               child: SingleChildScrollView(
@@ -125,7 +126,7 @@ class _BranchesScreenState extends State<BranchesScreen> {
                               color: AppColors.scaffoldColor,
                               child: RefreshIndicator(
                                 onRefresh: () async {
-                                  await BlocProvider.of<BranchesCubit>(context).getCompanyBranches();
+                                  await BlocProvider.of<BranchesCubit>(context).getCompanyBranches(DiskRepo().loadCompanyId()??1);
                                   searchController.clear();
                                 },
                                 child: ListView.builder(

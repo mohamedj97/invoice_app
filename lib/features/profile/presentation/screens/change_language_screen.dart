@@ -76,7 +76,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                   orientation: OptionsOrientation.vertical,
                   wrapRunSpacing: 24.0,
                   decoration: const InputDecoration(border: InputBorder.none),
-                  initialValue: 'English- (En)',
+                  initialValue: context.locale.toString()=="ar"?'Arabic- (Ar)':'English- (En)',
                   name: 'language',
                   onChanged: (value) {},
                   validator: FormBuilderValidators.compose(

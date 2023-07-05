@@ -15,9 +15,9 @@ class BranchesRepositoryImpl extends BranchesRepository with ConnectivityMixin {
   BranchesRepositoryImpl(this.branchesRemoteDataSource);
 
   @override
-  Future<Either<Failure, GetBranchesResponse>> getCompanyBranches() async{
+  Future<Either<Failure, GetBranchesResponse>> getCompanyBranches(int companyId) async{
     try {
-      final response = await branchesRemoteDataSource.getCompanyBranches();
+      final response = await branchesRemoteDataSource.getCompanyBranches(companyId);
 
       return Right(response);
     } on ServerException catch (e) {

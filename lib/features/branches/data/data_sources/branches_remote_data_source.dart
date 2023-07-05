@@ -6,7 +6,7 @@ import '../../../../../core/api/api_repo.dart';
 import '../models/responses/get_branches_response_model.dart';
 
 abstract class BranchesRemoteDataSource {
-  Future<GetBranchesResponse> getCompanyBranches();
+  Future<GetBranchesResponse> getCompanyBranches(int companyId);
   Future<BoolResponse> editBranch({required int id, required CompanyBranch companyBranch});
   Future<AddBranchResponse> addBranch({required CompanyBranch companyBranch});
 }
@@ -18,8 +18,8 @@ class BranchesRemoteDataSourceImpl extends BranchesRemoteDataSource {
   });
 
   @override
-  Future<GetBranchesResponse> getCompanyBranches()async {
-    final response = await apiRepo.branchesClient.getCompanyBranches();
+  Future<GetBranchesResponse> getCompanyBranches(int companyId)async {
+    final response = await apiRepo.branchesClient.getCompanyBranches(companyId);
     return response;
   }
 
