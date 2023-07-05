@@ -6,7 +6,7 @@ import '../../domain/entities/get_single_role_result.dart';
 import '../../domain/entities/role.dart';
 
 abstract class RolesRemoteDataSource {
-  Future<GetRolesResponse> getCompanyRoles();
+  Future<GetRolesResponse> getCompanyRoles(int companyId);
 
   Future<GetSingleRoleResult> getSingleRole({required int id});
 
@@ -25,8 +25,8 @@ class RolesRemoteDataSourceImpl extends RolesRemoteDataSource {
   });
 
   @override
-  Future<GetRolesResponse> getCompanyRoles() async {
-    final response = await apiRepo.rolesClient.getCompanyRoles();
+  Future<GetRolesResponse> getCompanyRoles(int companyId) async {
+    final response = await apiRepo.rolesClient.getCompanyRoles(companyId);
     return response;
   }
 

@@ -16,9 +16,9 @@ class RolesRepositoryImpl extends RolesRepository with ConnectivityMixin {
   RolesRepositoryImpl(this.rolesRemoteDataSource);
 
   @override
-  Future<Either<Failure, GetRolesResponse>> getCompanyRoles() async {
+  Future<Either<Failure, GetRolesResponse>> getCompanyRoles(int companyId) async {
     try {
-      final response = await rolesRemoteDataSource.getCompanyRoles();
+      final response = await rolesRemoteDataSource.getCompanyRoles(companyId);
 
       return Right(response);
     } on ServerException catch (e) {

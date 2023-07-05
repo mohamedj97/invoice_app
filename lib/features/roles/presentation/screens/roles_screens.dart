@@ -34,7 +34,7 @@ class _RolesScreenState extends State<RolesScreen> {
 
   @override
   void initState() {
-    cubit.getCompanyRoles();
+    cubit.getCompanyRoles(DiskRepo().loadCompanyId()??1);
     super.initState();
   }
 

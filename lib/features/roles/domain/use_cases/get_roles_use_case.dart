@@ -9,7 +9,7 @@ class GetRolesUseCase {
     required this.rolesRepository,
   });
 
-  Future<Either<Failure, GetRolesResponse>> call() async {
-    return await rolesRepository.getCompanyRoles();
+  Future<Either<Failure, GetRolesResponse>> call(int companyId) async {
+    return await rolesRepository.getCompanyRoles(companyId);
   }
 }

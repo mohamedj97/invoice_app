@@ -22,9 +22,9 @@ class RolesCubit extends Cubit<RolesState> {
       this.getFeaturesUseCase,
       ) : super(RolesInitial());
 
-  Future<void> getCompanyRoles() async {
+  Future<void> getCompanyRoles(int companyId) async {
     emit(RolesLoading());
-    final response = await getRolesUseCase.call();
+    final response = await getRolesUseCase.call(companyId);
 
     response.fold((failure) {
       emit(RolesFailure(failure: failure.message));

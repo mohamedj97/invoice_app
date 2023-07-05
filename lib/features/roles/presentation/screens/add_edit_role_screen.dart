@@ -42,7 +42,7 @@ class _AddEditRoleScreenState extends State<AddEditRoleScreen> {
   @override
   void initState() {
     cubit.getFeatures();
-    cubit.getCompanyRoles();
+    cubit.getCompanyRoles(DiskRepo().loadCompanyId()??1);
     super.initState();
     if (widget.roleId != null) cubit.getSingleRole(id: widget.roleId!);
   }

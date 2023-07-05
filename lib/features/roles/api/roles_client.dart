@@ -15,7 +15,7 @@ abstract class RolesClient {
   factory RolesClient(Dio dio, {String baseUrl}) = _RolesClient;
 
   @GET(EndPoints.companyRoles)
-  Future<GetRolesResponse> getCompanyRoles();
+  Future<GetRolesResponse> getCompanyRoles(@Query("companyId") int companyId);
 
   @GET(EndPoints.getSingleRole)
   Future<GetSingleRoleResult> getSingleRole(int id);

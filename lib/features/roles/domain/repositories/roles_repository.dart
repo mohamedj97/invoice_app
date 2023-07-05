@@ -7,7 +7,7 @@ import '../entities/get_single_role_result.dart';
 import '../entities/role.dart';
 
 abstract class RolesRepository {
-  Future<Either<Failure, GetRolesResponse>> getCompanyRoles();
+  Future<Either<Failure, GetRolesResponse>> getCompanyRoles(int companyId);
 
   Future<Either<Failure, GetSingleRoleResult>> getSingleRole({required int id});
 

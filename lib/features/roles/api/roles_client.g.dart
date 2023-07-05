@@ -19,9 +19,9 @@ class _RolesClient implements RolesClient {
   String? baseUrl;
 
   @override
-  Future<GetRolesResponse> getCompanyRoles() async {
+  Future<GetRolesResponse> getCompanyRoles(companyId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'companyId': companyId};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
