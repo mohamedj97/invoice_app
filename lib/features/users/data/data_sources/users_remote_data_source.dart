@@ -6,7 +6,7 @@ import '../models/responses/get_user_lookup_response_model.dart';
 import '../models/responses/get_users_response_model.dart';
 
 abstract class UsersRemoteDataSource {
-  Future<GetUsersResponse> getCompanyUsers();
+  Future<GetUsersResponse> getCompanyUsers(int companyId);
   Future<AddUserResult> getSingleUser({required int id});
   Future<GetUserLookupResponse> getCompanyUserLookup({required int id});
   Future<BoolResponse> editUser({required int id,required UserRequest userRequest});
@@ -21,8 +21,8 @@ class UsersRemoteDataSourceImpl extends UsersRemoteDataSource {
   });
 
   @override
-  Future<GetUsersResponse> getCompanyUsers() async {
-    final response = await apiRepo.usersClient.getCompanyUsers();
+  Future<GetUsersResponse> getCompanyUsers(int companyId) async {
+    final response = await apiRepo.usersClient.getCompanyUsers(companyId);
     return response;
   }
 

@@ -18,9 +18,9 @@ class UsersCubit extends Cubit<UsersState> {
       this.getSingleUserUseCase,
       ) : super(UsersInitial());
 
-  Future<void> getCompanyUsers() async {
+  Future<void> getCompanyUsers(int companyId) async {
     emit(UsersLoading());
-    final response = await getUsersUseCase.call();
+    final response = await getUsersUseCase.call(companyId);
 
     response.fold((failure) {
       emit(UsersFailure(failure: failure.message));

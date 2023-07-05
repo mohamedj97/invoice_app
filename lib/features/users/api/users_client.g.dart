@@ -19,9 +19,9 @@ class _UsersClient implements UsersClient {
   String? baseUrl;
 
   @override
-  Future<GetUsersResponse> getCompanyUsers() async {
+  Future<GetUsersResponse> getCompanyUsers(companyId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'companyId': companyId};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio

@@ -9,7 +9,7 @@ class GetUsersUseCase {
     required this.usersRepository,
   });
 
-  Future<Either<Failure, GetUsersResponse>> call() async {
-    return await usersRepository.getCompanyUsers();
+  Future<Either<Failure, GetUsersResponse>> call(int companyId) async {
+    return await usersRepository.getCompanyUsers(companyId);
   }
 }

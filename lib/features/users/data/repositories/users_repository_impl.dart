@@ -16,9 +16,9 @@ class UsersRepositoryImpl extends UsersRepository with ConnectivityMixin {
   UsersRepositoryImpl(this.usersRemoteDataSource);
 
   @override
-  Future<Either<Failure, GetUsersResponse>> getCompanyUsers() async {
+  Future<Either<Failure, GetUsersResponse>> getCompanyUsers(int companyId) async {
     try {
-      final response = await usersRemoteDataSource.getCompanyUsers();
+      final response = await usersRemoteDataSource.getCompanyUsers(companyId);
 
       return Right(response);
     } on ServerException catch (e) {

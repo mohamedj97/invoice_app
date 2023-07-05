@@ -7,7 +7,7 @@ import '../../data/models/responses/get_user_lookup_response_model.dart';
 import '../entities/add_user_results.dart';
 
 abstract class UsersRepository {
-  Future<Either<Failure, GetUsersResponse>> getCompanyUsers();
+  Future<Either<Failure, GetUsersResponse>> getCompanyUsers(int companyId);
   Future<Either<Failure, AddUserResult>> getSingleUser({required int id});
   Future<Either<Failure, GetUserLookupResponse>> getCompanyUserLookup({required int id});
   Future<Either<Failure, BoolResponse>> editUser({required int id,required UserRequest userRequest});

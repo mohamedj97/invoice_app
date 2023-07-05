@@ -7,6 +7,7 @@ import 'package:invoice_app/core/utils/string_validation_extension.dart';
 import 'package:invoice_app/core/widgets/custom_back_button.dart';
 import 'package:invoice_app/features/users/presentation/cubit/users_cubit.dart';
 import 'package:invoice_app/features/users/presentation/screens/add_edit_user_screen.dart';
+import '../../../../core/api/repository/disk_repo.dart';
 import '../../../../core/assets/font_assets.dart';
 import '../../../../core/assets/image_assets.dart';
 import '../../../../core/common_widgets/empty_screen.dart';
@@ -32,7 +33,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
   @override
   void initState() {
-    cubit.getCompanyUsers();
+    cubit.getCompanyUsers(DiskRepo().loadCompanyId()??1);
     super.initState();
   }
 
@@ -109,7 +110,7 @@ class _UsersScreenState extends State<UsersScreen> {
                       : users.isEmpty
                           ? RefreshIndicator(
                               onRefresh: () async {
-                                await BlocProvider.of<UsersCubit>(context).getCompanyUsers();
+                                await BlocProvider.of<UsersCubit>(context).getCompanyUsers(DiskRepo().loadCompanyId()??1);
                                 searchController.clear();
                               },
                               child: SingleChildScrollView(
@@ -128,7 +129,7 @@ class _UsersScreenState extends State<UsersScreen> {
                               color: AppColors.scaffoldColor,
                               child: RefreshIndicator(
                                 onRefresh: () async {
-                                  await BlocProvider.of<UsersCubit>(context).getCompanyUsers();
+                                  await BlocProvider.of<UsersCubit>(context).getCompanyUsers(DiskRepo().loadCompanyId()??1);
                                   searchController.clear();
                                 },
                                 child: ListView.builder(

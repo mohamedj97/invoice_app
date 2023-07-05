@@ -15,7 +15,7 @@ abstract class UsersClient {
   factory UsersClient(Dio dio, {String baseUrl}) = _UsersClient;
 
   @GET(EndPoints.companyUsers)
-  Future<GetUsersResponse> getCompanyUsers();
+  Future<GetUsersResponse> getCompanyUsers(@Query("companyId") int companyId);
 
   @GET(EndPoints.getSingleUser)
   Future<AddUserResult> getSingleUser(int id);
