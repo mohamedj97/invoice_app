@@ -55,7 +55,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   List<BaseLookup> unitTypes = [];
   num? extraDiscountAmount;
   bool hasData = false;
-  TextEditingController extraDiscountController = TextEditingController();
+  TextEditingController extraDiscountController = TextEditingController(text: "0.0");
 
   @override
   void dispose() {
@@ -287,18 +287,11 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                                       ),
                                                       SizedBox(
                                                         width: 150,
-                                                        child: hasData
-                                                            ? LWCustomDateFormField(
+                                                        child: LWCustomDateFormField(
                                                                 isRequired: true,
                                                                 name: "invoice_date",
                                                                 labelText: "",
-                                                                initialValue: widget.invoice!.invoiceDate,
-                                                                hintText: "choose_date".tr(),
-                                                              )
-                                                            :  LWCustomDateFormField(
-                                                                isRequired: true,
-                                                                name: "invoice_date",
-                                                                labelText: "",
+                                                                initialValue: widget.invoice?.invoiceDate??DateTime.now(),
                                                                 hintText: "choose_date".tr(),
                                                               ),
                                                       ),
@@ -493,12 +486,12 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                                           invoiceTypeId: InvoicesLocalDataSource.invoiceType!.id,
                                           customerId: customerValue!.id,
                                           lines: InvoicesLocalDataSource.addedItems,
-                                          extraDiscountAmount: extraDiscountAmount,
+                                          extraDiscountAmount: extraDiscountAmount??0.0,
                                         ),
                                       );
                                     }
                                   },
-                                  primaryTitle: "submit_invoice".tr(),
+                                  primaryTitle: "save".tr(),
                                   secondaryOnPressed: () {},
                                   secondaryTitle: "preview".tr(),
                                 ),
@@ -542,7 +535,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                             Navigator.pop(context);
                           },
                           child: LWCustomText(
-                            title: customers[index].name ?? "NA",
+                            title: "${customers[index].name}-${customers[index].id}",
                             color: AppColors.labelColor,
                           ),
                         ),
