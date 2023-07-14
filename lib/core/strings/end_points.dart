@@ -68,4 +68,10 @@ class EndPoints {
   static const startSubscription ="PaymentGateway/startsubscription";
   static const executePayment ="PaymentGateway/executepayment_mobile";
 
+
+  //ETA
+  static const getETAConnections ="Companies/getcompany_etaconnection/";
+  static const addETAConnections ="Companies/setcompany_etaconnection/";
+  static const getETALookups ="Companies/getcompany_etaconnection_lookups";
+
 }
