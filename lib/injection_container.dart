@@ -17,6 +17,9 @@ import 'package:invoice_app/features/customers/domain/use_cases/add_customer_use
 import 'package:invoice_app/features/customers/domain/use_cases/edit_customer_use_case.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/add_customer/add_edit_customer_cubit.dart';
 import 'package:invoice_app/features/customers/presentation/cubit/get_customers/get_customers_cubit.dart';
+import 'package:invoice_app/features/eta/data/data_sources/eta_remote_data_source.dart';
+import 'package:invoice_app/features/eta/domain/repositories/eta_repository.dart';
+import 'package:invoice_app/features/eta/presentation/cubit/eta_cubit.dart';
 import 'package:invoice_app/features/invoices/data/data_sources/invoices_remote_data_source.dart';
 import 'package:invoice_app/features/invoices/data/repositories/invoices_repository_impl.dart';
 import 'package:invoice_app/features/invoices/domain/repositories/invoices_repository.dart';
@@ -85,6 +88,10 @@ import 'features/company_registration/presentation/cubit/company_register_cubit.
 import 'features/customers/domain/use_cases/get_customer_types_use_case.dart';
 import 'features/customers/domain/use_cases/get_customers_use_case.dart';
 import 'features/customers/presentation/cubit/get_customer_types/get_customer_types_cubit.dart';
+import 'features/eta/data/repositories/eta_repository_impl.dart';
+import 'features/eta/domain/use_cases/add_eta_use_case.dart';
+import 'features/eta/domain/use_cases/get_eta_lookusp_use_case.dart';
+import 'features/eta/domain/use_cases/get_eta_use_case.dart';
 import 'features/invoices/presentation/cubit/get_types/get_invoice_types_cubit.dart';
 import 'features/payment/domain/use_cases/get_company_subscribtion_use_case.dart';
 import 'features/products/data/data_sources/products_remote_data_source.dart';
@@ -111,6 +118,7 @@ Future<void> init() async {
 // Bloc
 
   sl.registerLazySingleton(() => LoginCubit(sl(), sl()));
+  sl.registerLazySingleton(() => ETACubit(sl(), sl(), sl()));
   sl.registerLazySingleton(() => PaymentCubit(sl(), sl(),sl(), sl(),sl()));
   sl.registerLazySingleton(() => BranchesCubit(sl()));
   sl.registerLazySingleton(() => UsersCubit(sl(),sl()));
@@ -143,6 +151,9 @@ Future<void> init() async {
 
 // Usecases
 //
+  sl.registerLazySingleton(() => AddETAUseCase(etaRepository: sl()));
+  sl.registerLazySingleton(() => GetETALookupsUseCase(etaRepository: sl()));
+  sl.registerLazySingleton(() => GetETAUseCase(etaRepository: sl()));
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => AddUserUseCase(usersRepository: sl()));
   sl.registerLazySingleton(() => EditUserUseCase(usersRepository: sl()));
@@ -190,6 +201,7 @@ Future<void> init() async {
 // Repository
 
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
+  sl.registerLazySingleton<ETARepository>(() => ETARepositoryImpl(sl()));
   sl.registerLazySingleton<PaymentRepository>(() => PaymentRepositoryImpl(sl()));
   sl.registerLazySingleton<CompanyRegistrationRepository>(() => CompanyRegistrationRepositoryImpl(sl()));
   sl.registerLazySingleton<InvoicesRepository>(() => InvoicesRepositoryImpl(sl()));
@@ -204,6 +216,7 @@ Future<void> init() async {
 // Datasources
 
   sl.registerLazySingleton<AuthRemoteDataSource>(() => AuthRemoteDataSourceImpl(apiRepo: sl()));
+  sl.registerLazySingleton<ETARemoteDataSource>(() => ETARemoteDataSourceImpl(apiRepo: sl()));
   sl.registerLazySingleton<AuthLocalDataSource>(() => AuthLocalDataSourceImpl(sharedPreferences: sl()));
 
   sl.registerLazySingleton<InvoicesRemoteDataSource>(() => InvoicesRemoteDataSourceImpl(apiRepo: sl()));
