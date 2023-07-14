@@ -21,7 +21,7 @@ class _UsersClient implements UsersClient {
   @override
   Future<GetUsersResponse> getCompanyUsers(companyId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'companyId': companyId};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
@@ -32,7 +32,7 @@ class _UsersClient implements UsersClient {
     )
             .compose(
               _dio.options,
-              'Companies/getcompanyuserlist',
+              'Companies/getcompanyuserlist/$companyId',
               queryParameters: queryParameters,
               data: _data,
             )

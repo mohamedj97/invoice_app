@@ -21,7 +21,7 @@ class _BranchesClient implements BranchesClient {
   @override
   Future<GetBranchesResponse> getCompanyBranches(companyId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'companyId': companyId};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -32,7 +32,7 @@ class _BranchesClient implements BranchesClient {
     )
             .compose(
               _dio.options,
-              'Companies/getcompanybranchlist',
+              'Companies/getcompanybranchlist/$companyId',
               queryParameters: queryParameters,
               data: _data,
             )

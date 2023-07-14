@@ -21,7 +21,7 @@ class _RolesClient implements RolesClient {
   @override
   Future<GetRolesResponse> getCompanyRoles(companyId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'companyId': companyId};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
@@ -32,7 +32,7 @@ class _RolesClient implements RolesClient {
     )
             .compose(
               _dio.options,
-              'Companies/getcompanyroleList',
+              'Companies/getcompanyroleList/$companyId',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -55,7 +55,7 @@ class _RolesClient implements RolesClient {
     )
             .compose(
               _dio.options,
-              'Companies/getcompanyrole/$id',
+              'Companies/getcompanyrole/',
               queryParameters: queryParameters,
               data: _data,
             )
