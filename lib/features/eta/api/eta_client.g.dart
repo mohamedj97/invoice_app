@@ -32,7 +32,7 @@ class _ETAClient implements ETAClient {
     )
             .compose(
               _dio.options,
-              'Companies/getcompany_etaconnection/',
+              'Companies/getcompany_etaconnection/$companyId',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -59,7 +59,7 @@ class _ETAClient implements ETAClient {
     )
             .compose(
               _dio.options,
-              'Companies/setcompany_etaconnection/',
+              'Companies/setcompany_etaconnection/$companyId',
               queryParameters: queryParameters,
               data: _data,
             )

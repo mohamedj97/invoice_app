@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:invoice_app/features/branches/presentation/screens/branches_screen.dart';
+import 'package:invoice_app/features/eta/presentation/screens/eta_screen.dart';
 import 'package:invoice_app/features/profile/presentation/screens/overview_screen.dart';
 import 'package:invoice_app/features/roles/presentation/screens/roles_screens.dart';
 import 'package:invoice_app/features/users/presentation/screens/users_screen.dart';
@@ -76,7 +77,13 @@ class _CompanyDataScreenState extends State<CompanyDataScreen> {
           ProfileItemWidget(
             title: "eta".tr(),
             showDivider: true,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(
+                CustomPageRoute.createRoute(
+                  page: const ETAScreen(),
+                ),
+              );
+            },
           ),
         ],
       ),

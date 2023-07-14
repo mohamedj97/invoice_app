@@ -43,74 +43,74 @@ class AddEtaConnectionResult {
 class AddETAModel {
   int id;
   int companyId;
-  String preprodClientId;
-  String preprodClientSecret;
-  DateTime preprodExpiryDate;
-  String prodClientId;
-  String prodClientSecret;
-  DateTime prodExpiryDate;
-  String preprodEtaToken;
-  DateTime preprodEtaTokenExpiry;
-  String prodEtaToken;
-  DateTime prodEtaTokenExpiry;
-  int activeEnvironment;
-  int invoiceVersion;
-  String tokenLabel;
-  String tokenSerial;
-  String certificateSerial;
-  String certificateIssuerName;
-  String tokenPin;
-  DateTime tokenExpiry;
-  int activeEnvironmentReceipt;
-  int receiptVersion;
-  String preprodClientIdReceipt;
-  String preprodClientSecretReceipt;
-  DateTime preprodExpiryDateReceipt;
-  String preprodPosSerialReceipt;
-  String prodClientIdReceipt;
-  String prodClientSecretReceipt;
-  DateTime prodExpiryDateReceipt;
-  String preprodEtaTokenReceipt;
-  DateTime preprodEtaTokenExpiryReceipt;
-  String prodPosSerialReceipt;
-  String prodEtaTokenReceipt;
-  DateTime prodEtaTokenExpiryReceipt;
+  String? preprodClientId;
+  String? preprodClientSecret;
+  DateTime? preprodExpiryDate;
+  String? prodClientId;
+  String? prodClientSecret;
+  DateTime? prodExpiryDate;
+  String? preprodEtaToken;
+  DateTime? preprodEtaTokenExpiry;
+  String? prodEtaToken;
+  DateTime? prodEtaTokenExpiry;
+  int? activeEnvironment;
+  int? invoiceVersion;
+  String? tokenLabel;
+  String? tokenSerial;
+  String? certificateSerial;
+  String? certificateIssuerName;
+  String? tokenPin;
+  DateTime? tokenExpiry;
+  int? activeEnvironmentReceipt;
+  int? receiptVersion;
+  String? preprodClientIdReceipt;
+  String? preprodClientSecretReceipt;
+  DateTime? preprodExpiryDateReceipt;
+  String? preprodPosSerialReceipt;
+  String? prodClientIdReceipt;
+  String? prodClientSecretReceipt;
+  DateTime? prodExpiryDateReceipt;
+  String? preprodEtaTokenReceipt;
+  DateTime? preprodEtaTokenExpiryReceipt;
+  String? prodPosSerialReceipt;
+  String? prodEtaTokenReceipt;
+  DateTime? prodEtaTokenExpiryReceipt;
 
   AddETAModel({
     required this.id,
     required this.companyId,
-    required this.preprodClientId,
-    required this.preprodClientSecret,
-    required this.preprodExpiryDate,
-    required this.prodClientId,
-    required this.prodClientSecret,
-    required this.prodExpiryDate,
-    required this.preprodEtaToken,
-    required this.preprodEtaTokenExpiry,
-    required this.prodEtaToken,
-    required this.prodEtaTokenExpiry,
-    required this.activeEnvironment,
-    required this.invoiceVersion,
-    required this.tokenLabel,
-    required this.tokenSerial,
-    required this.certificateSerial,
-    required this.certificateIssuerName,
-    required this.tokenPin,
-    required this.tokenExpiry,
-    required this.activeEnvironmentReceipt,
-    required this.receiptVersion,
-    required this.preprodClientIdReceipt,
-    required this.preprodClientSecretReceipt,
-    required this.preprodExpiryDateReceipt,
-    required this.preprodPosSerialReceipt,
-    required this.prodClientIdReceipt,
-    required this.prodClientSecretReceipt,
-    required this.prodExpiryDateReceipt,
-    required this.preprodEtaTokenReceipt,
-    required this.preprodEtaTokenExpiryReceipt,
-    required this.prodPosSerialReceipt,
-    required this.prodEtaTokenReceipt,
-    required this.prodEtaTokenExpiryReceipt,
+     this.preprodClientId,
+     this.preprodClientSecret,
+     this.preprodExpiryDate,
+     this.prodClientId,
+     this.prodClientSecret,
+     this.prodExpiryDate,
+     this.preprodEtaToken,
+     this.preprodEtaTokenExpiry,
+     this.prodEtaToken,
+     this.prodEtaTokenExpiry,
+     this.activeEnvironment,
+     this.invoiceVersion,
+     this.tokenLabel,
+     this.tokenSerial,
+     this.certificateSerial,
+     this.certificateIssuerName,
+     this.tokenPin,
+     this.tokenExpiry,
+     this.activeEnvironmentReceipt,
+     this.receiptVersion,
+     this.preprodClientIdReceipt,
+     this.preprodClientSecretReceipt,
+     this.preprodExpiryDateReceipt,
+     this.preprodPosSerialReceipt,
+     this.prodClientIdReceipt,
+     this.prodClientSecretReceipt,
+     this.prodExpiryDateReceipt,
+     this.preprodEtaTokenReceipt,
+     this.preprodEtaTokenExpiryReceipt,
+     this.prodPosSerialReceipt,
+     this.prodEtaTokenReceipt,
+     this.prodEtaTokenExpiryReceipt,
   });
 
   factory AddETAModel.fromJson(Map<String, dynamic> json) => AddETAModel(
@@ -118,14 +118,14 @@ class AddETAModel {
     companyId: json["companyId"],
     preprodClientId: json["preprodClientId"],
     preprodClientSecret: json["preprodClientSecret"],
-    preprodExpiryDate: DateTime.parse(json["preprodExpiryDate"]),
+    preprodExpiryDate: json["preprodExpiryDate"]==null ?null:DateTime.parse(json["preprodExpiryDate"]as String),
     prodClientId: json["prodClientId"],
     prodClientSecret: json["prodClientSecret"],
-    prodExpiryDate: DateTime.parse(json["prodExpiryDate"]),
+    prodExpiryDate: json["prodExpiryDate"]==null ?null:DateTime.parse(json["prodExpiryDate"]as String),
     preprodEtaToken: json["preprodEtaToken"],
-    preprodEtaTokenExpiry: DateTime.parse(json["preprodEtaTokenExpiry"]),
+    preprodEtaTokenExpiry: json["preprodEtaTokenExpiry"]==null ?null:DateTime.parse(json["preprodEtaTokenExpiry"]as String),
     prodEtaToken: json["prodEtaToken"],
-    prodEtaTokenExpiry: DateTime.parse(json["prodEtaTokenExpiry"]),
+    prodEtaTokenExpiry: json["prodEtaTokenExpiry"]==null ?null:DateTime.parse(json["prodEtaTokenExpiry"]as String),
     activeEnvironment: json["activeEnvironment"],
     invoiceVersion: json["invoiceVersion"],
     tokenLabel: json["tokenLabel"],
@@ -133,21 +133,21 @@ class AddETAModel {
     certificateSerial: json["certificateSerial"],
     certificateIssuerName: json["certificateIssuerName"],
     tokenPin: json["tokenPin"],
-    tokenExpiry: DateTime.parse(json["tokenExpiry"]),
+    tokenExpiry: json["tokenExpiry"]==null ?null:DateTime.parse(json["tokenExpiry"]as String),
     activeEnvironmentReceipt: json["activeEnvironment_Receipt"],
     receiptVersion: json["receiptVersion"],
     preprodClientIdReceipt: json["preprodClientId_Receipt"],
     preprodClientSecretReceipt: json["preprodClientSecret_Receipt"],
-    preprodExpiryDateReceipt: DateTime.parse(json["preprodExpiryDate_Receipt"]),
+    preprodExpiryDateReceipt: json["preprodExpiryDateReceipt"]==null ?null:DateTime.parse(json["preprodExpiryDateReceipt"]as String),
     preprodPosSerialReceipt: json["preprodPosSerial_Receipt"],
     prodClientIdReceipt: json["prodClientId_Receipt"],
     prodClientSecretReceipt: json["prodClientSecret_Receipt"],
-    prodExpiryDateReceipt: DateTime.parse(json["prodExpiryDate_Receipt"]),
+    prodExpiryDateReceipt: json["prodExpiryDateReceipt"]==null ?null:DateTime.parse(json["prodExpiryDateReceipt"]as String),
     preprodEtaTokenReceipt: json["preprodEtaToken_Receipt"],
-    preprodEtaTokenExpiryReceipt: DateTime.parse(json["preprodEtaTokenExpiry_Receipt"]),
+    preprodEtaTokenExpiryReceipt: json["preprodEtaTokenExpiryReceipt"]==null ?null:DateTime.parse(json["preprodEtaTokenExpiryReceipt"]as String),
     prodPosSerialReceipt: json["prodPosSerial_Receipt"],
     prodEtaTokenReceipt: json["prodEtaToken_Receipt"],
-    prodEtaTokenExpiryReceipt: DateTime.parse(json["prodEtaTokenExpiry_Receipt"]),
+    prodEtaTokenExpiryReceipt: json["prodEtaTokenExpiryReceipt"]==null ?null:DateTime.parse(json["prodEtaTokenExpiryReceipt"]as String),
   );
 
   Map<String, dynamic> toJson() => {
@@ -155,14 +155,14 @@ class AddETAModel {
     "companyId": companyId,
     "preprodClientId": preprodClientId,
     "preprodClientSecret": preprodClientSecret,
-    "preprodExpiryDate": preprodExpiryDate.toIso8601String(),
+    "preprodExpiryDate": preprodExpiryDate?.toIso8601String(),
     "prodClientId": prodClientId,
     "prodClientSecret": prodClientSecret,
-    "prodExpiryDate": prodExpiryDate.toIso8601String(),
+    "prodExpiryDate": prodExpiryDate?.toIso8601String(),
     "preprodEtaToken": preprodEtaToken,
-    "preprodEtaTokenExpiry": preprodEtaTokenExpiry.toIso8601String(),
+    "preprodEtaTokenExpiry": preprodEtaTokenExpiry?.toIso8601String(),
     "prodEtaToken": prodEtaToken,
-    "prodEtaTokenExpiry": prodEtaTokenExpiry.toIso8601String(),
+    "prodEtaTokenExpiry": prodEtaTokenExpiry?.toIso8601String(),
     "activeEnvironment": activeEnvironment,
     "invoiceVersion": invoiceVersion,
     "tokenLabel": tokenLabel,
@@ -170,20 +170,20 @@ class AddETAModel {
     "certificateSerial": certificateSerial,
     "certificateIssuerName": certificateIssuerName,
     "tokenPin": tokenPin,
-    "tokenExpiry": tokenExpiry.toIso8601String(),
+    "tokenExpiry": tokenExpiry?.toIso8601String(),
     "activeEnvironment_Receipt": activeEnvironmentReceipt,
     "receiptVersion": receiptVersion,
     "preprodClientId_Receipt": preprodClientIdReceipt,
     "preprodClientSecret_Receipt": preprodClientSecretReceipt,
-    "preprodExpiryDate_Receipt": preprodExpiryDateReceipt.toIso8601String(),
+    "preprodExpiryDate_Receipt": preprodExpiryDateReceipt?.toIso8601String(),
     "preprodPosSerial_Receipt": preprodPosSerialReceipt,
     "prodClientId_Receipt": prodClientIdReceipt,
     "prodClientSecret_Receipt": prodClientSecretReceipt,
-    "prodExpiryDate_Receipt": prodExpiryDateReceipt.toIso8601String(),
+    "prodExpiryDate_Receipt": prodExpiryDateReceipt?.toIso8601String(),
     "preprodEtaToken_Receipt": preprodEtaTokenReceipt,
-    "preprodEtaTokenExpiry_Receipt": preprodEtaTokenExpiryReceipt.toIso8601String(),
+    "preprodEtaTokenExpiry_Receipt": preprodEtaTokenExpiryReceipt?.toIso8601String(),
     "prodPosSerial_Receipt": prodPosSerialReceipt,
     "prodEtaToken_Receipt": prodEtaTokenReceipt,
-    "prodEtaTokenExpiry_Receipt": prodEtaTokenExpiryReceipt.toIso8601String(),
+    "prodEtaTokenExpiry_Receipt": prodEtaTokenExpiryReceipt?.toIso8601String(),
   };
 }
