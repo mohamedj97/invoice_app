@@ -7,6 +7,6 @@ import '../entities/change_password_request.dart';
 
 abstract class ProfileRepository {
   Future<Either<Failure, GetProfileResponse>> getProfile();
-  Future<Either<Failure, StringResponse>> changePassword(ChangePasswordRequest changePasswordRequest);
+  Future<Either<Failure, BoolResponse>> changePassword(ChangePasswordRequest changePasswordRequest);
   Future<Either<Failure, GetCompanyLookupsResponse>> getCompanyLookupsDataForProfile();
 }

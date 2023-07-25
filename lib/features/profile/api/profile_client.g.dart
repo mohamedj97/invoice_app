@@ -65,26 +65,26 @@ class _ProfileClient implements ProfileClient {
   }
 
   @override
-  Future<StringResponse> changePassword(changePasswordModel) async {
+  Future<BoolResponse> changePassword(changePasswordModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(changePasswordModel.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<StringResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<BoolResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'Users/change-password',
+              'Authenticate/change-password',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = StringResponse.fromJson(_result.data!);
+    final value = BoolResponse.fromJson(_result.data!);
     return value;
   }
 

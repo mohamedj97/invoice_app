@@ -20,5 +20,5 @@ abstract class ProfileClient {
   Future<GetCompanyLookupsResponse> getCompanyLookupsDataForProfile();
 
   @POST(EndPoints.changePassword)
-  Future<StringResponse> changePassword(@Body()  ChangePasswordModel changePasswordModel);
+  Future<BoolResponse> changePassword(@Body()  ChangePasswordModel changePasswordModel);
 }

@@ -1,18 +1,18 @@
 part of 'change_paswword_cubit.dart';
 
 class ChangePasswordState extends Equatable {
-  final StringResponse? stringResponse;
+  final BoolResponse? boolResponse;
   final String? failure;
   final RequestState changePasswordRequestState;
 
   const ChangePasswordState({
-    this.stringResponse,
+    this.boolResponse,
     this.changePasswordRequestState = RequestState.loading,
     this.failure = "",
   });
 
   ChangePasswordState copyWith({
-    StringResponse? stringResponse,
+    BoolResponse? boolResponse,
     String? failure,
     RequestState? changePasswordRequestState,
   }) {
@@ -20,7 +20,7 @@ class ChangePasswordState extends Equatable {
       failure: failure ?? this.failure,
       changePasswordRequestState:
       changePasswordRequestState ?? this.changePasswordRequestState,
-      stringResponse: stringResponse ?? this.stringResponse,
+      boolResponse: boolResponse ?? this.boolResponse,
     );
   }
 
@@ -28,17 +28,17 @@ class ChangePasswordState extends Equatable {
   List<Object> get props => [
     changePasswordRequestState,
     failure!,
-    stringResponse ?? StringResponse(statuscode: 0, result: "")
+    boolResponse ?? BoolResponse(statuscode: 0, result: null)
   ];
 }
 
 class ChangePasswordInitial extends ChangePasswordState {}
 
 class ChangePasswordSuccess extends ChangePasswordState {
-  final StringResponse stringResponse;
+  final BoolResponse boolResponse;
 
   const ChangePasswordSuccess({
-    required this.stringResponse,
+    required this.boolResponse,
   });
 }
 

@@ -6,7 +6,7 @@ import '../models/responses/get_profile_response_model.dart';
 
 abstract class ProfileRemoteDataSource {
   Future<GetProfileResponse> getProfile();
-  Future<StringResponse> changePassword(ChangePasswordModel changePasswordModel);
+  Future<BoolResponse> changePassword(ChangePasswordModel changePasswordModel);
   Future<GetCompanyLookupsResponse> getCompanyLookupsDataForProfile();
 }
 
@@ -22,7 +22,7 @@ class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
     return response;
   }
   @override
-  Future<StringResponse> changePassword(ChangePasswordModel changePasswordModel) async {
+  Future<BoolResponse> changePassword(ChangePasswordModel changePasswordModel) async {
     final response = await apiRepo.profileClient.changePassword(changePasswordModel);
 
     return response;

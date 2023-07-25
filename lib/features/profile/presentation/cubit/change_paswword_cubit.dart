@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoice_app/features/profile/domain/entities/change_password_request.dart';
@@ -31,11 +33,11 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       );
     }, (response) {
       if (response.statuscode == 200 && response.result != null) {
-        emit(ChangePasswordSuccess(stringResponse: response));
+        emit(ChangePasswordSuccess(boolResponse: response));
         return emit(
           state.copyWith(
             changePasswordRequestState: RequestState.success,
-            stringResponse: response,
+            boolResponse: response,
           ),
         );
       } else {
@@ -43,7 +45,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
         return emit(
           state.copyWith(
             changePasswordRequestState: RequestState.error,
-            stringResponse: response,
+            boolResponse: response,
           ),
         );
       }

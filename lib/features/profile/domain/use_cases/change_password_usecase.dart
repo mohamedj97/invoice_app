@@ -10,7 +10,7 @@ class ChangePasswordUseCase {
     required this.profileRepository,
   });
 
-  Future<Either<Failure, StringResponse>> call(ChangePasswordRequest changePasswordRequest) async {
+  Future<Either<Failure, BoolResponse>> call(ChangePasswordRequest changePasswordRequest) async {
     return await profileRepository.changePassword(changePasswordRequest);
   }
 }

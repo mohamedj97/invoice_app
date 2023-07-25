@@ -50,16 +50,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       (Route<dynamic> route) => false,
                 );
               },
-              isUnAuthorized: state.stringResponse!.statuscode == 401,
-              message:
-              state.stringResponse?.result ?? "password_change_success".tr(),
+              isUnAuthorized: state.boolResponse!.statuscode == 401,
+              message: "password_change_success".tr(),
             );
           }
           if (state.changePasswordRequestState == RequestState.error) {
             getErrorDialogue(
               context: context,
-              isUnAuthorized: state.stringResponse!.statuscode==401,
-              message: state.stringResponse?.message?.first ?? "something_went_wrong".tr(),
+              isUnAuthorized: state.boolResponse!.statuscode==401,
+              message: state.boolResponse?.message?.first ?? "something_went_wrong".tr(),
             );
           }
         },

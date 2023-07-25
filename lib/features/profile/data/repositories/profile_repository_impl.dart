@@ -29,7 +29,7 @@ class ProfileRepositoryImpl extends ProfileRepository with ConnectivityMixin {
   }
 
   @override
-  Future<Either<Failure, StringResponse>> changePassword(
+  Future<Either<Failure, BoolResponse>> changePassword(
       ChangePasswordRequest changePasswordRequest) async {
     try {
       final response = await profileRemoteDataSource.changePassword(ChangePasswordModel(
