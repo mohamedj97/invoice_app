@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, widget) => MaterialApp(
-          title: "Invoice",
+          title: "Fatortk",
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           localizationsDelegates: context.localizationDelegates,
