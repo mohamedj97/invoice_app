@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../core/strings/end_points.dart';
@@ -22,6 +23,9 @@ abstract class AuthClient {
 
   @POST(EndPoints.resendCode)
   Future<RegisterResponse> resendCode({required int userId});
+
+  @POST(EndPoints.deleteUser)
+  Future<BoolResponse> deleteUser({required int userId});
 
   @POST(EndPoints.validateSecurityCode)
   Future<ValidateCodeResponse> validateSecurityCode({required int userId,required String securityCode});
