@@ -9,7 +9,7 @@ class EndPoints {
   static const register = 'Authenticate/register';
   static const validateSecurityCode = 'Authenticate/validatesecuritycode/';
   static const resendCode = 'Authenticate/Resend/';
-  static const deleteUser = 'Authenticate/deleteuser/';
+  static const deleteUser = 'Users/';
 
   //company-registration
   static const registerCompany = 'CompanyRegistration/';

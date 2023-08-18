@@ -1,3 +1,4 @@
+import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:invoice_app/features/auth/data/models/requests/register_request_model.dart';
 import 'package:invoice_app/features/auth/data/models/responses/register_response_model.dart';
 
@@ -10,6 +11,7 @@ abstract class AuthRemoteDataSource {
   Future<LoginResponse> login(LoginModel loginRequest);
   Future<RegisterResponse> register(RegisterModel registerRequest);
   Future<RegisterResponse> resendCode({required int userId});
+  Future<BoolResponse> deleteUser({required int userId});
   Future<ValidateCodeResponse> validateSecurityCode({required int userId,required String securityCode});
 }
 
@@ -42,6 +44,13 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<RegisterResponse> resendCode({required int userId}) async{
     final response = await apiRepo.authClient.resendCode(userId: userId);
+
+    return response;
+  }
+
+  @override
+  Future<BoolResponse> deleteUser({required int userId}) async{
+    final response = await apiRepo.authClient.deleteUser(userId: userId);
 
     return response;
   }

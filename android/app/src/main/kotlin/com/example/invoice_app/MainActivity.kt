@@ -1,4 +1,4 @@
-package com.example.invoice_app
+package com.fatortak.invoice_app
 
 import io.flutter.embedding.android.FlutterActivity
 

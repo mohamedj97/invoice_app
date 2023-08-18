@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:invoice_app/features/auth/domain/use_cases/delete_user_use_case.dart';
 import 'package:invoice_app/features/auth/domain/use_cases/register_usecase.dart';
 import 'package:invoice_app/features/auth/domain/use_cases/validate_code_usecase.dart';
 import 'package:invoice_app/features/auth/presentation/cubit/register/register_cubit.dart';
@@ -127,7 +128,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => RolesCubit(sl(),sl(),sl()));
   sl.registerLazySingleton(() => AddEditRoleCubit(sl(),sl()));
   sl.registerLazySingleton(() => CompanyRegisterCubit(sl(),sl(),sl()));
-  sl.registerLazySingleton(() => ValidateCodeCubit(sl(), sl()));
+  sl.registerLazySingleton(() => ValidateCodeCubit(sl(), sl(),sl()));
   sl.registerLazySingleton(() => RegisterCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetInvoicesCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetInvoiceTypesCubit(sl()));
@@ -170,6 +171,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetRolesUseCase(rolesRepository: sl()));
   sl.registerLazySingleton(() => RegisterUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => ValidateCodeUseCase(authRepository: sl()));
+  sl.registerLazySingleton(() => DeleteUserUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => ResendCodeUseCase(authRepository: sl()));
   sl.registerLazySingleton(() => GetInvoicesUseCase(invoicesRepository: sl()));
   sl.registerLazySingleton(() => EditSingleInvoiceUseCase(invoicesRepository: sl()));

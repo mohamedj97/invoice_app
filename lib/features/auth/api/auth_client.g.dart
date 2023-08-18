@@ -103,7 +103,7 @@ class _AuthClient implements AuthClient {
     )
             .compose(
               _dio.options,
-              'Authenticate/deleteuser/$userId',
+              'Users/$userId',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -146,6 +146,8 @@ class _AuthClient implements AuthClient {
         requestOptions.responseType = ResponseType.plain;
       } else {
         requestOptions.responseType = ResponseType.json;
+        requestOptions.headers["Authorization"] =
+        "Bearer ${MemoryRepo().tokensData?.token ?? ""}";
       }
     }
     return requestOptions;

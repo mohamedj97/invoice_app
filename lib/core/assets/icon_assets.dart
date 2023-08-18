@@ -23,4 +23,5 @@ class IconAssets {
   static const filterIcon="assets/icons/filter_icon.svg";
   static const languageIcon="assets/icons/language.png";
   static const subscribeIcon="assets/icons/subscribe_icon.png";
+  static const deleteUserIcon="assets/icons/delete_user_icon.png";
 }

@@ -27,7 +27,7 @@ class _VerificationScreenState extends State<VerificationScreen> with TickerProv
   final TextEditingController _otpController = TextEditingController(text: "");
   String? email;
   final formKey = GlobalKey<FormBuilderState>();
-  final cubit = ValidateCodeCubit(sl(), sl());
+  final cubit = ValidateCodeCubit(sl(), sl(),sl());
   int _start = 0;
   late AnimationController controller;
   double progress = 1.0;

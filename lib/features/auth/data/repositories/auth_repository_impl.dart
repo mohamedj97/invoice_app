@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:invoice_app/core/api/base_api_response.dart';
 import 'package:invoice_app/features/auth/data/models/responses/register_response_model.dart';
 import 'package:invoice_app/features/auth/data/models/responses/validate_code_response_model.dart';
 import 'package:invoice_app/features/auth/domain/entities/register_request.dart';
@@ -19,8 +20,7 @@ class AuthRepositoryImpl extends AuthRepository with ConnectivityMixin {
   AuthRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, LoginResponse>> login(
-      LoginRequest loginRequest) async {
+  Future<Either<Failure, LoginResponse>> login(LoginRequest loginRequest) async {
     try {
       final response = await remoteDataSource.login(LoginModel(
         loginRequest.username,
@@ -34,8 +34,7 @@ class AuthRepositoryImpl extends AuthRepository with ConnectivityMixin {
   }
 
   @override
-  Future<Either<Failure, RegisterResponse>> register(
-      RegisterRequest registerRequest) async {
+  Future<Either<Failure, RegisterResponse>> register(RegisterRequest registerRequest) async {
     try {
       final response = await remoteDataSource.register(RegisterModel(
         ConfirmedPassword: registerRequest.ConfirmedPassword,
@@ -51,9 +50,10 @@ class AuthRepositoryImpl extends AuthRepository with ConnectivityMixin {
   }
 
   @override
-  Future<Either<Failure, ValidateCodeResponse>> validateSecurityCode({required int userId, required String securityCode}) async{
+  Future<Either<Failure, ValidateCodeResponse>> validateSecurityCode(
+      {required int userId, required String securityCode}) async {
     try {
-      final response = await remoteDataSource.validateSecurityCode(userId: userId,securityCode: securityCode);
+      final response = await remoteDataSource.validateSecurityCode(userId: userId, securityCode: securityCode);
 
       return Right(response);
     } on ServerException catch (e) {
@@ -62,9 +62,20 @@ class AuthRepositoryImpl extends AuthRepository with ConnectivityMixin {
   }
 
   @override
-  Future<Either<Failure, RegisterResponse>> resendCode({required int userId}) async{
+  Future<Either<Failure, RegisterResponse>> resendCode({required int userId}) async {
     try {
       final response = await remoteDataSource.resendCode(userId: userId);
+
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, BoolResponse>> deleteUser({required int userId}) async {
+    try {
+      final response = await remoteDataSource.deleteUser(userId: userId);
 
       return Right(response);
     } on ServerException catch (e) {

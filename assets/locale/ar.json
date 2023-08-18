@@ -14,6 +14,8 @@
   "could_not_upload_image": "حدث خطأ اثناء الصاق الصورة",
   "startup": "المبتدئين",
   "annual": "السنوي",
+  "delete_user": "مسح المستخدم",
+  "delete_user_description": "هل تريد مسح هذاالحساب؟",
   "payment_successful": "عملية دفع ناجحة",
   "payment_failed": "عملية دفع خاطئة",
   "best_settings_for_startup": "افضل الاعدادات للمبتدئين",
