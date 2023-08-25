@@ -25,7 +25,7 @@ class CompanySubscriptionResult {
   });
 
   factory CompanySubscriptionResult.fromJson(Map<String, dynamic> json) => CompanySubscriptionResult(
-        result: CompanySubscriptionData.fromJson(json["result"]),
+        result:json["result"]==null? null: CompanySubscriptionData.fromJson(json["result"]),
         status: json["status"],
         statuscode: json["statuscode"],
         message: List<String>.from(json["message"].map((x) => x)),

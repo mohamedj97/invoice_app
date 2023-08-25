@@ -37,7 +37,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       child: BlocConsumer<PaymentCubit, PaymentState>(
         listener: (context, state) async {
           if (state.executePaymentRequestState == RequestState.success) {}
-          if (state.companySubscriptionRequestState == RequestState.error) {
+          if (state.companySubscriptionRequestState == RequestState.error && state.getCompanySubscriptionResponse!.statuscode != 405) {
             getErrorDialogue(
               context: context,
               isUnAuthorized: state.getCompanySubscriptionResponse!.statuscode == 401,
