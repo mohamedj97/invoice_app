@@ -146,7 +146,7 @@ class PaymentCubit extends Cubit<PaymentState> {
         ),
       );
     }, (response) {
-      if (response.statuscode == 200 && response.result != null) {
+      if (response.statuscode == 200) {
         emit(PaymentSuccess(getCompanySubscriptionResponse: response));
         return emit(
           state.copyWith(
