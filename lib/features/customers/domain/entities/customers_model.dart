@@ -10,7 +10,7 @@ class CustomersModel {
   late int companyid;
   String? code;
   String? name;
-  int? identityid;
+  String? identityid;
   int? countryid;
   String? countryname;
   String? countrynamear;

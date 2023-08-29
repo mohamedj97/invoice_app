@@ -108,7 +108,7 @@ class _AddEditCustomerScreenState extends State<AddEditCustomerScreen> {
 
                       final String buildingNumber = formState.value["building_number"];
 
-                      final int identityId = int.parse(formState.value["identity_id"]);
+                      final String identityId = formState.value["identity_id"];
 
 
                       final BaseLookup customerType = formState.value["customer_type"] as BaseLookup;

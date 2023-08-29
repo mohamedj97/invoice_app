@@ -16,7 +16,7 @@ class CustomerRequest extends Equatable {
   late int type;
   String? code;
   late String name;
-  int? identityid;
+  String? identityid;
   int? country;
   int? governate;
   String? city;

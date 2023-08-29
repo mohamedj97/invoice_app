@@ -23,7 +23,7 @@ CustomerModelModel _$CustomerModelModelFromJson(Map<String, dynamic> json) =>
       type: json['type'] as int,
       code: json['code'] as String?,
       name: json['name'] as String,
-      identityid: json['identityid'] as int?,
+      identityid: json['identityid'] as String?,
       country: json['country'] as int?,
       governate: json['governate'] as int?,
       city: json['city'] as String?,
