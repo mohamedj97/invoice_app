@@ -86,217 +86,237 @@ class _PricingScreenState extends State<PricingScreen> {
                           child: CircularProgressIndicator(),
                         ),
                       )
-                    : Column(
-                        children: [
-                          const SizedBox(height: 8.0),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.pricingTextColor,
-                              borderRadius: const BorderRadius.all(Radius.circular(15)),
-                              border: Border.all(color: AppColors.pricingTextColor, width: 1.5),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                 if(monthlyList.isNotEmpty) InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = 0;
-                                      });
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: selectedIndex == 0 ? AppColors.primary : AppColors.pricingTextColor,
-                                        borderRadius: const BorderRadius.all(Radius.circular(15)),
-                                        border: Border.all(color: AppColors.pricingTextColor, width: 1.5),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: LWCustomText(
-                                          title: 'monthly'.tr(),
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.whiteColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  if(annualList.isNotEmpty) InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = 1;
-                                      });
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: selectedIndex == 1 ? AppColors.primary : AppColors.pricingTextColor,
-                                        borderRadius: const BorderRadius.all(Radius.circular(15)),
-                                        border: Border.all(color: AppColors.pricingTextColor, width: 1.5),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: LWCustomText(
-                                          title: 'annual'.tr(),
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.whiteColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              physics: const ScrollPhysics(),
-                              itemCount: selectedIndex == 0 ? monthlyList.length : annualList.length,
-                              itemBuilder: (context, index) {
-                                SubscriptionPlanModel item =
-                                    selectedIndex == 0 ? monthlyList[index] : annualList[index];
-                                return Column(
-                                  children: [
-                                    const SizedBox(height: 8.0),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                              color: selectedIndex == 0 ? AppColors.primary : AppColors.whiteColor,
-                                              border: Border.all(
-                                                color: AppColors.searchBarColor,
+                    : annualList.isNotEmpty || monthlyList.isNotEmpty
+                        ? Column(
+                            children: [
+                              const SizedBox(height: 8.0),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.pricingTextColor,
+                                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                                  border: Border.all(color: AppColors.pricingTextColor, width: 1.5),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      if (monthlyList.isNotEmpty)
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedIndex = 0;
+                                            });
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  selectedIndex == 0 ? AppColors.primary : AppColors.pricingTextColor,
+                                              borderRadius: const BorderRadius.all(Radius.circular(15)),
+                                              border: Border.all(color: AppColors.pricingTextColor, width: 1.5),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(16.0),
+                                              child: LWCustomText(
+                                                title: 'monthly'.tr(),
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.whiteColor,
                                               ),
-                                              borderRadius: const BorderRadius.all(Radius.circular(15))),
-                                          child: Column(
-                                            children: [
-                                              const SizedBox(height: 16.0),
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                            ),
+                                          ),
+                                        ),
+                                      if (annualList.isNotEmpty)
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedIndex = 1;
+                                            });
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  selectedIndex == 1 ? AppColors.primary : AppColors.pricingTextColor,
+                                              borderRadius: const BorderRadius.all(Radius.circular(15)),
+                                              border: Border.all(color: AppColors.pricingTextColor, width: 1.5),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(16.0),
+                                              child: LWCustomText(
+                                                title: 'annual'.tr(),
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.whiteColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const ScrollPhysics(),
+                                  itemCount: selectedIndex == 0 ? monthlyList.length : annualList.length,
+                                  itemBuilder: (context, index) {
+                                    SubscriptionPlanModel item =
+                                        selectedIndex == 0 ? monthlyList[index] : annualList[index];
+                                    return Column(
+                                      children: [
+                                        const SizedBox(height: 8.0),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              width: MediaQuery.of(context).size.width,
+                                              decoration: BoxDecoration(
+                                                  color: selectedIndex == 0 ? AppColors.primary : AppColors.whiteColor,
+                                                  border: Border.all(
+                                                    color: AppColors.searchBarColor,
+                                                  ),
+                                                  borderRadius: const BorderRadius.all(Radius.circular(15))),
+                                              child: Column(
                                                 children: [
-                                                  LWCustomText(
-                                                    title: item.name ?? "",
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: FontAssets.avertaSemiBold,
-                                                    fontSize: 25.0,
-                                                    color: selectedIndex == 0
-                                                        ? AppColors.whiteColor
-                                                        : AppColors.blackColor,
-                                                  ),
-                                                  const SizedBox(height: 8.0),
-                                                  LWCustomText(
-                                                    title: item.comment ?? "",
-                                                    fontFamily: FontAssets.avertaSemiBold,
-                                                    fontSize: 15.0,
-                                                    color: selectedIndex == 0
-                                                        ? AppColors.whiteColor
-                                                        : AppColors.dataFieldBorderColor,
-                                                  ),
                                                   const SizedBox(height: 16.0),
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                        color: selectedIndex == 0
-                                                            ? AppColors.whiteColor
-                                                            : AppColors.babyBlueColor),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.all(16.0),
-                                                      child: LWCustomText(
-                                                        title: "${item.price} ${"currency_egp".tr()}",
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      LWCustomText(
+                                                        title: item.name ?? "",
                                                         fontWeight: FontWeight.bold,
                                                         fontFamily: FontAssets.avertaSemiBold,
                                                         fontSize: 25.0,
-                                                        color: AppColors.primary,
+                                                        color: selectedIndex == 0
+                                                            ? AppColors.whiteColor
+                                                            : AppColors.blackColor,
+                                                      ),
+                                                      const SizedBox(height: 8.0),
+                                                      LWCustomText(
+                                                        title: item.comment ?? "",
+                                                        fontFamily: FontAssets.avertaSemiBold,
+                                                        fontSize: 15.0,
+                                                        color: selectedIndex == 0
+                                                            ? AppColors.whiteColor
+                                                            : AppColors.dataFieldBorderColor,
+                                                      ),
+                                                      const SizedBox(height: 16.0),
+                                                      Container(
+                                                        decoration: BoxDecoration(
+                                                            color: selectedIndex == 0
+                                                                ? AppColors.whiteColor
+                                                                : AppColors.babyBlueColor),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(16.0),
+                                                          child: LWCustomText(
+                                                            title: "${item.price} ${"currency_egp".tr()}",
+                                                            fontWeight: FontWeight.bold,
+                                                            fontFamily: FontAssets.avertaSemiBold,
+                                                            fontSize: 25.0,
+                                                            color: AppColors.primary,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(height: 16.0),
+                                                      const Divider(
+                                                        thickness: 0.5,
+                                                        height: 2.0,
+                                                        color: AppColors.searchBarColor,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 16.0),
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      width: MediaQuery.of(context).size.width,
+                                                      child: ListView.builder(
+                                                        scrollDirection: Axis.vertical,
+                                                        itemCount: item.planFeatures.length,
+                                                        shrinkWrap: true,
+                                                        itemBuilder: (context, index) {
+                                                          var feature = item.planFeatures[index];
+                                                          return PricingItem(
+                                                            title: feature.name,
+                                                            iconColor: selectedIndex == 0
+                                                                ? AppColors.whiteColor
+                                                                : AppColors.primary,
+                                                            textColor: selectedIndex == 0
+                                                                ? AppColors.whiteColor
+                                                                : AppColors.blackColor,
+                                                          );
+                                                        },
                                                       ),
                                                     ),
                                                   ),
-                                                  const SizedBox(height: 16.0),
-                                                  const Divider(
-                                                    thickness: 0.5,
-                                                    height: 2.0,
-                                                    color: AppColors.searchBarColor,
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 16.0),
-                                              Expanded(
-                                                child: SizedBox(
-                                                  width: MediaQuery.of(context).size.width,
-                                                  child: ListView.builder(
-                                                    scrollDirection: Axis.vertical,
-                                                    itemCount: item.planFeatures.length,
-                                                    shrinkWrap: true,
-                                                    itemBuilder: (context, index) {
-                                                      var feature = item.planFeatures[index];
-                                                      return PricingItem(
-                                                        title: feature.name,
-                                                        iconColor: selectedIndex == 0
+                                                  const SizedBox(height: 8.0),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                                                    child: SizedBox(
+                                                      width: double.infinity,
+                                                      child: CustomElevatedButton(
+                                                        title: "get_started".tr(),
+                                                        color: selectedIndex == 0
                                                             ? AppColors.whiteColor
                                                             : AppColors.primary,
                                                         textColor: selectedIndex == 0
-                                                            ? AppColors.whiteColor
-                                                            : AppColors.blackColor,
-                                                      );
-                                                    },
+                                                            ? AppColors.primary
+                                                            : AppColors.whiteColor,
+                                                        onPressed: () async {
+                                                          setState(() {
+                                                            paymentMethodId = item.id;
+                                                          });
+                                                          await DiskRepo().ensureInitialized();
+                                                          await BlocProvider.of<PaymentCubit>(context)
+                                                              .startSubscription(
+                                                                  subscriptionPlanId: item.id,
+                                                                  userId: DiskRepo().loadUserId() ?? 0);
+                                                        },
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
+                                                  const SizedBox(height: 8.0),
+                                                ],
                                               ),
-                                              const SizedBox(height: 8.0),
-                                              Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                                                child: SizedBox(
-                                                  width: double.infinity,
-                                                  child: CustomElevatedButton(
-                                                    title: "get_started".tr(),
-                                                    color:
-                                                        selectedIndex == 0 ? AppColors.whiteColor : AppColors.primary,
-                                                    textColor:
-                                                        selectedIndex == 0 ? AppColors.primary : AppColors.whiteColor,
-                                                    onPressed: () async {
-                                                      setState(() {
-                                                        paymentMethodId = item.id;
-                                                      });
-                                                      await DiskRepo().ensureInitialized();
-                                                      await BlocProvider.of<PaymentCubit>(context).startSubscription(
-                                                          subscriptionPlanId: item.id,
-                                                          userId: DiskRepo().loadUserId() ?? 0);
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(height: 8.0),
-                                            ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: CustomElevatedButton(
-                                  title: "free_trial".tr(),
-                                  onPressed: () {
-                                    widget.fromProfile != null && widget.fromProfile == true? Navigator.pop(context): Navigator.of(context).pushAndRemoveUntil(
-                                      CustomPageRoute.createRoute(
-                                        page: const LoginScreen(),
-                                      ),
-                                      (Route<dynamic> route) => false,
+                                      ],
                                     );
                                   },
-                                )),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: CustomElevatedButton(
+                                      title: "free_trial".tr(),
+                                      onPressed: () {
+                                        widget.fromProfile != null && widget.fromProfile == true
+                                            ? Navigator.pop(context)
+                                            : Navigator.of(context).pushAndRemoveUntil(
+                                                CustomPageRoute.createRoute(
+                                                  page: const LoginScreen(),
+                                                ),
+                                                (Route<dynamic> route) => false,
+                                              );
+                                      },
+                                    )),
+                              ),
+                            ],
+                          )
+                        : Center(
+                            child: LWCustomText(
+                              title: 'no_plans'.tr(),
+                              textAlign: TextAlign.center,
+                              color: AppColors.profileItemColor,
+                              fontSize: 35,
+                              fontFamily: FontAssets.avertaRegular,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ],
-                      ),
           );
         },
       ),
