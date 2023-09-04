@@ -101,7 +101,7 @@ class _PricingScreenState extends State<PricingScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  InkWell(
+                                 if(monthlyList.isNotEmpty) InkWell(
                                     onTap: () {
                                       setState(() {
                                         selectedIndex = 0;
@@ -124,7 +124,7 @@ class _PricingScreenState extends State<PricingScreen> {
                                       ),
                                     ),
                                   ),
-                                  InkWell(
+                                  if(annualList.isNotEmpty) InkWell(
                                     onTap: () {
                                       setState(() {
                                         selectedIndex = 1;
