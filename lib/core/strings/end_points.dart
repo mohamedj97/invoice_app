@@ -1,8 +1,8 @@
 class EndPoints {
   static const productionBaseUrl = "";
-  static const stagingBaseUrl = "https://zinvoivedevapi.azurewebsites.net/api/";
+  static const stagingBaseUrl = "https://fatortakprodapi.azurewebsites.net/api/";
 
-  static const base = 'https://zinvoivedevapi.azurewebsites.net/api/';
+  static const base = 'https://fatortakprodapi.azurewebsites.net/api/https://fatortakprodapi.azurewebsites.net/api/';
 
   // auth
   static const login = 'Authenticate/login';
