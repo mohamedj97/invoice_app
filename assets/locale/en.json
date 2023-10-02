@@ -41,6 +41,8 @@
   "complete_company_data": "Complete Company Data",
   "please_write_down": "Please write down",
   "verification": "Verification",
+  "download_invoice": "Download Invoice",
+  "delete_invoice": "Delete Invoice",
   "change_company": "Change Company",
   "we_sent_a_code_to": "We sent a code to",
   "network_error": "Network error please check your internet connection",

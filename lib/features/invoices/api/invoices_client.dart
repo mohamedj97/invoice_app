@@ -29,4 +29,7 @@ abstract class InvoicesClient {
 
   @GET(EndPoints.getInvoiceLookups)
   Future<GetInvoiceTypesResponse> getInvoiceLookups();
+
+  @DELETE(EndPoints.singleInvoice)
+  Future<BoolResponse> deleteInvoice(int id);
 }

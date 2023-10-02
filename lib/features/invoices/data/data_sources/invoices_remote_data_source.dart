@@ -13,6 +13,7 @@ abstract class InvoicesRemoteDataSource {
   Future<BoolResponse> editSingleInvoices(int id ,InvoiceRequestModel invoiceRequestModel);
   Future<GetInvoiceTypesResponse> getInvoiceLookups();
   Future<GetSingleInvoiceResponse> addInvoice(InvoiceRequestModel invoiceRequestModel);
+  Future<BoolResponse> deleteInvoice({required int id});
 }
 
 class InvoicesRemoteDataSourceImpl extends InvoicesRemoteDataSource {
@@ -51,6 +52,13 @@ class InvoicesRemoteDataSourceImpl extends InvoicesRemoteDataSource {
   @override
   Future<GetSingleInvoiceResponse> getSingleInvoices(int id) async{
     final response = await apiRepo.invoicesClient.getSingleInvoices(id);
+
+    return response;
+  }
+
+  @override
+  Future<BoolResponse> deleteInvoice({required int id}) async{
+    final response = await apiRepo.invoicesClient.deleteInvoice(id);
 
     return response;
   }

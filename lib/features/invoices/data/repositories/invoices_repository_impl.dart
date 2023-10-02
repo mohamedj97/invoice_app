@@ -72,4 +72,15 @@ class InvoicesRepositoryImpl extends InvoicesRepository with ConnectivityMixin {
       return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, BoolResponse>> deleteInvoice(int id) async{
+    try {
+      final response = await invoicesRemoteDataSource.deleteInvoice(id: id);
+
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorMessageModel.statusMessage));
+    }
+  }
 }

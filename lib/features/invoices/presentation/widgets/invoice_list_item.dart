@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoice_app/core/assets/colors.dart';
 import 'package:invoice_app/core/assets/font_assets.dart';
 import '../../../../core/common_widgets/lw_custom_text.dart';
+import '../../../../core/widgets/custom_tool_tip_shape.dart';
 import '../../domain/entities/invoice_head_model.dart';
 
 class InvoiceListItem extends StatelessWidget {
@@ -59,17 +60,50 @@ class InvoiceListItem extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8.0),
-              Container(
-                  color: AppColors.lightGreenColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: LWCustomText(
-                      title: invoice.status ?? "NA",
-                      color: AppColors.greenColor,
-                      fontSize: 10.0,
-                      fontFamily: FontAssets.avertaSemiBold,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    color: AppColors.lightGreenColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: LWCustomText(
+                        title: invoice.status ?? "NA",
+                        color: AppColors.greenColor,
+                        fontSize: 10.0,
+                        fontFamily: FontAssets.avertaSemiBold,
+                      ),
                     ),
-                  )),
+                  ),
+                  PopupMenuButton(
+                      shape: const TooltipShape(),
+                      iconSize: 30,
+                      color: AppColors.primary,
+                      offset: const Offset(-4, 50),
+                      icon: const Icon(
+                        Icons.more_vert,
+                        color: AppColors.primary,
+                      ),
+                      itemBuilder: (BuildContext context) => [
+                            PopupMenuItem(
+                              value: "delete",
+                              child: LWCustomText(
+                                title: "delete_invoice".tr(),
+                                color: AppColors.whiteColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: "download",
+                              child: LWCustomText(
+                                title: "download_invoice".tr(),
+                                color: AppColors.whiteColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],),
+                ],
+              ),
               const SizedBox(height: 16.0),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),

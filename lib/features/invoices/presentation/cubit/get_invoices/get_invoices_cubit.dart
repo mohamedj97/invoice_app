@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:invoice_app/core/api/base_api_response.dart';
+import 'package:invoice_app/features/invoices/domain/use_cases/delete_invoice_use_case.dart';
 import 'package:invoice_app/features/invoices/domain/use_cases/get_invoices_use_case.dart';
 import 'package:invoice_app/features/invoices/domain/use_cases/get_single_invoice_use_case.dart';
 
@@ -13,11 +15,13 @@ part 'get_invoices_state.dart';
 
 class GetInvoicesCubit extends Cubit<GetInvoicesState> {
   final GetInvoicesUseCase getInvoicesUseCase;
+  final DeleteInvoiceUseCase deleteInvoiceUseCase;
   final GetSingleInvoiceUseCase getSingleInvoiceUseCase;
 
   GetInvoicesCubit(
     this.getInvoicesUseCase,
     this.getSingleInvoiceUseCase,
+    this.deleteInvoiceUseCase,
   ) : super(GetInvoicesInitial());
 
   Future<void> getInvoices(InvoiceFilterGenericFilterModel invoiceFilterGenericFilterModel) async {
@@ -82,6 +86,40 @@ class GetInvoicesCubit extends Cubit<GetInvoicesState> {
           state.copyWith(
             getInvoicesRequestState: RequestState.error,
             getSingleInvoiceResponse: response,
+          ),
+        );
+      }
+    });
+  }
+
+  Future<void> deleteInvoice({required int id}) async {
+    emit(GetInvoicesLoading());
+    final response = await deleteInvoiceUseCase.call(id);
+
+    response.fold((failure) {
+      emit(GetInvoicesFailure(failure: failure.message));
+
+      return emit(
+        state.copyWith(
+          deleteInvoiceRequestState: RequestState.error,
+          failure: failure.message,
+        ),
+      );
+    }, (response) {
+      if (response.statuscode == 200 && response.result != null) {
+        emit(GetInvoicesSuccess(deleteInvoiceResponse: response));
+        return emit(
+          state.copyWith(
+            deleteInvoiceRequestState: RequestState.success,
+            deleteInvoiceResponse: response,
+          ),
+        );
+      } else {
+        emit(GetInvoicesFailure(failure: response.message?.first ?? ""));
+        return emit(
+          state.copyWith(
+            deleteInvoiceRequestState: RequestState.error,
+            deleteInvoiceResponse: response,
           ),
         );
       }
