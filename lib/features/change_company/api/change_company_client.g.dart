@@ -47,8 +47,8 @@ class _ChangeCompanyClient implements ChangeCompanyClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GetUsersCompaniesResult>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<BoolResponse>(Options(
       method: 'PUT',
       headers: _headers,
       extra: _extra,
