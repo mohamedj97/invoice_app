@@ -93,7 +93,7 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
           if (state.deleteInvoiceRequestState == RequestState.success) {
             Navigator.of(context).pushAndRemoveUntil(
               CustomPageRoute.createRoute(
-                page: const HomeScreen(),
+                page: const HomeScreen(index: 1),
               ),
                   (Route<dynamic> route) => false,
             );

@@ -45,7 +45,7 @@ class _ChangeCompanyScreenState extends State<ChangeCompanyScreen> {
         if (state.changeCompanyRequestState == RequestState.success) {
           Navigator.of(context).pushAndRemoveUntil(
             CustomPageRoute.createRoute(
-              page: const HomeScreen(),
+              page: const HomeScreen(index: 3),
             ),
             (Route<dynamic> route) => false,
           );
