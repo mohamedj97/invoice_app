@@ -9,8 +9,9 @@ import '../../domain/entities/invoice_head_model.dart';
 class InvoiceListItem extends StatelessWidget {
   final InvoiceHeadModel invoice;
   final void Function()? onTap;
+  final void Function(String)? onSelected;
 
-  const InvoiceListItem({Key? key, required this.invoice, this.onTap}) : super(key: key);
+  const InvoiceListItem({Key? key, required this.invoice, this.onTap, this.onSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +85,7 @@ class InvoiceListItem extends StatelessWidget {
                         Icons.more_vert,
                         color: AppColors.primary,
                       ),
+                      onSelected: onSelected,
                       itemBuilder: (BuildContext context) => [
                             PopupMenuItem(
                               value: "delete",

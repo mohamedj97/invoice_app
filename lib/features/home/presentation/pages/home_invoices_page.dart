@@ -20,6 +20,7 @@ import '../../../invoices/data/models/requests/get_invoices_request_model.dart';
 import '../../../invoices/domain/entities/invoice_head_model.dart';
 import '../../../invoices/domain/entities/single_invoice_response.dart';
 import '../../../invoices/presentation/widgets/invoice_list_item.dart';
+import '../screens/home_screen.dart';
 
 class HomeInvoicesPage extends StatefulWidget {
   const HomeInvoicesPage({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class HomeInvoicesPage extends StatefulWidget {
 class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
   TextEditingController searchController = TextEditingController();
   List<InvoiceHeadModel> invoices = [];
-  final cubit = GetInvoicesCubit(sl(), sl(),sl());
+  final cubit = GetInvoicesCubit(sl(), sl(), sl());
   bool tapped = false;
   bool isSearch = true;
   int pageNo = 2;
@@ -89,11 +90,26 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
               ),
             );
           }
+          if (state.deleteInvoiceRequestState == RequestState.success) {
+            Navigator.of(context).pushAndRemoveUntil(
+              CustomPageRoute.createRoute(
+                page: const HomeScreen(),
+              ),
+                  (Route<dynamic> route) => false,
+            );
+          }
           if (state.getInvoicesRequestState == RequestState.error) {
             getErrorDialogue(
               context: context,
               isUnAuthorized: state.getInvoicesResponse!.statuscode == 401,
               message: state.getInvoicesResponse?.message?.first ?? "something_went_wrong".tr(),
+            );
+          }
+          if (state.deleteInvoiceRequestState == RequestState.error) {
+            getErrorDialogue(
+              context: context,
+              isUnAuthorized: state.deleteInvoiceResponse!.statuscode == 401,
+              message: state.deleteInvoiceResponse?.message?.first ?? "something_went_wrong".tr(),
             );
           }
         },
@@ -203,6 +219,12 @@ class _HomeInvoicesPageState extends State<HomeInvoicesPage> {
                                   itemBuilder: (context, index) {
                                     return InvoiceListItem(
                                       key: UniqueKey(),
+                                      onSelected: (value) async {
+                                        if (value == "delete") {
+                                          BlocProvider.of<GetInvoicesCubit>(context)
+                                              .deleteInvoice(id: invoices[index].id);
+                                        }
+                                      },
                                       invoice: invoices[index],
                                       onTap: () async {
                                         setState(() {
