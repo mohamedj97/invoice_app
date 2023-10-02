@@ -55,7 +55,7 @@ class _ChangeCompanyClient implements ChangeCompanyClient {
     )
             .compose(
               _dio.options,
-              'Users/setuser_selected_company/',
+              'Users/setuser_selected_company/$companyId',
               queryParameters: queryParameters,
               data: _data,
             )

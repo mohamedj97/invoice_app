@@ -9,7 +9,7 @@ GetUsersCompaniesResult getUsersCompaniesResultFromJson(String str) => GetUsersC
 String getUsersCompaniesResultToJson(GetUsersCompaniesResult data) => json.encode(data.toJson());
 
 class GetUsersCompaniesResult {
-  List<CompanyInfo>? companies;
+  List<MiniCompanyInfo>? companies;
   int status;
   int statuscode;
   List<String>? message;
@@ -24,7 +24,7 @@ class GetUsersCompaniesResult {
   });
 
   factory GetUsersCompaniesResult.fromJson(Map<String, dynamic> json) => GetUsersCompaniesResult(
-    companies: List<CompanyInfo>.from(json["result"].map((x) => CompanyInfo.fromJson(x))),
+    companies: List<MiniCompanyInfo>.from(json["result"].map((x) => MiniCompanyInfo.fromJson(x))),
     status: json["status"],
     statuscode: json["statuscode"],
     message: List<String>.from(json["message"].map((x) => x)),
@@ -40,14 +40,14 @@ class GetUsersCompaniesResult {
   };
 }
 
-class CompanyInfo {
+class MiniCompanyInfo {
  late int companyId;
   String? code;
   String? name;
   String? logoUrl;
  late bool selected;
 
-  CompanyInfo({
+  MiniCompanyInfo({
     required this.companyId,
      this.code,
      this.name,
@@ -55,7 +55,7 @@ class CompanyInfo {
     required this.selected,
   });
 
-  factory CompanyInfo.fromJson(Map<String, dynamic> json) => CompanyInfo(
+  factory MiniCompanyInfo.fromJson(Map<String, dynamic> json) => MiniCompanyInfo(
     companyId: json["companyId"],
     code: json["code"],
     name: json["name"],
