@@ -1,9 +1,6 @@
 class EndPoints {
-  static const productionBaseUrl = "";
-  static const stagingBaseUrl = "https://fatortakprodapi.azurewebsites.net/api/";
-
-  static const base = 'https://fatortakprodapi.azurewebsites.net/api/https://fatortakprodapi.azurewebsites.net/api/';
-
+  static const productionBaseUrl = "https://fatortakprodapi.azurewebsites.net/api/";
+  static const stagingBaseUrl = "https://zinvoivedevapi.azurewebsites.net/api/";
   // auth
   static const login = 'Authenticate/login';
   static const register = 'Authenticate/register';
@@ -75,4 +72,7 @@ class EndPoints {
   static const addETAConnections ="Companies/setcompany_etaconnection/";
   static const getETALookups ="Companies/getcompany_etaconnection_lookups";
 
+  //Change Company
+  static const getUserCompanies = 'Users/getusercompanies';
+  static const changeCompany = 'Users/setuser_selected_company/';
 }

@@ -1,4 +1,3 @@
-
 import 'core/strings/end_points.dart';
 
 enum Environment {staging, production }
@@ -28,7 +27,6 @@ String get apiBaseUrl {
     case Environment.staging:
       return EndPoints.stagingBaseUrl;
     case Environment.production:
-      //TODO: update production apiBaseUrl
       return EndPoints.productionBaseUrl;
   }
 }

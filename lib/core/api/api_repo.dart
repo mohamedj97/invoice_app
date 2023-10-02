@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoice_app/features/change_company/api/change_company_client.dart';
 import 'package:invoice_app/features/customers/api/customers_client.dart';
 import 'package:invoice_app/features/eta/api/eta_client.dart';
 import 'package:invoice_app/features/invoices/api/invoices_client.dart';
@@ -28,6 +29,7 @@ class APIRepository {
   late ProductsClient productsClient;
   late ProfileClient profileClient;
   late UsersClient usersClient;
+  late ChangeCompanyClient changeCompanyClient;
   late StatisticsClient statisticsClient;
   late CompanyRegistrationClient companyRegistrationClient;
   late ETAClient etaClient;
@@ -110,6 +112,7 @@ class APIRepository {
     usersClient = UsersClient(authDio, baseUrl: apiBaseUrl);
     companyRegistrationClient = CompanyRegistrationClient(authDio, baseUrl: apiBaseUrl);
     etaClient = ETAClient(authDio, baseUrl: apiBaseUrl);
+    changeCompanyClient = ChangeCompanyClient(authDio, baseUrl: apiBaseUrl);
   }
   Future ensureInitialized() async => true;
 }

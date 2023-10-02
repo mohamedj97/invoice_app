@@ -11,6 +11,9 @@ import 'package:invoice_app/features/branches/domain/use_cases/edit_branch_use_c
 import 'package:invoice_app/features/branches/domain/use_cases/get_branches_use_case.dart';
 import 'package:invoice_app/features/branches/presentation/cubit/add_edit_branch_cubit.dart';
 import 'package:invoice_app/features/branches/presentation/cubit/branches_cubit.dart';
+import 'package:invoice_app/features/change_company/data/repositories/change_company_repository_impl.dart';
+import 'package:invoice_app/features/change_company/domain/use_cases/get_user_companies_use_case.dart';
+import 'package:invoice_app/features/change_company/presentation/cubit/change_company_cubit.dart';
 import 'package:invoice_app/features/customers/data/data_sources/customers_remote_data_source.dart';
 import 'package:invoice_app/features/customers/data/repositories/customers_repository_impl.dart';
 import 'package:invoice_app/features/customers/domain/repositories/customers_repository.dart';
@@ -79,6 +82,9 @@ import 'features/auth/domain/use_cases/login_usecase.dart';
 import 'features/auth/domain/use_cases/resend_code_usecase.dart';
 import 'features/auth/presentation/cubit/login/login_cubit.dart';
 import 'features/auth/presentation/cubit/validate_code/validate_code_cubit.dart';
+import 'features/change_company/data/data_sources/change_company_remote_data_source.dart';
+import 'features/change_company/domain/repositories/change_company_repository.dart';
+import 'features/change_company/domain/use_cases/change_company_use_case.dart';
 import 'features/company_registration/data/data_sources/remote_data_source/company_registration_remote_data_source.dart';
 import 'features/company_registration/data/repositories/comapny_registration_repository_impl.dart';
 import 'features/company_registration/domain/repositories/company_registration_repository.dart';
@@ -142,6 +148,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AddEditProductCubit(sl(), sl()));
   sl.registerLazySingleton(() => GetItemTypesCubit(sl()));
   sl.registerLazySingleton(() => GetSubmittedInvoicesCubit(sl(), sl()));
+  sl.registerLazySingleton(() => ChangeCompanyCubit(sl(), sl()));
   //
 
 //   sl.registerFactory(() => CreateUpdateDeletePostCubit(
@@ -199,6 +206,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetSubscriptionPlansUseCase(paymentRepository: sl()));
   sl.registerLazySingleton(() => StartSubscriptionPlansUseCase(paymentRepository: sl()));
   sl.registerLazySingleton(() => GetCompanySubscriptionUseCase(paymentRepository: sl()));
+  sl.registerLazySingleton(() => ChangeCompanyUseCase(changeCompanyRepository: sl()));
+  sl.registerLazySingleton(() => GetUserCompaniesUseCase(changeCompanyRepository: sl()));
 
 // Repository
 
@@ -214,6 +223,7 @@ Future<void> init() async {
   sl.registerLazySingleton<UsersRepository>(() => UsersRepositoryImpl(sl()));
   sl.registerLazySingleton<RolesRepository>(() => RolesRepositoryImpl(sl()));
   sl.registerLazySingleton<SubmittedInvoicesRepository>(() => SubmittedInvoicesRepositoryImpl(sl()));
+  sl.registerLazySingleton<ChangeCompanyRepository>(() => ChangeCompanyRepositoryImpl(sl()));
 
 // Datasources
 
@@ -235,6 +245,7 @@ Future<void> init() async {
   sl.registerLazySingleton<BranchesRemoteDataSource>(() => BranchesRemoteDataSourceImpl(apiRepo: sl()));
   sl.registerLazySingleton<UsersRemoteDataSource>(() => UsersRemoteDataSourceImpl(apiRepo: sl()));
   sl.registerLazySingleton<RolesRemoteDataSource>(() => RolesRemoteDataSourceImpl(apiRepo: sl()));
+  sl.registerLazySingleton<ChangeCompanyRemoteDataSource>(() => ChangeCompanyRemoteDataSourceImpl(apiRepo: sl()));
 
   sl.registerLazySingleton<SubmittedInvoicesRemoteDataSource>(
       () => SubmittedInvoicesRemoteDataSourceImpl(apiRepo: sl()));

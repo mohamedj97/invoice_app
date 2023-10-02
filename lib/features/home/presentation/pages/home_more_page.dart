@@ -15,6 +15,7 @@ import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../injection_container.dart';
+import '../../../change_company/presentation/screens/change_company_screen.dart';
 import '../../../profile/presentation/screens/change_language_screen.dart';
 import '../../../profile/presentation/screens/change_password_screen.dart';
 import '../../../profile/presentation/screens/company_data_screen.dart';
@@ -184,6 +185,13 @@ class _HomeMorePageState extends State<HomeMorePage> {
                       imagePath: IconAssets.languageIcon,
                       onTap: () {
                         Navigator.of(context).push(CustomPageRoute.createRoute(page: const ChangeLanguageScreen()));
+                      },
+                    ),
+                    ProfileItemWidget(
+                      title: "change_company".tr(),
+                      imagePath: IconAssets.changeCompany,
+                      onTap: () {
+                        Navigator.of(context).push(CustomPageRoute.createRoute(page: const ChangeCompanyScreen()));
                       },
                     ),
                     ProfileItemWidget(
