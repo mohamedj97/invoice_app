@@ -10,6 +10,7 @@ import '../../../../core/common_widgets/lw_custom_text.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_dropdown_form_field.dart';
+import '../../../../core/widgets/form_builder_fields/lw_custom_text_form_field.dart';
 import '../../../../injection_container.dart';
 import '../../../products/domain/entities/base_lookup.dart';
 import '../../../products/presentation/cubit/get_item_types_cubit.dart';
@@ -43,6 +44,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
   LineTotal lineTotal = LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
   TextEditingController priceController = TextEditingController(text: "00");
   int? specificAddedItemIndex;
+  TextEditingController descriptionController = TextEditingController(text: "");
 
   @override
   void initState() {
@@ -65,6 +67,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
       discountRate = widget.existItem?.discountRate ?? 0.0;
       priceController.text =
           widget.existItem?.priceEgp != null ? widget.existItem!.priceEgp.toString() : 0.0.toString();
+      descriptionController.text= widget.existItem?.itemDescription != null ? widget.existItem!.itemDescription.toString() : "";
     }
     super.initState();
   }
@@ -163,6 +166,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                                   setState(() {
                                     item = itemValue;
                                     priceController.text = item!.price.toString();
+                                    descriptionController.text=itemValue?.description??"";
                                     defaultUnitType = unitTypes.firstWhere((element) => element.id == item!.unittypeID);
                                   });
                                 },
@@ -199,6 +203,37 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                         ),
                       ),
                       const SizedBox(height: 16.0),
+                      Container(
+                        color: AppColors.whiteColor,
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 16.0),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: LWCustomText(
+                                  title: "description".tr(),
+                                  color: AppColors.labelColor,
+                                  fontFamily: FontAssets.avertaRegular,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              LWCustomTextFormField(
+                                name: "description",
+                                showLabel: false,
+                                labelText: "",
+                                hintText: "description".tr(),
+                                controller: descriptionController,
+                                isRequired: true,
+                                isCard: false,
+                                enabled: false,
+                                borderDecoration: InputBorder.none,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 16.0),
                       Container(
                         color: AppColors.whiteColor,
