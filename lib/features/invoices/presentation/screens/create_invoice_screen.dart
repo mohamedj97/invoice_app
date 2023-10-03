@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -16,9 +19,13 @@ import 'package:invoice_app/features/invoices/presentation/cubit/add_invoice/add
 import 'package:invoice_app/features/invoices/presentation/cubit/get_types/get_invoice_types_cubit.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/add_invoice_items.dart';
 import 'package:invoice_app/features/invoices/presentation/screens/success_invoice_screen.dart';
+import 'package:open_file_plus/open_file_plus.dart';
+import 'package:path_provider/path_provider.dart';
+import '../../../../core/api/repository/memory_repo.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/navigation/custom_page_route.dart';
 import '../../../../core/popups/error_dialogue.dart';
+import '../../../../core/strings/end_points.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/custom_back_button.dart';
 import '../../../../core/widgets/form_builder_fields/lw_custom_date_form_field.dart';
@@ -55,6 +62,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
   List<BaseLookup> unitTypes = [];
   num? extraDiscountAmount;
   bool hasData = false;
+  bool isLoading = false;
   TextEditingController extraDiscountController = TextEditingController(text: "0.0");
 
   @override
@@ -95,6 +103,59 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
             InvoicesLocalDataSource.clearData();
           },
         ),
+        actions: [
+          if(widget.invoice!=null)Padding(
+            padding: const EdgeInsets.only(left: 32.0),
+            child: InkWell(
+              onTap: ()async{
+                  final Map<String, String> headers = {
+                    'Authorization': 'Bearer ${MemoryRepo().tokensData?.token ?? ""}',
+                    // Add any other headers you need
+                  };
+                  setState(() {
+                    isLoading = true;
+                  });
+                  final response = await http.get(
+                      Uri.parse(
+                          "${EndPoints.stagingBaseUrl}Invoices/exportInvoicePDF/${widget.invoice!.id}"),
+                      headers: headers);
+                  print(response.body);
+                  if (response.statusCode == 200) {
+                    // Successful response, save the PDF to a file
+                    // You can choose the directory and filename where you want to save it.
+                    final pdfBytes = response.bodyBytes;
+                    // Get the temporary directory
+                    final tempDir = await getTemporaryDirectory();
+
+                    // Create a temporary file with a unique name
+                    final tempFile = File(
+                        '${tempDir.path}/${"Invoice_number".tr()}${widget.invoice!.invoiceNo}.pdf');
+                    await tempFile.writeAsBytes(pdfBytes);
+                    setState(() {
+                      isLoading = false;
+                    });
+                    // Open the downloaded PDF file
+                    OpenFile.open(tempFile.path);
+                  } else {
+                    setState(() {
+                      isLoading = false;
+                    });
+                    // Handle the API response error
+                    await getErrorDialogue(
+                        context: context,
+                        isUnAuthorized: false,
+                        message: "something_went_wrong".tr(),
+                );
+              }
+              },
+              child: const Icon(
+                Icons.download,
+                size: 30,
+                color: AppColors.primary,
+              ),
+            ),
+          ),
+        ],
         body: BlocProvider.value(
           value: AddInvoiceCubit(sl(), sl()),
           child: BlocConsumer<AddInvoiceCubit, AddInvoiceState>(
@@ -176,7 +237,12 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                             }
                           }
 
-                          return FormBuilder(
+                          return isLoading?const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(),
+                            ),
+                          ):FormBuilder(
                             key: formKey,
                             child: Column(
                               children: [
