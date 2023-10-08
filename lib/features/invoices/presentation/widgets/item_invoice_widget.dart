@@ -32,7 +32,7 @@ class ItemInvoiceWidget extends StatelessWidget {
             fontSize: 14.0,
           ),
           subtitle: LWCustomText(
-            title: item.itemDescription,
+            title: item.itemDescription??"",
             color: AppColors.searchBarColor,
             fontFamily: FontAssets.avertaRegular,
             fontSize: 12.0,

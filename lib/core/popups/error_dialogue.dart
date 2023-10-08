@@ -13,7 +13,8 @@ import '../navigation/custom_page_route.dart';
 Future<void> getErrorDialogue(
     {required String message,
     required bool isUnAuthorized,
-      void Function()? onPressed,
+    IconData? icon,
+    void Function()? onPressed,
     required BuildContext context}) async {
   if (isUnAuthorized) {
     await DiskRepo().deleteTokensData();
@@ -39,26 +40,24 @@ Future<void> getErrorDialogue(
                 fontFamily: FontAssets.avertaSemiBold,
                 fontSize: 16.0,
               )
-            : const Icon(
-                Icons.warning,
+            : Icon(
+                icon ?? Icons.warning,
                 color: AppColors.primary,
                 size: 80.0,
               ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            LWCustomText(
-                title: message,
-                fontSize: 14.0,
-                fontFamily: FontAssets.avertaRegular),
+            LWCustomText(title: message, fontSize: 14.0, fontFamily: FontAssets.avertaRegular),
             const SizedBox(height: 24.0),
             SizedBox(
               width: 300,
               child: CustomElevatedButton(
                 title: isUnAuthorized ? "login".tr() : "cancel".tr(),
-                onPressed: onPressed??() {
-                  Navigator.pop(context);
-                },
+                onPressed: onPressed ??
+                    () {
+                      Navigator.pop(context);
+                    },
               ),
             ),
           ],

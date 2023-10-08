@@ -60,7 +60,7 @@ class Line {
   int? removedBy;
   List<LineTax>? lineTax = [];
   LineTotal? lineTotal;
-  late String itemDescription;
+  String? itemDescription;
   num? exchangeRate;
   num? discountRate;
   num? discountAmount;

@@ -40,6 +40,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
   num? quantity;
   ItemLookup? item;
   num? price;
+  String? description;
   num? discountRate;
   LineTotal lineTotal = LineTotal(salesTotal: 0, netTotal: 0, total: 0, lineTaxTotal: []);
   TextEditingController priceController = TextEditingController(text: "00");
@@ -64,6 +65,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
       InvoicesLocalDataSource.addedTaxes = InvoicesLocalDataSource.addedItems[specificAddedItemIndex!].lineTax ?? [];
       quantity = widget.existItem?.quantity ?? 0.0;
       price = widget.existItem?.priceEgp ?? 0.0;
+      description = widget.existItem?.itemDescription;
       discountRate = widget.existItem?.discountRate ?? 0.0;
       priceController.text =
           widget.existItem?.priceEgp != null ? widget.existItem!.priceEgp.toString() : 0.0.toString();
@@ -97,6 +99,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                         quantity = num.parse(formState.value["quantity"]);
                         discountRate = num.parse(formState.value["discount_rate"]);
                         price = num.parse(priceController.text);
+                        description=descriptionController.text;
                         setState(() {
                           for (int i = 0; i < InvoicesLocalDataSource.addedItems.length; i++) {
                             if (InvoicesLocalDataSource.addedItems[i].itemId == item!.id) {
@@ -107,7 +110,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                           }
                           InvoicesLocalDataSource.addedItems.add(
                             Line(
-                              itemDescription: item!.description!,
+                              itemDescription: descriptionController.text??item?.description??description??"",
                               itemId: item!.id,
                               unitType: item!.unittypeID ?? 0,
                               quantity: quantity ?? 0,
@@ -227,7 +230,7 @@ class _AddInvoiceItemsState extends State<AddInvoiceItems> {
                                 controller: descriptionController,
                                 isRequired: true,
                                 isCard: false,
-                                enabled: false,
+                                enabled: true,
                                 borderDecoration: InputBorder.none,
                               ),
                             ],

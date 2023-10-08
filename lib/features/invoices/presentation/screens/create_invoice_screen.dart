@@ -179,6 +179,15 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
               if (addInvoiceState.addInvoiceRequestState == RequestState.error) {
                 getErrorDialogue(
                   context: context,
+                  icon: Icons.check_circle,
+                  onPressed: (){
+                    Navigator.of(context).pushAndRemoveUntil(
+                      CustomPageRoute.createRoute(
+                        page: const HomeScreen(index: 1,),
+                      ),
+                          (Route<dynamic> route) => false,
+                    );
+                  },
                   isUnAuthorized: addInvoiceState.getSingleInvoiceResponse!.statuscode == 401,
                   message: addInvoiceState.getSingleInvoiceResponse?.message?.first ?? "something_went_wrong".tr(),
                 );
